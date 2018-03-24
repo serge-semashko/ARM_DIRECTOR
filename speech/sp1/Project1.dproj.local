@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.775,=C:\Users\ostap\Documents\Embarcadero\Studio\Projects\WebModuleUnit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.701,G:\home\ARM_editor\speech\sp1\Project1.dproj=C:\Users\ostap\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.356,G:\home\ARM_editor\speech\sp1\main.pas=C:\Users\ostap\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.356,G:\home\ARM_editor\speech\sp1\main.dfm=C:\Users\ostap\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.883,=C:\Users\ostap\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.397,=C:\Users\ostap\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.912,=C:\Users\ostap\Documents\Embarcadero\Studio\Projects\FormUnit1.pas</Transaction>
+  </Transactions>
+</BorlandProject>

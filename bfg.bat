@@ -1,0 +1,1 @@
+C:\Java\jdk1.8.0_121\bin\java -jar bfg.jar --strip-blobs-bigger-than 2M 

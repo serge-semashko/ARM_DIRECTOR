@@ -1,0 +1,20 @@
+﻿2018.01.02 Extend parameters:
+
+           inspired by "Christian Koch" <ch.koch.ed@online.de>
+           required to add ":cdda-track=1" as option to the media
+            
+           affected procedures:
+            
+                procedure Play       (mrl: WideString; mediaOptions : array of WideString; ...); overload;
+                procedure PlayNormal (mrl: WideString; mediaOptions : array of WideString; ...); overload;
+                procedure PlayYoutube(mrl: WideString; mediaOptions : array of WideString; ...); overload;
+
+2017.12.05 New functions:
+
+           GetVideoSampleAspectRatio
+
+2016.11.28 Update Equalizer function declarations
+
+           reported by "Woldemar Unknown" <djvk@mail.ru>
+
+2016.10.18 Initial release

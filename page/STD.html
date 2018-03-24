@@ -1,0 +1,315 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+    <script src="../amcharts/amcharts.js"></script>
+    <script src="../amcharts/serial.js"></script>
+    <script src="../amcharts/light.js"></script>
+    <script src="../amcharts/plugins/export/export.min.js"></script>
+    <script src="scripts/canvasjs.min.js"></script>
+    <script src="scripts/jquery.canvasjs.min.js"></script>
+    
+
+
+    <link rel="stylesheet" href="../amcharts/plugins/export/export.css" type="text/css" media="all" />
+
+    <script>
+        zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
+        ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];
+
+    </script>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>jinr arm</title>
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="stylesheet" href="styles/main.css">
+    <script src="scripts/vendor/modernizr.js"></script>
+    <script src="scripts/vendor/jquery.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+    <script src="scripts/plugins.js"></script>
+    <script src="scripts/data.js"></script>
+    <script src="scripts/main.js"></script>
+</head>
+
+<body>
+   
+    <div ><h1 style="color: #699AD6; padding-left: 20%; float: left; margin-top: 0px">Криогенный комплекс ЛФВЭ ОИЯИ</h1><div id="timedisplay" style="float: left; padding-left: 10px"></div></div>
+    
+    <div class="dlines">
+        <div class="tablesContaner"><span class="d-head">КГУ-1 - Текущие данные</span>
+            <table class="data-table" border="1">
+                <tr>
+                    <td class="b-head" colspan="4">Обороты</td>
+                </tr>
+                <tr>
+                    <td class="c-head">ТД1</td>
+                    <td class="c-head">ТД2</td>
+                    <td class="c-head">ТД3</td>
+                    <td class="c-head">ПЖ</td>
+                </tr>
+                <tr>
+                    <td class="int" data-id="45">...</td>
+                    <td class="int" data-id="46">...</td>
+                    <td class="int" data-id="47">...</td>
+                    <td class="int" data-id="51">...</td>
+                </tr>
+                <tr>
+                    <td class="b-head" colspan="4">Уровни</td>
+                </tr>
+                <tr>
+                    <td class="c-head">Сборник</td>
+                    <td class="c-head">Ванна</td>
+                    <td class="c-head">БО1</td>
+                    <td class="c-head">БО2</td>
+                </tr>
+                <tr>
+                    <td class="float" data-id="35">...</td>
+                    <td class="float" data-id="36">...</td>
+                    <td class="float" data-id="32">...</td>
+                    <td class="float" data-id="33">...</td>
+                </tr>
+                <tr>
+                    <td class="b-head" colspan="4">Температуры</td>
+                </tr>
+                <tr>
+                    <td class="c-head">Т1</td>
+                    <td class="c-head">Т5</td>
+                    <td class="c-head">Т9</td>
+                    <td class="c-head">Т13</td>
+                </tr>
+                <tr>
+                    <td class="float" data-id="5">...</td>
+                    <td class="float" data-id="11">...</td>
+                    <td class="float" data-id="23">...</td>
+                    <td class="float" data-id="111">...</td>
+                </tr>
+                <tr>
+                    <td class="c-head">Т2</td>
+                    <td class="c-head">Т6</td>
+                    <td class="c-head">Т10</td>
+                    <td class="c-head"></td>
+                </tr>
+                <tr>
+                    <td class="float" data-id="7">...</td>
+                    <td class="float" data-id="12">...</td>
+                    <td class="float" data-id="24">...</td>
+                    <td data-id=""></td>
+                </tr>
+                <tr>
+                    <td class="c-head">Т3</td>
+                    <td class="c-head">Т7</td>
+                    <td class="c-head">Т11</td>
+                    <td class="c-head"></td>
+                </tr>
+                <tr>
+                    <td class="float" data-id="9">...</td>
+                    <td class="float" data-id="26">...</td>
+                    <td class="float" data-id="28">...</td>
+                    <td data-id=""></td>
+                </tr>
+                <tr>
+                    <td class="c-head">Т4</td>
+                    <td class="c-head">Т8</td>
+                    <td class="c-head">Т12</td>
+                    <td class="c-head"></td>
+                </tr>
+                <tr>
+                    <td class="float" data-id="10">...</td>
+                    <td class="float" data-id="27">...</td>
+                    <td class="float" data-id="29">...</td>
+                    <td data-id=""></td>
+                </tr>
+                <tr>
+                    <td class="b-head" colspan="4">Температуры на БО1</td>
+                </tr>
+                <tr>
+                    <td class="c-head">Т181</td>
+                    <td class="c-head">Т191</td>
+                    <td class="c-head">Т201</td>
+                    <td class="c-head">Т211</td>
+                </tr>
+                <tr>
+                    <td class="float" data-id="14">...</td>
+                    <td class="float" data-id="15">...</td>
+                    <td class="float" data-id="16">...</td>
+                    <td class="float" data-id="17">...</td>
+                </tr>
+                <tr>
+                    <td class="b-head" colspan="4">Температуры на БО2</td>
+                </tr>
+                <tr>
+                    <td class="c-head">Т182</td>
+                    <td class="c-head">Т192</td>
+                    <td class="c-head">Т202</td>
+                    <td class="c-head">Т212</td>
+                </tr>
+                <tr>
+                    <td class="float" data-id="18">...</td>
+                    <td class="float" data-id="19">...</td>
+                    <td class="float" data-id="20">...</td>
+                    <td class="float" data-id="21">...</td>
+                </tr>
+            </table>
+        </div>
+        <div class="tablesContaner"><span class="d-head">КГУ-2 - Текущие данные</span>
+            <table class="data-table" border="1">
+                <tr>
+                    <td class="b-head" colspan="4">Обороты</td>
+                </tr>
+                <tr>
+                    <td class="c-head">ТД1</td>
+                    <td class="c-head">ТД2</td>
+                    <td class="c-head">ТД3</td>
+                    <td class="c-head">ПЖ</td>
+                </tr>
+                <tr>
+                    <td class="int" data-id="95">...</td>
+                    <td class="int" data-id="96">...</td>
+                    <td class="int" data-id="97">...</td>
+                    <td class="int" data-id="101">...</td>
+                </tr>
+                <tr>
+                    <td class="b-head" colspan="4">Уровни</td>
+                </tr>
+                <tr>
+                    <td class="c-head">Сборник</td>
+                    <td class="c-head">Ванна</td>
+                    <td class="c-head">БО1</td>
+                    <td class="c-head">БО2</td>
+                </tr>
+                <tr>
+                    <td class="float" data-id="85">...</td>
+                    <td class="float" data-id="86">...</td>
+                    <td class="float" data-id="82">...</td>
+                    <td class="float" data-id="83">...</td>
+                </tr>
+                <tr>
+                    <td class="b-head" colspan="4">Температуры</td>
+                </tr>
+                <tr>
+                    <td class="c-head">Т1</td>
+                    <td class="c-head">Т5</td>
+                    <td class="c-head">Т9</td>
+                    <td class="c-head">Т13</td>
+                </tr>
+                <tr>
+                    <td class="float" data-id="55">...</td>
+                    <td class="float" data-id="61">...</td>
+                    <td class="float" data-id="73">...</td>
+                    <td class="float" data-id="112">...</td>
+                </tr>
+                <tr>
+                    <td class="c-head">Т2</td>
+                    <td class="c-head">Т6</td>
+                    <td class="c-head">Т10</td>
+                    <td class="c-head"></td>
+                </tr>
+                <tr>
+                    <td class="float" data-id="57">...</td>
+                    <td class="float" data-id="62">...</td>
+                    <td class="float" data-id="74">...</td>
+                    <td data-id=""></td>
+                </tr>
+                <tr>
+                    <td class="c-head">Т3</td>
+                    <td class="c-head">Т7</td>
+                    <td class="c-head">Т11</td>
+                    <td class="c-head"></td>
+                </tr>
+                <tr>
+                    <td class="float" data-id="59">...</td>
+                    <td class="float" data-id="76">...</td>
+                    <td class="float" data-id="78">...</td>
+                    <td data-id=""></td>
+                </tr>
+                <tr>
+                    <td class="c-head">Т4</td>
+                    <td class="c-head">Т8</td>
+                    <td class="c-head">Т12</td>
+                    <td class="c-head"></td>
+                </tr>
+                <tr>
+                    <td class="float" data-id="60">...</td>
+                    <td class="float" data-id="77">...</td>
+                    <td class="float" data-id="79">...</td>
+                    <td data-id=""></td>
+                </tr>
+                <tr>
+                    <td class="b-head" colspan="4">Температуры на БО1</td>
+                </tr>
+                <tr>
+                    <td class="c-head">Т181</td>
+                    <td class="c-head">Т191</td>
+                    <td class="c-head">Т201</td>
+                    <td class="c-head">Т211</td>
+                </tr>
+                <tr>
+                    <td class="float" data-id="64">...</td>
+                    <td class="float" data-id="65">...</td>
+                    <td class="float" data-id="66">...</td>
+                    <td class="float" data-id="67">...</td>
+                </tr>
+                <tr>
+                    <td class="b-head" colspan="4">Температуры на БО2</td>
+                </tr>
+                <tr>
+                    <td class="c-head">Т182</td>
+                    <td class="c-head">Т192</td>
+                    <td class="c-head">Т202</td>
+                    <td class="c-head">Т212</td>
+                </tr>
+                <tr>
+                    <td class="float" data-id="68">...</td>
+                    <td class="float" data-id="69">...</td>
+                    <td class="float" data-id="70">...</td>
+                    <td class="float" data-id="71">...</td>
+                </tr>
+            </table>
+        </div>
+        <div id="chart1" class="graphContaner">
+        </div>
+    </div>
+    <div class="dlines">
+        <div class="graphContaner">
+        <select class="graphSelect" name="" id="ch2select" OnChange='ch2change()'>
+                <option value="kgu1s">КГУ1 - Пусковой режим</option>
+                <option value="kgu1w">КГУ1 - Рабочий режим</option>
+                <option value="kgu1l">КГУ1 - Уровни</option>
+                <option value="kgu12l">Уровни КГУ1-КГУ2</option>
+            </select>
+            <div id="chart2" >
+            </div>            
+        </div>
+        <div class="graphContaner">
+                    <select name="" id="ch3select" OnChange='ch3change() '>
+                <option value="kgu2s">КГУ2 - Пусковой режим</option>
+                <option value="kgu2w">КГУ2 - Рабочий режим</option>
+                <option value="kgu2l">КГУ2 - Уровни</option>
+                <option value="kgu12l">Уровни КГУ1-КГУ2</option>
+            </select>
+        <div id="chart3">
+        </div>
+                </div>
+        <div id="chart4" class="graphContaner"></div>
+    </div>
+    <!--[if lt IE 10]>
+      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+      <![endif]-->
+    <!--       <div class="container">
+        <div class="header">
+          <ul class="nav nav-pills pull-right">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+          <h3 class="text-muted">jinr arm</h3>
+        </div>
+
+    </div> -->
+</body>
+
+</html>

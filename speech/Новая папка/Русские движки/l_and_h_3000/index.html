@@ -1,0 +1,102 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>arm</title>
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <style>
+        wwcanvas {
+            border: 4px double black;
+            /* Параметры границы */
+            background: white;
+            /* Цвет фона */
+            padding: 1px;
+            /* Поля вокруг текста */
+            left: 1px;
+        }
+    </style>
+</head>
+
+<body>
+    
+<input id="txt" type=text>
+<select>
+</select>
+Высота: <input id=pitch type=range>
+Скорость: <input id=rate type=range>
+<button onclick="speak()">Прговорить</button>
+
+    <script>
+        var synth = window.speechSynthesis;
+        var inputTxt = document.querySelector('#txt');
+        var voiceSelect = document.querySelector('select');
+        var pitch = document.querySelector('#pitch');
+        var rate = document.querySelector('#rate');
+        var voices = [];
+
+        function populateVoiceList() {
+            voices = synth.getVoices();
+            for (i = 0; i < voices.length; i++) {
+                var option = document.createElement('option');
+                option.textContent = voices[i].name + ' (' + voices[i].lang + ')';
+                if (voices[i].default) {
+                    option.textContent += ' -- DEFAULT';
+                }
+                option.setAttribute('data-lang', voices[i].lang);
+                option.setAttribute('data-name', voices[i].name);
+                voiceSelect.appendChild(option);
+            }
+        }
+        populateVoiceList();
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = populateVoiceList;
+        }
+
+        function speak(event) {
+            var utterThis = new SpeechSynthesisUtterance(inputTxt.value);
+            var selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');
+            for (i = 0; i < voices.length; i++) {
+                if (voices[i].name === selectedOption) {
+                    utterThis.voice = voices[i];
+                }
+            }
+            utterThis.pitch = pitch.value / 50;
+            utterThis.rate = rate.value / 50;
+            synth.speak(utterThis);
+            inputTxt.blur();
+        }
+    </script>
+    <script>
+        synthVoice("Speech 11");
+        var synth = window.speechSynthesis;
+        var voices = synth.getVoices();
+        var utterThis = new SpeechSynthesisUtterance("test " + -1 + " проба ");
+        utterThis.lang = 'ru-RU';
+        //        utterThis.voice = synth.getVoices()[i]; // ЄєЄ чрфр╕ь Google Ёєёёъшщ (ru-RU)
+        synth.speak(utterThis)
+        for (var i = 0; i < voices.length; i++) {
+            var utterThis = new SpeechSynthesisUtterance("test " + i + " проба ");
+            utterThis.lang = 'ru-RU';
+            //        utterThis.voice = synth.getVoices()[i]; // ЄєЄ чрфр╕ь Google Ёєёёъшщ (ru-RU)
+            console.log("\n Voice=" + voices[i].name);
+            synth.speak(utterThis)
+        }
+
+        function synthVoice(text) {
+            const synth = window.speechSynthesis;
+            const utterance = new SpeechSynthesisUtterance();
+            utterance.text = text;
+            synth.speak(utterance);
+        }
+    </script>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h6 align="center"><font size="+1"><a href="http://mifoteka.ru">sgfashdfgashdgfaj роыпволфырпвро</a></font></h6> </body>
+
+</html>

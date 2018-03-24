@@ -1,0 +1,41 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <script src="scripts/vendor/jquery.js"></script>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>arm</title>
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <script src="scripts/data.js"></script>
+    <script src="scripts/airSecond.js"></script>
+    <script src="scripts/events.js"></script>
+    <script src="scripts/devs.js"></script>
+    <script src="scripts/main.js"></script>
+    <style>
+   wwcanvas {
+    border: 4px double black; /* Параметры границы */
+    background: white; /* Цвет фона */
+    padding: 1px; /* Поля вокруг текста */
+    left: 1px;   
+   }
+  </style>
+</head>
+
+<body>
+<div style="display :none" id="time">Dhtvz</div>
+<div style="display :none" id="atime">aaaa</div>
+<div id="main">
+    <canvas id="evCanvas" ></canvas>
+    <canvas id="dvCanvas" ></canvas>
+</div>
+dddd
+dddd
+    <!--<aside>-->
+        <!--<h1></h1>-->aaaa
+    <!--</aside>-->
+<!--<textarea id="area">dddd</textarea>-->
+</body>
+</html>

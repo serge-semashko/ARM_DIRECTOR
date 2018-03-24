@@ -1,0 +1,46 @@
+object MainForm: TMainForm
+  Left = 0
+  Top = 0
+  Caption = 'FmxDemoPasLibVlcPlayer'
+  ClientHeight = 480
+  ClientWidth = 640
+  Position = ScreenCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnClose = FormClose
+  DesignerMasterStyle = 0
+  object FmxPasLibVlcPlayer1: TFmxPasLibVlcPlayer
+    MultiResBitmap = <
+      item
+      end>
+    Align = Client
+    Size.Width = 520.000000000000000000
+    Size.Height = 480.000000000000000000
+    Size.PlatformDefault = False
+    WrapMode = Stretch
+    SnapShotFmt = 'png'
+    OnMediaPlayerVideoSizeChanged = FmxPasLibVlcPlayer1MediaPlayerVideoSizeChanged
+  end
+  object OpenDialog: TOpenDialog
+    InitialDir = 'C:\_LibXE\vlc\_testFiles'
+    Left = 560
+    Top = 72
+  end
+  object Panel1: TPanel
+    Align = Right
+    Position.X = 520.000000000000000000
+    Size.Width = 120.000000000000000000
+    Size.Height = 480.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    object OpenButton: TButton
+      Position.X = 24.000000000000000000
+      Position.Y = 24.000000000000000000
+      TabOrder = 0
+      Text = 'Open'
+      OnClick = OpenButtonClick
+    end
+  end
+end

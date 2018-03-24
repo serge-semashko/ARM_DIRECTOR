@@ -1,0 +1,55 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <script src="scripts/vendor/jquery.js"></script>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>arm</title>
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <script src="scripts/data.js"></script>
+    <script src="scripts/airSecond.js"></script>
+    <script src="scripts/events.js"></script>
+    <script src="scripts/devs.js"></script>
+    <script src="scripts/main.js"></script>
+    <style>
+   wwcanvas {
+    border: 4px double black; /* Џ а ¬Ґвал Ја ­Ёжл */
+    background: white; /* –ўҐв д®­  */
+    padding: 1px; /* Џ®«п ў®ЄагЈ вҐЄбв  */
+    left: 1px;   
+   }
+  </style>
+</head>
+<body text="black" bgcolor="white">
+<p align="center"><font size="+2" color="red"><b> 111 ????????? 222</b></font></p>
+
+<script>
+alert("Speech!");
+synthVoice("Speech 111");
+synthVoice("гҐҐҐЇ  111");
+var synth = window.speechSynthesis;
+var utterThis = new SpeechSynthesisUtterance("11 ?????? 22");
+utterThis.voice = synth.getVoices()[16]; // тут задаём Google русский (ru-RU)
+synth.speak(utterThis)
+function synthVoice(text) {
+  const synth = window.speechSynthesis;
+  const utterance = new SpeechSynthesisUtterance();
+  utterance.text = text;
+  synth.speak(utterance);
+}
+</script>
+
+<br>
+<br>
+<p align="center"><font size="+2"><a href="http://mifoteka.ru/about_project/about_project.htm">Что такое проект "Мифотека"</a></font></p>
+<br>
+<br>
+<h6 align="center"><font size="+1"><a href="http://mifoteka.ru">Главная страница сайта проекта "Мифотека"</a></font></h6>
+<h5 align="center"><a href="http://mifoteka.ru/search/search.htm">Поиск по сайту проекта "Мифотека"</a></h5>
+<p align="right">Идея и реализация: copyright © Цейковец Никита</p>
+<p align="right"><a href="http://mifoteka.ru/feedback/feedback.htm">Обратная связь</a></p>
+</body>
+</html>

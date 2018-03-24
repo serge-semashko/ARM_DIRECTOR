@@ -1,0 +1,13 @@
+var speech = WScript.CreateObject("SPEECH.SpVoice");
+if ( speech == null )
+    WScript.Echo("Speech not installed. Exit");
+var voices = speech.GetVoices();
+if ( voices.Count == 0 ) {
+    WScript.Echo("Voices not installed. Exit.");
+    WScript.Quit(0);
+}
+
+WScript.Echo("Voices available: " + voices.Count);
+for ( var i = 0; i < voices.Count; ++i)
+    WScript.Echo(voices.Item(i).GetDescription());
+WScript.Echo("Current Voice: " + speech.Voice.GetDescription());

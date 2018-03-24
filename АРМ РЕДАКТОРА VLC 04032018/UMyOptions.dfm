@@ -1,0 +1,136 @@
+object FrMyOptions: TFrMyOptions
+  Left = 0
+  Top = 0
+  BorderStyle = bsDialog
+  Caption = #1055#1072#1088#1072#1084#1077#1090#1088#1099
+  ClientHeight = 551
+  ClientWidth = 684
+  Color = clBtnFace
+  DoubleBuffered = True
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poOwnerFormCenter
+  OnClose = FormClose
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Splitter1: TSplitter
+    Left = 273
+    Top = 0
+    Width = 9
+    Height = 510
+    StyleElements = []
+    ExplicitLeft = 185
+  end
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 273
+    Height = 510
+    Align = alLeft
+    BevelInner = bvLowered
+    BevelOuter = bvLowered
+    Caption = 'Panel1'
+    ShowCaption = False
+    TabOrder = 0
+    StyleElements = []
+    OnResize = Panel1Resize
+    object imgPartitions: TImage
+      Left = 2
+      Top = 2
+      Width = 269
+      Height = 506
+      Align = alClient
+      OnMouseDown = imgPartitionsMouseDown
+      OnMouseUp = imgPartitionsMouseUp
+      ExplicitLeft = -2
+      ExplicitTop = -2
+    end
+  end
+  object Panel2: TPanel
+    Left = 0
+    Top = 510
+    Width = 684
+    Height = 41
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = 'Panel2'
+    ShowCaption = False
+    TabOrder = 1
+    StyleElements = []
+    object imgButtons: TImage
+      Left = 351
+      Top = 0
+      Width = 333
+      Height = 41
+      Align = alRight
+      OnMouseMove = imgButtonsMouseMove
+      OnMouseUp = imgButtonsMouseUp
+      ExplicitLeft = 256
+    end
+  end
+  object Panel3: TPanel
+    Left = 282
+    Top = 0
+    Width = 402
+    Height = 510
+    Align = alClient
+    BevelInner = bvLowered
+    BevelOuter = bvLowered
+    Caption = 'Panel3'
+    ShowCaption = False
+    TabOrder = 2
+    StyleElements = []
+    object imgOptions: TImage
+      Left = 2
+      Top = 2
+      Width = 398
+      Height = 506
+      Align = alClient
+      OnMouseUp = imgOptionsMouseUp
+      ExplicitLeft = 88
+      ExplicitTop = 96
+      ExplicitWidth = 105
+      ExplicitHeight = 105
+    end
+    object Edit1: TEdit
+      Left = 120
+      Top = 368
+      Width = 121
+      Height = 19
+      BevelOuter = bvNone
+      Ctl3D = False
+      ParentCtl3D = False
+      TabOrder = 0
+      Text = 'Edit1'
+      Visible = False
+      OnChange = Edit1Change
+      OnKeyDown = Edit1KeyDown
+      OnKeyPress = Edit1KeyPress
+    end
+    object ComboBox1: TComboBox
+      Left = 128
+      Top = 424
+      Width = 145
+      Height = 22
+      BevelInner = bvNone
+      BevelKind = bkSoft
+      Style = csOwnerDrawFixed
+      Ctl3D = False
+      ParentCtl3D = False
+      TabOrder = 1
+      Visible = False
+      StyleElements = []
+      OnChange = ComboBox1Change
+    end
+  end
+  object ColorDialog1: TColorDialog
+    Options = [cdFullOpen, cdPreventFullOpen, cdSolidColor, cdAnyColor]
+    Left = 466
+    Top = 312
+  end
+end

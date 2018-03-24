@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{92A0D837-AF68-4B8F-819C-FF4B7979BC73}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="webclient.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\DeviceManger\DeviceManager.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="webclient">
+        <MSBuild Projects="webclient.dproj"/>
+    </Target>
+    <Target Name="webclient:Clean">
+        <MSBuild Projects="webclient.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="webclient:Make">
+        <MSBuild Projects="webclient.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DeviceManager">
+        <MSBuild Projects="..\DeviceManger\DeviceManager.dproj"/>
+    </Target>
+    <Target Name="DeviceManager:Clean">
+        <MSBuild Projects="..\DeviceManger\DeviceManager.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DeviceManager:Make">
+        <MSBuild Projects="..\DeviceManger\DeviceManager.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="webclient;DeviceManager"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="webclient:Clean;DeviceManager:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="webclient:Make;DeviceManager:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

@@ -1,0 +1,22 @@
+[Stats]
+<<<<<<< HEAD
+EditorSecs=40908
+DesignerSecs=487
+InspectorSecs=171
+CompileSecs=217970
+OtherSecs=632
+StartTime=05.06.2017 20:19:53
+RealKeys=0
+EffectiveKeys=0
+DebugSecs=327730
+=======
+EditorSecs=15393
+DesignerSecs=284
+InspectorSecs=148
+CompileSecs=168960
+OtherSecs=208
+StartTime=05.06.2017 20:19:53
+RealKeys=0
+EffectiveKeys=0
+DebugSecs=289197
+>>>>>>> 567489eb579fa25cb906471546da671d36020444

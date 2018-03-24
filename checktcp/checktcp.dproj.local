@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+  <Transactions>
+    <Transaction>2018.03.20 22:51:24.670,G:\home\ARM_EDITOR\tcpd12\main.pas=G:\home\ARM_EDITOR\tcpd12\Unit1.pas</Transaction>
+    <Transaction>2018.03.20 22:51:24.670,G:\home\ARM_EDITOR\tcpd12\main.dfm=G:\home\ARM_EDITOR\tcpd12\Unit1.dfm</Transaction>
+    <Transaction>2018.03.20 22:51:48.730,G:\home\ARM_EDITOR\tcpd12\checktcp.dproj=G:\home\ARM_EDITOR\tcpd12\Project1.dproj</Transaction>
+  </Transactions>
+</BorlandProject>

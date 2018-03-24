@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{41FBC755-134C-4AD9-B23F-48FF02D44C14}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="thread_list.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\АРМ РЕДАКТОРА VLC 01022018\ARM_Director.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="thread_list">
+        <MSBuild Projects="thread_list.dproj"/>
+    </Target>
+    <Target Name="thread_list:Clean">
+        <MSBuild Projects="thread_list.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="thread_list:Make">
+        <MSBuild Projects="thread_list.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ARM_Director">
+        <MSBuild Projects="..\АРМ РЕДАКТОРА VLC 01022018\ARM_Director.dproj"/>
+    </Target>
+    <Target Name="ARM_Director:Clean">
+        <MSBuild Projects="..\АРМ РЕДАКТОРА VLC 01022018\ARM_Director.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ARM_Director:Make">
+        <MSBuild Projects="..\АРМ РЕДАКТОРА VLC 01022018\ARM_Director.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="thread_list;ARM_Director"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="thread_list:Clean;ARM_Director:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="thread_list:Make;ARM_Director:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

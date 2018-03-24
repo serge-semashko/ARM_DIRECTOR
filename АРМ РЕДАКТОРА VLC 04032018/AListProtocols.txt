@@ -1,0 +1,200 @@
+<TLDevices>
+  <TypeDevices=Видеомикшер>
+    <Firms=Sony>
+        <Protocol=Sony BVS/DVS>
+          <Ports>
+          </Ports>
+          <MainOptions>
+            <Count=0>
+          </MainOptions>
+          <AddOptions>
+            <Title=>
+            <Count=0>
+          </AddOptions>
+        </Protocol=Sony BVS/DVS>
+    </Firms=Sony>
+    <Firms=SAM(Snell & Wilcox Ltd)>
+      <Device=Kahuna>
+        <Protocol=GVG100>
+          <Ports>
+            <PortIP>
+              <IPAdress=197.162.200.122>
+              <IPPort=50001>
+              <Login=SAM>
+              <Password=sam#001>
+            </PortIP>
+          </Ports>
+          <MainOptions>
+            <Count=2>
+            <1:EffectAdress=ME2|ME1|ME2|Key1|Key2|Key3|Key4>
+            <2:Keyer=Key4|Key1|Key2|Key3|Key4>
+          </MainOptions>
+          <AddOptions>
+            <Title=Соответствие номеров событий источникам видеомикшера>
+            <Count=32>
+            <1:Устройство 1=Xpt1|AUX[0..9]|Xpt[0..196]>
+            <2:Устройство 2=Xpt2|AUX[0..9]|Xpt[0..196]>
+            <3:Устройство 3=Xpt3|AUX[0..9]|Xpt[0..196]>
+            <4:Устройство 4=Xpt4|AUX[0..9]|Xpt[0..196]>
+            <5:Устройство 5=Xpt5|AUX[0..9]|Xpt[0..196]>
+            <6:Устройство 6=Xpt6|AUX[0..9]|Xpt[0..196]>
+            <7:Устройство 7=Xpt7|AUX[0..9]|Xpt[0..196]>
+            <8:Устройство 8=Xpt8|AUX[0..9]|Xpt[0..196]>
+            <9:Устройство 9=Xpt9|AUX[0..9]|Xpt[0..196]>
+            <10:Устройство 10=Xpt10|AUX[0..9]|Xpt[0..196]>
+            <11:Устройство 11=Xpt11|AUX[0..9]|Xpt[0..196]>
+            <12:Устройство 12=AUX0|AUX[0..9]|Xpt[0..196]>
+            <13:Устройство 13=AUX1|AUX[0..9]|Xpt[0..196]>
+            <14:Устройство 14=AUX2|AUX[0..9]|Xpt[0..196]>
+            <15:Устройство 15=Xpt15|AUX[0..9]|Xpt[0..196]>
+            <16:Устройство 16=Xpt16|AUX[0..9]|Xpt[0..196]>
+            <17:Устройство 17=Xpt17|AUX[0..9]|Xpt[0..196]>
+            <18:Устройство 18=Xpt18|AUX[0..9]|Xpt[0..196]>
+            <19:Устройство 19=Xpt19|AUX[0..9]|Xpt[0..196]>
+            <20:Устройство 20=Xpt20|AUX[0..9]|Xpt[0..196]>
+            <21:Устройство 21=Xpt21|AUX[0..9]|Xpt[0..196]>
+            <22:Устройство 22=Xpt22|AUX[0..9]|Xpt[0..196]>
+            <23:Устройство 23=Xpt23|AUX[0..9]|Xpt[0..196]>
+            <24:Устройство 24=Xpt24|AUX[0..9]|Xpt[0..196]>
+            <25:Устройство 25=Xpt25|AUX[0..9]|Xpt[0..196]>
+            <26:Устройство 26=Xpt26|AUX[0..9]|Xpt[0..196]>
+            <27:Устройство 27=Xpt27|AUX[0..9]|Xpt[0..196]>
+            <28:Устройство 28=Xpt28|AUX[0..9]|Xpt[0..196]>
+            <29:Устройство 29=Xpt29|AUX[0..9]|Xpt[0..196]>
+            <30:Устройство 30=Xpt30|AUX[0..9]|Xpt[0..196]>
+            <31:Устройство 31=Xpt31|AUX[0..9]|Xpt[0..196]>
+            <32:Устройство 32=Xpt196|AUX[0..9]|Xpt[0..196]>
+          </AddOptions>
+        </Protocol=GVG100>
+        <Protocol=Sony BVS/DVS>
+          <Ports>
+            <Port422>
+              <Speed=38400>
+              <Bits=8>
+              <Parity=нечет>
+              <Stop=1>
+              <Flow=Нет>
+            </Port422>
+            <PortIP>
+              <IPAdress=197.168.222.222>
+              <IPPort=7605>
+              <Login=SAM01>
+              <Password=sam#001>
+            </PortIP>
+          </Ports>
+          <MainOptions>
+            <Count=1>
+            <1:EffectAdress=ME2|ME1|ME2|Key1|Key2|key3|Key4>
+          </MainOptions>
+          <AddOptions>
+            <Title=Соответствие номеров событий источникам видеомикшера>
+            <Count=32>
+            <1:Устройство 1=Xpt95|AUX[0..9]|Xpt[0..96]>
+            <2:Устройство 2=Xpt2|AUX[0..9]|Xpt[0..96]>
+            <3:Устройство 3=Xpt3|AUX[0..9]|Xpt[0..96]>
+            <4:Устройство 4=Xpt4|AUX[0..9]|Xpt[0..96]>
+            <5:Устройство 5=Xpt5|AUX[0..9]|Xpt[0..96]>
+            <6:Устройство 6=Xpt6|AUX[0..9]|Xpt[0..96]>
+            <7:Устройство 7=Xpt7|AUX[0..9]|Xpt[0..96]>
+            <8:Устройство 8=Xpt8|AUX[0..9]|Xpt[0..96]>
+            <9:Устройство 9=Xpt9|AUX[0..9]|Xpt[0..96]>
+            <10:Устройство 10=Xpt10|AUX[0..9]|Xpt[0..96]>
+            <11:Устройство 11=Xpt11|AUX[0..9]|Xpt[0..96]>
+            <12:Устройство 12=Xpt96|AUX[0..9]|Xpt[0..96]>
+            <13:Устройство 13=Xpt94|AUX[0..9]|Xpt[0..96]>
+            <14:Устройство 14=Xpt92|AUX[0..9]|Xpt[0..96]>
+            <15:Устройство 15=Xpt15|AUX[0..9]|Xpt[0..96]>
+            <16:Устройство 16=Xpt16|AUX[0..9]|Xpt[0..96]>
+            <17:Устройство 17=Xpt17|AUX[0..9]|Xpt[0..96]>
+            <18:Устройство 18=Xpt18|AUX[0..9]|Xpt[0..96]>
+            <19:Устройство 19=Xpt19|AUX[0..9]|Xpt[0..96]>
+            <20:Устройство 20=Xpt20|AUX[0..9]|Xpt[0..96]>
+            <21:Устройство 21=Xpt21|AUX[0..9]|Xpt[0..96]>
+            <22:Устройство 22=Xpt22|AUX[0..9]|Xpt[0..96]>
+            <23:Устройство 23=AUX1|AUX[0..9]|Xpt[0..96]>
+            <24:Устройство 24=Xpt24|AUX[0..9]|Xpt[0..96]>
+            <25:Устройство 25=Xpt25|AUX[0..9]|Xpt[0..96]>
+            <26:Устройство 26=Xpt26|AUX[0..9]|Xpt[0..96]>
+            <27:Устройство 27=Xpt27|AUX[0..9]|Xpt[0..96]>
+            <28:Устройство 28=Xpt28|AUX[0..9]|Xpt[0..96]>
+            <29:Устройство 29=Xpt29|AUX[0..9]|Xpt[0..96]>
+            <30:Устройство 30=Xpt30|AUX[0..9]|Xpt[0..96]>
+            <31:Устройство 31=Xpt31|AUX[0..9]|Xpt[0..96]>
+            <32:Устройство 32=Xpt32|AUX[0..9]|Xpt[0..96]>
+          </AddOptions>
+        </Protocol=Sony BVS/DVS>
+      </Device=Kahuna>
+    </Firms=SAM(Snell & Wilcox Ltd)>
+    <Firms=Ross Video>
+      <Device=Carbone>
+        <Protocol=GVG100>
+          <Ports>
+            <Port422>
+              <Speed=4800>
+              <Bits=8>
+              <Parity=Нечет>
+              <Stop=1>
+              <Flow=Аппаратный>
+            </Port422>
+            <PortIP>
+              <IPAdress=196.188.050.122>
+              <IPPort=1605>
+              <Login=ROSS01>
+              <Password=ross#001>
+            </PortIP>
+          </Ports>
+          <MainOptions>
+            <Count=0>
+          </MainOptions>
+          <AddOptions>
+            <Title=>
+            <Count=0>
+          </AddOptions>
+        </Protocol=GVG100>
+      </Device=Carbone>
+    </Firms=Ross Video>
+    <Firms=Grass Valey>
+      <Device=Kayak>
+        <Protocol=GVG100>
+          <Ports>
+            <Port422>
+              <Speed=38400>
+              <Bits=8>
+              <Parity=Нечет>
+              <Stop=1>
+              <Flow=Нет>
+            </Port422>
+          </Ports>
+          <MainOptions>
+            <Count=0>
+          </MainOptions>
+          <AddOptions>
+            <Title=>
+            <Count=0>
+          </AddOptions>
+        </Protocol=GVG100>
+      </Device=Kayak>
+      <Device=Carrera>
+        <Protocol=GVG100>
+          <Ports>
+            <Port422>
+              <Speed=38400>
+              <Bits=8>
+              <Parity=Нечет>
+              <Stop=1>
+              <Flow=Нет>
+            </Port422>
+          </Ports>
+          <MainOptions>
+            <Count=0>
+          </MainOptions>
+          <AddOptions>
+            <Title=>
+            <Count=0>
+          </AddOptions>
+        </Protocol=GVG100>
+      </Device=Carrera>
+    </Firms=Grass Valey>
+  </TypeDevices=Видеомикшер>
+</TLDevices>
+<TLText></TLText><TLMedia></TLMedia>

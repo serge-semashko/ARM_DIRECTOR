@@ -1,0 +1,356 @@
+fmt: unknown box type %4.4s (incompletely loaded)
+out: unknown box type mpod (incompletely loaded)
+fmt: elst box found
+out: elst box found
+fmt: STTS table of %u entries
+out: STTS table of 1 entries
+fmt: elst box found
+out: elst box found
+fmt: STTS table of %u entries
+out: STTS table of 1 entries
+fmt: threaded frame decoding is not compatible with DXVA2, disabled
+out: threaded frame decoding is not compatible with DXVA2, disabled
+fmt: decoded zero sample
+out: decoded zero sample
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: playback too early (%lld): down-sampling
+out: playback too early (-42283): down-sampling
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: playback too late (%lld): up-sampling
+out: playback too late (64565): up-sampling
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: timing screwed (drift: %lld us): stopping resampling
+out: timing screwed (drift: 134739 us): stopping resampling
+fmt: playback too late (%lld): up-sampling
+out: playback too late (129886): up-sampling
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: playback way too late (%lld): flushing buffers
+out: playback way too late (180385): flushing buffers
+fmt: playback way too early (%lld): playing silence
+out: playback way too early (-391833): playing silence
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: playback too late (%lld): up-sampling
+out: playback too late (63383): up-sampling
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: timing screwed (drift: %lld us): stopping resampling
+out: timing screwed (drift: 132997 us): stopping resampling
+fmt: playback too late (%lld): up-sampling
+out: playback too late (132755): up-sampling
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: playback way too late (%lld): flushing buffers
+out: playback way too late (184798): flushing buffers
+fmt: playback way too early (%lld): playing silence
+out: playback way too early (-379013): playing silence
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: playback too late (%lld): up-sampling
+out: playback too late (63780): up-sampling
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: timing screwed (drift: %lld us): stopping resampling
+out: timing screwed (drift: 128034 us): stopping resampling
+fmt: playback too late (%lld): up-sampling
+out: playback too late (126401): up-sampling
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: playback way too late (%lld): flushing buffers
+out: playback way too late (182047): flushing buffers
+fmt: playback way too early (%lld): playing silence
+out: playback way too early (-389365): playing silence
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: playback too late (%lld): up-sampling
+out: playback too late (64719): up-sampling
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: timing screwed (drift: %lld us): stopping resampling
+out: timing screwed (drift: 133724 us): stopping resampling
+fmt: playback too late (%lld): up-sampling
+out: playback too late (138068): up-sampling
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: playback way too late (%lld): flushing buffers
+out: playback way too late (185495): flushing buffers
+fmt: playback way too early (%lld): playing silence
+out: playback way too early (-402480): playing silence
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: playback too late (%lld): up-sampling
+out: playback too late (62648): up-sampling
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: timing screwed (drift: %lld us): stopping resampling
+out: timing screwed (drift: 126331 us): stopping resampling
+fmt: playback too late (%lld): up-sampling
+out: playback too late (119698): up-sampling
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: playback way too late (%lld): flushing buffers
+out: playback way too late (187328): flushing buffers
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: playback way too early (%lld): playing silence
+out: playback way too early (-395663): playing silence
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: playback too late (%lld): up-sampling
+out: playback too late (60606): up-sampling
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: timing screwed (drift: %lld us): stopping resampling
+out: timing screwed (drift: 121648 us): stopping resampling
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: playback too late (%lld): up-sampling
+out: playback too late (121796): up-sampling
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: playback way too late (%lld): flushing buffers
+out: playback way too late (185050): flushing buffers
+fmt: playback way too early (%lld): playing silence
+out: playback way too early (-366773): playing silence
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: playback too late (%lld): up-sampling
+out: playback too late (60606): up-sampling
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: timing screwed (drift: %lld us): stopping resampling
+out: timing screwed (drift: 124531 us): stopping resampling
+fmt: playback too late (%lld): up-sampling
+out: playback too late (128678): up-sampling
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: playback way too late (%lld): flushing buffers
+out: playback way too late (182308): flushing buffers
+fmt: playback way too early (%lld): playing silence
+out: playback way too early (-396322): playing silence
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: playback too late (%lld): up-sampling
+out: playback too late (60263): up-sampling
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering
+fmt: plane %d not aligned
+out: plane 0 not aligned
+fmt: disabling direct rendering
+out: disabling direct rendering

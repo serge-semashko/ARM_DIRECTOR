@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.508,C:\Users\ostap\Documents\Embarcadero\Studio\Projects\ProjectGroup1.groupproj=G:\home\ARM_EDITOR\ver1203\arm_web_manager.groupproj</Transaction>
+  </Transactions>
+	<Default.Personality>
+<<<<<<< HEAD
+		<Projects ActiveProject="G:\home\ARM_EDITOR\ver1203\DEVManger 04032018\DEVManager.dproj"/>
+=======
+		<Projects ActiveProject="G:\home\ARM_EDITOR\ver1203\webredis\webredis.dproj"/>
+>>>>>>> 567489eb579fa25cb906471546da671d36020444
+	</Default.Personality>
+</BorlandProject>

@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{DB309D79-FCF7-4F45-ACB5-6A3055D71460}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Project1.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="C:\Embarcadero\Studio\19.0\Samples\Object Pascal\VCL\InetWinSockets\inetwinsockets.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="Project1">
+        <MSBuild Projects="Project1.dproj"/>
+    </Target>
+    <Target Name="Project1:Clean">
+        <MSBuild Projects="Project1.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Project1:Make">
+        <MSBuild Projects="Project1.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="inetwinsockets">
+        <MSBuild Projects="C:\Embarcadero\Studio\19.0\Samples\Object Pascal\VCL\InetWinSockets\inetwinsockets.dproj"/>
+    </Target>
+    <Target Name="inetwinsockets:Clean">
+        <MSBuild Projects="C:\Embarcadero\Studio\19.0\Samples\Object Pascal\VCL\InetWinSockets\inetwinsockets.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="inetwinsockets:Make">
+        <MSBuild Projects="C:\Embarcadero\Studio\19.0\Samples\Object Pascal\VCL\InetWinSockets\inetwinsockets.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="Project1;inetwinsockets"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="Project1:Clean;inetwinsockets:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="Project1:Make;inetwinsockets:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
