@@ -1,0 +1,749 @@
+25.03.2018 15:39:38:338  connect 127.0.0.1 9085 Time = 187078251
+25.03.2018 15:39:39:339  DISconnect BY ERROR on connectПодключение не установлено, т.к. конечный компьютер отверг запрос на подключение Time = 187079294
+25.03.2018 15:39:39:339  connect 127.0.0.1 9085 Time = 187079295
+25.03.2018 15:39:40:340  DISconnect BY ERROR on connectПодключение не установлено, т.к. конечный компьютер отверг запрос на подключение Time = 187080296
+25.03.2018 15:39:40:340  connect 127.0.0.1 9085 Time = 187080297
+25.03.2018 15:39:41:341  DISconnect BY ERROR on connectПодключение не установлено, т.к. конечный компьютер отверг запрос на подключение Time = 187081298
+25.03.2018 15:39:41:341  connect 127.0.0.1 9085 Time = 187081299
+25.03.2018 15:39:42:342  DISconnect BY ERROR on connectПодключение не установлено, т.к. конечный компьютер отверг запрос на подключение Time = 187082300
+25.03.2018 15:39:42:342  connect 127.0.0.1 9085 Time = 187082301
+25.03.2018 15:39:43:343  DISconnect BY ERROR on connectПодключение не установлено, т.к. конечный компьютер отверг запрос на подключение Time = 187083302
+25.03.2018 15:39:43:343  connect 127.0.0.1 9085 Time = 187083303
+25.03.2018 15:39:44:344  DISconnect BY ERROR on connectПодключение не установлено, т.к. конечный компьютер отверг запрос на подключение Time = 187084309
+25.03.2018 15:39:44:344  connect 127.0.0.1 9085 Time = 187084310
+25.03.2018 15:39:45:345  DISconnect BY ERROR on connectПодключение не установлено, т.к. конечный компьютер отверг запрос на подключение Time = 187085316
+25.03.2018 15:39:45:345  connect 127.0.0.1 9085 Time = 187085317
+25.03.2018 15:39:46:346  DISconnect BY ERROR on connectПодключение не установлено, т.к. конечный компьютер отверг запрос на подключение Time = 187086318
+25.03.2018 15:39:46:346  connect 127.0.0.1 9085 Time = 187086319
+25.03.2018 15:39:47:347  DISconnect BY ERROR on connectПодключение не установлено, т.к. конечный компьютер отверг запрос на подключение Time = 187087326
+25.03.2018 15:39:48:348  connect 127.0.0.1 9085 Time = 187088098
+25.03.2018 15:39:49:349  DISconnect BY ERROR on connectПодключение не установлено, т.к. конечный компьютер отверг запрос на подключение Time = 187089100
+25.03.2018 15:39:49:349  connect 127.0.0.1 9085 Time = 187089101
+25.03.2018 15:39:50:350  DISconnect BY ERROR on connectПодключение не установлено, т.к. конечный компьютер отверг запрос на подключение Time = 187090102
+25.03.2018 15:39:50:350  connect 127.0.0.1 9085 Time = 187090103
+25.03.2018 15:39:51:351  DISconnect BY ERROR on connectПодключение не установлено, т.к. конечный компьютер отверг запрос на подключение Time = 187091106
+25.03.2018 15:39:51:351  connect 127.0.0.1 9085 Time = 187091107
+25.03.2018 15:39:52:352  DISconnect BY ERROR on connectПодключение не установлено, т.к. конечный компьютер отверг запрос на подключение Time = 187092105
+25.03.2018 15:39:52:352  connect 127.0.0.1 9085 Time = 187092201
+25.03.2018 15:39:53:353  DISconnect BY ERROR on connectПодключение не установлено, т.к. конечный компьютер отверг запрос на подключение Time = 187093202
+25.03.2018 15:39:53:353  connect 127.0.0.1 9085 Time = 187093203
+25.03.2018 15:39:54:354  DISconnect BY ERROR on connectПодключение не установлено, т.к. конечный компьютер отверг запрос на подключение Time = 187094204
+25.03.2018 15:39:55:355  connect 127.0.0.1 9085 Time = 187094951
+25.03.2018 15:39:56:356  DISconnect BY ERROR on connectПодключение не установлено, т.к. конечный компьютер отверг запрос на подключение Time = 187095954
+25.03.2018 15:39:56:356  connect 127.0.0.1 9085 Time = 187095955
+25.03.2018 15:39:57:357  DISconnect BY ERROR on connectПодключение не установлено, т.к. конечный компьютер отверг запрос на подключение Time = 187096954
+25.03.2018 15:39:57:357  not connectet delay after error
+25.03.2018 15:39:57:357  connect 127.0.0.1 9085 Time = 187096956
+25.03.2018 15:39:58:358  DISconnect BY ERROR on connectПодключение не установлено, т.к. конечный компьютер отверг запрос на подключение Time = 187097957
+25.03.2018 15:39:58:358  connect 127.0.0.1 9085 Time = 187097958
+25.03.2018 15:39:59:359  DISconnect BY ERROR on connectПодключение не установлено, т.к. конечный компьютер отверг запрос на подключение Time = 187098959
+25.03.2018 15:39:59:359  connect 127.0.0.1 9085 Time = 187098960
+25.03.2018 15:40:00:30  DISconnect BY ERROR on connectПодключение не установлено, т.к. конечный компьютер отверг запрос на подключение Time = 187099967
+25.03.2018 15:40:00:30  connect 127.0.0.1 9085 Time = 187099968
+25.03.2018 15:40:01:31  DISconnect BY ERROR on connectПодключение не установлено, т.к. конечный компьютер отверг запрос на подключение Time = 187100980
+25.03.2018 15:40:01:31  connect 127.0.0.1 9085 Time = 187100981
+25.03.2018 15:40:02:32  DISconnect BY ERROR on connectПодключение не установлено, т.к. конечный компьютер отверг запрос на подключение Time = 187101982
+25.03.2018 15:40:02:32  connect 127.0.0.1 9085 Time = 187101983
+25.03.2018 15:40:03:33  CHECK STATUS AFTER CONNECT Time = 187102984
+25.03.2018 15:40:03:33 Receive DEVMAN[0]
+25.03.2018 15:40:03:33  sendln /GET_DEVMAN[0]
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =9 Time=4
+25.03.2018 15:40:03:33  success. TIME = 37  len=7 Ans=((-1));
+25.03.2018 15:40:03:33 Received DEVMAN[0] res=((-1));
+25.03.2018 15:40:03:33 Receive DEVMAN[1]
+25.03.2018 15:40:03:33  sendln /GET_DEVMAN[1]
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =9 Time=4
+25.03.2018 15:40:03:33  success. TIME = 9  len=7 Ans=((-1));
+25.03.2018 15:40:03:33 Received DEVMAN[1] res=((-1));
+25.03.2018 15:40:03:33 Receive DEVMAN[2]
+25.03.2018 15:40:03:33  sendln /GET_DEVMAN[2]
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =9 Time=4
+25.03.2018 15:40:03:33  success. TIME = 14  len=7 Ans=((-1));
+25.03.2018 15:40:03:33 Received DEVMAN[2] res=((-1));
+25.03.2018 15:40:03:33 Send CTC
+25.03.2018 15:40:03:33  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =20 Time=4
+25.03.2018 15:40:03:33  success. TIME = 10  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:03:33 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:03:33 Send TLP
+25.03.2018 15:40:03:33  sendln /SET_TLP={"BackGroun
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =20 Time=4
+25.03.2018 15:40:03:33  success. TIME = 10  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:03:33 Sent TLP res=({"status":"ok"});
+25.03.2018 15:40:03:33 Send TLO[1]
+25.03.2018 15:40:03:33  sendln /SET_TLO[1]={"TypeTL
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =20 Time=4
+25.03.2018 15:40:03:33  success. TIME = 42  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:03:33 Sent TLO[1] res=({"status":"ok"});
+25.03.2018 15:40:03:33 Send TLO[2]
+25.03.2018 15:40:03:33  sendln /SET_TLO[2]={"TypeTL
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =20 Time=4
+25.03.2018 15:40:03:33  success. TIME = 41  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:03:33 Sent TLO[2] res=({"status":"ok"});
+25.03.2018 15:40:03:33 Send TLO[3]
+25.03.2018 15:40:03:33  sendln /SET_TLO[3]={"TypeTL
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =20 Time=4
+25.03.2018 15:40:03:33  success. TIME = 40  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:03:33 Sent TLO[3] res=({"status":"ok"});
+25.03.2018 15:40:03:33 Send TLEDITOR
+25.03.2018 15:40:03:33  sendln /SET_TLEDITOR={"Inde
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =20 Time=4
+25.03.2018 15:40:03:33  success. TIME = 12  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:03:33 Sent TLEDITOR res=({"status":"ok"});
+25.03.2018 15:40:03:33 Send TLT[0]
+25.03.2018 15:40:03:33  sendln /SET_TLT[0]={"IDTime
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =20 Time=4
+25.03.2018 15:40:03:33  success. TIME = 12  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:03:33 Sent TLT[0] res=({"status":"ok"});
+25.03.2018 15:40:03:33 Send TLT[1]
+25.03.2018 15:40:03:33  sendln /SET_TLT[1]={"IDTime
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =20 Time=4
+25.03.2018 15:40:03:33  success. TIME = 12  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:03:33 Sent TLT[1] res=({"status":"ok"});
+25.03.2018 15:40:03:33 Send TLT[2]
+25.03.2018 15:40:03:33  sendln /SET_TLT[2]={"IDTime
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =20 Time=4
+25.03.2018 15:40:03:33  success. TIME = 17  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:03:33 Sent TLT[2] res=({"status":"ok"});
+25.03.2018 15:40:03:33 Receive DEVMAN[3]
+25.03.2018 15:40:03:33  sendln /GET_DEVMAN[3]
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =9 Time=4
+25.03.2018 15:40:03:33  success. TIME = 8  len=7 Ans=((-1));
+25.03.2018 15:40:03:33 Received DEVMAN[3] res=((-1));
+25.03.2018 15:40:03:33 Receive DEVMAN[4]
+25.03.2018 15:40:03:33  sendln /GET_DEVMAN[4]
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =9 Time=4
+25.03.2018 15:40:03:33  success. TIME = 9  len=7 Ans=((-1));
+25.03.2018 15:40:03:33 Received DEVMAN[4] res=((-1));
+25.03.2018 15:40:03:33 Receive DEVMAN[5]
+25.03.2018 15:40:03:33  sendln /GET_DEVMAN[5]
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =9 Time=4
+25.03.2018 15:40:03:33  success. TIME = 9  len=7 Ans=((-1));
+25.03.2018 15:40:03:33 Received DEVMAN[5] res=((-1));
+25.03.2018 15:40:03:33 Send CTC
+25.03.2018 15:40:03:33  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =20 Time=4
+25.03.2018 15:40:03:33  success. TIME = 10  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:03:33 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:03:33 Receive DEVMAN[6]
+25.03.2018 15:40:03:33  sendln /GET_DEVMAN[6]
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =9 Time=4
+25.03.2018 15:40:03:33  success. TIME = 8  len=7 Ans=((-1));
+25.03.2018 15:40:03:33 Received DEVMAN[6] res=((-1));
+25.03.2018 15:40:03:33 Receive DEVMAN[7]
+25.03.2018 15:40:03:33  sendln /GET_DEVMAN[7]
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =9 Time=4
+25.03.2018 15:40:03:33  success. TIME = 9  len=7 Ans=((-1));
+25.03.2018 15:40:03:33 Received DEVMAN[7] res=((-1));
+25.03.2018 15:40:03:33 Receive DEVMAN[8]
+25.03.2018 15:40:03:33  sendln /GET_DEVMAN[8]
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =9 Time=4
+25.03.2018 15:40:03:33  success. TIME = 9  len=7 Ans=((-1));
+25.03.2018 15:40:03:33 Received DEVMAN[8] res=((-1));
+25.03.2018 15:40:03:33 Receive DEVMAN[9]
+25.03.2018 15:40:03:33  sendln /GET_DEVMAN[9]
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =9 Time=4
+25.03.2018 15:40:03:33  success. TIME = 8  len=7 Ans=((-1));
+25.03.2018 15:40:03:33 Received DEVMAN[9] res=((-1));
+25.03.2018 15:40:03:33 Receive DEVMAN[10]
+25.03.2018 15:40:03:33  sendln /GET_DEVMAN[10]
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =9 Time=4
+25.03.2018 15:40:03:33  success. TIME = 9  len=7 Ans=((-1));
+25.03.2018 15:40:03:33 Received DEVMAN[10] res=((-1));
+25.03.2018 15:40:03:33 Receive DEVMAN[11]
+25.03.2018 15:40:03:33  sendln /GET_DEVMAN[11]
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =9 Time=4
+25.03.2018 15:40:03:33  success. TIME = 9  len=7 Ans=((-1));
+25.03.2018 15:40:03:33 Received DEVMAN[11] res=((-1));
+25.03.2018 15:40:03:33 Receive DEVMAN[12]
+25.03.2018 15:40:03:33  sendln /GET_DEVMAN[12]
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =9 Time=4
+25.03.2018 15:40:03:33  success. TIME = 8  len=7 Ans=((-1));
+25.03.2018 15:40:03:33 Received DEVMAN[12] res=((-1));
+25.03.2018 15:40:03:33 Receive DEVMAN[13]
+25.03.2018 15:40:03:33  sendln /GET_DEVMAN[13]
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =9 Time=4
+25.03.2018 15:40:03:33  success. TIME = 9  len=7 Ans=((-1));
+25.03.2018 15:40:03:33 Received DEVMAN[13] res=((-1));
+25.03.2018 15:40:03:33 Receive DEVMAN[14]
+25.03.2018 15:40:03:33  sendln /GET_DEVMAN[14]
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =9 Time=4
+25.03.2018 15:40:03:33  success. TIME = 9  len=7 Ans=((-1));
+25.03.2018 15:40:03:33 Received DEVMAN[14] res=((-1));
+25.03.2018 15:40:03:33 Send CTC
+25.03.2018 15:40:03:33  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =20 Time=4
+25.03.2018 15:40:03:33  success. TIME = 10  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:03:33 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:03:33 Receive DEVMAN[15]
+25.03.2018 15:40:03:33  sendln /GET_DEVMAN[15]
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =9 Time=4
+25.03.2018 15:40:03:33  success. TIME = 8  len=7 Ans=((-1));
+25.03.2018 15:40:03:33 Received DEVMAN[15] res=((-1));
+25.03.2018 15:40:03:33 Receive DEVMAN[16]
+25.03.2018 15:40:03:33  sendln /GET_DEVMAN[16]
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =9 Time=4
+25.03.2018 15:40:03:33  success. TIME = 95  len=7 Ans=((-1));
+25.03.2018 15:40:03:33 Received DEVMAN[16] res=((-1));
+25.03.2018 15:40:03:33 Send CTC
+25.03.2018 15:40:03:33  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =20 Time=4
+25.03.2018 15:40:03:33  success. TIME = 11  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:03:33 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:03:33 Send CTC
+25.03.2018 15:40:03:33  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =20 Time=4
+25.03.2018 15:40:03:33  success. TIME = 9  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:03:33 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:03:33 Send CTC
+25.03.2018 15:40:03:33  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =20 Time=4
+25.03.2018 15:40:03:33  success. TIME = 9  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:03:33 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:03:33 Send CTC
+25.03.2018 15:40:03:33  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:03:33  peek answer
+25.03.2018 15:40:03:33 Receive block begin
+25.03.2018 15:40:03:33 Receive block ok len =20 Time=4
+25.03.2018 15:40:03:33  success. TIME = 9  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:03:33 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:04:34 Send CTC
+25.03.2018 15:40:04:34  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:04:34  peek answer
+25.03.2018 15:40:04:34 Receive block begin
+25.03.2018 15:40:04:34 Receive block ok len =20 Time=4
+25.03.2018 15:40:04:34  success. TIME = 9  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:04:34 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:04:34 Send CTC
+25.03.2018 15:40:04:34  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:04:34  peek answer
+25.03.2018 15:40:04:34 Receive block begin
+25.03.2018 15:40:04:34 Receive block ok len =20 Time=4
+25.03.2018 15:40:04:34  success. TIME = 9  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:04:34 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:04:34 Send CTC
+25.03.2018 15:40:04:34  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:04:34  peek answer
+25.03.2018 15:40:04:34 Receive block begin
+25.03.2018 15:40:04:34 Receive block ok len =20 Time=4
+25.03.2018 15:40:04:34  success. TIME = 26  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:04:34 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:04:34 Send CTC
+25.03.2018 15:40:04:34  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:04:34  peek answer
+25.03.2018 15:40:04:34 Receive block begin
+25.03.2018 15:40:04:34 Receive block ok len =20 Time=4
+25.03.2018 15:40:04:34  success. TIME = 9  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:04:34 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:04:34 Send CTC
+25.03.2018 15:40:04:34  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:04:34  peek answer
+25.03.2018 15:40:04:34 Receive block begin
+25.03.2018 15:40:04:34 Receive block ok len =20 Time=4
+25.03.2018 15:40:04:34  success. TIME = 9  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:04:34 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:04:34 Send CTC
+25.03.2018 15:40:04:34  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:04:34  peek answer
+25.03.2018 15:40:04:34 Receive block begin
+25.03.2018 15:40:04:34 Receive block ok len =20 Time=4
+25.03.2018 15:40:04:34  success. TIME = 10  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:04:34 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:04:34 Send CTC
+25.03.2018 15:40:04:34  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:04:34  peek answer
+25.03.2018 15:40:04:34 Receive block begin
+25.03.2018 15:40:04:34 Receive block ok len =20 Time=4
+25.03.2018 15:40:04:34  success. TIME = 10  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:04:34 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:04:34 Send CTC
+25.03.2018 15:40:04:34  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:04:34  peek answer
+25.03.2018 15:40:04:34 Receive block begin
+25.03.2018 15:40:04:34 Receive block ok len =20 Time=4
+25.03.2018 15:40:04:34  success. TIME = 10  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:04:34 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:04:34 Receive DEVMAN[0]
+25.03.2018 15:40:04:34  sendln /GET_DEVMAN[0]
+25.03.2018 15:40:04:34  peek answer
+25.03.2018 15:40:04:34 Receive block begin
+25.03.2018 15:40:04:34 Receive block ok len =9 Time=4
+25.03.2018 15:40:04:34  success. TIME = 8  len=7 Ans=((-1));
+25.03.2018 15:40:04:34 Received DEVMAN[0] res=((-1));
+25.03.2018 15:40:04:34 Receive DEVMAN[1]
+25.03.2018 15:40:04:34  sendln /GET_DEVMAN[1]
+25.03.2018 15:40:04:34  peek answer
+25.03.2018 15:40:04:34 Receive block begin
+25.03.2018 15:40:04:34 Receive block ok len =9 Time=4
+25.03.2018 15:40:04:34  success. TIME = 8  len=7 Ans=((-1));
+25.03.2018 15:40:04:34 Received DEVMAN[1] res=((-1));
+25.03.2018 15:40:04:34 Receive DEVMAN[2]
+25.03.2018 15:40:04:34  sendln /GET_DEVMAN[2]
+25.03.2018 15:40:04:34  peek answer
+25.03.2018 15:40:04:34 Receive block begin
+25.03.2018 15:40:04:34 Receive block ok len =9 Time=4
+25.03.2018 15:40:04:34  success. TIME = 8  len=7 Ans=((-1));
+25.03.2018 15:40:04:34 Received DEVMAN[2] res=((-1));
+25.03.2018 15:40:04:34 Send CTC
+25.03.2018 15:40:04:34  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:04:34  peek answer
+25.03.2018 15:40:04:34 Receive block begin
+25.03.2018 15:40:04:34 Receive block ok len =20 Time=4
+25.03.2018 15:40:04:34  success. TIME = 9  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:04:34 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:04:34 Send CTC
+25.03.2018 15:40:04:34  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:04:34  peek answer
+25.03.2018 15:40:04:34 Receive block begin
+25.03.2018 15:40:04:34 Receive block ok len =20 Time=4
+25.03.2018 15:40:04:34  success. TIME = 9  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:04:34 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:04:34 Receive DEVMAN[3]
+25.03.2018 15:40:04:34  sendln /GET_DEVMAN[3]
+25.03.2018 15:40:04:34  peek answer
+25.03.2018 15:40:04:34 Receive block begin
+25.03.2018 15:40:04:34 Receive block ok len =9 Time=4
+25.03.2018 15:40:04:34  success. TIME = 8  len=7 Ans=((-1));
+25.03.2018 15:40:04:34 Received DEVMAN[3] res=((-1));
+25.03.2018 15:40:04:34 Receive DEVMAN[4]
+25.03.2018 15:40:04:34  sendln /GET_DEVMAN[4]
+25.03.2018 15:40:04:34  peek answer
+25.03.2018 15:40:04:34 Receive block begin
+25.03.2018 15:40:05:35 Receive block ok len =9 Time=4
+25.03.2018 15:40:05:35  success. TIME = 9  len=7 Ans=((-1));
+25.03.2018 15:40:05:35 Received DEVMAN[4] res=((-1));
+25.03.2018 15:40:05:35 Receive DEVMAN[5]
+25.03.2018 15:40:05:35  sendln /GET_DEVMAN[5]
+25.03.2018 15:40:05:35  peek answer
+25.03.2018 15:40:05:35 Receive block begin
+25.03.2018 15:40:05:35 Receive block ok len =9 Time=4
+25.03.2018 15:40:05:35  success. TIME = 9  len=7 Ans=((-1));
+25.03.2018 15:40:05:35 Received DEVMAN[5] res=((-1));
+25.03.2018 15:40:05:35 Send CTC
+25.03.2018 15:40:05:35  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:05:35  peek answer
+25.03.2018 15:40:05:35 Receive block begin
+25.03.2018 15:40:05:35 Receive block ok len =20 Time=4
+25.03.2018 15:40:05:35  success. TIME = 10  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:05:35 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:05:35 Receive DEVMAN[6]
+25.03.2018 15:40:05:35  sendln /GET_DEVMAN[6]
+25.03.2018 15:40:05:35  peek answer
+25.03.2018 15:40:05:35 Receive block begin
+25.03.2018 15:40:05:35 Receive block ok len =9 Time=4
+25.03.2018 15:40:05:35  success. TIME = 8  len=7 Ans=((-1));
+25.03.2018 15:40:05:35 Received DEVMAN[6] res=((-1));
+25.03.2018 15:40:05:35 Receive DEVMAN[7]
+25.03.2018 15:40:05:35  sendln /GET_DEVMAN[7]
+25.03.2018 15:40:05:35  peek answer
+25.03.2018 15:40:05:35 Receive block begin
+25.03.2018 15:40:05:35 Receive block ok len =9 Time=4
+25.03.2018 15:40:05:35  success. TIME = 9  len=7 Ans=((-1));
+25.03.2018 15:40:05:35 Received DEVMAN[7] res=((-1));
+25.03.2018 15:40:05:35 Receive DEVMAN[8]
+25.03.2018 15:40:05:35  sendln /GET_DEVMAN[8]
+25.03.2018 15:40:05:35  peek answer
+25.03.2018 15:40:05:35 Receive block begin
+25.03.2018 15:40:05:35 Receive block ok len =9 Time=4
+25.03.2018 15:40:05:35  success. TIME = 9  len=7 Ans=((-1));
+25.03.2018 15:40:05:35 Received DEVMAN[8] res=((-1));
+25.03.2018 15:40:05:35 Receive DEVMAN[9]
+25.03.2018 15:40:05:35  sendln /GET_DEVMAN[9]
+25.03.2018 15:40:05:35  peek answer
+25.03.2018 15:40:05:35 Receive block begin
+25.03.2018 15:40:05:35 Receive block ok len =9 Time=4
+25.03.2018 15:40:05:35  success. TIME = 8  len=7 Ans=((-1));
+25.03.2018 15:40:05:35 Received DEVMAN[9] res=((-1));
+25.03.2018 15:40:05:35 Receive DEVMAN[10]
+25.03.2018 15:40:05:35  sendln /GET_DEVMAN[10]
+25.03.2018 15:40:05:35  peek answer
+25.03.2018 15:40:05:35 Receive block begin
+25.03.2018 15:40:05:35 Receive block ok len =9 Time=4
+25.03.2018 15:40:05:35  success. TIME = 9  len=7 Ans=((-1));
+25.03.2018 15:40:05:35 Received DEVMAN[10] res=((-1));
+25.03.2018 15:40:05:35 Receive DEVMAN[11]
+25.03.2018 15:40:05:35  sendln /GET_DEVMAN[11]
+25.03.2018 15:40:05:35  peek answer
+25.03.2018 15:40:05:35 Receive block begin
+25.03.2018 15:40:05:35 Receive block ok len =9 Time=4
+25.03.2018 15:40:05:35  success. TIME = 9  len=7 Ans=((-1));
+25.03.2018 15:40:05:35 Received DEVMAN[11] res=((-1));
+25.03.2018 15:40:05:35 Receive DEVMAN[12]
+25.03.2018 15:40:05:35  sendln /GET_DEVMAN[12]
+25.03.2018 15:40:05:35  peek answer
+25.03.2018 15:40:05:35 Receive block begin
+25.03.2018 15:40:05:35 Receive block ok len =9 Time=4
+25.03.2018 15:40:05:35  success. TIME = 8  len=7 Ans=((-1));
+25.03.2018 15:40:05:35 Received DEVMAN[12] res=((-1));
+25.03.2018 15:40:05:35 Receive DEVMAN[13]
+25.03.2018 15:40:05:35  sendln /GET_DEVMAN[13]
+25.03.2018 15:40:05:35  peek answer
+25.03.2018 15:40:05:35 Receive block begin
+25.03.2018 15:40:05:35 Receive block ok len =9 Time=4
+25.03.2018 15:40:05:35  success. TIME = 9  len=7 Ans=((-1));
+25.03.2018 15:40:05:35 Received DEVMAN[13] res=((-1));
+25.03.2018 15:40:05:35 Receive DEVMAN[14]
+25.03.2018 15:40:05:35  sendln /GET_DEVMAN[14]
+25.03.2018 15:40:05:35  peek answer
+25.03.2018 15:40:05:35 Receive block begin
+25.03.2018 15:40:05:35 Receive block ok len =9 Time=4
+25.03.2018 15:40:05:35  success. TIME = 9  len=7 Ans=((-1));
+25.03.2018 15:40:05:35 Received DEVMAN[14] res=((-1));
+25.03.2018 15:40:05:35 Send CTC
+25.03.2018 15:40:05:35  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:05:35  peek answer
+25.03.2018 15:40:05:35 Receive block begin
+25.03.2018 15:40:05:35 Receive block ok len =20 Time=4
+25.03.2018 15:40:05:35  success. TIME = 10  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:05:35 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:05:35 Receive DEVMAN[15]
+25.03.2018 15:40:05:35  sendln /GET_DEVMAN[15]
+25.03.2018 15:40:05:35  peek answer
+25.03.2018 15:40:05:35 Receive block begin
+25.03.2018 15:40:05:35 Receive block ok len =9 Time=4
+25.03.2018 15:40:05:35  success. TIME = 8  len=7 Ans=((-1));
+25.03.2018 15:40:05:35 Received DEVMAN[15] res=((-1));
+25.03.2018 15:40:05:35 Receive DEVMAN[16]
+25.03.2018 15:40:05:35  sendln /GET_DEVMAN[16]
+25.03.2018 15:40:05:35  peek answer
+25.03.2018 15:40:05:35 Receive block begin
+25.03.2018 15:40:05:35 Receive block ok len =9 Time=4
+25.03.2018 15:40:05:35  success. TIME = 9  len=7 Ans=((-1));
+25.03.2018 15:40:05:35 Received DEVMAN[16] res=((-1));
+25.03.2018 15:40:05:35 Send CTC
+25.03.2018 15:40:05:35  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:05:35  peek answer
+25.03.2018 15:40:05:35 Receive block begin
+25.03.2018 15:40:05:35 Receive block ok len =20 Time=4
+25.03.2018 15:40:05:35  success. TIME = 9  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:05:35 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:05:35 Send CTC
+25.03.2018 15:40:05:35  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:05:35  peek answer
+25.03.2018 15:40:05:35 Receive block begin
+25.03.2018 15:40:05:35 Receive block ok len =20 Time=4
+25.03.2018 15:40:05:35  success. TIME = 9  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:05:35 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:05:35 Send CTC
+25.03.2018 15:40:05:35  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:05:35  peek answer
+25.03.2018 15:40:05:35 Receive block begin
+25.03.2018 15:40:05:35 Receive block ok len =20 Time=4
+25.03.2018 15:40:05:35  success. TIME = 9  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:05:35 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:05:35 Send CTC
+25.03.2018 15:40:05:35  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:05:35  peek answer
+25.03.2018 15:40:05:35 Receive block begin
+25.03.2018 15:40:05:35 Receive block ok len =20 Time=4
+25.03.2018 15:40:05:35  success. TIME = 9  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:05:35 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:05:35 Send CTC
+25.03.2018 15:40:05:35  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:05:35  peek answer
+25.03.2018 15:40:05:35 Receive block begin
+25.03.2018 15:40:05:35 Receive block ok len =20 Time=4
+25.03.2018 15:40:05:35  success. TIME = 9  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:05:35 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:05:35 Send CTC
+25.03.2018 15:40:05:35  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:05:35  peek answer
+25.03.2018 15:40:05:35 Receive block begin
+25.03.2018 15:40:05:35 Receive block ok len =20 Time=4
+25.03.2018 15:40:05:35  success. TIME = 9  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:05:35 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:05:35 Send CTC
+25.03.2018 15:40:05:35  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:05:35  peek answer
+25.03.2018 15:40:05:35 Receive block begin
+25.03.2018 15:40:05:35 Receive block ok len =20 Time=4
+25.03.2018 15:40:05:35  success. TIME = 9  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:05:35 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:05:35 Send CTC
+25.03.2018 15:40:05:35  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:05:35  peek answer
+25.03.2018 15:40:05:35 Receive block begin
+25.03.2018 15:40:05:35 Receive block ok len =20 Time=4
+25.03.2018 15:40:05:35  success. TIME = 9  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:05:35 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:05:35 Send CTC
+25.03.2018 15:40:05:35  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:05:35  peek answer
+25.03.2018 15:40:05:35 Receive block begin
+25.03.2018 15:40:05:35 Receive block ok len =20 Time=4
+25.03.2018 15:40:05:35  success. TIME = 9  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:05:35 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:06:36 Send CTC
+25.03.2018 15:40:06:36  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:06:36  peek answer
+25.03.2018 15:40:06:36 Receive block begin
+25.03.2018 15:40:06:36 Receive block ok len =20 Time=4
+25.03.2018 15:40:06:36  success. TIME = 18  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:06:36 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:06:36 Send CTC
+25.03.2018 15:40:06:36  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:06:36  peek answer
+25.03.2018 15:40:06:36 Receive block begin
+25.03.2018 15:40:06:36 Receive block ok len =20 Time=4
+25.03.2018 15:40:06:36  success. TIME = 9  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:06:36 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:06:36 Send CTC
+25.03.2018 15:40:06:36  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:06:36  peek answer
+25.03.2018 15:40:06:36 Receive block begin
+25.03.2018 15:40:06:36 Receive block ok len =20 Time=4
+25.03.2018 15:40:06:36  success. TIME = 21  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:06:36 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:06:36 Receive DEVMAN[0]
+25.03.2018 15:40:06:36  sendln /GET_DEVMAN[0]
+25.03.2018 15:40:06:36  peek answer
+25.03.2018 15:40:06:36 Receive block begin
+25.03.2018 15:40:06:36 Receive block ok len =9 Time=4
+25.03.2018 15:40:06:36  success. TIME = 10  len=7 Ans=((-1));
+25.03.2018 15:40:06:36 Received DEVMAN[0] res=((-1));
+25.03.2018 15:40:06:36 Receive DEVMAN[1]
+25.03.2018 15:40:06:36  sendln /GET_DEVMAN[1]
+25.03.2018 15:40:06:36  peek answer
+25.03.2018 15:40:06:36 Receive block begin
+25.03.2018 15:40:06:36 Receive block ok len =9 Time=4
+25.03.2018 15:40:06:36  success. TIME = 11  len=7 Ans=((-1));
+25.03.2018 15:40:06:36 Received DEVMAN[1] res=((-1));
+25.03.2018 15:40:06:36 Receive DEVMAN[2]
+25.03.2018 15:40:06:36  sendln /GET_DEVMAN[2]
+25.03.2018 15:40:06:36  peek answer
+25.03.2018 15:40:06:36 Receive block begin
+25.03.2018 15:40:06:36 Receive block ok len =9 Time=4
+25.03.2018 15:40:06:36  success. TIME = 9  len=7 Ans=((-1));
+25.03.2018 15:40:06:36 Received DEVMAN[2] res=((-1));
+25.03.2018 15:40:06:36 Send CTC
+25.03.2018 15:40:06:36  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:06:36  peek answer
+25.03.2018 15:40:06:36 Receive block begin
+25.03.2018 15:40:06:36 Receive block ok len =20 Time=4
+25.03.2018 15:40:06:36  success. TIME = 11  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:06:36 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:06:36 Receive DEVMAN[3]
+25.03.2018 15:40:06:36  sendln /GET_DEVMAN[3]
+25.03.2018 15:40:06:36  peek answer
+25.03.2018 15:40:06:36 Receive block begin
+25.03.2018 15:40:06:36 Receive block ok len =9 Time=4
+25.03.2018 15:40:06:36  success. TIME = 9  len=7 Ans=((-1));
+25.03.2018 15:40:06:36 Received DEVMAN[3] res=((-1));
+25.03.2018 15:40:06:36 Receive DEVMAN[4]
+25.03.2018 15:40:06:36  sendln /GET_DEVMAN[4]
+25.03.2018 15:40:06:36  peek answer
+25.03.2018 15:40:06:36 Receive block begin
+25.03.2018 15:40:06:36 Receive block ok len =9 Time=4
+25.03.2018 15:40:06:36  success. TIME = 9  len=7 Ans=((-1));
+25.03.2018 15:40:06:36 Received DEVMAN[4] res=((-1));
+25.03.2018 15:40:06:36 Receive DEVMAN[5]
+25.03.2018 15:40:06:36  sendln /GET_DEVMAN[5]
+25.03.2018 15:40:06:36  peek answer
+25.03.2018 15:40:06:36 Receive block begin
+25.03.2018 15:40:06:36 Receive block ok len =9 Time=4
+25.03.2018 15:40:06:36  success. TIME = 9  len=7 Ans=((-1));
+25.03.2018 15:40:06:36 Received DEVMAN[5] res=((-1));
+25.03.2018 15:40:06:36 Send CTC
+25.03.2018 15:40:06:36  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:06:36  peek answer
+25.03.2018 15:40:06:36 Receive block begin
+25.03.2018 15:40:06:36 Receive block ok len =20 Time=4
+25.03.2018 15:40:06:36  success. TIME = 10  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:06:36 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:06:36 Receive DEVMAN[6]
+25.03.2018 15:40:06:36  sendln /GET_DEVMAN[6]
+25.03.2018 15:40:06:36  peek answer
+25.03.2018 15:40:06:36 Receive block begin
+25.03.2018 15:40:06:36 Receive block ok len =9 Time=4
+25.03.2018 15:40:06:36  success. TIME = 8  len=7 Ans=((-1));
+25.03.2018 15:40:06:36 Received DEVMAN[6] res=((-1));
+25.03.2018 15:40:06:36 Receive DEVMAN[7]
+25.03.2018 15:40:06:36  sendln /GET_DEVMAN[7]
+25.03.2018 15:40:06:36  peek answer
+25.03.2018 15:40:06:36 Receive block begin
+25.03.2018 15:40:06:36 Receive block ok len =9 Time=4
+25.03.2018 15:40:06:36  success. TIME = 10  len=7 Ans=((-1));
+25.03.2018 15:40:06:36 Received DEVMAN[7] res=((-1));
+25.03.2018 15:40:06:36 Receive DEVMAN[8]
+25.03.2018 15:40:06:36  sendln /GET_DEVMAN[8]
+25.03.2018 15:40:06:36  peek answer
+25.03.2018 15:40:06:36 Receive block begin
+25.03.2018 15:40:06:36 Receive block ok len =9 Time=4
+25.03.2018 15:40:06:36  success. TIME = 9  len=7 Ans=((-1));
+25.03.2018 15:40:06:36 Received DEVMAN[8] res=((-1));
+25.03.2018 15:40:06:36 Receive DEVMAN[9]
+25.03.2018 15:40:06:36  sendln /GET_DEVMAN[9]
+25.03.2018 15:40:06:36  peek answer
+25.03.2018 15:40:06:36 Receive block begin
+25.03.2018 15:40:06:36 Receive block ok len =9 Time=4
+25.03.2018 15:40:06:36  success. TIME = 9  len=7 Ans=((-1));
+25.03.2018 15:40:06:36 Received DEVMAN[9] res=((-1));
+25.03.2018 15:40:06:36 Receive DEVMAN[10]
+25.03.2018 15:40:06:36  sendln /GET_DEVMAN[10]
+25.03.2018 15:40:06:36  peek answer
+25.03.2018 15:40:06:36 Receive block begin
+25.03.2018 15:40:06:36 Receive block ok len =9 Time=4
+25.03.2018 15:40:06:36  success. TIME = 9  len=7 Ans=((-1));
+25.03.2018 15:40:06:36 Received DEVMAN[10] res=((-1));
+25.03.2018 15:40:06:36 Receive DEVMAN[11]
+25.03.2018 15:40:06:36  sendln /GET_DEVMAN[11]
+25.03.2018 15:40:06:36  peek answer
+25.03.2018 15:40:06:36 Receive block begin
+25.03.2018 15:40:06:36 Receive block ok len =9 Time=4
+25.03.2018 15:40:06:36  success. TIME = 9  len=7 Ans=((-1));
+25.03.2018 15:40:06:36 Received DEVMAN[11] res=((-1));
+25.03.2018 15:40:06:36 Send CTC
+25.03.2018 15:40:06:36  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:06:36  peek answer
+25.03.2018 15:40:06:36 Receive block begin
+25.03.2018 15:40:06:36 Receive block ok len =20 Time=4
+25.03.2018 15:40:06:36  success. TIME = 10  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:06:36 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:06:36 Receive DEVMAN[12]
+25.03.2018 15:40:06:36  sendln /GET_DEVMAN[12]
+25.03.2018 15:40:06:36  peek answer
+25.03.2018 15:40:06:36 Receive block begin
+25.03.2018 15:40:06:36 Receive block ok len =9 Time=4
+25.03.2018 15:40:06:36  success. TIME = 8  len=7 Ans=((-1));
+25.03.2018 15:40:06:36 Received DEVMAN[12] res=((-1));
+25.03.2018 15:40:06:36 Receive DEVMAN[13]
+25.03.2018 15:40:06:36  sendln /GET_DEVMAN[13]
+25.03.2018 15:40:06:36  peek answer
+25.03.2018 15:40:06:36 Receive block begin
+25.03.2018 15:40:06:36 Receive block ok len =9 Time=4
+25.03.2018 15:40:06:36  success. TIME = 8  len=7 Ans=((-1));
+25.03.2018 15:40:06:36 Received DEVMAN[13] res=((-1));
+25.03.2018 15:40:06:36 Receive DEVMAN[14]
+25.03.2018 15:40:06:36  sendln /GET_DEVMAN[14]
+25.03.2018 15:40:06:36  peek answer
+25.03.2018 15:40:06:36 Receive block begin
+25.03.2018 15:40:06:36 Receive block ok len =9 Time=4
+25.03.2018 15:40:06:36  success. TIME = 9  len=7 Ans=((-1));
+25.03.2018 15:40:06:36 Received DEVMAN[14] res=((-1));
+25.03.2018 15:40:06:36 Receive DEVMAN[15]
+25.03.2018 15:40:06:36  sendln /GET_DEVMAN[15]
+25.03.2018 15:40:06:36  peek answer
+25.03.2018 15:40:06:36 Receive block begin
+25.03.2018 15:40:06:36 Receive block ok len =9 Time=4
+25.03.2018 15:40:06:36  success. TIME = 8  len=7 Ans=((-1));
+25.03.2018 15:40:06:36 Received DEVMAN[15] res=((-1));
+25.03.2018 15:40:06:36 Receive DEVMAN[16]
+25.03.2018 15:40:06:36  sendln /GET_DEVMAN[16]
+25.03.2018 15:40:06:36  peek answer
+25.03.2018 15:40:06:36 Receive block begin
+25.03.2018 15:40:06:36 Receive block ok len =9 Time=4
+25.03.2018 15:40:06:36  success. TIME = 9  len=7 Ans=((-1));
+25.03.2018 15:40:06:36 Received DEVMAN[16] res=((-1));
+25.03.2018 15:40:06:36 Send CTC
+25.03.2018 15:40:06:36  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:06:36  peek answer
+25.03.2018 15:40:06:36 Receive block begin
+25.03.2018 15:40:06:36 Receive block ok len =20 Time=4
+25.03.2018 15:40:06:36  success. TIME = 12  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:06:36 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:06:36 Send CTC
+25.03.2018 15:40:06:36  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:06:36  peek answer
+25.03.2018 15:40:06:36 Receive block begin
+25.03.2018 15:40:06:36 Receive block ok len =20 Time=4
+25.03.2018 15:40:06:36  success. TIME = 24  len=18 Ans=({"status":"ok"});
+25.03.2018 15:40:06:36 Sent CTC res=({"status":"ok"});
+25.03.2018 15:40:06:36 Send CTC
+25.03.2018 15:40:06:36  sendln /SET_CTC={"Caption":
+25.03.2018 15:40:06:36  peek answer
+25.03.2018 15:42:28:328  DISconnect BY ERROR pn peek answer
+25.03.2018 15:42:28:328 Sent  res=
+25.03.2018 15:42:28:328  connect   Time = 187247818
+25.03.2018 15:42:28:328  DISconnect BY ERROR on connectИли приложение не вызвало WSAStartup, или произошла ошибка в WSAStartup Time = 187247823
+25.03.2018 15:42:28:328  not connectet delay after error
+25.03.2018 15:42:28:328  not connectet delay after error
+25.03.2018 15:42:28:328  not connectet delay after error
+25.03.2018 15:42:28:328  not connectet delay after error
+25.03.2018 15:42:28:328  not connectet delay after error
+25.03.2018 15:42:28:328  not connectet delay after error
+25.03.2018 15:42:28:328  not connectet delay after error
+25.03.2018 15:42:28:328  not connectet delay after error
+25.03.2018 15:42:28:328  not connectet delay after error
+25.03.2018 15:42:28:328  not connectet delay after error
+25.03.2018 15:42:28:328  not connectet delay after error
+25.03.2018 15:42:28:328  not connectet delay after error
+25.03.2018 15:42:28:328  not connectet delay after error
+25.03.2018 15:42:28:328  not connectet delay after error
+25.03.2018 15:42:28:328  not connectet delay after error
+25.03.2018 15:42:28:328  not connectet delay after error
+25.03.2018 15:42:28:328  not connectet delay after error
+25.03.2018 15:42:28:328  not connectet delay after error
+25.03.2018 15:42:28:328  not connectet delay after error
+25.03.2018 15:42:28:328  not connectet delay after error
+25.03.2018 15:42:28:328  not connectet delay after error
+25.03.2018 15:42:28:328  not connectet delay after error
+25.03.2018 15:42:28:328  not connectet delay after error
+25.03.2018 15:42:28:328  not connectet delay after error
+25.03.2018 15:42:28:328  not connectet delay after error
+25.03.2018 15:42:28:328  not connectet delay after error
+25.03.2018 15:42:28:328  not connectet delay after error
+25.03.2018 15:42:28:328  not connectet delay after error
+25.03.2018 15:42:28:328  not connectet delay after error
+25.03.2018 15:42:28:328  not connectet delay after error
