@@ -60,12 +60,8 @@ uses
   UMyTextTable in 'UMyTextTable.pas',
   UMyProtocols in 'UMyProtocols.pas',
   uwebget in '..\helpers\uwebget.pas',
-<<<<<<< HEAD
   udevmanagers in '..\helpers\udevmanagers.pas',
   Web.Win.Sockets in '..\helpers\Web.Win.Sockets.pas';
-=======
-  udevmanagers in '..\helpers\udevmanagers.pas';
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 
 {$R *.res}
 

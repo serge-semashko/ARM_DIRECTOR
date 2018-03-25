@@ -99,29 +99,17 @@ Function GPIBError(iberr :integer) :string;
   Function   WriteLNRData:Boolean;
 
   Function   SpinByName(component:tcomponent;name:string):TSpinEdit;
-<<<<<<< HEAD
   Procedure  WriteLog(LogName,LogData:ansiString);overload;
   Procedure  WriteLog(LogData:ansiString);overload;
   Procedure  WriteTimeLog(LogName,LogData:ansiString);overload;
   Procedure  WriteTimeLog(LogData:ansiString);overload;
   Procedure  WriteProtocol(LogData:ansiString);
-=======
-  Procedure  WriteLog(LogName,LogData:String);overload;
-  Procedure  WriteLog(LogData:String);overload;
-  Procedure  WriteTimeLog(LogName,LogData:String);overload;
-  Procedure  WriteTimeLog(LogData:String);overload;
-  Procedure  WriteProtocol(LogData:String);
->>>>>>> 567489eb579fa25cb906471546da671d36020444
   Function   ChangeChar(const str:string;SrcChar,DstChar:Char):String;
   Function   ConvertFloat(str:string;var Newval:double):boolean;
   Function   ElapshedTime:double;
   Function   ExecCommand485(rs:thandle;CMD:string):string;
   Procedure  SaveToJPG(bitmap:tbitmap;afile :string);
-<<<<<<< HEAD
   Procedure  WriteToFile(Logname,LogData:ansiString);
-=======
-  Procedure  WriteToFile(Logname,LogData:String);
->>>>>>> 567489eb579fa25cb906471546da671d36020444
   Function   HexToInt(str:string;var Val:int64):boolean;
   pROCEDURE  MySleep(dl:integer);
   Function   readAMPData : boolean;
@@ -369,11 +357,7 @@ begin
      result:=res=0;
   end;
 
-<<<<<<< HEAD
 Procedure WriteLog(Logname,LogData:ansiString);
-=======
-Procedure WriteLog(Logname,LogData:String);
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 var
   ff:TFileStream;
 begin
@@ -388,11 +372,7 @@ begin
   end;
 end;
 
-<<<<<<< HEAD
 Procedure WriteToFile(Logname,LogData:ansiString);
-=======
-Procedure WriteToFile(Logname,LogData:String);
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 var
   ff:TFileStream;
 begin
@@ -406,7 +386,6 @@ begin
   except
   end;
 end;
-<<<<<<< HEAD
 Procedure WriteLog(LogData:ansiString);
 var
   ff:TFileStream;
@@ -416,36 +395,17 @@ begin
 
   try
     tname:=formatdatetime('yyyy-mm-dd',now)+'.txt';
-=======
-Procedure WriteLog(LogData:String);
-var
-  ff:TFileStream;
-  log1:string;
-  tname :string;
-begin
- exit;
-  try
-    tname:=formatdatetime('yyyy-mm-dd',now)+'.dat';
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     If FileExists(tName)
        then ff := TFileStream.create(tName,fmOpenWrite or  fmShareDenyNone)
        else ff := TFileStream.create(tName,fmCreate or  fmShareDenyNone);
     ff.seek(0,soFromEnd);
-<<<<<<< HEAD
     log1:= LogData+#13#10;
-=======
-    log1:=Logdata;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     ff.write(Log1[1],length(log1));
     ff.free;
   except
   end;
 end;
-<<<<<<< HEAD
 Procedure WriteProtocol(LogData:ansiString);
-=======
-Procedure WriteProtocol(LogData:String);
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 var
   ff:TFileStream;
   log1:string;
@@ -464,22 +424,14 @@ exit;
   except
   end;
 end;
-<<<<<<< HEAD
 Procedure WriteTimeLog(LogData:ansiString);
-=======
-Procedure WriteTimeLog(LogData:String);
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 begin
 
   WriteLog(FormatdateTime('DD/MM/YYYY HH:NN:SS',now)+' '+LogData+#10);
 end;
 
 
-<<<<<<< HEAD
 Procedure WriteTimeLog(Logname,LogData:ansiString);
-=======
-Procedure WriteTimeLog(Logname,LogData:String);
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 begin
   WriteLog(LogName,FormatdateTime(#10+'DD/MM/YYYY HH:NN:SS',now)+' '+LogData+#10);
 end;

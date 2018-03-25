@@ -46,7 +46,6 @@ type
         function LoadFromJSONObject(json: tjsonObject): boolean;
         function LoadFromJSONstr(JSONstr: string): boolean;
     end;
-<<<<<<< HEAD
 
 var
     DevManagers: array[0..16] of TDevManager;
@@ -59,16 +58,6 @@ procedure UpdateManagerList;
 
 implementation
 
-=======
-    var
-      DevManagers : array [0..16] of TDevManager;
-      DevManagers_changed : array [0..16] of Boolean;
-      DevManagers_old : array [0..16] of string;
-Procedure UpdateManagerList;
-implementation
-
-
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 constructor TDevManager.create;
 begin
     Count := 0;
@@ -93,10 +82,7 @@ begin
     freemem(@Count);
     freemem(@Options);
 end;
-<<<<<<< HEAD
 
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 constructor TOneOption.create(SName, SText, SVarText: string);
 begin
     Name := SName;
@@ -268,7 +254,6 @@ begin
     jsontmp.Free;
 end;
 
-<<<<<<< HEAD
 procedure UpdateManagerList;
 var
     i: integer;
@@ -284,22 +269,6 @@ begin
             DevManagers_changed[i] := true;
             DevManagers_old[i] := str2;
             if Length(str2) < 30 then begin
-=======
-Procedure UpdateManagerList;
-var
-   i : integer;
-   str1, str2 : string;
-begin
-    for i := low(DevManagers) to high(DevManagers) do
-    begin
-        str2 := GetJsonStrFromServer('DEVMAN[' + inttostr(i) + ']');
-        if DevManagers_old[i] <> str2 then
-        begin
-            DevManagers_changed[i] := true;
-            DevManagers_old[i] := str2;
-            if Length(str2) < 30 then
-            begin
->>>>>>> 567489eb579fa25cb906471546da671d36020444
                 DevManagers[i] := nil;
                 continue;
             end;
@@ -312,7 +281,6 @@ begin
     end;
 
 end;
-<<<<<<< HEAD
 
 var
     i1: integer;
@@ -326,14 +294,3 @@ initialization
 
 end.
 
-=======
- var
-    i1 : integer;
-initialization
- for i1 := 0 to 16 do begin
-     DevManagers[i1] := nil;
-     DevManagers_changed[i1] := true;
-     DevManagers_old[i1] := '';
- end;
-end.
->>>>>>> 567489eb579fa25cb906471546da671d36020444

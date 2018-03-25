@@ -4,7 +4,7 @@ interface
 
 uses
     Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-    Dialogs, StdCtrls, WinSock, ExtCtrls, mmsystem, Web.Win.Sockets, Vcl.Buttons, system.json;
+    Dialogs, StdCtrls, WinSock, ExtCtrls, mmsystem, Web.Win.Sockets, Vcl.Buttons;
 
 type
     Tmainform = class(TForm)
@@ -102,37 +102,19 @@ begin
     tcpclient1.Free;
 
 end;
-function LoadFromJSONstr(JSONstr: string): boolean;
-var
-  json: tjsonObject;
-begin
-  json := tjsonObject.ParseJSONValue(TEncoding.UTF8.GetBytes(JSONstr), 0)
-    as tjsonObject;
-  result := true;
-  if json = nil then
-  begin
-    result := false;
-  end;
-
-end;
 
 procedure Tmainform.SpeedButton1Click(Sender: TObject);
 var
     st, i1, len : int64;
-    str1, jsonstr : ansistring;
     s1, s2: ansistring;
     b1 : boolean;
     su1, su2: string;
-    json, js1, js2 : tjsonobject;
 begin
-     js1 := TJSONObject.Create;
-     js2 := TJSONObject.Create;
-
    s1 := '1234567890';
    su1 := '…÷” ≈Õ√ÿŸ«';
    s2 := '1234567890';
    su2 := '…÷” ≈Õ√ÿŸ«';
-    for st := 0 to 1 do begin
+    for st := 0 to 15 do begin
       s1 := s1 +s1;
       s2 := s2 +s2;
       su1 := su1 +su1;
@@ -140,18 +122,13 @@ begin
     end;
     st := timegettime;
     len :=length(s1);
-    for i1 := 0 to  200  do js1.AddPair(IntToStr(i1),'dsfgfsadfasdfasdf');
-    showmessage ('Generate json len='+FloatToStr(js1.Count)+' ansi cmp ='+IntToStr(Timegettime -st));
+    for i1 := 0 to  10  do b1 := s1=s2;
+    showmessage ('len='+FloatToStr(len/1000000.0)+' ansi cmp ='+IntToStr(Timegettime -st));
 
     st := timegettime;
-        for i1 := 0 to  1000  do str1 := js1.ToString;
-    showmessage ('To String ='+IntToStr(((Timegettime -st))));
+    for i1 := 0 to  1  do b1 := su1=su2;
+    showmessage ('wide cmp ='+IntToStr(((Timegettime -st))));
 
-    st := timegettime;
-     for i1 := 0 to  1000  do    json := tjsonObject.ParseJSONValue(TEncoding.UTF8.GetBytes(str1), 0) as TJSONObject;
-    if js2 <> nil then
-
-    showmessage ('from  cmp ='+IntToStr(((Timegettime -st))));
 end;
 
 procedure Tmainform.Tcpserver3Accept(Sender: TObject;       //ÔË¯ÎÓ ÒÓÓ·˘ÂÌËÂ

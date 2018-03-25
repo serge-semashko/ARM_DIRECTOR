@@ -283,10 +283,7 @@ var
     sindx, sphr, stph, stmp: string;
     indx: integer;
 begin
-<<<<<<< HEAD
   try
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     result := '';
     sindx := Index;
 
@@ -316,11 +313,7 @@ begin
     else if Source = 'tldata' then
     begin
         indx := MyStrToInt(sindx);
-<<<<<<< HEAD
         if (indx = -1) or (indx > MyProtocol.Options.Count-1) then
-=======
-        if indx = -1 then
->>>>>>> 567489eb579fa25cb906471546da671d36020444
             exit;
         if ansilowercase(trim(Param)) = 'name' then
             result := MyProtocol.Options.List[indx].Name
@@ -351,14 +344,11 @@ begin
     WriteLog('Translator', 'GetCommandValue: Source=' + Source + ' Param=' +
       Param + ' Phrase=' + Phrase + 'TypePhrase=' + TypePhrase + ' Index' +
       Index + 'Result=' + result);
-<<<<<<< HEAD
   except
     WriteLog('Translator', 'Error GetCommandValue: Source=' + Source + ' Param=' +
       Param + ' Phrase=' + Phrase + 'TypePhrase=' + TypePhrase + ' Index' +
       Index + 'Result=' + result);
   end;
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 end;
 
 function SetSpace(Count: integer): string;
@@ -987,11 +977,7 @@ end;
 procedure TCommandTemplates.GetCMDPaused(evpos : integer; lst: tstrings);
 var clst: tstrings;
     i, j : integer;
-<<<<<<< HEAD
     cmd, stmp, scmd, sevnt : string;
-=======
-    stmp, scmd, sevnt : string;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     pss, pse, evnt : integer;
 begin
     WriteLog('Translator', 'TCommandTemplates.GetCMDPaused  Start');
@@ -1042,15 +1028,11 @@ begin
                 end;
               end else scmd:=stmp;
               if evnt > MyTLEdit.Count-1 then evnt:=MyTLEdit.Count-1;
-<<<<<<< HEAD
               cmd := GetCommand(scmd, evnt);
               if cmd<>'' then begin
                 cmd := BeforeStr + GetCommand(scmd, evnt) + AfterStr;
                 lst.Add(cmd);
               end;
-=======
-              lst.Add(GetCommand(scmd, evnt));
->>>>>>> 567489eb579fa25cb906471546da671d36020444
             end;
         finally
             clst.free;
@@ -1064,11 +1046,7 @@ end;
 procedure TCommandTemplates.GetCMDStart(evpos : integer; lst: tstrings);
 var clst: tstrings;
     i, j : integer;
-<<<<<<< HEAD
     cmd, stmp, scmd, sevnt : string;
-=======
-    stmp, scmd, sevnt : string;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     pss, pse, evnt : integer;
 begin
     WriteLog('Translator', 'TCommandTemplates.GetCMDStart  Start');
@@ -1119,15 +1097,11 @@ begin
                 end;
               end else scmd:=stmp;
               if evnt > MyTLEdit.Count-1 then evnt:=MyTLEdit.Count-1;
-<<<<<<< HEAD
               cmd := GetCommand(scmd, evnt);
               if cmd<>'' then begin
                 cmd := BeforeStr + GetCommand(scmd, evnt) + AfterStr;
                 lst.Add(cmd);
               end;
-=======
-              lst.Add(GetCommand(scmd, evnt));
->>>>>>> 567489eb579fa25cb906471546da671d36020444
             end;
         finally
             clst.free;
@@ -1194,16 +1168,11 @@ begin
               end else scmd:=stmp;
               //lst.Add(GetCommand(scmd, evnt));
               if evnt > MyTLEdit.Count-1 then evnt:=MyTLEdit.Count-1;
-<<<<<<< HEAD
               cmd := GetCommand(scmd, evnt);
               if cmd<>'' then begin
                 cmd := BeforeStr + cmd + AfterStr;
                 lst.Add(cmd);
               end;
-=======
-              cmd := BeforeStr + GetCommand(scmd, evnt) + AfterStr;
-              lst.Add(cmd);
->>>>>>> 567489eb579fa25cb906471546da671d36020444
             end;
         finally
             clst.free;
@@ -1217,11 +1186,7 @@ end;
 procedure TCommandTemplates.GetCMDFinish(evpos : integer;  lst: tstrings);
 var clst: tstrings;
     i, j : integer;
-<<<<<<< HEAD
     cmd, stmp, scmd, sevnt : string;
-=======
-    stmp, scmd, sevnt : string;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     pss, pse, evnt : integer;
 begin
     WriteLog('Translator', 'TCommandTemplates.GetCMDFinish  Start');
@@ -1272,15 +1237,11 @@ begin
                 end;
               end else scmd:=stmp;
               if evnt > MyTLEdit.Count-1 then evnt:=MyTLEdit.Count-1;
-<<<<<<< HEAD
               cmd := GetCommand(scmd, evnt);
               if cmd<>'' then begin
                 cmd := BeforeStr + GetCommand(scmd, evnt) + AfterStr;
                 lst.Add(cmd);
               end;
-=======
-              lst.Add(GetCommand(scmd, evnt));
->>>>>>> 567489eb579fa25cb906471546da671d36020444
             end;
         finally
             clst.free;

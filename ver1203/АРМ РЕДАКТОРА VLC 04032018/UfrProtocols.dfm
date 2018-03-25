@@ -83,11 +83,7 @@ object FrProtocols: TFrProtocols
         Top = 0
         Width = 215
         Height = 244
-<<<<<<< HEAD
         Caption = #1052#1086#1076#1091#1083#1100' '#1091#1087#1088#1072#1074#1083#1077#1085#1080#1103':'
-=======
-        Caption = #1055#1086#1088#1090' '#1091#1087#1088#1072#1074#1083#1077#1085#1080#1103':'
->>>>>>> 567489eb579fa25cb906471546da671d36020444
         TabOrder = 0
         object imgPorts: TImage
           Left = 1
@@ -221,13 +217,10 @@ object FrProtocols: TFrProtocols
       OnChange = ComboBox2Change
     end
   end
-<<<<<<< HEAD
   object Timer1: TTimer
     Enabled = False
     OnTimer = Timer1Timer
     Left = 356
     Top = 88
   end
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 end

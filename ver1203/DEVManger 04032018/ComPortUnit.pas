@@ -87,11 +87,7 @@ Begin { Execute }
             Exit;
         while not Terminated do
         begin
-<<<<<<< HEAD
             sleep(10);
-=======
-            sleep(1);
->>>>>>> 567489eb579fa25cb906471546da671d36020444
             QueryPort;
         end;
         // Repeat

@@ -128,10 +128,7 @@
         <DCCReference Include="UMyEvents.pas"/>
         <DCCReference Include="UTimeline.pas"/>
         <DCCReference Include="..\helpers\uwebget.pas"/>
-<<<<<<< HEAD
         <DCCReference Include="..\helpers\Web.Win.Sockets.pas"/>
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
         <None Include="..\helpers\events_body.inc"/>
         <None Include="..\helpers\events_hdr.inc"/>
         <None Include="..\helpers\utimeline_body.inc"/>
@@ -160,10 +157,7 @@
                     <Excluded_Packages Name="$(BDSBIN)\bcbofficexp250.bpl">Embarcadero C++Builder Office XP Servers Package</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dcloffice2k250.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dclofficexp250.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
-<<<<<<< HEAD
                     <Excluded_Packages Name="$(BDSBIN)\dclFireDACEnt250.bpl">Embarcadero FireDAC C\S Components</Excluded_Packages>
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
                 </Excluded_Packages>
             </Delphi.Personality>
             <Platforms>

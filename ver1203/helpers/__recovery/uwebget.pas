@@ -80,6 +80,7 @@ var
     pathlog: string;
     ff: TFileStream;
 begin
+exit;
     try
 
         if FileExists(FileName) then
@@ -510,7 +511,6 @@ initialization
         webvars[i].json := nil;
         webvars[i].LastUpdate := -1;
         webvars[i].Refresh := 1500;
-
     end;
 
 //    TCPClient := TTcpClient.Create(nil);

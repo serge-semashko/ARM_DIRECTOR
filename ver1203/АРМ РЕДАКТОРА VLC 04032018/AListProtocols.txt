@@ -22,11 +22,7 @@
               <Bits=8>
               <Parity=нечет>
               <Stop=1>
-<<<<<<< HEAD
               <Flow=нет>
-=======
-              <Flow=Нет>
->>>>>>> 567489eb579fa25cb906471546da671d36020444
             </Port422>
             <PortIP>
               <IPAdress=197.168.222.222>
@@ -141,11 +137,7 @@
         <Protocol=GVG100>
           <Ports>
             <Port422>
-<<<<<<< HEAD
               <Speed=38400>
-=======
-              <Speed=4800>
->>>>>>> 567489eb579fa25cb906471546da671d36020444
               <Bits=8>
               <Parity=Нечет>
               <Stop=1>
@@ -159,7 +151,6 @@
             </PortIP>
           </Ports>
           <MainOptions>
-<<<<<<< HEAD
             <Count=1>
             <1:EffectAdress=ME1|ME1|ME2|Key1|Key2|key3|Key4>
           </MainOptions>
@@ -198,13 +189,6 @@
             <30:Устройство 30=Xpt30|AUX[0..9]|Xpt[0..96]>
             <31:Устройство 31=Xpt31|AUX[0..9]|Xpt[0..96]>
             <32:Устройство 32=Xpt32|AUX[0..9]|Xpt[0..96]>
-=======
-            <Count=0>
-          </MainOptions>
-          <AddOptions>
-            <Title=>
-            <Count=0>
->>>>>>> 567489eb579fa25cb906471546da671d36020444
           </AddOptions>
         </Protocol=GVG100>
       </Device=Carbone>

@@ -86,21 +86,17 @@
                 <2=byte.value.42> 
               </Command=ReadPresetBus>
             </CommandsList>
-<<<<<<< HEAD
             <CommandsPaused>
               <Type=List>
               <Count=2>
               <1=CrossPointProgrammBus[Event]>
               <2=CrossPointPreviewBus[Event+1]>  
             </CommandsPaused>  
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
             <CommandsStart>
               <Type=Case>
               <Case=phrase.Command(Text)|Cut|Mix|Wipe|Ignore>
               <Cut>
                 <Count=2>
-<<<<<<< HEAD
                 <1=ReadPresetBus[Event]>
                 <2=CrossPointProgrammBus[Event]>
               </Cut> 
@@ -119,23 +115,6 @@
                 <Count=2>
                 <1=ReadPresetBus[Event]> 
                 <2=CrossPointProgrammBus[Event]> 
-=======
-                <1=ReadPresetBus>
-                <2=CrossPointProgrammBus>
-              </Cut> 
-              <Mix>
-                <Count=1>
-                <1=WriteAutoTransRatePrwPgm>
-              </Mix>
-              <Wipe>
-                <Count=1> 
-                <1=WriteAutoTransRatePrwPgm>
-              </Wipe>
-              <Ignore>
-                <Count=2>
-                <1=ReadPresetBus> 
-                <2=CrossPointProgrammBus> 
->>>>>>> 567489eb579fa25cb906471546da671d36020444
               </Ignore>
             </CommandsStart>
             <CommandsTransition>
@@ -143,7 +122,6 @@
               <Case=phrase.Command(Text)|Cut|Mix|Wipe|Ignore>
               <Cut>
                 <Count=2> 
-<<<<<<< HEAD
                 <1=ReadPresetBus[Event+1]>
                 <2=CrossPointPreviewBus[Event+1]> 
               </Cut> 
@@ -165,28 +143,6 @@
                 <Count=2>
                 <1=ReadPresetBus[Event+1]>
                 <2=CrossPointPreviewBus[Event+1]> 
-=======
-                <1=ReadPresetBus>
-                <2=CrossPointPreviewBus> 
-              </Cut> 
-              <Mix>
-                <Count=3>
-                <1=SetMixTransition>
-                <2=ReadPresetBus>
-                <3=CrossPointPreviewBus>
-              </Mix>
-              <Wipe>
-                <Count=4> 
-                <1=SetWipeTransition>
-                <2=WriteWipePattern> 
-                <3ReadPresetBus>
-                <4=CrossPointPreviewBus>
-              </Wipe>
-              <Ignore>
-                <Count=2>
-                <1=ReadPresetBus>
-                <2=CrossPointPreviewBus> 
->>>>>>> 567489eb579fa25cb906471546da671d36020444
               </Ignore>            
             </CommandsTransition>
             <CommandsFinish>
@@ -293,7 +249,6 @@
               </Command=WriteAutoTransRatePrwPgm>
               <Command=RunMixTransition>
                 <Count=4>
-<<<<<<< HEAD
                 <0=byte.value.03>
                 <1=byte.main.EffectAdress>
                 <2=byte.value.FB>
@@ -324,32 +279,6 @@
               <Type=List>
               <Count=1>
               <1=CrossPointProgrammBus[Event]>
-=======
-                <0=byte.values.03>
-                <1=byte.main.EffectAdress>
-                <2=byte.values.FB>
-                <3=byte.values.0F> 
-              </Command=RunMixTransition>
-              <Command=RunWipeTransition>
-                <Count=4>
-                <0=byte.values.03>
-                <1=byte.main.EffectAdress>
-                <2=byte.values.FB>
-                <3=byte.values.0E> 
-              </Command=RunWipeTransition>
-              <Command=WriteWipePattern>
-                <Count=4>
-                <0=byte.values.03>
-                <1=byte.main.EffectAdress>
-                <2=byte.values.C8>
-                <3=byte.phrase.Set(Data)> 
-              </Command=WriteWipePattern>
-            </CommandsList>
-            <CommandsStart>
-              <Type=List>
-              <Count=1>
-              <1=CrossPointProgrammBus>
->>>>>>> 567489eb579fa25cb906471546da671d36020444
             </CommandsStart>
             <CommandsTransition>
               <Type=Case>
@@ -359,7 +288,6 @@
               </Cut> 
               <Mix>
                 <Count=2>
-<<<<<<< HEAD
                 <1=CrossPointPreviewBus[Event+1]>
                 <2=WriteAutoTransRatePrwPgm[Event+1]> 
               </Mix>
@@ -368,16 +296,6 @@
                 <1=CrossPointPreviewBus[Event+1]>
                 <2=WriteAutoTransRatePrwPgm[Event+1]>
                 <3=WriteWipePattern[Event+1]> 
-=======
-                <1=CrossPointPreviewBus>
-                <2=WriteAutoTransRatePrwPgm> 
-              </Mix>
-              <Wipe>
-                <Count=3> 
-                <1=CrossPointPreviewBus>
-                <2=WriteAutoTransRatePrwPgm>
-                <3=WriteWipePattern> 
->>>>>>> 567489eb579fa25cb906471546da671d36020444
               </Wipe>
               <Ignore>
                 <Count=0>
@@ -388,7 +306,6 @@
               <Case=phrase.Command(Text)|Cut|Mix|Wipe|Ignore>
               <Cut>
                 <Count=1>
-<<<<<<< HEAD
                 <1=CrossPointProgrammBus[Event+1]>
               </Cut> 
               <Mix>
@@ -402,41 +319,16 @@
               <Ignore>
                 <Count=1>
                 <1=CrossPointProgrammBus[Event+1]> 
-=======
-                <1=CrossPointProgrammBus>
-              </Cut> 
-              <Mix>
-                <Count=1>
-                <1=RunMixTransition>
-              </Mix>
-              <Wipe>
-                <Count=1> 
-                <1=RunWipeTransition>
-              </Wipe>
-              <Ignore>
-                <Count=1>
-                <1=CrossPointProgrammBus> 
->>>>>>> 567489eb579fa25cb906471546da671d36020444
               </Ignore>
             </CommandsFinish>
           </CommandsTemplates>
           <MainOptions>
             <Param=EffectAdress>
-<<<<<<< HEAD
               <Count=4>
               <1:ME1=00>
               <2:ME2=01>
               <3:ME3=02>
               <4:ME4=03>
-=======
-              <Count=6>
-              <1:ME1=00>
-              <2:ME2=01>
-              <3:Key1=02>
-              <4:Key2=03>
-              <5:Key3=04>
-              <6:Key4=05>
->>>>>>> 567489eb579fa25cb906471546da671d36020444
             </Param=EffectAdress> 
           </MainOptions>
           <AddOptions>

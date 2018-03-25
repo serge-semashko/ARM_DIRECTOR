@@ -89,12 +89,9 @@ type
     dmselect : boolean;
     devicemanager : string;
     ldevicemanager : string;
-<<<<<<< HEAD
     rt2: trect;
     rtsts : trect;
     Status : string;
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     port422: TPort422;
     portip: TPortIP;
     function GetString: string;
@@ -937,12 +934,9 @@ begin
   initrect(rtdm);
   devicemanager := '';
   ldevicemanager := '0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16';
-<<<<<<< HEAD
   initrect(rt2);
   initrect(rtsts);
   status := '';
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
   port422 := TPort422.create;
   portip := TPortIP.create;
   dmselect := false;
@@ -959,12 +953,9 @@ begin
   freemem(@rtdm);
   freemem(@devicemanager);
   freemem(@ldevicemanager);
-<<<<<<< HEAD
   freemem(@rt2);
   freemem(@rtsts);
   freemem(@status);
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
   freemem(@port422);
   freemem(@portip);
   freemem(@dmselect);
@@ -1085,7 +1076,6 @@ begin
     Top := 5;
     ps := (wdth - 10) div 2;
 
-<<<<<<< HEAD
     rt1.Left := 5;
     rt1.Right := ps - 10;
     rt1.Top := Top;// + HghtRw + 5;
@@ -1116,8 +1106,6 @@ begin
 
     Top := rtsts.Bottom + 5;
 
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     if exist422 and existip then
     begin
       rt422.Left := 5;
@@ -1128,10 +1116,7 @@ begin
       rtip.Right := wdth - 5;
       rtip.Top := Top;
       rtip.Bottom := rt422.Top + HghtRw;
-<<<<<<< HEAD
       tmp.SetPen(ps_solid,1,colortorgb(FormsFontColor));
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
       tmp.Rectangle(rt422.Left, rt422.Top + 4, rt422.Left + HghtRw - 8,
         rt422.Bottom - 4);
       tmp.Rectangle(rtip.Left, rtip.Top + 4, rtip.Left + HghtRw - 8,
@@ -1153,18 +1138,13 @@ begin
           rtip.Bottom - 4), DT_CENTER or DT_SINGLELINE);
       end;
       // tmp.Rectangle(rt422.Left, rt422.Top+4, rt422.Left+HghtRw-8,rt422.Bottom-4);
-<<<<<<< HEAD
       tmp.DrawText('RS422/232', Rect(rt422.Left + HghtRw - 5, rt422.Top,
-=======
-      tmp.DrawText('COM Порт', Rect(rt422.Left + HghtRw - 5, rt422.Top,
->>>>>>> 567489eb579fa25cb906471546da671d36020444
         rt422.Right, rt422.Bottom), DT_VCENTER or DT_SINGLELINE);
 
       // tmp.Rectangle(rtip.Left, rtip.Top+4, rtip.Left+HghtRw-8,rtip.Bottom-4);
       tmp.DrawText('IP Адрес', Rect(rtip.Left + HghtRw - 5, rtip.Top,
         rtip.Right, rtip.Bottom), DT_VCENTER or DT_SINGLELINE);
 
-<<<<<<< HEAD
 
       if select422 then
         port422.draw(tmp, rtip.Bottom + 5, HghtRw)
@@ -1179,10 +1159,6 @@ begin
       rt1.Left := 5;
       rt1.Right := ps - 10;
       rt1.Top := Top;// + HghtRw + 5;
-=======
-      rt1.Left := 5;
-      rt1.Right := ps - 10;
-      rt1.Top := Top + HghtRw + 5;
       rt1.Bottom := rt1.Top + HghtRw;
       rtdm.Left := ps - 5;
       rtdm.Right := wdth - 5;
@@ -1192,30 +1168,6 @@ begin
         then tmp.SetPen(ps_dot,1,colortorgb(FormsFontColor))
         else tmp.SetPen(ps_solid,1,colortorgb(FormsColor));
       tmp.Rectangle(rtdm.Left,rtdm.Top,rtdm.Right,rtdm.Bottom);
-      tmp.DrawText('Модуль упр.:', rt1, DT_VCENTER or DT_SINGLELINE);
-      tmp.DrawText(devicemanager, rtdm, DT_VCENTER or DT_SINGLELINE);
-      if select422 then
-        port422.draw(tmp, rt1.Bottom, HghtRw)
-      else
-        portip.draw(tmp, rt1.Bottom, HghtRw);
-    end
-    else if (not exist422) and existip then
-    begin
-      Top := Top + HghtRw;
-      rt1.Left := 5;
-      rt1.Right := ps - 10;
-      rt1.Top := Top + 5;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
-      rt1.Bottom := rt1.Top + HghtRw;
-      rtdm.Left := ps - 5;
-      rtdm.Right := wdth - 5;
-      rtdm.Top := rt1.Top;
-      rtdm.Bottom := rt1.Bottom;
-      if dmselect
-        then tmp.SetPen(ps_dot,1,colortorgb(FormsFontColor))
-        else tmp.SetPen(ps_solid,1,colortorgb(FormsColor));
-      tmp.Rectangle(rtdm.Left,rtdm.Top,rtdm.Right,rtdm.Bottom);
-<<<<<<< HEAD
       tmp.DrawText('Номер:', rt1, DT_VCENTER or DT_SINGLELINE);
       //tmp.DrawText('123456789', rtdm, DT_VCENTER or DT_SINGLELINE);
       tmp.DrawText(devicemanager, rtdm, DT_VCENTER or DT_SINGLELINE);
@@ -1243,18 +1195,6 @@ begin
       rt1.Left := 5;
       rt1.Right := ps - 10;
       rt1.Top := Top;// + HghtRw + 5;
-=======
-      tmp.DrawText('Модуль упр.:', rt1, DT_VCENTER or DT_SINGLELINE);
-      tmp.DrawText(devicemanager, rtdm, DT_VCENTER or DT_SINGLELINE);
-      portip.draw(tmp, rt1.Bottom, HghtRw);
-    end
-    else if (not existip) and exist422 then
-    begin
-      Top := Top + HghtRw;
-      rt1.Left := 5;
-      rt1.Right := ps - 10;
-      rt1.Top := Top; // +hghtrw + 5;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
       rt1.Bottom := rt1.Top + HghtRw;
       rtdm.Left := ps - 5;
       rtdm.Right := wdth - 5;
@@ -1264,7 +1204,6 @@ begin
         then tmp.SetPen(ps_dot,1,colortorgb(FormsFontColor))
         else tmp.SetPen(ps_solid,1,colortorgb(FormsColor));
       tmp.Rectangle(rtdm.Left,rtdm.Top,rtdm.Right,rtdm.Bottom);
-<<<<<<< HEAD
       tmp.DrawText('Номер:', rt1, DT_VCENTER or DT_SINGLELINE);
       //tmp.DrawText('123456789', rtdm, DT_VCENTER or DT_SINGLELINE);
       tmp.DrawText(devicemanager, rtdm, DT_VCENTER or DT_SINGLELINE);
@@ -1283,16 +1222,10 @@ begin
 
       Top := rtsts.Bottom + 5;
       port422.draw(tmp, Top, HghtRw);
-=======
-      tmp.DrawText('Модуль упр.:', rt1, DT_VCENTER or DT_SINGLELINE);
-      tmp.DrawText(devicemanager, rtdm, DT_VCENTER or DT_SINGLELINE);
-      port422.draw(tmp, rt1.Bottom, HghtRw);
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     end
     else if (not exist422) and (not existip) then
     begin
       tmp.SetTextColor(colortorgb(smoothcolor(FormsFontColor, 32)));
-<<<<<<< HEAD
 
       Top := 5;
       ps := (wdth - 10) div 2;
@@ -1300,12 +1233,6 @@ begin
       rt1.Left := 5;
       rt1.Right := ps - 10;
       rt1.Top := Top;// + HghtRw + 5;
-=======
-      Top := Top + HghtRw;
-      rt1.Left := 5;
-      rt1.Right := ps - 10;
-      rt1.Top := Top; // +hghtrw + 5;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
       rt1.Bottom := rt1.Top + HghtRw;
       rtdm.Left := ps - 5;
       rtdm.Right := wdth - 5;
@@ -1315,7 +1242,6 @@ begin
         then tmp.SetPen(ps_dot,1,colortorgb(FormsFontColor))
         else tmp.SetPen(ps_solid,1,colortorgb(FormsColor));
       tmp.Rectangle(rtdm.Left,rtdm.Top,rtdm.Right,rtdm.Bottom);
-<<<<<<< HEAD
       tmp.DrawText('Номер:', rt1, DT_VCENTER or DT_SINGLELINE);
       //tmp.DrawText('123456789', rtdm, DT_VCENTER or DT_SINGLELINE);
       tmp.DrawText(devicemanager, rtdm, DT_VCENTER or DT_SINGLELINE);
@@ -1337,15 +1263,6 @@ begin
         port422.draw(tmp, Top, HghtRw)
       else
         portip.draw(tmp, Top, HghtRw);
-=======
-
-      tmp.DrawText('Модуль упр.:', rt1, DT_VCENTER or DT_SINGLELINE);
-      tmp.DrawText(devicemanager, rtdm, DT_VCENTER or DT_SINGLELINE);
-      if select422 then
-        port422.draw(tmp, rt1.Bottom, HghtRw)
-      else
-        portip.draw(tmp, rt1.Bottom, HghtRw);
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     end;
 
     tmp.SetTransparent(false);

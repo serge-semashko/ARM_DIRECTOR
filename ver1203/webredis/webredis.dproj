@@ -105,10 +105,7 @@
         <DCCReference Include="mainsrv.pas">
             <Form>HTTPSRVForm</Form>
         </DCCReference>
-<<<<<<< HEAD
         <DCCReference Include="..\helpers\Web.Win.Sockets.pas"/>
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -138,7 +135,6 @@
                 <Platform value="Win32">True</Platform>
                 <Platform value="Win64">False</Platform>
             </Platforms>
-<<<<<<< HEAD
             <Deployment Version="3">
                 <DeployFile LocalName="webredis.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
@@ -562,15 +558,10 @@
                 <ProjectRoot Platform="Android" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="iOSSimulator" Name="$(PROJECTNAME).app"/>
             </Deployment>
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
         </BorlandProject>
         <ProjectFileVersion>12</ProjectFileVersion>
     </ProjectExtensions>
     <Import Project="$(BDS)\Bin\CodeGear.Delphi.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')"/>
     <Import Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj" Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')"/>
-<<<<<<< HEAD
     <Import Project="$(MSBuildProjectName).deployproj" Condition="Exists('$(MSBuildProjectName).deployproj')"/>
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 </Project>

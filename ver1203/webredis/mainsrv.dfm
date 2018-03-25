@@ -26,35 +26,17 @@ object HTTPSRVForm: THTTPSRVForm
     Align = alTop
     TabOrder = 0
     OnClick = Panel1Click
-<<<<<<< HEAD
-=======
-    object SpeedButton1: TSpeedButton
-      Left = 16
-      Top = 16
-      Width = 33
-      Height = 33
-      OnClick = SpeedButton1Click
-    end
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     object URLED: TEdit
       Left = 8
       Top = 64
       Width = 625
       Height = 24
       TabOrder = 0
-<<<<<<< HEAD
       Text = 'http://127.0.0.1:9090'
     end
     object BitBtn1: TBitBtn
       Left = 8
       Top = 8
-=======
-      Text = 'http://nucloweb.jinr.ru/kgu/Cache/get_data.php?callback=?'
-    end
-    object BitBtn1: TBitBtn
-      Left = 792
-      Top = 24
->>>>>>> 567489eb579fa25cb906471546da671d36020444
       Width = 75
       Height = 25
       Caption = 'BitBtn1'
@@ -64,11 +46,7 @@ object HTTPSRVForm: THTTPSRVForm
     object txt1: TStaticText
       Left = 160
       Top = 8
-<<<<<<< HEAD
       Width = 449
-=======
-      Width = 529
->>>>>>> 567489eb579fa25cb906471546da671d36020444
       Height = 21
       AutoSize = False
       BevelKind = bkSoft
@@ -84,7 +62,6 @@ object HTTPSRVForm: THTTPSRVForm
       Caption = 'txt2'
       TabOrder = 3
     end
-<<<<<<< HEAD
     object webreqtxt: TStaticText
       Left = 640
       Top = 64
@@ -107,18 +84,12 @@ object HTTPSRVForm: THTTPSRVForm
       ParentFont = False
       TabOrder = 5
     end
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
   end
   object Memo2: TMemo
     Left = 0
     Top = 99
     Width = 1081
-<<<<<<< HEAD
     Height = 157
-=======
-    Height = 91
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     Align = alTop
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -130,15 +101,9 @@ object HTTPSRVForm: THTTPSRVForm
   end
   object Memo1: TMemo
     Left = 0
-<<<<<<< HEAD
     Top = 256
     Width = 1081
     Height = 433
-=======
-    Top = 190
-    Width = 1081
-    Height = 499
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     Align = alClient
     Lines.Strings = (
       'Memo1')
@@ -146,14 +111,8 @@ object HTTPSRVForm: THTTPSRVForm
     TabOrder = 2
   end
   object Timer1: TTimer
-<<<<<<< HEAD
     Interval = 300
     OnTimer = Timer1Timer
-=======
-    Enabled = False
-    Interval = 50
-    OnTimer = SpeedButton1Click
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     Left = 368
     Top = 128
   end

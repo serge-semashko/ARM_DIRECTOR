@@ -19,11 +19,7 @@ object FEditTimeline: TFEditTimeline
   OnCreate = FormCreate
   OnKeyUp = FormKeyUp
   PixelsPerInch = 96
-<<<<<<< HEAD
   TextHeight = 16
-=======
-  TextHeight = 13
->>>>>>> 567489eb579fa25cb906471546da671d36020444
   object Panel1: TPanel
     Left = 0
     Top = 0
@@ -38,11 +34,7 @@ object FEditTimeline: TFEditTimeline
     object Label1: TLabel
       Left = 16
       Top = 12
-<<<<<<< HEAD
       Width = 132
-=======
-      Width = 123
->>>>>>> 567489eb579fa25cb906471546da671d36020444
       Height = 16
       Caption = #1058#1080#1087' '#1090#1072#1081#1084'-'#1083#1080#1085#1080#1080':'
       Font.Charset = DEFAULT_CHARSET
@@ -143,13 +135,8 @@ object FEditTimeline: TFEditTimeline
     object Label7: TLabel
       Left = 16
       Top = -2
-<<<<<<< HEAD
       Width = 267
       Height = 16
-=======
-      Width = 195
-      Height = 13
->>>>>>> 567489eb579fa25cb906471546da671d36020444
       Caption = #1057#1080#1084#1074#1086#1083#1100#1085#1086#1077' '#1086#1073#1086#1079#1085#1072#1095#1077#1085#1080#1077' '#1090#1072#1081#1084'-'#1083#1080#1085#1080#1080':'
       StyleElements = []
     end
@@ -167,11 +154,7 @@ object FEditTimeline: TFEditTimeline
     object Label2: TLabel
       Left = 5
       Top = 53
-<<<<<<< HEAD
       Width = 70
-=======
-      Width = 69
->>>>>>> 567489eb579fa25cb906471546da671d36020444
       Height = 16
       Caption = #1053#1072#1079#1074#1072#1085#1080#1077':'
       Font.Charset = DEFAULT_CHARSET
@@ -194,11 +177,7 @@ object FEditTimeline: TFEditTimeline
     object Label3: TLabel
       Left = 5
       Top = 84
-<<<<<<< HEAD
       Width = 159
-=======
-      Width = 152
->>>>>>> 567489eb579fa25cb906471546da671d36020444
       Height = 16
       Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1091#1089#1090#1088#1086#1081#1089#1090#1074':'
       Font.Charset = DEFAULT_CHARSET
@@ -346,78 +325,48 @@ object FEditTimeline: TFEditTimeline
     object Label8: TLabel
       Left = 16
       Top = 73
-<<<<<<< HEAD
       Width = 266
       Height = 16
-=======
-      Width = 196
-      Height = 13
->>>>>>> 567489eb579fa25cb906471546da671d36020444
       Caption = #1052#1080#1085#1080#1084#1072#1083#1100#1085#1072#1103' '#1076#1083#1080#1090#1077#1083#1100#1085#1086#1089#1090#1100' '#1089#1086#1073#1099#1090#1080#1103': '
       StyleElements = []
     end
     object Label9: TLabel
       Left = 16
       Top = 138
-<<<<<<< HEAD
       Width = 96
       Height = 16
-=======
-      Width = 71
-      Height = 13
->>>>>>> 567489eb579fa25cb906471546da671d36020444
       Caption = #1062#1074#1077#1090' '#1089#1086#1073#1099#1090#1080#1103
       StyleElements = []
     end
     object Label10: TLabel
       Left = 357
       Top = 73
-<<<<<<< HEAD
       Width = 48
       Height = 16
-=======
-      Width = 36
-      Height = 13
->>>>>>> 567489eb579fa25cb906471546da671d36020444
       Caption = #1082#1072#1076#1088#1086#1074
       StyleElements = []
     end
     object Label11: TLabel
       Left = 16
       Top = 106
-<<<<<<< HEAD
       Width = 282
       Height = 16
-=======
-      Width = 211
-      Height = 13
->>>>>>> 567489eb579fa25cb906471546da671d36020444
       Caption = #1059#1089#1088#1077#1076#1085#1105#1085#1085#1072#1103' '#1076#1083#1080#1090#1077#1083#1100#1085#1086#1089#1090#1100' '#1086#1076#1085#1086#1081' '#1073#1091#1082#1074#1099':'
       StyleElements = []
     end
     object Label12: TLabel
       Left = 16
       Top = 41
-<<<<<<< HEAD
       Width = 70
       Height = 16
-=======
-      Width = 53
-      Height = 13
->>>>>>> 567489eb579fa25cb906471546da671d36020444
       Caption = #1053#1072#1079#1074#1072#1085#1080#1077':'
       StyleElements = []
     end
     object Label13: TLabel
       Left = 358
       Top = 106
-<<<<<<< HEAD
       Width = 33
       Height = 16
-=======
-      Width = 26
-      Height = 13
->>>>>>> 567489eb579fa25cb906471546da671d36020444
       Caption = #1084#1089#1077#1082
       StyleElements = []
     end
@@ -449,11 +398,7 @@ object FEditTimeline: TFEditTimeline
       Left = 280
       Top = 72
       Width = 73
-<<<<<<< HEAD
       Height = 26
-=======
-      Height = 22
->>>>>>> 567489eb579fa25cb906471546da671d36020444
       MaxValue = 600
       MinValue = 1
       TabOrder = 1
@@ -463,11 +408,7 @@ object FEditTimeline: TFEditTimeline
       Left = 280
       Top = 39
       Width = 247
-<<<<<<< HEAD
       Height = 22
-=======
-      Height = 19
->>>>>>> 567489eb579fa25cb906471546da671d36020444
       TabOrder = 0
       Text = #1058#1077#1082#1089#1090
       StyleElements = []
@@ -476,11 +417,7 @@ object FEditTimeline: TFEditTimeline
       Left = 280
       Top = 104
       Width = 73
-<<<<<<< HEAD
       Height = 26
-=======
-      Height = 22
->>>>>>> 567489eb579fa25cb906471546da671d36020444
       Increment = 10
       MaxValue = 1000
       MinValue = 0
@@ -501,26 +438,16 @@ object FEditTimeline: TFEditTimeline
     object Label5: TLabel
       Left = 16
       Top = 65
-<<<<<<< HEAD
       Width = 70
       Height = 16
-=======
-      Width = 53
-      Height = 13
->>>>>>> 567489eb579fa25cb906471546da671d36020444
       Caption = #1053#1072#1079#1074#1072#1085#1080#1077';'
       StyleElements = []
     end
     object Label6: TLabel
       Left = 16
       Top = 98
-<<<<<<< HEAD
       Width = 124
       Height = 16
-=======
-      Width = 89
-      Height = 13
->>>>>>> 567489eb579fa25cb906471546da671d36020444
       Caption = #1062#1074#1077#1090' '#1090#1072#1081#1084'-'#1083#1080#1085#1080#1080':'
       StyleElements = []
     end
@@ -552,11 +479,7 @@ object FEditTimeline: TFEditTimeline
       Left = 196
       Top = 63
       Width = 300
-<<<<<<< HEAD
       Height = 22
-=======
-      Height = 19
->>>>>>> 567489eb579fa25cb906471546da671d36020444
       TabOrder = 0
       Text = 'Media'
       StyleElements = []

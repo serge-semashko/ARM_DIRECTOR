@@ -281,10 +281,7 @@ begin
         for i := 0 to lst.Count - 1 do
             Stri := Stri + lst.Strings[i];
         SetAProtocolData(Stri);
-<<<<<<< HEAD
         StrProtocol := Stri;
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     finally
         lst.free;
     end;

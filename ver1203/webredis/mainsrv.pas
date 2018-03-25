@@ -8,11 +8,7 @@ uses
     Dialogs, StdCtrls, Buttons, ExtCtrls, HTTPSend, blcksock, winsock, Synautil,
     strutils, system.json, AppEvnts, Menus, inifiles, das_const, ipcthrd,
     TeEngine, Series, TeeProcs, Chart, VclTee.TeeGDIPlus, System.Generics.Collections,
-<<<<<<< HEAD
     mmsystem, synaip, Web.Win.Sockets;
-=======
-    mmsystem;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 
 type
     THTTPSRVForm = class(TForm)
@@ -20,29 +16,17 @@ type
         Timer1: TTimer;
         Memo2: TMemo;
         URLED: TEdit;
-<<<<<<< HEAD
-=======
-        SpeedButton1: TSpeedButton;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
         BitBtn1: TBitBtn;
         PopupMenu2: TPopupMenu;
         Restore1: TMenuItem;
         Minimize1: TMenuItem;
         quit1: TMenuItem;
-<<<<<<< HEAD
         Memo1: TMemo;
         txt1: TStaticText;
         txt2: TStaticText;
         webreqtxt: TStaticText;
         mmo1: TMemo;
         procedure FormCreate(Sender: TObject);
-=======
-    Memo1: TMemo;
-    txt1: TStaticText;
-    txt2: TStaticText;
-        procedure FormCreate(Sender: TObject);
-        procedure SpeedButton1Click(Sender: TObject);
->>>>>>> 567489eb579fa25cb906471546da671d36020444
         procedure terminate1Click(Sender: TObject);
         procedure Panel1Click(Sender: TObject);
         procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -51,22 +35,16 @@ type
         procedure Minimize1Click(Sender: TObject);
         procedure quit1Click(Sender: TObject);
         procedure FormShow(Sender: TObject);
-<<<<<<< HEAD
         procedure TcpserverAccept(Sender: TObject; ClientSocket: TCustomIpClient);
         procedure TcphttpserverAccept(Sender: TObject; ClientSocket: TCustomIpClient);
         procedure Timer1Timer(Sender: TObject);
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     private
     protected
         procedure ControlWindow(var Msg: TMessage); message WM_SYSCOMMAND;
         procedure IconMouse(var Msg: TMessage); message WM_USER + 1;
     public
-<<<<<<< HEAD
         TCPsrv: TTcpServer;
         TCPHTTPsrv: TTcpServer;
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
         procedure Ic(n: Integer; Icon: TIcon);
     end;
 
@@ -77,10 +55,7 @@ type
         constructor Create;
         destructor Destroy; override;
         procedure Execute; override;
-<<<<<<< HEAD
         procedure DoExecute;
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     end;
 
     TTCPHttpThrd = class(TThread)
@@ -92,10 +67,7 @@ type
         constructor Create(hsock: tSocket);
         destructor Destroy; override;
         procedure Execute; override;
-<<<<<<< HEAD
         procedure doExecute;
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
         function ProcessHttpRequest(Request, URI: string): Integer;
     end;
 
@@ -117,16 +89,11 @@ type
         json: TJSONObject;
     end;
 
-<<<<<<< HEAD
 function ProcessRequest(URI: string): AnsiString;
 
 var
     LocalTCPPort: string = '9085';
     EmptyWebVar: TWebVar;// = ('','',-1,'',nil); //'','',-1,'',nil);
-=======
-var
-    EmptyWebVar: TWebVar = (); //'','',-1,'',nil);
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     VarCount: integer = 0;
     webvars: array[0..10000] of twebvar;
     KeyNames: tstringlist;
@@ -158,7 +125,6 @@ uses
     shellapi;
 {$R *.dfm}
 
-<<<<<<< HEAD
 function ReceiveBlob(sock: thandle; var buff: array of ansichar; len: integer): Integer;
 var
     rc: integer;
@@ -354,8 +320,6 @@ begin
 
 end;
 
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 procedure THTTPSRVForm.IconMouse(var Msg: TMessage);
 var
     p: tpoint;
@@ -416,22 +380,17 @@ begin
 end;
 
 procedure THTTPSRVForm.Panel1Click(Sender: TObject);
-<<<<<<< HEAD
 var
     st: int64;
 begin
     st := timeGetTime;
 
-=======
-begin
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     HTTP := THTTPSend.Create;
     try
 //    HTTP.ProxyHost := Edit8.Text;
 //    HTTP.ProxyPort := Edit9.Text;
         HTTP.HTTPMethod('GET', URLED.text);
         Memo2.Lines.Assign(HTTP.Headers);
-<<<<<<< HEAD
         Memo1.Lines.LoadFromStream(HTTP.Document);
     finally
         HTTP.Free;
@@ -439,12 +398,6 @@ begin
 
     webreqtxt.Caption := ' WEBTIME = ' + IntToStr(timeGetTime - st);
 
-=======
-//    Memo3.Lines.LoadFromStream(HTTP.Document);
-    finally
-        HTTP.Free;
-    end;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 end;
 
 procedure THTTPSRVForm.quit1Click(Sender: TObject);
@@ -470,17 +423,13 @@ var
     str1: string;
     objFileName: string;
     strlist: TStringList;
-<<<<<<< HEAD
     rc: integer;
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 begin
 
     starttime := now;
     while (now - starttime) * 24 * 3600 < 3 do
         Application.ProcessMessages;
 
-<<<<<<< HEAD
     tcpsrv := ttcpserver.Create(nil);
     tcpsrv.LocalPort := IntToStr(StrToInt(LocalTCPPort));
     tcpsrv.OnAccept := TcpserverAccept;
@@ -505,9 +454,6 @@ begin
 
 
 //    HTTPsrv := TTCPHttpDaemon.Create;
-=======
-    HTTPsrv := TTCPHttpDaemon.Create;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     lastReq := -1;
     Ic(1, Application.Icon);
     Timer1.Enabled := true;
@@ -530,39 +476,23 @@ end;
 constructor TTCPHttpDaemon.Create;
 begin
     inherited Create(false);
-<<<<<<< HEAD
     sock := TTCPBlockSocket.Create;
-=======
-    Sock := TTCPBlockSocket.Create;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     FreeOnTerminate := true;
     Priority := tpNormal;
 end;
 
 destructor TTCPHttpDaemon.Destroy;
 begin
-<<<<<<< HEAD
     sock.free;
     inherited Destroy;
 end;
 
 procedure TTCPHttpDaemon.DoExecute;
-=======
-    Sock.free;
-    inherited Destroy;
-end;
-
-procedure TTCPHttpDaemon.Execute;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 var
     ClientSock: tSocket;
 begin
   // writeTimeLog('open sock');
-<<<<<<< HEAD
     with sock do begin
-=======
-    with Sock do begin
->>>>>>> 567489eb579fa25cb906471546da671d36020444
         CreateSocket;
         setLinger(true, 10);
         bind('0.0.0.0', IntToStr(PortNum));
@@ -581,7 +511,6 @@ begin
     end;
 end;
 
-<<<<<<< HEAD
 procedure TTCPHttpDaemon.Execute;
 var
     st: int64;
@@ -590,13 +519,10 @@ begin
     doExecute;
 end;
 
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 { TTCPHttpThrd }
 
 constructor TTCPHttpThrd.Create(hsock: tSocket);
 begin
-<<<<<<< HEAD
 //    writeTimeLog('TCPHttpThrd.Create');
     inherited Create(false);
     sock := TTCPBlockSocket.Create;
@@ -604,38 +530,20 @@ begin
     InputData := TMemoryStream.Create;
     OutputData := TMemoryStream.Create;
     sock.socket := hsock;
-=======
-    writeTimeLog('TCPHttpThrd.Create');
-
-    inherited Create(false);
-    Sock := TTCPBlockSocket.Create;
-    Headers := TStringList.Create;
-    InputData := TMemoryStream.Create;
-    OutputData := TMemoryStream.Create;
-    Sock.socket := hsock;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     FreeOnTerminate := true;
     Priority := tpNormal;
 end;
 
 destructor TTCPHttpThrd.Destroy;
 begin
-<<<<<<< HEAD
     sock.free;
-=======
-    Sock.free;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     Headers.free;
     InputData.free;
     OutputData.free;
     inherited Destroy;
 end;
 
-<<<<<<< HEAD
 procedure TTCPHttpThrd.doExecute;
-=======
-procedure TTCPHttpThrd.Execute;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 var
     b: byte;
     timeout: Integer;
@@ -644,7 +552,6 @@ var
     size: Integer;
     X, n: Integer;
     resultcode: Integer;
-<<<<<<< HEAD
     rsstr: string;
     st: int64;
 
@@ -664,14 +571,6 @@ begin
     WriteLog('URI ' + s);
     addMark(2);
     if sock.lastError <> 0 then
-=======
-begin
-    writeTimeLog('123');
-    timeout := 120000;
-  // read request line
-    s := Sock.RecvString(timeout);
-    if Sock.lastError <> 0 then
->>>>>>> 567489eb579fa25cb906471546da671d36020444
         Exit;
     if s = '' then
         Exit;
@@ -690,17 +589,12 @@ begin
         if pos('HTTP/', protocol) <> 1 then
             Exit;
         repeat
-<<<<<<< HEAD
 
             s := sock.RecvString(timeout);
             if pos('Host:', s) > 0 then
                 rsstr := s + rsstr;
             addMark(3);
             if sock.lastError <> 0 then
-=======
-            s := Sock.RecvString(timeout);
-            if Sock.lastError <> 0 then
->>>>>>> 567489eb579fa25cb906471546da671d36020444
                 Exit;
             if s <> '' then
                 Headers.add(s);
@@ -712,32 +606,21 @@ begin
     InputData.Clear;
     if size >= 0 then begin
         InputData.SetSize(size);
-<<<<<<< HEAD
         X := sock.RecvBufferEx(InputData.Memory, size, timeout);
         addMark(4);
         InputData.SetSize(X);
         if sock.lastError <> 0 then
-=======
-        X := Sock.RecvBufferEx(InputData.Memory, size, timeout);
-        InputData.SetSize(X);
-        if Sock.lastError <> 0 then
->>>>>>> 567489eb579fa25cb906471546da671d36020444
             Exit;
     end;
     OutputData.Clear;
     resultcode := ProcessHttpRequest(method, URI);
-<<<<<<< HEAD
     sock.SendString('HTTP/1.0 ' + IntToStr(resultcode) + CRLF);
-=======
-    Sock.SendString('HTTP/1.0 ' + IntToStr(resultcode) + CRLF);
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     if protocol <> '' then begin
         Headers.add('Content-length: ' + IntToStr(OutputData.size));
         Headers.add('Connection: close');
         Headers.add('Date: ' + Rfc822DateTime(now));
         Headers.add('Server: Synapse HTTP server demo');
         Headers.add('');
-<<<<<<< HEAD
         addMark(5);
         for n := 0 to Headers.count - 1 do
             sock.SendString(Headers[n] + CRLF);
@@ -748,14 +631,6 @@ begin
         Exit;
     sock.SendBuffer(OutputData.Memory, OutputData.size);
     addMark(7);
-=======
-        for n := 0 to Headers.count - 1 do
-            Sock.SendString(Headers[n] + CRLF);
-    end;
-    if Sock.lastError <> 0 then
-        Exit;
-    Sock.SendBuffer(OutputData.Memory, OutputData.size);
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     if lastReq > 0 then begin
         intsum := intsum + trunc((now - lastReq) * 24 * 3600 * 1000);
         inc(intcount);
@@ -765,7 +640,6 @@ begin
             minint := trunc((now - lastReq) * 24 * 3600 * 1000);
     end;
     lastReq := now;
-<<<<<<< HEAD
     addMark(8);
 
     sock.CloseSocket;
@@ -781,27 +655,18 @@ begin
     st := timegettime;
     doExecute;
 //  WriteLog('Request process time = '+IntToStr(timeGetTime-st));
-=======
-    Sock.CloseSocket;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 end;
 
 procedure AddWebVar(keyname: ansistring; KeyValue: ansistring; json: tjsonobject);
 var
     i1, i2, i3: integer;
     tnow: int64;
-<<<<<<< HEAD
     JSvalue: TJSONValue;
     posstr: string;
-=======
-    JSvalue : TJSONValue;
-    posstr : string;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 begin
     tnow := timeGetTime;
     if keyname = 'TLP' then begin
 
-<<<<<<< HEAD
         JSvalue := json.GetValue('Position');
         if JSvalue <> nil then
             posstr := JSvalue.Value
@@ -815,21 +680,6 @@ begin
         HTTPSRVForm.txt2.Caption := 'CTC:' + formatdatetime('TLP: HH:NN:SS ZZZ ', now)
     else
         HTTPSRVForm.memo1.lines.Values[keyname] := formatdatetime('HH:NN:SS ZZZ', now);
-=======
-      jsvalue := json.GetValue('Position');
-      if JSvalue<>nil
-         then posstr := JSvalue.Value
-         else posstr := 'NIL';
-
-      HTTPSRVForm.txt1.Caption :='TLP:'+ formatdatetime('TLP: HH:NN:SS ZZZ ',now)+' position:'+posstr;
-
-    end else
-        if keyname = 'CTC'
-           then HTTPSRVForm.txt2.Caption :='CTC:'+ formatdatetime('TLP: HH:NN:SS ZZZ ',now)
-           else   HTTPSRVForm.memo1.lines.Values[keyname] := formatdatetime('HH:NN:SS ZZZ',now);
-    ;
-
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     for i1 := 0 to VarCount - 1 do begin
         if ansiuppercase(webvars[i1].Name) <> ansiuppercase(keyname) then
             continue;
@@ -853,16 +703,11 @@ begin
 
 end;
 
-<<<<<<< HEAD
 function RemoveWebVar(keyname: ansistring): ansistring;
-=======
-procedure RemoveWebVar(keyname: ansistring);
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 var
     i1, i2, i3: integer;
     tnow: int64;
 begin
-<<<<<<< HEAD
     result := '{"RC":0,"status":"Not exist"}';
 
     for i1 := 0 to VarCount - 1 do begin
@@ -872,12 +717,6 @@ begin
         webvars[i1].changed := -1;
         result := '{"RC":0,"status":"Deleted"}';
 
-=======
-    for i1 := 0 to VarCount - 1 do begin
-        if ansiuppercase(webvars[i1].Name) <> ansiuppercase(keyname) then
-            continue;
-        webvars[i1].changed := -1;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
         exit;
     end;
 end;
@@ -916,7 +755,6 @@ begin
     SelValue := system.Copy(pair, pos(':', pair) + 1, Length(pair));
 end;
 
-<<<<<<< HEAD
 //function GetVarBySelection(baseName, SelName, Selvalue: string): twebvar;
 //var
 //    i1, i2, i3: integer;
@@ -938,29 +776,6 @@ end;
 //    Result := EmptyWebVar;
 //
 //end;
-=======
-function GetVarBySelection(baseName, SelName, Selvalue: string): twebvar;
-var
-    i1, i2, i3: integer;
-    jvalue: tjsonvalue;
-    jstr: string;
-begin
-    for i1 := 0 to VarCount - 1 do begin
-        if ansiuppercase(webvars[i1].baseName) <> ansiuppercase(baseName) then
-            continue;
-        jvalue := webvars[i1].json.GetValue(SelName);
-        if jvalue = nil then
-            Continue;
-        jstr := jvalue.Value;
-        if jstr <> Selvalue then
-            continue;
-        result := webvars[i1];
-        exit;
-    end;
-    Result := EmptyWebVar;
-
-end;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 
 function GetWebVar(keyName: ansistring): TWebVar;
 var
@@ -973,35 +788,22 @@ var
 begin
     result := EmptyWebVar;
     ;
-<<<<<<< HEAD
 //    ParseKeyName(keyName, baseName, SelName, Selvalue);
 //    if SelName <> '' then begin
 //        Result := GetVarBySelection(baseName, SelName, Selvalue);
 //        exit;
 //    end;
-=======
-    ParseKeyName(keyName, baseName, SelName, Selvalue);
-    if SelName <> '' then begin
-        Result := GetVarBySelection(baseName, SelName, Selvalue);
-        exit;
-    end;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 
     for i1 := 0 to VarCount - 1 do begin
         if ansiuppercase(webvars[i1].Name) <> ansiuppercase(keyName) then
             continue;
-<<<<<<< HEAD
         if webvars[i1].changed > 0 then
             result := webvars[i1];
-=======
-        result := webvars[i1];
->>>>>>> 567489eb579fa25cb906471546da671d36020444
         exit;
     end;
 
 end;
 
-<<<<<<< HEAD
 function ProcessRequest(URI: string): AnsiString;
 var
     stmp, jreq, resp, keyName, keyVal, str1: ansistring;
@@ -1059,8 +861,6 @@ begin
     result := resp;
 end;
 
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 function TTCPHttpThrd.ProcessHttpRequest(Request, URI: string): Integer;
 var
     l: TStringList;
@@ -1082,54 +882,15 @@ begin
   // Request is type of request and URI is URI of request
   // OutputData is document with reply, headers is stringlist with reply headers.
   // Result is result code
-<<<<<<< HEAD
 //    WritetimeLog(URI);
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     result := 504;
     if Request = 'GET' then begin
         Headers.Clear;
         Headers.add('Content-type: Text/Html');
         l := TStringList.Create;
         try
-<<<<<<< HEAD
             resp := ProcessRequest(URI);
             resp := jreq + resp;
-=======
-            if (pos('callback=', URI) <> 0) then begin
-                stmp := copy(URI, pos('callback=', URI) + 9, length(URI));
-                amppos := pos('get_member', stmp);
-                if amppos > 0 then
-                    jreq := copy(stmp, 1, amppos - 2);
-            end;
-            resp := HardRec.JSONAll;
-
-            i1 := pos('&', URI);
-            if i1 <= 0 then
-                i1 := length(URI) + 1;
-            MyRequest := System.Copy(URI, 2, i1 - 2);
-            if pos('GET_', MyRequest) <> 0 then begin
-                resp := GetWebVar(system.copy(MyRequest, 5, Length(MyRequest))).jSONSTR;
-            end;
-            pos_var_name := pos('SET_', ansiuppercase(URI)) + 4;
-            if pos_var_name > 5 then begin
-                resp := '{"status":"ok"}';
-                i1 := pos('=', URI);
-                if i1 > 5 then begin
-                    keyname := copy(URI, pos_var_name, i1 - pos_var_name);
-                    str1 := copy(URI, i1 + 1, Length(URI));
-                    while (str1[length(str1)] <> '}') and (length(str1) > 1) do
-                        system.delete(str1, length(str1), 1);
-                    json := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(str1), 0) as TJSONObject;
-                    if json <> nil then
-                        AddWebVar(keyname, str1, json)
-                    else
-                        resp := '{"status":"errformat"}';
-                end;
-            end;
-
-            resp := jreq + '(' + resp + ');';
->>>>>>> 567489eb579fa25cb906471546da671d36020444
             l.add(resp);
             l.SaveToStream(OutputData);
         finally
@@ -1139,7 +900,6 @@ begin
     end;
 end;
 
-<<<<<<< HEAD
 procedure THTTPSRVForm.terminate1Click(Sender: TObject);
 begin
     halt;
@@ -1148,62 +908,6 @@ end;
 procedure THTTPSRVForm.Timer1Timer(Sender: TObject);
 begin
 //   TCPsrv.Handle;
-=======
-procedure THTTPSRVForm.SpeedButton1Click(Sender: TObject);
-var
-    jtype: string;
-    jsonstr: string;
-    i, id: Integer;
-    r1, r2: double;
-  // rl : tstringlist;
-    offset, position, h, g: Integer;
-    s: string;
-    ff: tfilestream;
-    r: array[0..255] of string;
-    pointpos: Integer;
-    resrecord: string;
-    FullProgPath: PwideChar;
-    str22: string;
-
-    procedure SliceSeries(Chart: TChart; maxlen: Integer);
-    var
-        Ic: Integer;
-    begin
-        for Ic := 0 to Chart.SeriesCount - 1 do begin
-            while Chart.Series[Ic].count > maxlen do
-                Chart.Series[Ic].Delete(0);
-        end;
-    end;
-
-var
-    st: double;
-begin
-    caption := formatDateTime('dd/mm/yyyy HH:NN:SS', now) + formatDateTime(' Старт:dd/mm/yyyy HH:NN:SS', starttime);
-    Timer1.Enabled := false;
-    Application.ProcessMessages;
-    while true do begin
-        st := now;
-        while (now - st) * 24 * 3600 * 1000 < 1 do begin
-            sleep(1);
-            Application.ProcessMessages;
-        end;
-        textfromjson := HardRec.JSONAll;
-    // memo2.Lines.Clear;
-    // memo2.Text:=textfromJson;
-        PrevUpdates := HardRec.UpdateCounter;
-        intsum := 0;
-        intcount := 0;
-        minint := 1000;
-        maxint := 0;
-
-    end;
-    Timer1.Enabled := true;
-end;
-
-procedure THTTPSRVForm.terminate1Click(Sender: TObject);
-begin
-    halt;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 end;
 
 var
@@ -1226,19 +930,11 @@ initialization
     lastReq := now;
 //    varNames := tstringlist.Create;
 //    Varvalues:= tstringlist.Create;
-<<<<<<< HEAD
     EmptyWebVar.Name := '';
     EmptyWebVar.baseName := '';
     EmptyWebVar.jsonStr := '';
     EmptyWebVar.changed := -1;
     EmptyWebVar.json := nil;
-=======
-      EmptyWebVar.Name := '';
-      EmptyWebVar.baseName := '';
-      EmptyWebVar.jsonStr := '';
-      EmptyWebVar.changed := -1;
-      EmptyWebVar.json := nil;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 
 end.
 

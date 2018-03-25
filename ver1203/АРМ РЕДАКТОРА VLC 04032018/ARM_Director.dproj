@@ -228,10 +228,7 @@
         <DCCReference Include="UMyProtocols.pas"/>
         <DCCReference Include="..\helpers\uwebget.pas"/>
         <DCCReference Include="..\helpers\udevmanagers.pas"/>
-<<<<<<< HEAD
         <DCCReference Include="..\helpers\Web.Win.Sockets.pas"/>
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
         <None Include="..\helpers\events_body.inc"/>
         <None Include="..\helpers\events_hdr.inc"/>
         <None Include="..\helpers\ugrtimelines_body.inc"/>

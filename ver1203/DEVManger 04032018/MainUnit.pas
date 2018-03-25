@@ -58,7 +58,6 @@ type
         Panel5: TPanel;
         Panel6: TPanel;
         SpeedButton1: TSpeedButton;
-<<<<<<< HEAD
     Panel3: TPanel;
     Label1: TLabel;
     Label2: TLabel;
@@ -67,8 +66,6 @@ type
     Edit1: TEdit;
     Shape1: TShape;
     Shape2: TShape;
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
         procedure FormCreate(Sender: TObject);
         procedure SpeedButton2Click(Sender: TObject);
         procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -83,12 +80,9 @@ type
         procedure SpeedButton1Click(Sender: TObject);
         procedure SpeedButton4Click(Sender: TObject);
     procedure SpeedButton3Click(Sender: TObject);
-<<<<<<< HEAD
     procedure SpeedButton5Click(Sender: TObject);
     procedure Edit1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure Edit1KeyPress(Sender: TObject; var Key: Char);
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     private
         { Private declarations }
         ShownOnce: Boolean;
@@ -139,12 +133,8 @@ var
     tlp_webrequest_time: Double = -1;
     tl_to_request_time: Double = -1;
     tle_request_time: Double = -1;
-<<<<<<< HEAD
     SetNewNumber : boolean = false;
     oldcurrevent : string = '';
-=======
-
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 
 
 procedure StartMyTimer;
@@ -155,12 +145,7 @@ Procedure Update_TLEditor;
 implementation
 
 uses ComPortUnit, umychars, UMyWork, UMyInitFile, ShellApi, shlobj, registry,
-<<<<<<< HEAD
     umain, UDrawTimelines, umyevents, uwebget, UPortOptions, UNumberManager,
-=======
-    umain, UDrawTimelines, umyevents, uwebget,
-    UPortOptions,
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     umyinfo, umyprotocols;
 
 {$R *.DFM}
@@ -226,12 +211,8 @@ begin
         { Если Вы хотите, чтобы процедура DoWork выполнялась лишь один раз - удалите цикл while }
         while not Terminated do
         begin
-<<<<<<< HEAD
             sleep(10);
             Application.ProcessMessages;
-=======
-            sleep(1);
->>>>>>> 567489eb579fa25cb906471546da671d36020444
             Synchronize(DoWork);
         end;
         // WriteLog('MAIN', 'TMyThread.Execute');
@@ -263,7 +244,6 @@ begin
             // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
             // if InfoWEB.Options[0].Text<>'' then TLParameters.Position :=TLParameters.Preroll + StrTimeCodeToFrames(InfoWEB.Options[1].Text);
             Update_TLEditor;
-<<<<<<< HEAD
 
             DT_tlpupdate := trunc((now - tlp_webrequest_time) * 24 *
               3600 * 1000);
@@ -303,11 +283,6 @@ begin
 
 
 
-=======
-            DT_tlpupdate := trunc((now - tlp_webrequest_time) * 24 *
-              3600 * 1000);
-
->>>>>>> 567489eb579fa25cb906471546da671d36020444
             // WriteLog('vlcmode', 'check update TLP dt = '+IntToStr(DT_tlpupdate));
             if DT_tlpupdate > 20 then
             begin
@@ -499,11 +474,7 @@ begin
                        if local_vlcMode=0 then InfoWEB.SetData(4, 'Stop');
                        if local_vlcMode=2 then InfoWEB.SetData(4, 'Paused');
 //++++++++++++++++++++++++++++++   PAUSED   ++++++++++++++++++++++++++++++++++++
-<<<<<<< HEAD
                        if (OldList1Index <> crpos.Number) or (trim(curr)<>trim(oldcurrevent)) then
-=======
-                       if OldList1Index <> crpos.Number then
->>>>>>> 567489eb579fa25cb906471546da671d36020444
                        begin
                            ListCommands.Clear;
                            // WriteBuffToPort(DataToBuffIn('30303030'));
@@ -544,10 +515,7 @@ begin
                            isduration := false;
                            isendevent := false;
                            isstartevent := false;
-<<<<<<< HEAD
                            oldcurrevent:=curr;
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
                        end;
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -840,7 +808,6 @@ begin
     Shell_NotifyIcon(NIM_DELETE, @nidata);
 end;
 
-<<<<<<< HEAD
 procedure TfmMain.Edit1KeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
@@ -852,8 +819,6 @@ begin
   if not (key in [#8,'0'..'9']) then Key:=#0;
 end;
 
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 procedure TfmMain.FileExitItem1Click(Sender: TObject);
 begin
     CloseApplication := true;
@@ -861,12 +826,8 @@ begin
 end;
 
 procedure TfmMain.FormClose(Sender: TObject; var Action: TCloseAction);
-<<<<<<< HEAD
 //var nidata: TNotifyIconData;
 var str1, str2 : string;
-=======
-var nidata: TNotifyIconData;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 begin
     if not CloseApplication then
     begin
@@ -884,7 +845,6 @@ begin
     if CommThreadExists then
         StopService;
     WriteIniFile(AppPath + AppName + SerialNumber + '.ini');
-<<<<<<< HEAD
 
     if ProgOptions <> nil  then begin
       str1 := 'DEVMAN[' + inttostr(ManagerNumber) +']';
@@ -903,17 +863,6 @@ begin
 //    finally
 //       Application.Terminate;
 //    end;
-=======
-    try
-       with nidata do begin
-          Wnd := fmMain.Handle;
-          uID := 1;
-       end;
-       Shell_NotifyIcon(NIM_DELETE, Addr(nidata));
-    finally
-       Application.Terminate;
-    end;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 end;
 
 procedure TfmMain.ComportInit;
@@ -921,7 +870,6 @@ Var
     lstrs: string;
 begin
     lstrs := trim(GetSerialPortNames(ListComports));
-<<<<<<< HEAD
     if ListComports.Count<=0 then begin
       port422name :='';
       Port422Init := false;
@@ -935,15 +883,6 @@ begin
         port422name := ListComports.Strings[port422number];
         Port422Init := StartService;
       end;
-=======
-    if lstrs <> '' then
-    begin
-        if port422number <= ListComports.Count - 1 then
-        begin
-            port422name := ListComports.Strings[port422number];
-            Port422Init := StartService;
-        end;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     end;
 end;
 
@@ -951,11 +890,8 @@ procedure TfmMain.FormCreate(Sender: TObject);
 var
     i: Integer;
     myLabel: TLabel;
-<<<<<<< HEAD
     str1, str2 : ansistring;
     bt : byte;
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 begin
     Panel5.Height := 25 * 10;
     GroupBox3.Height := 25 * 16;
@@ -975,14 +911,11 @@ begin
     Panel2.Font.Size := ProgrammFontSize;
     Panel2.Font.Color := ProgrammFontColor;
 
-<<<<<<< HEAD
     Panel3.Color := ProgrammColor;
     Panel3.Font.name := ProgrammFontName;
     Panel3.Font.Size := ProgrammFontSize;
     Panel3.Font.Color := ProgrammFontColor;
 
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     Panel5.Color := ProgrammColor;
     Panel5.Font.name := ProgrammFontName;
     Panel5.Font.Size := ProgrammFontSize;
@@ -993,7 +926,6 @@ begin
     Panel6.Font.Size := ProgrammFontSize;
     Panel6.Font.Color := ProgrammFontColor;
 
-<<<<<<< HEAD
     Label1.Color := ProgrammColor;
     Label1.Font.name := ProgrammFontName;
     Label1.Font.Size := ProgrammFontSize;
@@ -1014,8 +946,6 @@ begin
 
     Shape2.Brush.Color:=ProgrammColor;
     Shape2.Pen.Color:=ProgrammFontColor;
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     // for i := 0 to fmmain.ComponentCount - 1 do
     // if (fmmain.Components[i] is TGroupBox) and
     // (fmmain.Components[i].Tag <> 1) then
@@ -1093,7 +1023,6 @@ begin
     InfoWEB.Draw(fmMain.imgWeb.Canvas, 25);
     fmMain.imgWeb.Repaint;
 
-<<<<<<< HEAD
 //    ShownOnce := false;
 //    CreateTrayIcon(1);
 //    // if CheckBox3.checked then begin
@@ -1101,15 +1030,6 @@ begin
 //    application.ShowMainForm := false;
 //    ShowWindow(application.Handle, SW_HIDE);
 //    HideItem.Enabled := false;
-=======
-    ShownOnce := false;
-    CreateTrayIcon(1);
-    // if CheckBox3.checked then begin
-    fmMain.WindowState := wsMinimized;
-    application.ShowMainForm := false;
-    ShowWindow(application.Handle, SW_HIDE);
-    HideItem.Enabled := false;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 
     // отладка +++++++++++++++++++++++++++++++++++
 
@@ -1119,7 +1039,6 @@ begin
     // отладка +++++++++++++++++++++++++++++++++++
     if ProgOptions = nil then ProgOptions := TProgOptions.create;
     ProgOptions.LoadData;
-<<<<<<< HEAD
 
     str1 := 'DEVMAN[' + inttostr(ManagerNumber) +']';
     str2:=GetJsonStrFromServer(str1);
@@ -1171,21 +1090,11 @@ end;
 
 procedure TfmMain.FormDestroy(Sender: TObject);
 var nidata: TNotifyIconData;
-=======
-    Timer1.Enabled := true;
-    // FmMain.Memo2.Clear;
-    MyTimer.StartTimer;
-    CurrDt := now;
-end;
-
-procedure TfmMain.FormDestroy(Sender: TObject);
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 begin
     UnmapViewOfFile(Compartido);
     CloseHandle(FicheroM);
     MyThread.Free;
     MyThread := nil;
-<<<<<<< HEAD
     try
        with nidata do begin
           Wnd := fmMain.Handle;
@@ -1195,8 +1104,6 @@ begin
     finally
        Application.Terminate;
     end;
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 end;
 
 procedure TfmMain.FormHide(Sender: TObject);
@@ -1254,7 +1161,6 @@ begin
 end;
 
 procedure TfmMain.SpeedButton3Click(Sender: TObject);
-<<<<<<< HEAD
 var num : integer;
     str1, str2 : string;
 begin
@@ -1291,10 +1197,6 @@ begin
   Timer1.Enabled := true;
   MyTimer.StartTimer;
   CurrDt := now;
-=======
-begin
-  ComportDialogOpen;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 end;
 
 procedure TfmMain.SpeedButton4Click(Sender: TObject);
@@ -1302,15 +1204,12 @@ begin
     setoptions;
 end;
 
-<<<<<<< HEAD
 procedure TfmMain.SpeedButton5Click(Sender: TObject);
 begin
   CloseApplication:=true;
   Close;
 end;
 
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 Procedure GetTimeLinesFromServer;
 var
     i: Integer;
@@ -1376,11 +1275,7 @@ end;
 
 Procedure Update_TLEditor;
 var
-<<<<<<< HEAD
     str1, str2, str3, sprot: ansistring;
-=======
-    str1, str2, str3: ansistring;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     url: ansistring;
     slist1: tstringlist;
     i, wt_i: Integer;
@@ -1400,24 +1295,16 @@ begin
     for i := 0 to 15 do
     begin
         // if trim(TLO_server[i].Manager)=trim(ProgOptions.Options[1].Text) then begin  //
-<<<<<<< HEAD
         NumberTimeline:=-1;
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
         if TLO_server[i] <> nil then
         begin
             if trim(TLO_server[i].Manager) = inttostr(ManagerNumber) then
             begin
-<<<<<<< HEAD
                 NumberTimeline := i;
-=======
-                NumberManeger := i;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
                 break;
             end;
         end;
     end;
-<<<<<<< HEAD
     if NumberTimeline=-1 then exit;
 
     if TLO_server[NumberTimeline] <> nil then
@@ -1435,47 +1322,22 @@ begin
               for i:=0 to infoport.Count-1 do infoport.SetData(i,'');
             end;
           TLO_server_changed[NumberTimeline] := false;
-=======
-    if TLO_server[NumberManeger] <> nil then
-    begin
-        if TLO_server_changed[NumberManeger] then
-        begin
-          if trim(TLO_server[NumberManeger].Protocol) <> '' then
-            SetAProtocolData(TLO_server[NumberManeger].Protocol);
-            SaveAProtocolToFile('AProtocol.txt', TLO_server[NumberManeger].Protocol);
-            LoadProtocol('AListProtocols.txt', 'TLDevices', INFOTypeDevice, INFOVendor,
-                         INFODevice, INFOProt);
-          TLO_server_changed[NumberManeger] := false;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
           if ProgOptions = nil  then begin
             ProgOptions := TProgOptions.Create;
             ProgOptions.Clear;
           end;
-<<<<<<< HEAD
           str2 := 'DEVMAN[' + inttostr(ManagerNumber) +']';
-=======
-          str2 := 'DEVMAN['+ProgOptions.Options[1].text+']';
->>>>>>> 567489eb579fa25cb906471546da671d36020444
           str3 :=ProgOptions.SaveToJSONStr;
           PutJsonStrToServer(str2,str3);
         end;
     end;
 
-<<<<<<< HEAD
     if TLT_server[NumberTimeline] <> nil then
     begin
        // if TLT_server_changed[NumberManeger] then
        // begin
             MyTLEdit.Assign(TLT_server[NumberTimeline], NumberTimeline + 1);
             TLT_server_changed[NumberTimeline] := false;
-=======
-    if TLT_server[NumberManeger] <> nil then
-    begin
-       // if TLT_server_changed[NumberManeger] then
-       // begin
-            MyTLEdit.Assign(TLT_server[NumberManeger], NumberManeger + 1);
-            TLT_server_changed[NumberManeger] := false;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
        // end;
     end;
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

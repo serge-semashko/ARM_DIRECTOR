@@ -104,10 +104,7 @@ uses
   SysUtils, Classes,
   synafpc,
   synsock, synautil, synacode, synaip
-<<<<<<< HEAD
   ,mmsystem
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 {$IFDEF CIL}
   ,System.Net
   ,System.Net.Sockets
@@ -1878,7 +1875,6 @@ begin
 end;
 
 procedure TBlockSocket.CloseSocket;
-<<<<<<< HEAD
 var
  st :Int64;
 begin
@@ -1886,15 +1882,10 @@ begin
   AbortSocket;
   synwritelog('tcpip','AbosrSocket '+IntToStr(timeGetTime-st))
 
-=======
-begin
-  AbortSocket;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 end;
 
 procedure TBlockSocket.AbortSocket;
 var
-<<<<<<< HEAD
  st :Int64;
   n: integer;
   p: TSynaOption;
@@ -1906,20 +1897,11 @@ begin
   synwritelog('tcpip','Close Socket '+IntToStr(timeGetTime-st));
   st := timeGetTime;
 
-=======
-  n: integer;
-  p: TSynaOption;
-begin
-  if FSocket <> INVALID_SOCKET then
-    synsock.CloseSocket(FSocket);
-  FSocket := INVALID_SOCKET;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
   for n := FDelayedOptions.Count - 1 downto 0 do
     begin
       p := TSynaOption(FDelayedOptions[n]);
       p.Free;
     end;
-<<<<<<< HEAD
   synwritelog('tcpip','Free options '+IntToStr(timeGetTime-st));
   st := timeGetTime;
   FDelayedOptions.Clear;
@@ -1933,13 +1915,6 @@ end;
 
 
 
-=======
-  FDelayedOptions.Clear;
-  FFamily := FFamilySave;
-  DoStatus(HR_SocketClose, '');
-end;
-
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 procedure TBlockSocket.Bind(IP, Port: string);
 var
   Sin: TVarSin;
@@ -3848,12 +3823,8 @@ begin
     FSSL.Shutdown;
   if (FSocket <> INVALID_SOCKET) and (FLastError = 0) then
   begin
-<<<<<<< HEAD
     synWriteLog('tcpip'+IntTostr(FSocket),'sg=hutdown');
     Synsock.Shutdown(FSocket,2 );
-=======
-    Synsock.Shutdown(FSocket, 1);
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     Purge;
   end;
   inherited CloseSocket;

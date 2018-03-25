@@ -1816,11 +1816,7 @@ begin
     exit;
   end;
   EditTimeline(GridTimeLines.Selection.Top);
-<<<<<<< HEAD
   //PutGridTimeLinesToServer(Form1.GridTimeLines);
-=======
-  PutGridTimeLinesToServer(Form1.GridTimeLines);
->>>>>>> 567489eb579fa25cb906471546da671d36020444
   GridTimeLines.Repaint;
   IsProjectChanges := true;
 end;

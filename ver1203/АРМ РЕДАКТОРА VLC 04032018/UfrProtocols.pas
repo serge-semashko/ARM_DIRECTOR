@@ -27,10 +27,7 @@ type
     GroupBox3: TGroupBox;
     imgMainParam: TImage;
     ComboBox2: TComboBox;
-<<<<<<< HEAD
     Timer1: TTimer;
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     procedure FormCreate(Sender: TObject);
     procedure Edit1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure Edit1KeyPress(Sender: TObject; var Key: Char);
@@ -60,16 +57,11 @@ type
     procedure imgAddParamMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure ComboBox2Change(Sender: TObject);
-<<<<<<< HEAD
     procedure Timer1Timer(Sender: TObject);
   private
     { Private declarations }
     CRow : integer;
     OldStr, NewStr : string;
-=======
-  private
-    { Private declarations }
->>>>>>> 567489eb579fa25cb906471546da671d36020444
   public
     { Public declarations }
     function SaveDataProtocol: string;
@@ -87,11 +79,7 @@ var
   STRVendors: string = '';
   STRManager: string = '0';
 
-<<<<<<< HEAD
 procedure SetProtocol(OPTTimeline: TTimelineOptions; ARow : integer);
-=======
-procedure SetProtocol(OPTTimeline: TTimelineOptions);
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 
 implementation
 
@@ -119,31 +107,11 @@ begin
   end;
 end;
 
-<<<<<<< HEAD
 procedure updateportdata;
 var lstdevmng : string;
     i, indx : Integer;
 begin
   UpdateManagerList;
-=======
-procedure SetProtocol(OPTTimeline: TTimelineOptions);
-var
-  sprotocols: string;
-  lst: tstrings;
-  lstdevmng : string;
-  i, indx : Integer;
-begin
-  UpdateManagerList;
-  if ListTypeDevices = nil then
-    ListTypeDevices := TListTypeDevices.Create;
-  InitFrProtocols;
-  FrProtocols.ComboBox1.Visible := false;
-  STRVendors := OPTTimeline.Protocol;
-  STRManager := OPTTimeline.Manager;
-  ListTypeDevices.clear;
-  ListTypeDevices.LoadFromFile('AListProtocols.txt', 'TLDevices');
-  FrProtocols.LoadDataProtocol(STRVendors);
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 
   lstdevmng := '';
   for i := 0 to 16 do begin
@@ -154,11 +122,6 @@ begin
     end;
   end;
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 567489eb579fa25cb906471546da671d36020444
   if ListTypeDevices.index = -1 then
     ListTypeDevices.index := 0;
   with ListTypeDevices.TypeDevices[ListTypeDevices.index] do
@@ -171,15 +134,10 @@ begin
       begin
         indx := FirmDevices[indx].index;
         ListProtocols[indx].Ports.ldevicemanager:=lstdevmng;
-<<<<<<< HEAD
         ListProtocols[indx].Ports.devicemanager := trim(STRManager);
         if trim(STRManager)<>'' then begin
           if DevManagers[StrToInt(STRManager)]<>nil then begin
             ListProtocols[indx].Ports.Status := 'работает';
-=======
-        if trim(STRManager)<>'' then begin
-          if DevManagers[StrToInt(STRManager)]<>nil then begin
->>>>>>> 567489eb579fa25cb906471546da671d36020444
             if trim(DevManagers[StrToInt(STRManager)].Options[2].Text)='RS232/422'
               then ListProtocols[indx].Ports.select422:=true
               else ListProtocols[indx].Ports.select422:=false;
@@ -204,17 +162,13 @@ begin
                DevManagers[StrToInt(STRManager)].Options[11].Text; //IP Login
             ListProtocols[indx].Ports.portip.Password:=
                DevManagers[StrToInt(STRManager)].Options[12].Text; //IP Password
-<<<<<<< HEAD
           end else begin
             ListProtocols[indx].Ports.Status := 'не обнаружен';
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
           end;
         end;
       end;
     end;
   end;
-<<<<<<< HEAD
 end;
 
 procedure SetProtocol(OPTTimeline: TTimelineOptions; ARow : integer);
@@ -249,34 +203,23 @@ begin
 
   DrawTableProtocols;
 //  FrProtocols.Timer1.Enabled:=true;
-=======
-
-  DrawTableProtocols;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 
   FrProtocols.ShowModal;
   if FrProtocols.ModalResult = mrOk then
   begin
     OPTTimeline.Protocol := STRVendors;
     OPTTimeline.Manager := STRManager;
-<<<<<<< HEAD
     if ARow<>-1 then begin
       (Form1.GridTimeLines.Objects[0,ARow] as TTimelineOptions).Protocol:=STRVendors;
       (Form1.GridTimeLines.Objects[0,ARow] as TTimelineOptions).Manager:=STRManager;
       PutGridTimeLinesToServer(Form1.GridTimeLines);
     end;
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     if ListTypeDevices <> nil then
     begin
       ListTypeDevices.clear;
       ListTypeDevices.FreeInstance;
       ListTypeDevices := nil;
     end;
-<<<<<<< HEAD
-=======
-
->>>>>>> 567489eb579fa25cb906471546da671d36020444
   end;
 end;
 
@@ -396,7 +339,6 @@ begin
             2:
               begin
                 STRManager := ComboBox4.Items.Strings[ComboBox4.ItemIndex];
-<<<<<<< HEAD
                 //STRManager := trim(StringReplace(STRManager,'не обнаружен', '', [rfReplaceAll, rfIgnoreCase]));
                 //STRManager := trim(StringReplace(STRManager,'работает', '', [rfReplaceAll, rfIgnoreCase]));
                 Ports.devicemanager := STRManager;
@@ -432,9 +374,6 @@ begin
 //                    Ports.devicemanager := Ports.devicemanager + ' не обнаружен';
 //                  end;
                 end;
-=======
-                Ports.devicemanager := STRManager;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
               end;
             10:
               Ports.port422.Speed := ComboBox4.Items.Strings
@@ -817,7 +756,6 @@ begin
   end;
 end;
 
-<<<<<<< HEAD
 procedure TFrProtocols.Timer1Timer(Sender: TObject);
 var indx : integer;
 begin
@@ -847,8 +785,6 @@ begin
   end;
 end;
 
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
 procedure TFrProtocols.imgButtonsMouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 var
@@ -857,23 +793,15 @@ var
 begin
   res := btnpnlpotocol.ClickButton(imgButtons.Canvas, X, Y);
   case res of
-<<<<<<< HEAD
     0: begin
          Timer1.Enabled:=false;
          FrProtocols.ModalResult := mrCancel;
        end;
-=======
-    0:
-      FrProtocols.ModalResult := mrCancel;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     1:
       begin
         // STRVendors := Vendors.GetString + Ports.GetString
         // + ProtocolMain.GetString + ProtocolAdd.GetString;
-<<<<<<< HEAD
         Timer1.Enabled:=false;
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
         STRVendors := SaveDataProtocol;
         WriteLog('Protocol', STRVendors);
         ListTypeDevices.SaveToFile('AListProtocols.txt', 'TLDevices');

@@ -157,12 +157,8 @@ Var
     INFOName3: string = '';
     INFOText3: string = '';
 
-<<<<<<< HEAD
     StrProtocol : string = '';
     NumberTimeline: Integer = -1;
-=======
-    NumberManeger: Integer = -1;
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     CountWaitReplay : integer = 0;
     MaxCountReplay : integer = 10;
 

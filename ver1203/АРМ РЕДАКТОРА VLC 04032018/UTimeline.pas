@@ -117,10 +117,7 @@ type
     procedure Image3Click(Sender: TObject);
   private
     { Private declarations }
-<<<<<<< HEAD
     CRow : integer;
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
     Procedure DrawIcons(ttl: TTypeTimeline; Selection: integer);
     function SelectIcons(X, Y: integer): integer;
   public
@@ -763,10 +760,7 @@ procedure EditTimeline(ARow: integer);
 var
   i, cellpos: integer;
 begin
-<<<<<<< HEAD
   FEditTimeline.CRow := ARow;
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
   FEditTimeline.Panel1.Visible := true;;
   FEditTimeline.Label1.Visible := true;
   FEditTimeline.Label1.Caption := 'Тип тайм-линии:';
@@ -878,10 +872,7 @@ begin
       (Form1.GridTimeLines.Objects[0, ARow] as TTimelineOptions)
         .Assign(OPTTimeline);
     end;
-<<<<<<< HEAD
     PutGridTimeLinesToServer(Form1.GridTimeLines);
-=======
->>>>>>> 567489eb579fa25cb906471546da671d36020444
   end;
 end;
 
@@ -1213,11 +1204,7 @@ begin
   // MyTextMessage('','Не обнаруженно ни одного модуля управления устройствами.'
   // + #13#10 +'Настройка оборудования не доступна',1);
   if OPTTimeline.TypeTL = tldevice then
-<<<<<<< HEAD
     SetProtocol(OPTTimeline, FEditTimeline.CRow)
-=======
-    SetProtocol(OPTTimeline)
->>>>>>> 567489eb579fa25cb906471546da671d36020444
   else
     MyTextMessage('Сообщение',
       'Отсутсвуют протоколы поддерживающие данный тип тайм-линий.', 1);

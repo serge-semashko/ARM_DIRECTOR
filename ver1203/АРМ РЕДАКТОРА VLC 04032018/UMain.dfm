@@ -1,9 +1,5 @@
 object Form1: TForm1
-<<<<<<< HEAD
   Left = -1000
-=======
-  Left = 208
->>>>>>> 567489eb579fa25cb906471546da671d36020444
   Top = 117
   HorzScrollBar.Visible = False
   VertScrollBar.Visible = False
@@ -19,11 +15,7 @@ object Form1: TForm1
   Font.Style = []
   KeyPreview = True
   OldCreateOrder = False
-<<<<<<< HEAD
   Position = poDesigned
-=======
-  Position = poScreenCenter
->>>>>>> 567489eb579fa25cb906471546da671d36020444
   Visible = True
   StyleElements = []
   OnClose = FormClose
@@ -33,11 +25,7 @@ object Form1: TForm1
   OnKeyUp = FormKeyUp
   OnResize = FormResize
   PixelsPerInch = 96
-<<<<<<< HEAD
   TextHeight = 16
-=======
-  TextHeight = 13
->>>>>>> 567489eb579fa25cb906471546da671d36020444
   object PanelControl: TPanel
     Left = 0
     Top = 0
@@ -195,13 +183,8 @@ object Form1: TForm1
         StyleElements = []
         OnClick = lbModeClick
         OnDblClick = lbModeClick
-<<<<<<< HEAD
         ExplicitWidth = 102
         ExplicitHeight = 20
-=======
-        ExplicitWidth = 107
-        ExplicitHeight = 24
->>>>>>> 567489eb579fa25cb906471546da671d36020444
       end
     end
     object PanelControlClip: TPanel
@@ -1095,11 +1078,7 @@ object Form1: TForm1
         Left = 0
         Top = 617
         Width = 312
-<<<<<<< HEAD
         Height = 16
-=======
-        Height = 13
->>>>>>> 567489eb579fa25cb906471546da671d36020444
         Align = alTop
         Visible = False
         StyleElements = []
@@ -1345,13 +1324,8 @@ object Form1: TForm1
           object lbPlayerFile: TLabel
             Left = 4
             Top = 127
-<<<<<<< HEAD
             Width = 72
             Height = 16
-=======
-            Width = 53
-            Height = 13
->>>>>>> 567489eb579fa25cb906471546da671d36020444
             Caption = 'lbPlayerFile'
             Visible = False
             StyleElements = []
@@ -1721,13 +1695,8 @@ object Form1: TForm1
               Caption = #1043#1088#1072#1092#1080#1095#1077#1089#1082#1080#1077' '#1096#1072#1073#1083#1086#1085#1099
               Layout = tlCenter
               StyleElements = []
-<<<<<<< HEAD
               ExplicitWidth = 158
               ExplicitHeight = 16
-=======
-              ExplicitWidth = 116
-              ExplicitHeight = 13
->>>>>>> 567489eb579fa25cb906471546da671d36020444
             end
           end
         end
@@ -1910,13 +1879,8 @@ object Form1: TForm1
               Caption = '00:00:00:00'
               Layout = tlCenter
               StyleElements = []
-<<<<<<< HEAD
               ExplicitWidth = 65
               ExplicitHeight = 16
-=======
-              ExplicitWidth = 57
-              ExplicitHeight = 13
->>>>>>> 567489eb579fa25cb906471546da671d36020444
             end
           end
         end
@@ -2051,13 +2015,8 @@ object Form1: TForm1
         object Label7: TLabel
           Left = 847
           Top = 13
-<<<<<<< HEAD
           Width = 41
           Height = 16
-=======
-          Width = 32
-          Height = 13
->>>>>>> 567489eb579fa25cb906471546da671d36020444
           Caption = 'Label7'
           Visible = False
           StyleElements = []
@@ -2156,22 +2115,14 @@ object Form1: TForm1
         object lbusesclpidlst: TLabel
           Left = 949
           Top = 0
-<<<<<<< HEAD
           Width = 99
-=======
-          Width = 76
->>>>>>> 567489eb579fa25cb906471546da671d36020444
           Height = 41
           Align = alLeft
           Alignment = taCenter
           Caption = #1057#1087#1080#1089#1086#1082' '#1082#1083#1080#1087#1086#1074
           Layout = tlCenter
           StyleElements = []
-<<<<<<< HEAD
           ExplicitHeight = 16
-=======
-          ExplicitHeight = 13
->>>>>>> 567489eb579fa25cb906471546da671d36020444
         end
         object Bevel14: TBevel
           Left = 727
@@ -2361,26 +2312,16 @@ object Form1: TForm1
     object Label8: TLabel
       Left = 33
       Top = 34
-<<<<<<< HEAD
       Width = 102
       Height = 16
-=======
-      Width = 76
-      Height = 13
->>>>>>> 567489eb579fa25cb906471546da671d36020444
       Caption = #1055#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1100':'
       StyleElements = []
     end
     object Label14: TLabel
       Left = 33
       Top = 82
-<<<<<<< HEAD
       Width = 53
       Height = 16
-=======
-      Width = 41
-      Height = 13
->>>>>>> 567489eb579fa25cb906471546da671d36020444
       Caption = #1055#1072#1088#1086#1083#1100':'
       StyleElements = []
     end
@@ -2408,11 +2349,7 @@ object Form1: TForm1
       Left = 33
       Top = 98
       Width = 150
-<<<<<<< HEAD
       Height = 24
-=======
-      Height = 21
->>>>>>> 567489eb579fa25cb906471546da671d36020444
       PasswordChar = '*'
       TabOrder = 1
       Text = 'Demo'
