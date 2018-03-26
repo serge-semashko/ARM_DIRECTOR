@@ -5,7 +5,7 @@ interface
 uses
     Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
     StdCtrls, ExtCtrls, Buttons, ComCtrls, Variants, MMSystem, Menus, UHRTimer,
-    Vcl.Samples.Spin, UCommon, UTimeline, UGRTimelines;
+    Vcl.Samples.Spin, UCommon, UTimeline, UGRTimelines, system.json;
 
 CONST
     WM_TRANSFER = WM_USER + 1; // Определяем сообщение
@@ -231,6 +231,7 @@ var
     i, icmd: Integer;
     StartFrame, DurFrame, EndFrame, nStartFrame, nEndFrame, nDurFrame: longint;
     DT_tlpupdate: int64;
+    js1 : TJSONObject;
 begin
     // WriteLog('vlcmode', 'TRY update TLP dt = '+IntToStr(DT_tlpupdate));
     try
@@ -266,6 +267,8 @@ begin
                 end else begin
                   InfoProtocol.SetData('Статус:', 'Не доступен');
                 end;
+//               if txt <> '' then
+//                  js1 := tjsonObject.ParseJSONValue(TEncoding.UTF8.GetBytes(txt), 0)  as tjsonObject;
               end;
               if infoweb<>nil then begin
                 for i:=1 to infoweb.Count-1

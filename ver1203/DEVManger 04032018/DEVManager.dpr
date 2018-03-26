@@ -16,7 +16,8 @@ uses
   UMyEvents in 'UMyEvents.pas',
   UTimeline in 'UTimeline.pas',
   uwebget in '..\helpers\uwebget.pas',
-  Web.Win.Sockets in '..\helpers\Web.Win.Sockets.pas';
+  Web.Win.Sockets in '..\helpers\Web.Win.Sockets.pas',
+  redis_common in '..\helpers\redis_common.pas';
 
 {$R *.RES}
 

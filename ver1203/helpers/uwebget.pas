@@ -12,6 +12,7 @@ const
     Play = 1;
     Paused = 2;
     Max_Refresh = 2;
+    Get_timeout = 300;
 
 type
     TPlayerMode = integer;
@@ -44,6 +45,8 @@ function getVariableFromJson(var json: tjsonobject; varName: string; varvalue: v
 function GetJsonStrFromServer(varName: ansistring): ansistring;
 
 function PutJsonStrToServer(varName: ansistring; varvalue: ansistring): ansistring;
+
+function ExtractJson(instr: ansistring): ansistring;
 
 var
     webvars_critsect: Tcriticalsection;
@@ -88,7 +91,7 @@ begin
             ff := TFileStream.create(FileName, fmCreate or fmShareDenyNone);
         ff.seek(0, soFromEnd);
         DecodeDate(now, Year, Month, Day);
-        txt := FormatDateTime('dd.mm.yyyy hh:mm:ss:ms ', now);
+        txt := FormatDateTime('dd.mm.yyyy hh:mm:ss:zzz ', now);
         txt := txt + log + #13#10;
         ff.write(txt[1], length(txt));
         ff.free;
@@ -311,6 +314,7 @@ begin
         end;
         result := webvars[i].jsonstr;
         webvars_critsect.Leave;
+        webWriteLog('webvars', 'Got ' + varName + ' resp=' + system.copy(result, 1, 20));
         exit;
     end;
     inc(webvar_count);
@@ -323,6 +327,17 @@ begin
     webvars[i].LastUpdate := -1;
     webvars[i].Refresh := 500;
     webvars_critsect.Leave;
+    st := TimegetTime;
+    while (TimeGetTime - st) < Get_timeout do begin
+        sleep(1);
+        if webvars[i].changed = -1 then
+            continue;
+        result := webvars[i].jsonstr;
+        webWriteLog('webvars', 'Get INIT wait and receive' + varName + ' resp=' + system.copy(result, 1, 20));
+        exit;
+    end;
+    webWriteLog('webvars', 'Get INIT wait and receive' + varName + ' timeout');
+
 end;
 
 function PutJsonStrToServer(varName: ansistring; varvalue: ansistring): ansistring;
@@ -363,35 +378,102 @@ begin
 end;
 
 { TclientHelper }
+function GetWebVarID(varName: ansistring): integer;
+begin
+    for result := 0 to webvar_count - 1 do begin
+        if ansiUppercase(varName) <> ansiUppercase(varName) then
+            continue;
+        exit;
+    end;
+    result := -1;
+end;
+
+function AddWebVar(varName: ansistring): integer;
+begin
+    webvars_critsect.Enter;
+    try
+
+        Inc(webvar_count);
+        webvars[webvar_count - 1].Name := varName;
+
+        if pos('[', varName) > 0 then
+            webvars[webvar_count - 1].baseName := system.copy(varName, 1, pos('[', varName) - 1)
+        else
+            webvars[webvar_count - 1].baseName := varName;
+        webvars[webvar_count - 1].changed := -1;
+        webvars[webvar_count - 1].jsonstr := '';
+        webvars[webvar_count - 1].json := nil;
+        webvars[webvar_count - 1].LastUpdate := -1;
+        webvars[webvar_count - 1].Refresh := 500;
+        result := webvar_count - 1;
+    except
+        on E: Exception do
+
+
+    end;
+    webvars_critsect.leave;
+end;
+
 procedure TIORedisThread.Update_Webvars;
 var
-    i, i1: integer;
+    i, i1, i_json: integer;
     str1: ansistring;
     mstr: tmemorystream;
     ff: tfilestream;
     putcommand: ansistring;
     Refreshed: integer;
     st: int64;
+    ans, resp, chtime: ansistring;
+    json: tjsonobject;
+    varName: AnsiString;
+    varValue: ansistring;
+    tmp: tbytes;
 begin
     Refreshed := 0;
-    for i := 0 to webvar_count - 1 do begin
-        st := TimeGetTime;
-        if webvars[i].changed = -10 then begin
-//            if st - WebVars [i].LastUpdate < WebVars [i].LastUpdate then continue;
-
-            SendWebVarToServer(i);
-            continue;
-        end;
-        if webvars[i].changed > -5 then begin
-            if st - WebVars[i].LastUpdate < WebVars[i].Refresh then
+    ans := Process_TCPRequest('/LST_', resp, chtime);
+    resp := ExtractJson(resp);
+    json := tjsonObject.ParseJSONValue(TEncoding.UTF8.GetBytes(resp), 0) as tjsonObject;
+    if json <> nil then begin
+        for i_json := 0 to json.Count - 1 do begin
+            st := TimegetTime;
+            varName := json.get(i_json).JsonString.Value;
+            varValue := json.get(i_json).JsonValue.Value;
+            i1 := GetWebVarID(varName);
+            if i1 < 0 then
+                i1 := AddWebVar(varName);
+            if (WebVars[i1].changed > 0) and (WebVars[i1].changed = StrToInt(varValue)) then
                 continue;
-            if Refreshed > Max_refresh then Continue;
-                
-            GetWebVarFromServer(i);
-            WebVars[i].LastUpdate := st;
-            inc(refreshed);
+            if (WebVars[i1].changed < -9) then
+                continue;
+
+            if WebVars[i1].Refresh > 0 then begin
+
+                if st - WebVars[i1].LastUpdate < WebVars[i1].Refresh then
+                    continue;
+                if Refreshed > Max_refresh then
+                    Continue;
+            end;
+
+            GetWebVarFromServer(i1);
+            WebVars[i1].LastUpdate := timeGetTime;
+            WebVars[i1].changed := StrToInt(varValue);
+            inc(Refreshed);
         end;
-    end;
+        for i := 0 to webvar_count - 1 do begin
+            st := TimeGetTime;
+            if webvars[i].changed = -10 then begin
+                SendWebVarToServer(i);
+                continue;
+            end;
+            webvars[i].changed := -st;
+            if webvars[i].changed > -5 then begin
+            end;
+        end;
+        json.free;
+    end
+    else
+        showmessage('Error webredis - var list = ' + resp);
+
 end;
 
 function TIORedisThread.SendWebVarToServer(ID: integer): integer;
@@ -411,19 +493,49 @@ begin
     webWriteLog('webget', 'Sent ' + webvars[ID].Name + ' res=' + resp);
 end;
 
+function ExtractJson(instr: ansistring): ansistring;
+var
+    i1: integer;
+begin
+    result := '';
+    i1 := pos('{', instr);
+    if i1 < 1 then
+        exit;
+    result := System.Copy(instr, i1, Length(instr));
+    i1 := length(result);
+    while (i1 > 2) do begin
+        if result[i1] = '}' then
+            break;
+        i1 := i1 - 1;
+    end;
+    result := System.Copy(result, 1, i1);
+
+end;
+
 function TIORedisThread.GetWebVarFromServer(ID: integer): integer;
 var
     varstr, vartime, resp: ansistring;
     ans: ansistring;
     St: int64;
     chtime: ansistring;
+    jsonstr: ansistring;
 begin
 
     webWriteLog('webget', 'Receive ' + webvars[ID].Name);
     St := timeGetTime;
     ans := Process_TCPRequest('/GET_' + webvars[ID].Name, resp, chtime);
     if ans = '' then begin
-//        webvars[ID].changed := St;
+        jsonstr := ExtractJson(resp);
+        if jsonstr <> '' then begin
+            webvars[ID].changed := St;
+            webvars[ID].jsonstr := jsonstr;
+        end
+        else begin
+            webvars[ID].changed := -1;
+            webvars[ID].jsonstr := '';
+        end;
+        ;
+
     end;
 
     webWriteLog('webget', 'Received ' + webvars[ID].Name + ' res=' + resp);
@@ -501,23 +613,32 @@ initialization
     EmptyWebVar.jsonStr := '';
     EmptyWebVar.changed := -1;
     EmptyWebVar.json := nil;
-    for i := 0 to 16 do begin
-        Inc(webvar_count);
-        webvars[i].Name := 'DEVMAN[' + IntToStr(i) + ']';
-        webvars[i].baseName := 'DEVMAN';
-        webvars[i].changed := -1;
-        webvars[i].jsonstr := '';
-        webvars[i].json := nil;
-        webvars[i].LastUpdate := -1;
-        webvars[i].Refresh := 1500;
-
-    end;
-
-//    TCPClient := TTcpClient.Create(nil);
-//    TCPClient.OnReceive := TclientHelper.ClientReceive;
+//
+//    for i := 0 to 16 do begin
+//        Inc(webvar_count);
+//        webvars[webvar_count - 1].Name := 'DEVMAN[' + IntToStr(i) + ']';
+//        webvars[webvar_count - 1].baseName := 'DEVMAN';
+//        webvars[webvar_count - 1].changed := -1;
+//        webvars[webvar_count - 1].jsonstr := '';
+//        webvars[webvar_count - 1].json := nil;
+//        webvars[webvar_count - 1].LastUpdate := -1;
+//        webvars[webvar_count - 1].Refresh := 500;
+//    end;
     webvars_critsect := TCriticalSection.Create;
     IOredis := TIORedisThread.Create;
     IOredis.Resume;
+    sleep(500);
+    try
+
+        if FileExists('webget') then
+            deletefile('webget');
+        if FileExists('webvars') then
+            deletefile('webvars');
+        if FileExists('webvar') then
+            deletefile('webvar');
+
+    finally
+    end;
 
 end.
 

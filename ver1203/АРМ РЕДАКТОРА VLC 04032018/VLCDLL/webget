@@ -94,3 +94,8 @@
 24.03.2018 15:29:09:39  peek answer
 24.03.2018 15:30:46:346 Receive block begin
 24.03.2018 15:33:10:310 Receive block begin
+26.03.2018 09:44:16:047 Receive block ok len =71 Time=5
+26.03.2018 09:44:16:104  success. TIME = 68  len=69 Ans=({DEVMAN[12]:"252127178",DEVMAN[2
+26.03.2018 09:44:16:104 Receive DEVMAN[3]
+26.03.2018 09:44:16:104  sendln /GET_DEVMAN[3]
+26.03.2018 16:16:36:387 Receive block begin
