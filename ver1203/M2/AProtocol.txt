@@ -1,1 +1,0 @@
-<TypeDevices=Видеомикшер><Firms=Sony><Device=><Protocol=Sony BVS/DVS><PortSelect=RS422><Ports></Ports><MainOptions><Count=0></MainOptions><AddOptions><Title=><Count=0></AddOptions>

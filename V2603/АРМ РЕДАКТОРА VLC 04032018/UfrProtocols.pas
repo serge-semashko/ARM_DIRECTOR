@@ -112,6 +112,7 @@ procedure updateportdata;
 var lstdevmng : string;
     i, indx : Integer;
 begin
+
   UpdateManagerList;
 
   lstdevmng := '';

@@ -66,6 +66,7 @@ var
     oldCTC: string;
 //    TCPClient: Ttcpclient;
     IOredis: TIORedisThread;
+    FastVars : tstringList;
 
 implementation
 
@@ -89,6 +90,32 @@ begin
 exit;
     try
         lfname := application.exename + '.log.txt';
+        if FileExists(lfname) then
+            ff := TFileStream.create(lfname, fmOpenWrite or fmShareDenyNone)
+        else
+            ff := TFileStream.create(lfname, fmCreate or fmShareDenyNone);
+        ff.seek(0, soFromEnd);
+        DecodeDate(now, Year, Month, Day);
+        txt := FormatDateTime('dd.mm.yyyy hh:mm:ss:zzz ', now);
+        txt := txt + log + #13#10;
+        ff.write(txt[1], length(txt));
+        ff.free;
+    finally
+
+    end;
+end;
+
+procedure ABSWriteLog( log: widestring);
+var
+    F: TextFile;
+    txt, FN: ansistring;
+    Day, Month, Year: Word;
+    pathlog: string;
+    ff: TFileStream;
+    lfname: ansistring;
+begin
+    try
+        lfname := application.exename + '.log.abs.txt';
         if FileExists(lfname) then
             ff := TFileStream.create(lfname, fmOpenWrite or fmShareDenyNone)
         else
@@ -306,34 +333,18 @@ var
     putcommand: ansistring;
     st: int64;
 begin
-    webWriteLog('webvars', 'Get ' + varName);
+//    webWriteLog('webvars', 'Get ' + varName);
     result := '';
-    webvars_critsect.Acquire;
     for i := 0 to webvar_count - 1 do begin
         if webvars[i].name <> varName then
             continue;
         if webvars[i].changed = -1 then begin
-            webvars_critsect.Leave;
             exit;
         end;
         result := webvars[i].jsonstr;
-        webvars_critsect.Leave;
-        webWriteLog('webvars', 'Got ' + varName + ' resp=' + system.copy(result, 1, 20));
+//        webWriteLog('webvars', 'Got ' + varName + ' resp=' + system.copy(result, 1, 20));
         exit;
     end;
-//    inc(webvar_count);
-//    webWriteLog('webvar', 'GetJSON  Add var ' + varName + ' VCount=' + IntToStr(webvar_count));
-//    i := webvar_count - 1;
-//    webvars[i].Name := varName;
-//    webvars[i].jsonstr := '';
-//    webvars[i].json := nil;
-//    webvars[i].changed := -1;
-//    webvars[i].LastUpdate := -1;
-//    webvars[i].Refresh := 500;
-//    webvars_critsect.Leave;
-//    st := TimegetTime;
-//    webWriteLog('webvars', 'Get INIT wait and receive' + varName + ' timeout');
-
 end;
 
 function PutJsonStrToServer(varName: ansistring; varvalue: ansistring): ansistring;
@@ -351,10 +362,15 @@ begin
     for i := 0 to webvar_count - 1 do begin
         if webvars[i].name <> varName then
             continue;
+        if webvars[i].changed > -5 then begin
+            webvars[i].changed := -10;
+            webvars[i].jsonstr := '';
+        end;
         if webvars[i].jsonstr = varvalue then begin
             webvars_critsect.Leave;
             exit;
         end;
+
         webvars[i].jsonstr := varvalue;
         webvars[i].changed := -10;
         webvars_critsect.Leave;
@@ -377,7 +393,7 @@ end;
 function GetWebVarID(varName: ansistring): integer;
 begin
     for result := 0 to webvar_count - 1 do begin
-        if ansiUppercase(varName) <> ansiUppercase(varName) then
+        if ansiUppercase(varName) <> ansiUppercase(webvars[result].Name) then
             continue;
         exit;
     end;
@@ -401,6 +417,9 @@ begin
         webvars[webvar_count - 1].json := nil;
         webvars[webvar_count - 1].LastUpdate := -1;
         webvars[webvar_count - 1].Refresh := 500;
+        if FastVars.IndexOf(varName)>=0 then         webvars[webvar_count - 1].Refresh := 0;
+
+
         result := webvar_count - 1;
     except
         on E: Exception do
@@ -433,6 +452,7 @@ begin
         exit;
     end;
     resp := ExtractJson(resp);
+    webWriteLog('webget', 'Process list  = ' + resp);
     json := tjsonObject.ParseJSONValue(TEncoding.UTF8.GetBytes(resp), 0) as tjsonObject;
 //    json := tjsonObject.ParseJSONValue(TEncoding.UTF8.GetBytes(resp+#13), 0) as tjsonObject;
 //    json := tjsonObject.ParseJSONValue(TEncoding.UTF8.GetBytes(resp+#13+#10), 0) as tjsonObject;
@@ -471,19 +491,20 @@ begin
             webWriteLog('', 'check to upload ' + webvars[i].name);
             if json.GetValue(webvars[i].name) <> nil then begin
                 srvtime := json.GetValue(webvars[i].name).Value;
-                if (StrToInt(srvtime) <> -1) and  (webvars[i].changed < -10) then
-                continue;
+                if (StrToInt(srvtime) <> -1) and (webvars[i].changed < -10) then
+                    continue;
             end;
             webWriteLog('', '!!!! upload ' + webvars[i].name);
             SendWebVarToServer(i);
             webvars[i].changed := -st;
-            if webvars[i].jsonStr='' then webvars[i].changed := -1;
+            if webvars[i].jsonStr = '' then
+                webvars[i].changed := -1;
 
         end;
         json.free;
     end
     else
-        showmessage('Error webredis - var list = ' + resp);
+        ABSWriteLog('Error webredis - var list = ' + resp);
 
 end;
 
@@ -598,7 +619,7 @@ var
 begin
     TCPCli := TTcpClient.Create(nil);
     while not Terminated do begin
-        sleep(3);
+        sleep(1);
         errtxt := '';
         try
             Reddis_Exchange;
@@ -608,7 +629,7 @@ begin
                 errtxt := e.Message;
         end;
         if errtxt <> '' then
-            ShowMessage(errtxt);
+            ABSWriteLog('exception on Reddis_Exchange '+errtxt);
         errtxt := '';
     end;
 
@@ -620,6 +641,8 @@ var
 initialization
     jsonware_url := 'http://localhost:9090/';
     server_addr := '127.0.0.1';
+    FastVars := tstringlist.Create;
+    fastvars.Add('TLP');
     server_port := '9085';
     EmptyWebVar.Name := '';
     EmptyWebVar.baseName := '';

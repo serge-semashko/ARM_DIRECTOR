@@ -117,6 +117,12 @@ var
     maxint: Integer = 0;
     minint: Integer = 10000;
     lastReq: double;
+    TLP_Time: int64 = -1;
+    TLP_count: int64 = 0;
+    TLP_speed: ansistring = '';
+    CTC_Time: int64 = -1;
+    CTC_count: int64 = 0;
+    CTC_speed: ansistring = '';
 
 implementation
 
@@ -668,17 +674,37 @@ begin
     tnow := timeGetTime;
     if keyname = 'TLP' then begin
 
+        if TimegetTime - TLP_Time < 1000 then
+            Inc(TLP_count)
+        else begin
+            TLP_speed := format('%f',[TLP_count*1000.0/(TimegetTime - TLP_Time)]);
+            TLP_count := 0;
+            TLP_time := TimeGetTime;
+        end;
         JSvalue := json.GetValue('Position');
         if JSvalue <> nil then
             posstr := JSvalue.Value
         else
             posstr := 'NIL';
 
+        posstr := posstr + ' UPD/sec = ' + TLP_speed;
         HTTPSRVForm.txt1.Caption := 'TLP:' + formatdatetime('TLP: HH:NN:SS ZZZ ', now) + ' position:' + posstr;
 
     end
-    else if keyname = 'CTC' then
-        HTTPSRVForm.txt2.Caption := 'CTC:' + formatdatetime('TLP: HH:NN:SS ZZZ ', now)
+    else if keyname = 'CTC' then begin
+
+        if TimegetTime - CTC_Time < 1000 then
+            Inc(CTC_count)
+        else begin
+            CTC_speed := IntToStr(CTC_count);
+            CTC_speed := format('%f',[CTC_count*1000.0/(TimegetTime - CTC_Time)]);
+            CTC_count := 0;
+            CTC_time := TimeGetTime;
+        end;
+        posstr := ' UPD/sec = ' + CTC_speed;
+
+        HTTPSRVForm.txt2.Caption := 'CTC:' + formatdatetime(' HH:NN:SS ZZZ ', now)+ posstr;
+    end
     else
         HTTPSRVForm.memo1.lines.Values[keyname] := formatdatetime('HH:NN:SS ZZZ', now);
     for i1 := 0 to VarCount - 1 do begin
