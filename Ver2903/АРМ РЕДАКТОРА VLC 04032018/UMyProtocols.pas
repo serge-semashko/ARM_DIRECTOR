@@ -521,9 +521,9 @@ begin
     buff.clear;
     try
       FName := extractfilepath(application.ExeName) + FileName;
-      if not FileExists(FileName) then
+      if not FileExists(FName) then
         exit;
-      buff.LoadFromFile(FileName);
+      buff.LoadFromFile(Fname);
       for i := 0 to buff.Count - 1 do
         ss := ss + trim(buff.Strings[i]);
       ss := GetProtocolsStr(ss, TypeProtocols);

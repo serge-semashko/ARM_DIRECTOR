@@ -38,7 +38,6 @@ type
         Refresh: int64;
     end;
 
-procedure ABSWriteLog(log: widestring);
 
 procedure addVariableToJson(var json: tjsonobject; varName: string; varvalue: variant);
 
@@ -74,7 +73,7 @@ var
     ChangeServerIP: boolean = false;
 
 implementation
-
+uses uwebredis_common;
 var
     PortNum: integer = 9090;
     chbuf: array[0..100000] of char;
@@ -88,78 +87,6 @@ begin
     IOredis.TCPCli.Disconnect;
 end;
 
-procedure webWriteLog(FileName: string; log: widestring); overload;
-var
-    F: TextFile;
-    txt, FN: ansistring;
-    Day, Month, Year: Word;
-    pathlog: string;
-    ff: TFileStream;
-    lfname: ansistring;
-    ans: ansistring;
-    i1: integer;
-begin
-   exit;
-    ans := '';
-    for i1 := 0 to webvar_count - 1 do
-        ans := ans + ' ' + webvars[i1].Name + ':' + IntToStr(webvars[i1].changed);
-
-    try
-        lfname := application.exename + '.log.txt';
-        if FileExists(lfname) then
-            ff := TFileStream.create(lfname, fmOpenWrite or fmShareDenyNone)
-        else
-            ff := TFileStream.create(lfname, fmCreate or fmShareDenyNone);
-        ff.seek(0, soFromEnd);
-        DecodeDate(now, Year, Month, Day);
-        txt := FormatDateTime('dd.mm.yyyy hh:mm:ss:zzz ', now);
-        txt := txt + FileName + log + #13#10;
-        ff.write(txt[1], length(txt));
-        txt := 'Webvars = ' + ans + #13#10;
-        ff.write(txt[1], length(txt));
-        ff.free;
-    finally
-
-    end;
-end;
-
-procedure webWriteLog(log: widestring); overload;
-var
-    F: TextFile;
-    txt, FN: ansistring;
-    Day, Month, Year: Word;
-    pathlog: string;
-    ff: TFileStream;
-    lfname: ansistring;
-begin
-    webWriteLog('', log);
-end;
-
-procedure ABSWriteLog(log: widestring);
-var
-    F: TextFile;
-    txt, FN: ansistring;
-    Day, Month, Year: Word;
-    pathlog: string;
-    ff: TFileStream;
-    lfname: ansistring;
-begin
-    try
-        lfname := application.exename + '.log.txt';
-        if FileExists(lfname) then
-            ff := TFileStream.create(lfname, fmOpenWrite or fmShareDenyNone)
-        else
-            ff := TFileStream.create(lfname, fmCreate or fmShareDenyNone);
-        ff.seek(0, soFromEnd);
-        DecodeDate(now, Year, Month, Day);
-        txt := FormatDateTime('dd.mm.yyyy hh:mm:ss:zzz ', now);
-        txt := '!!! ' + txt + log + #13#10;
-        ff.write(txt[1], length(txt));
-        ff.free;
-    finally
-
-    end;
-end;
 
 function getVariableFromJson(var json: tjsonobject; varName: string; varvalue: variant): variant;
 var
@@ -196,79 +123,7 @@ begin
     json.AddPair(varName, strValue);
 end;
 
-function ReceiveBlob(sock: thandle; var buff: array of ansichar; len: integer): Integer;
-var
-    rc: integer;
-    incount: integer;
-    readLen: integer;
-    Blockfinished: boolean;
-    st, i1, i2: int64;
-begin
-    st := timeGetTime;
-    webWriteLog('RB>', 'Receive block begin');
-    FillChar(buff, high(buff), 0);
-    readLen := 0;
-    result := -1;
-    Blockfinished := false;
-    while (true) do begin
-        sleep(2);
-//       synWriteLog('webget', ' IOCTL');
-        rc := ioctlsocket(sock, FIONREAD, incount);
-        if incount = 0 then begin
-            if timegettime - st > 1000 then
-                result := readLen;
-            break;
-            continue;
-        end;
-        st := 1000;
-        if incount > 8000 then
-//            synWriteLog('webget', ' LARGE TCP To read = ' + IntToStr(incount));
-//        synWriteLog('webget', ' TCP To read = ' + IntToStr(incount));
-            if rc <> 0 then begin
-                rc := wsagetlasterror;
-                webWriteLog('RB>', ' DISconnect BY ERROR AFTER ioctl = ' + syserrormessage(rc));
-                Exit;
-            end;
-        if incount < 0 then begin
-            rc := wsagetlasterror;
-            if rc <> 0 then begin
-                webWriteLog('webget', ' DISconnect BY ERROR AFTER RECEIVE = ' + syserrormessage(rc));
-            end
-            else
-                webWriteLog('webget', ' DISconnect BY ERROR AFTER RECEIVE incount= ' + IntToStr(incount));
-            Exit;
-        end;
-        rc := recv(sock, buff[readLen], incount, 0);
-        if rc <= 0 then begin
-            rc := WSAGetLastError;
-            webWriteLog('webget', 'Error receive ' + syserrormessage(rc));
-            exit;
-        end;
-        for i1 := readLen to readLen + rc - 1 do begin
-            if buff[i1] <> #255 then
-                continue;
-            Blockfinished := true;
-            result := readLen;
-            Break;
-        end;
-        readLen := readLen + rc;
-        if Blockfinished then
-            exit;
-    end;
-//    synWriteLog('webget', 'Receive block ok len =' + IntToSTr(readLen));
-    result := readLen;
-end;
-
-function TIORedisThread.Process_TCPRequest(instr: AnsiString; var resp, chtime: ansistring; Long: boolean): ansistring;
-var
-    rc: integer;
-    st: int64;
-    SendString: ansistring;
-    incount: u_long;
-    INBUF: array[0..300000] of ansiCHAR;
-    outBUF: array[0..300000] of ansiCHAR;
-
-    procedure FillBuff(var buff: array of ansichar; instr: ansistring);
+    procedure FillBuff(var buff: array of ansichar; str: ansistring);
     var
         i1, len: integer;
         lstr: tstringlist;
@@ -279,11 +134,21 @@ var
 //            lstr.SaveToFile(FormatDateTime('HH_NN_SS_ZZZ', now) + '.txt');
 //        end;
 
-        len := length(instr);
-        for i1 := 0 to length(instr) - 1 do
-            buff[i1] := instr[i1 + 1];
+        len := length(str);
+        for i1 := 0 to length(str) - 1 do
+            buff[i1] := str[i1 + 1];
 
     end;
+
+function TIORedisThread.Process_TCPRequest(instr: AnsiString; var resp, chtime: ansistring; Long: boolean): ansistring;
+var
+    rc: integer;
+    st: int64;
+    SendString: ansistring;
+    incount: u_long;
+    INBUF: array[0..300000] of ansiCHAR;
+    outBUF: array[0..300000] of ansiCHAR;
+
 
 begin
     result := 'Error';
@@ -315,18 +180,19 @@ begin
             Exit;
         end;
     end;
+
     rc := ioctlsocket(tcpcli.handle, FIONREAD, incount);
-    if incount > 0 then
+    if incount > 0 then begin
+        webWriteLog('TCP>', ' FLUSH input data  '+ IntToSTR(incount));
         rc := recv(tcpcli.handle, INBUF[0], incount, 0);
+    end;
     FillChar(outBUF[0], 250000, 0);
     if chtime <> '' then
-        SendString := instr + #00 + #255
+        SendString :=SOH +instr + EOT + #00
     else
-        SendString := '/TIME=[' + chtime + ']' + instr + #00 + #255;
-
+        SendString :=soh+ '/TIME=[' + chtime + ']' + instr+ eot + #00 ;
     fillbuff(outBUF, SendString);
-
-    webWriteLog('TCP>', ' sendln ' + system.copy(instr, 1, 20));
+    webWriteLog('TCP>', ' send blob(' +IntToStr(length(SendString))+')= '+ system.copy(SendString, 1, 190));
     rc := Send(tcpcli.handle, outBUF[0], length(SendString), 0);
     if rc < 0 then begin
         rc := WSAGetlastError;
@@ -335,19 +201,20 @@ begin
         TCPCli.Disconnect;
         Exit;
     end;
-    webWriteLog('TCP>', ' peek answer');
-    rc := recv(tcpCli.Handle, INBUF[0], 4000, MSG_PEEK);
-    if rc < 0 then begin
-        rc := WSAGetlastError;
-        webWriteLog('TCP>', ' DISconnect BY ERROR pn peek answer');
-        tcpCli.Disconnect;
-        Exit;
-    end;
-    if Long then begin
-        webWriteLog('TCP>', ' Sleep before long');
-        sleep(300);
-    end;
+//    webWriteLog('TCP>', ' peek answer');
+//    rc := recv(tcpCli.Handle, INBUF[0], 4000, MSG_PEEK);
+//    if rc < 0 then begin
+//        rc := WSAGetlastError;
+//        webWriteLog('TCP>', ' DISconnect BY ERROR pn peek answer');
+//        tcpCli.Disconnect;
+//        Exit;
+//    end;
+//    if Long then begin
+//        webWriteLog('TCP>', ' Sleep before long');
+//        sleep(300);
+//    end;
 
+    webWriteLog('TCP>', ' GET ANSWER for request');
     rc := ReceiveBlob(tcpCli.Handle, INBUF, 200000);
     if rc < 0 then begin
         rc := WSAGetlastError;

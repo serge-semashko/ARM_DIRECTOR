@@ -19,7 +19,8 @@ uses
   {$ENDIF MACOS}
   System.SysConst,
   dialogs,
-  Web.Win.Sockets in '..\helpers\Web.Win.Sockets.pas';
+  Web.Win.Sockets in '..\helpers\Web.Win.Sockets.pas',
+  uwebredis_common in '..\helpers\uwebredis_common.pas';
 
 // http in 'http.pas';
 

@@ -17,7 +17,8 @@ uses
   UTimeline in 'UTimeline.pas',
   uwebget in '..\helpers\uwebget.pas',
   USetID in 'USetID.pas' {FrSetID},
-  Web.Win.Sockets in '..\helpers\Web.Win.Sockets.pas';
+  Web.Win.Sockets in '..\helpers\Web.Win.Sockets.pas',
+  uwebredis_common in '..\helpers\uwebredis_common.pas';
 
 {$R *.RES}
 

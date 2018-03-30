@@ -65,7 +65,8 @@ uses
   UPlayer in '..\helpers\UPlayer.pas',
   uwebget in '..\helpers\uwebget.pas',
   vlcpl in '..\helpers\vlcpl.pas',
-  Web.Win.Sockets in '..\helpers\Web.Win.Sockets.pas';
+  Web.Win.Sockets in '..\helpers\Web.Win.Sockets.pas',
+  uwebredis_common in '..\helpers\uwebredis_common.pas';
 
 {$R *.res}
 

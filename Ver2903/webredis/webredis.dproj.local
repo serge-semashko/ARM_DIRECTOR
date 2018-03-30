@@ -1,2 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<BorlandProject/>
+<BorlandProject>
+  <Transactions>
+    <Transaction>2018.03.30 07:56:29.864,=G:\home\ARM_EDITOR\Ver2903\webredis\Unit1.pas</Transaction>
+    <Transaction>2018.03.30 07:57:07.027,G:\home\ARM_EDITOR\Ver2903\helpers\uwebredis_common.pas=G:\home\ARM_EDITOR\Ver2903\webredis\Unit1.pas</Transaction>
+  </Transactions>
+</BorlandProject>

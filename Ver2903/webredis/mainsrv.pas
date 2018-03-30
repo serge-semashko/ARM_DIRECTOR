@@ -9,7 +9,6 @@ uses
     strutils, system.json, AppEvnts, Menus, inifiles, das_const, ipcthrd,
     TeEngine, Series, TeeProcs, Chart, VclTee.TeeGDIPlus, System.Generics.Collections,
     mmsystem, Web.Win.Sockets;
-
 type
     THTTPSRVForm = class(TForm)
         Panel1: TPanel;
@@ -89,9 +88,6 @@ type
         json: TJSONObject;
     end;
 
-procedure webWriteLog(log: widestring); overload;
-
-procedure webWriteLog(partname, log: widestring); overload;
 
 function ProcessRequest(URI: string): AnsiString;
 
@@ -110,18 +106,10 @@ var
     PortNum: Integer = 9090;
     textfromjson: string = '[]';
     currentData: string = '{}';
-    testjson: string = '[{"time":"18:57:40","sbrkgu1":0,"sbrkgu2":0,"k1t6":272.73,"k1t12":295.05,"k1t13":288.41,"k1dt5t6":12.15,"k1dt3t4":2.73,"k1sbr":0,' + '"k1vanna":0,"k1bo1":0.37,"k1bo2":0,"k2t6":108.89,"k2t12":211.58,"k2t13":286.86,"k2dt5t6":-2.02,"k2dt3t4":-1.91,"k2sbr":0,"k2vanna":0,' + '"k2bo1":0,"k2bo2":58.79}]';
-    starttime: double;
     HTTP: THTTPSend = nil;
-    PrevUpdate: double = 0;
     HTTPsrv: TTCPHttpDaemon;
     HTTPSRVFORM: THTTPSRVForm;
     URL: string;
-    intsum: Integer = 0;
-    intcount: Integer = 0;
-    maxint: Integer = 0;
-    minint: Integer = 10000;
-    lastReq: double;
     TLP_Time: int64 = -1;
     TLP_count: int64 = 0;
     TLP_speed: ansistring = '';
@@ -132,113 +120,16 @@ var
 implementation
 
 uses
-    shellapi;
+    shellapi, uwebredis_common;
 {$R *.dfm}
 
-procedure webWriteLog(log: widestring); overload;
-var
-    F: TextFile;
-    txt, FN: ansistring;
-    Day, Month, Year: Word;
-    pathlog: string;
-    ff: TFileStream;
-    lfname: ansistring;
-begin
- webWriteLog('',log);
-end;
-
-procedure webWriteLog(partname, log: widestring); overload;
-var
-    F: TextFile;
-    txt, FN: ansistring;
-    Day, Month, Year: Word;
-    pathlog: string;
-    ff: TFileStream;
-    lfname: ansistring;
-begin
-    try
-        lfname := application.exename + '.log.txt';
-        if FileExists(lfname) then
-            ff := TFileStream.create(lfname, fmOpenWrite or fmShareDenyNone)
-        else
-            ff := TFileStream.create(lfname, fmCreate or fmShareDenyNone);
-        ff.seek(0, soFromEnd);
-        DecodeDate(now, Year, Month, Day);
-        txt := FormatDateTime('dd.mm.yyyy hh:mm:ss:zzz ', now);
-        txt := txt + log + #13#10;
-        ff.write(txt[1], length(txt));
-        ff.free;
-    finally
-
-    end;
-end;
-
-function ReceiveBlob(sock: thandle; var buff: array of ansichar; len: integer): Integer;
-var
-    rc: integer;
-    incount: integer;
-    readLen: integer;
-    Blockfinished : boolean;
-    st, i1, i2: int64;
-begin
-    st := timeGetTime;
-    webWriteLog('webget', 'Receive block begin');
-    FillChar(buff, high(buff), 0);
-    readLen := 0;
-    result := -1;
-    blockfinished := false;
-    while (true) do begin
-        sleep(2);
-//       synWriteLog('webget', ' IOCTL');
-        rc := ioctlsocket(sock, FIONREAD, incount);
-        if incount = 0 then begin
-            if timegettime - st > 1000 then
-                result := readlen;
-                break;
-            continue;
-        end;
-        st := 1000;
-        if incount > 8000 then
-//            synWriteLog('webget', ' LARGE TCP To read = ' + IntToStr(incount));
-//        synWriteLog('webget', ' TCP To read = ' + IntToStr(incount));
-            if rc <> 0 then begin
-                rc := wsagetlasterror;
-                webWriteLog('webget', ' DISconnect BY ERROR AFTER ioctl = ' + syserrormessage(rc));
-                Exit;
-            end;
-        if incount < 0 then begin
-            rc := wsagetlasterror;
-            if rc <> 0 then begin
-                webWriteLog('webget', ' DISconnect BY ERROR AFTER RECEIVE = ' + syserrormessage(rc));
-            end
-            else
-                webWriteLog('webget', ' DISconnect BY ERROR AFTER RECEIVE incount= ' + IntToStr(incount));
-            Exit;
-        end;
-        rc := recv(sock, buff[readLen], incount, 0);
-        if rc <= 0 then begin
-            rc := WSAGetLastError;
-            webWriteLog('webget', 'Error receive ' + syserrormessage(rc));
-            exit;
-        end;
-        for i1 := readLen to readLen + rc -1  do begin
-          if buff[i1]<>#255 then continue;
-          Blockfinished := true;
-          result := readlen;
-          Break;
-        end;
-        readLen := readLen + rc;
-        if Blockfinished then exit;
-    end;
-//    synWriteLog('webget', 'Receive block ok len =' + IntToSTr(readLen));
-    result := readLen;
-end;
 
 procedure THTTPSRVForm.TcpserverAccept(Sender: TObject;       //пришло сообщение
     ClientSocket: TCustomIpClient);
 var
     txt: string;
-    buffer: array[0..300000] of ansichar;
+    Inbuffer: array[0..300000] of ansichar;
+    OUTBUffer: array[0..300000] of ansichar;
     tmpBuffer: integer;
     rcstr, hstr: string;
     rc: Integer;
@@ -254,7 +145,7 @@ begin
 //    mmo1.Lines.add(FormatDateTime('HH:NN:SS ', now) + 'accept' + hstr);
     while True do begin
         sleep(1);
-        rc := recv(ClientSocket.Handle, buffer[0], 1, MSG_PEEK);
+        rc := recv(ClientSocket.Handle, inbuffer[0], 1, MSG_PEEK);
         if rc <= 0 then begin
             rc := WSAGetlastError;
             webWriteLog('webget', ' DISconnect by other sid. Checked on wait incoming packet' + SysErrorMessage(rc));
@@ -262,19 +153,20 @@ begin
             Exit;
         end;
         st := timegettime;
-        webWriteLog('webget', 'Begin receive block');
+        webWriteLog('TCPaccept>', 'Begin receive block');
 
-        rc := ReceiveBlob(ClientSocket.Handle, buffer, 200000);
+        rc := ReceiveBlob(ClientSocket.Handle, inbuffer, 200000);
         if rc < 0 then begin
             rc := WSAGetlastError;
             ;
-            webWriteLog('webget', ' DISconnect BY ERROR AFTER receive blob');
+            webWriteLog('TCPaccept>', ' DISconnect BY ERROR AFTER receive blob');
             ClientSocket.Disconnect;
             Exit;
         end;
 
-        instr := buffer;
-        webWriteLog('webget', Format('Received len=%d time=%d ', [rc, timegettime - st]) + ' Request= ' + system.copy(instr, 1, 30));
+        instr := inbuffer;
+
+        webWriteLog('TCPaccept>', Format('Received len=%d time=%d ', [rc, timegettime - st]) + ' Request= ' + system.copy(instr, 1, 30));
         while length(instr) > 5 do begin
             if system.copy(instr, 1, 5) = '/GET_' then
                 break;
@@ -297,27 +189,26 @@ begin
         i1 := pos(' ', uri) - 1;
         if i1 > 1 then
             uri := system.copy(uri, 1, i1);
-        webWriteLog('webget', ' Request ' + system.copy(uri, 1, 30));
+        webWriteLog('TCPaccept>', ' Request ' + system.copy(uri, 1, 30));
 
-        outstr := ProcessRequest(uri);
+        outstr :=soh+ ProcessRequest(uri)+eot+#0;
         if pos('GET_', uri) > 0 then begin
 
 //            synWriteLog('GET_', uri + ' =  ' + outstr);
         end;
-        webWriteLog('webget', ' Answer ' + system.copy(outstr, 1, 30));
+        webWriteLog('TCPaccept>', ' Answer ' + system.copy(outstr, 1, 30));
 
-        strpcopy(buffer, #1+outstr + #0 + #255);
-        webWriteLog('webget', Format('Processed len=%d time=%d ', [rc, timegettime - st]) + ' Answer= ' + system.copy(outstr, 1, 30));
-        rc := Send(ClientSocket.handle, buffer[0], length(outstr + #00 + #255), 0);
-        webWriteLog('webget', ' send ' + IntToStr(rc));
+        strpcopy(outbuffer,outstr);
+        webWriteLog('TCPaccept>', Format('Processed len=%d time=%d ', [rc, timegettime - st]) + ' Answer= ' + system.copy(outstr, 1, 30));
+        rc := Send(ClientSocket.handle, outbuffer[0], length(outstr), 0);
+        webWriteLog('wTCPaccept>', ' send ' + IntToStr(rc));
         if rc < 0 then begin
             rc := WSAGetlastError;
-            webWriteLog('webget', ' DISconnect BY ERROR AFTER SEND ERR = ' + syserrormessage(rc));
+            webWriteLog('TCPaccept>', ' DISconnect BY ERROR AFTER SEND ERR = ' + syserrormessage(rc));
             ClientSocket.Disconnect;
             Exit;
         end;
-        webWriteLog('webget', Format('Completed time=%d ', [timegettime - st]));
-
+        webWriteLog('TCPaccept>', Format('Completed time=%d ', [timegettime - st]));
     end;
 
 end;
@@ -489,7 +380,6 @@ var
     rc: integer;
 begin
 
-    lastReq := -1;
     Ic(1, Application.Icon);
     Timer1.Enabled := true;
     application.Minimize;
@@ -666,15 +556,6 @@ begin
         Exit;
     sock.SendBuffer(OutputData.Memory, OutputData.size);
     addMark(7);
-    if lastReq > 0 then begin
-        intsum := intsum + trunc((now - lastReq) * 24 * 3600 * 1000);
-        inc(intcount);
-        if (now - lastReq) * 24 * 3600 * 1000 > maxint then
-            maxint := trunc((now - lastReq) * 24 * 3600 * 1000);
-        if (now - lastReq) * 24 * 3600 * 1000 < minint then
-            minint := trunc((now - lastReq) * 24 * 3600 * 1000);
-    end;
-    lastReq := now;
     addMark(8);
 
     sock.CloseSocket;
@@ -768,7 +649,7 @@ begin
     for i1 := 0 to VarCount - 1 do begin
         if ansiuppercase(webvars[i1].Name) <> ansiuppercase(keyname) then
             continue;
-        HTTPSRVForm.memo1.lines.Values[keyname] := 'deleted ' + formatdatetime('HH:NN:SS ZZZ', now);
+        IF keyname<>'TLP' THEN  HTTPSRVForm.memo1.lines.Values[keyname] := 'deleted ' + formatdatetime('HH:NN:SS ZZZ', now);
         webvars[i1].changed := -1;
         result := '{"RC":0,"status":"Deleted"}';
 
@@ -920,6 +801,8 @@ begin
         if i1 > 5 then begin
             keyName := copy(URI, pos_var_name, i1 - pos_var_name);
             str1 := copy(URI, i1 + 1, Length(URI));
+            str1 := AnsiReplaceStr(str1,EOT,'');
+            str1 := trim(AnsiReplaceStr(str1,soh,''));
             if str1 = '' then begin
                 resp := RemoveWebVar(keyName);
             end
@@ -994,10 +877,6 @@ var
 begin
     Timer1.Enabled := false;
 
-    starttime := now;
-    while (now - starttime) * 24 * 3600 < 3 do
-        Application.ProcessMessages;
-
     tcpsrv := ttcpserver.Create(nil);
     tcpsrv.LocalPort := IntToStr(StrToInt(LocalTCPPort));
     tcpsrv.OnAccept := TcpserverAccept;
@@ -1021,14 +900,8 @@ begin
     end;
 
 
-//    HTTPsrv := TTCPHttpDaemon.Create;
-    lastReq := -1;
-
 end;
 
-var
-    jcount: Integer;
-    str: string;
 
 var
     ini: tinifile;
@@ -1043,7 +916,6 @@ initialization
         HardRec.UpdateCounter := 13131313
     end;
     HardRec.UpdateCounter := 0;
-    lastReq := now;
 //    varNames := tstringlist.Create;
 //    Varvalues:= tstringlist.Create;
     EmptyWebVar.Name := '';

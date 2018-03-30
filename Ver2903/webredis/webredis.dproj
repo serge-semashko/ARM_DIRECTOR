@@ -97,6 +97,7 @@
         <Icon_MainIcon>webredis_Icon1.ico</Icon_MainIcon>
         <AppEnableHighDPI>true</AppEnableHighDPI>
         <BT_BuildType>Debug</BT_BuildType>
+        <Debugger_RunParams>netlog</Debugger_RunParams>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -106,6 +107,7 @@
             <Form>HTTPSRVForm</Form>
         </DCCReference>
         <DCCReference Include="..\helpers\Web.Win.Sockets.pas"/>
+        <DCCReference Include="..\helpers\uwebredis_common.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
