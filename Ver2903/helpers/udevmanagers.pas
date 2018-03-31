@@ -127,11 +127,14 @@ var
 begin
     json := tjsonObject.ParseJSONValue(TEncoding.UTF8.GetBytes(JSONstr), 0) as tjsonObject;
     result := true;
-    if json = nil then begin
-        result := false;
+    if JSON = nil then
+    begin
+      result := false;
     end
-    else
-        LoadFromJSONObject(json);
+    else begin
+      LoadFromJSONObject(JSON);
+      json.free;
+    end;
 end;
 
 function TDevManagerJson.SaveToJSONObject: tjsonObject;
@@ -198,11 +201,14 @@ var
 begin
     json := tjsonObject.ParseJSONValue(TEncoding.UTF8.GetBytes(JSONstr), 0) as tjsonObject;
     result := true;
-    if json = nil then begin
-        result := false;
+    if JSON = nil then
+    begin
+      result := false;
     end
-    else
-        LoadFromJSONObject(json);
+    else begin
+      LoadFromJSONObject(JSON);
+      json.free;
+    end;
 end;
 
 function TOneOptionJson.SaveToJSONObject: tjsonObject;

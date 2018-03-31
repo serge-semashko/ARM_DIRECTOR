@@ -240,10 +240,12 @@ begin
     result := true;
     if JSON = nil then
     begin
-        result := false;
+      result := false;
     end
-    else
-        LoadFromJSONObject(JSON);
+    else begin
+      LoadFromJSONObject(JSON);
+      json.free;
+    end;
 end;
 
 function TRectJSON.SaveToJSONObject: tjsonObject;

@@ -96,6 +96,7 @@ type
     end;
 
 var
+   st :int64;
     TLO_server: array [0 .. 16] of TTimelineOptions;
     TLO_server_changed: array [0 .. 16] of Boolean;
     TLO_server_old: array [0 .. 16] of string;
@@ -302,6 +303,7 @@ begin
                     begin
                         // WriteLog('vlcmode', 'update TLP dt = '+IntToStr(DT_tlpupdate));
                         TLP_server.LoadFromJSONstr(tlp_str);
+//                        TLP_server.Position := (timegettime - st) div 1000;
                         local_vlcMode := TLP_server.vlcmode;
                         if TLP_server.vlcmode = play then
                             // showmessage('Play')
@@ -1385,5 +1387,5 @@ begin
     TLT_server_changed[i] := true;
     TLT_server_old[i] := '';
 end;
-
+    st := timegettime;
 end.

@@ -72,13 +72,14 @@ begin
   json := tjsonObject.ParseJSONValue(TEncoding.UTF8.GetBytes(JSONstr), 0)
     as tjsonObject;
   result := true;
-  if json = nil then
-  begin
-    result := false;
-  end
-  else
-    LoadFromJSONObject(json);
-
+    if JSON = nil then
+    begin
+      result := false;
+    end
+    else begin
+      LoadFromJSONObject(JSON);
+      json.free;
+    end;
 end;
 
 function TTLParametersJson.SaveToJSONObject: tjsonObject;
@@ -188,13 +189,14 @@ begin
   json := tjsonObject.ParseJSONValue(TEncoding.UTF8.GetBytes(JSONstr), 0)
     as tjsonObject;
   result := true;
-  if json = nil then
-  begin
-    result := false;
-  end
-  else
-    LoadFromJSONObject(json);
-
+    if JSON = nil then
+    begin
+      result := false;
+    end
+    else begin
+      LoadFromJSONObject(JSON);
+      json.free;
+    end;
 end;
 
 function TTLScalerJson.SaveToJSONObject: tjsonObject;
@@ -275,13 +277,14 @@ begin
   json := tjsonObject.ParseJSONValue(TEncoding.UTF8.GetBytes(JSONstr), 0)
     as tjsonObject;
   result := true;
-  if json = nil then
-  begin
-    result := false;
-  end
-  else
-    LoadFromJSONObject(json);
-
+    if JSON = nil then
+    begin
+      result := false;
+    end
+    else begin
+      LoadFromJSONObject(JSON);
+      json.free;
+    end;
 end;
 
 function TTLTimelineJSON.SaveToJSONObject: tjsonObject;
@@ -377,13 +380,14 @@ begin
   json := tjsonObject.ParseJSONValue(TEncoding.UTF8.GetBytes(JSONstr), 0)
     as tjsonObject;
   result := true;
-  if json = nil then
-  begin
-    result := false;
-  end
-  else
-    LoadFromJSONObject(json);
-
+    if JSON = nil then
+    begin
+      result := false;
+    end
+    else begin
+      LoadFromJSONObject(JSON);
+      json.free;
+    end;
 end;
 
 function TTLEditorJSON.SaveToJSONObject: tjsonObject;
@@ -487,13 +491,14 @@ begin
   json := tjsonObject.ParseJSONValue(TEncoding.UTF8.GetBytes(JSONstr), 0)
     as tjsonObject;
   result := true;
-  if json = nil then
-  begin
-    result := false;
-  end
-  else
-    LoadFromJSONObject(json);
-
+    if JSON = nil then
+    begin
+      result := false;
+    end
+    else begin
+      LoadFromJSONObject(JSON);
+      json.free;
+    end;
 end;
 
 function TTLZoneJSON.SaveToJSONObject: tjsonObject;

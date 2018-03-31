@@ -54,13 +54,14 @@ begin
   JSON := tjsonObject.ParseJSONValue(TEncoding.UTF8.GetBytes(JSONstr), 0)
     as tjsonObject;
   result := true;
-  if JSON = nil then
-  begin
-    result := false;
-  end
-  else
-    LoadFromJSONObject(JSON);
-
+    if JSON = nil then
+    begin
+      result := false;
+    end
+    else begin
+      LoadFromJSONObject(JSON);
+      json.free;
+    end;
 end;
 
 function TMyEventJSON.SaveToJSONObject: tjsonObject;
@@ -158,12 +159,14 @@ begin
   JSON := tjsonObject.ParseJSONValue(TEncoding.UTF8.GetBytes(JSONstr), 0)
     as tjsonObject;
   result := true;
-  if JSON = nil then
-  begin
-    result := false;
-  end
-  else
-    LoadFromJSONObject(JSON);
+    if JSON = nil then
+    begin
+      result := false;
+    end
+    else begin
+      LoadFromJSONObject(JSON);
+      json.free;
+    end;
 end;
 
 function TMyPhraseJSON.SaveToJSONObject: tjsonObject;
@@ -238,12 +241,14 @@ begin
   JSON := tjsonObject.ParseJSONValue(TEncoding.UTF8.GetBytes(JSONstr), 0)
     as tjsonObject;
   result := true;
-  if JSON = nil then
-  begin
-    result := false;
-  end
-  else
-    LoadFromJSONObject(JSON);
+    if JSON = nil then
+    begin
+      result := false;
+    end
+    else begin
+      LoadFromJSONObject(JSON);
+      json.free;
+    end;
 end;
 
 function TMyPhrasesJSON.SaveToJSONObject: tjsonObject;
@@ -291,12 +296,14 @@ begin
   JSON := tjsonObject.ParseJSONValue(TEncoding.UTF8.GetBytes(JSONstr), 0)
     as tjsonObject;
   result := true;
-  if JSON = nil then
-  begin
-    result := false;
-  end
-  else
-    LoadFromJSONObject(JSON);
+    if JSON = nil then
+    begin
+      result := false;
+    end
+    else begin
+      LoadFromJSONObject(JSON);
+      json.free;
+    end;
 end;
 
 function TRectJSON.SaveToJSONObject: tjsonObject;

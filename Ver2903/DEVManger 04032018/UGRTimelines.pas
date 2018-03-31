@@ -1602,7 +1602,7 @@ begin
     end
     else
         LoadFromJSONObject(json);
-
+    json.free;
 end;
 
 function TTLParametersJson.SaveToJSONObject: tjsonObject;
@@ -1714,6 +1714,7 @@ begin
     end
     else
         LoadFromJSONObject(json);
+        json.free;
 
 end;
 
@@ -1795,12 +1796,14 @@ begin
     json := tjsonObject.ParseJSONValue(TEncoding.UTF8.GetBytes(JSONstr), 0)
       as tjsonObject;
     Result := true;
-    if json = nil then
+    if JSON = nil then
     begin
-        Result := false;
+      result := false;
     end
-    else
-        LoadFromJSONObject(json);
+    else begin
+      LoadFromJSONObject(JSON);
+      json.free;
+    end;
 
 end;
 
@@ -1897,13 +1900,14 @@ begin
     json := tjsonObject.ParseJSONValue(TEncoding.UTF8.GetBytes(JSONstr), 0)
       as tjsonObject;
     Result := true;
-    if json = nil then
+    if JSON = nil then
     begin
-        Result := false;
+      result := false;
     end
-    else
-        LoadFromJSONObject(json);
-
+    else begin
+      LoadFromJSONObject(JSON);
+      json.free;
+    end;
 end;
 
 function TTLEditorJSON.SaveToJSONObject: tjsonObject;
@@ -2007,13 +2011,14 @@ begin
     json := tjsonObject.ParseJSONValue(TEncoding.UTF8.GetBytes(JSONstr), 0)
       as tjsonObject;
     Result := true;
-    if json = nil then
+    if JSON = nil then
     begin
-        Result := false;
+      result := false;
     end
-    else
-        LoadFromJSONObject(json);
-
+    else begin
+      LoadFromJSONObject(JSON);
+      json.free;
+    end;
 end;
 
 function TTLZoneJSON.SaveToJSONObject: tjsonObject;

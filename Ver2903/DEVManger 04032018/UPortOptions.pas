@@ -285,7 +285,8 @@ begin
 end;
 
 procedure TProgOptions.LoadData;
-var ps : integer;
+var
+    ps: integer;
     ss: string;
 begin
     clear;
@@ -298,12 +299,14 @@ begin
         ss := 'IP Адрес';
     Add('Порт передачи данных:', ss, 'RS232/422|IP Адрес');
     ss := trim(GetSerialPortNames(ListComports));
-    if trim(ss)<>'' then begin
-      ss := StringReplace(ss, ',', '|', [rfReplaceAll, rfIgnoreCase]);
-      ps := ListComports.IndexOf(Port422Name);
-      if ps<0 then Port422Name:='';
-    end else begin
-      Port422Name:='';
+    if trim(ss) <> '' then begin
+        ss := StringReplace(ss, ',', '|', [rfReplaceAll, rfIgnoreCase]);
+        ps := ListComports.IndexOf(Port422Name);
+        if ps < 0 then
+            Port422Name := '';
+    end
+    else begin
+        Port422Name := '';
     end;
     Add('Последовательный порт:', Port422Name, ss); // : string ='';
     // Add('',Port422Number,''); //: integer = 0;
@@ -321,9 +324,9 @@ begin
     Options[Count - 1].EditType := 0; // : string = '9009';
     Add('IP Абонент:', IPLogin, ''); // : string = '';
     Add('IP Пароль:', IPPassword, ''); // : string = '';
-    Add('IP Адрес WEB сервера:', server_addr,'');
+    Add('IP Адрес WEB сервера:', server_addr, '');
     Options[Count - 1].EditType := 1;
-    Add('IP Порт WEB сервера:', trim(server_port),'');
+    Add('IP Порт WEB сервера:', trim(server_port), '');
     Options[Count - 1].EditType := 0;
     // : string = 'http://localhost:9090/GET_TLEDITOR';
     if AutoStart then
@@ -343,7 +346,7 @@ end;
 procedure TProgOptions.SaveData;
 var
     sipaddr, sipport, ss: string;
-    psi : integer;
+    psi: integer;
 begin
     ss := Get('Номер устройства:');
     if trim(ss) = '' then
@@ -378,13 +381,15 @@ begin
 
     //Add('IP Адрес WEB сервера:', wideipadress(server_addr));
     //Add('IP Порт WEB сервера:', trim(server_port));
-    ChangeServerIP:=false;
+    ChangeServerIP := false;
     sipaddr := shortipadress(Get('IP Адрес WEB сервера:'));
-    if sipaddr<>server_addr then ChangeServerIP:=true;
+    if sipaddr <> server_addr then
+        ChangeServerIP := true;
     server_addr := sipaddr;
 
     sipport := trim(Get('IP Порт WEB сервера:'));
-    if sipport<>server_port then ChangeServerIP:=true;
+    if sipport <> server_port then
+        ChangeServerIP := true;
     server_port := sipport;
 
     ss := Get('Авто запуск программы:');
@@ -432,8 +437,9 @@ begin
     if indxoption = -1 then
         exit;
     ProgOptions.Options[indxoption].Text := ComboBox1.Items.Strings[ComboBox1.ItemIndex];
-    if indxoption=1 then begin
-      if trim(ProgOptions.Options[1].Text)<>'' then ManagerNumber:=strtoint(ProgOptions.Options[1].Text);
+    if indxoption = 1 then begin
+        if trim(ProgOptions.Options[1].Text) <> '' then
+            ManagerNumber := strtoint(ProgOptions.Options[1].Text);
     end;
 
     ProgOptions.draw(ImgOptions.Canvas, ComboBox1.Height);
@@ -453,7 +459,9 @@ begin
             s := copy(s, 1, 15);
         Edit1.Text := s;
         ProgOptions.Options[indxoption].Text := shortipadress(Edit1.Text);
-    end else ProgOptions.Options[indxoption].Text := Edit1.Text;
+    end
+    else
+        ProgOptions.Options[indxoption].Text := Edit1.Text;
     ProgOptions.draw(ImgOptions.Canvas, ComboBox1.Height);
     ImgOptions.Repaint;
 end;
@@ -585,9 +593,10 @@ begin
             Edit1.Left := ProgOptions.Options[indxoption].RTT.Left;
             Edit1.top := ProgOptions.Options[indxoption].RTT.top;
             Edit1.Width := ProgOptions.Options[indxoption].RTT.Right - ProgOptions.Options[indxoption].RTT.Left;
-            if ProgOptions.Options[indxoption].EditType=1
-              then Edit1.Text := WideIPAdress(ProgOptions.Options[indxoption].Text)
-              else Edit1.Text := ProgOptions.Options[indxoption].Text;
+            if ProgOptions.Options[indxoption].EditType = 1 then
+                Edit1.Text := WideIPAdress(ProgOptions.Options[indxoption].Text)
+            else
+                Edit1.Text := ProgOptions.Options[indxoption].Text;
             Edit1.Visible := true;
         end
         else begin
@@ -607,7 +616,8 @@ end;
 procedure TfrOptions.SpeedButton1Click(Sender: TObject);
 begin
     ProgOptions.SaveData;
-    if ChangeServerIP then Disconnect_redis;
+    if ChangeServerIP then
+        Disconnect_redis;
 
     if Port422select then begin
         fmMain.Timer1.Enabled := false;
@@ -618,8 +628,7 @@ begin
     Edit1.Visible := false;
     ComboBox1.Visible := false;
     SetIconApplication(fmMain.image1, ManagerNumber);
-    fmMain.Caption := 'Модуль управления устройствами: ' + '  S/N: '
-                    + SerialNumber + '   ID=' + inttostr(ManagerNumber);
+    fmMain.Caption := 'Модуль управления устройствами: ' + '  S/N: ' + SerialNumber + '   ID=' + inttostr(ManagerNumber);
     ProgOptions.draw(ImgOptions.Canvas, ComboBox1.Height);
     ImgOptions.Repaint;
     if AutoStart then
@@ -666,11 +675,16 @@ var
 begin
     json := tjsonObject.ParseJSONValue(TEncoding.UTF8.GetBytes(JSONstr), 0) as tjsonObject;
     result := true;
-    if json = nil then begin
-        result := false;
+    if JSON = nil then
+    begin
+      result := false;
     end
-    else
-        LoadFromJSONObject(json);
+    else begin
+      LoadFromJSONObject(JSON);
+      json.free;
+    end;
+
+
 end;
 
 function TProgOptionsJson.SaveToJSONObject: tjsonObject;
