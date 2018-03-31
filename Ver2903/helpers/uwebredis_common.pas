@@ -21,7 +21,6 @@ var
     FullLogMode: boolean = false;
 
 implementation
-
 procedure ABSWriteLog(log: widestring);
 var
     F: TextFile;
@@ -174,7 +173,7 @@ begin
             exit;
         end;
         webWriteLog('GB>', '=================== STREAM DATA BLOCK=========' + IntToStr(incount) + ' DTime = ' + IntToStr(TimegetTime - st));
-        webWriteLog('GB>', system.copy(buff,readLen,incount));
+        webWriteLog('GB>', system.copy(buff, readLen, incount));
         for i1 := readLen to readLen + rc - 1 do begin
             if buff[i1] <> EOT then
                 continue;
@@ -196,11 +195,13 @@ var
     lfname: ansistring;
 
 initialization
-    for i1 := 0 to ParamCount do
+    for i1 := 0 to ParamCount do begin
+
         if AnsiUpperCase(ParamStr(i1)) = 'NETLOG' then
             FullLogMode := true
         else
             FullLogMode := false;
+    end;
     lfname := paramstr(0) + '.log.txt';
     if FileExists(lfname) then
         DeleteFile(lfname);

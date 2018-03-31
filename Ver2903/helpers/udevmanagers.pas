@@ -169,8 +169,8 @@ var
 begin
     jsontmp := SaveToJSONObject;
     JSONstr := jsontmp.ToJSON;
-    result := JSONstr;
-    jsontmp.Free;
+    result := JSONstr;jsontmp.free;
+
 end;
 
 { TOneOptionJson }
@@ -250,8 +250,7 @@ var
 begin
     jsontmp := SaveToJSONObject;
     JSONstr := jsontmp.ToJSON;
-    result := JSONstr;
-    jsontmp.Free;
+    result := JSONstr;jsontmp.Free;
 end;
 
 procedure UpdateManagerList;

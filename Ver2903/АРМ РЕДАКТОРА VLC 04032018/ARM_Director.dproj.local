@@ -6,12 +6,12 @@
     <Transaction>1899.12.30 00:00:00.000.273,=E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\АРМ РЕДАКТОРА VLC\Unit3.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.703,=E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\АРМ РЕДАКТОРА VLC\Unit3.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.151,=E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\АРМ РЕДАКТОРА VLC\Unit3.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.695,E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\АРМ РЕДАКТОРА VLC\UFrSaveProject.pas=E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\АРМ РЕДАКТОРА VLC\Unit3.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.847,=G:\home\ARM_EDITOR\V2603\helpers\Web.Win.Sockets.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.547,E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\АРМ РЕДАКТОРА VLC\UfrListErrors.dfm=E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\АРМ РЕДАКТОРА VLC\Unit3.dfm</Transaction>
     <Transaction>1899.12.30 00:00:00.000.587,=G:\home\ARM_EDITOR\ver1203\helpers\events_body.inc</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.113,=E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\АРМ РЕДАКТОРА VLC\UMyTextTable.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.965,G:\home\ARM_EDITOR\ver1203\АРМ РЕДАКТОРА VLC 04032018\uwebget.pas=</Transaction>
     <Transaction>1899.12.30 00:00:00.000.648,=G:\home\ARM_EDITOR\V2603\helpers\redis_common.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.695,E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\АРМ РЕДАКТОРА VLC\UFrSaveProject.pas=E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\АРМ РЕДАКТОРА VLC\Unit3.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.113,=E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\АРМ РЕДАКТОРА VLC\UMyTextTable.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.739,E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\АРМ РЕДАКТОРА VLC\UEditedProjects.pas=</Transaction>
     <Transaction>1899.12.30 00:00:00.000.871,=G:\home\ARM_EDITOR\V2603\helpers\Utcpip.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.740,E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\АРМ РЕДАКТОРА VLC\UfrProtocols.pas=E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\АРМ РЕДАКТОРА VLC\Unit3.pas</Transaction>
@@ -23,6 +23,7 @@
     <Transaction>1899.12.30 00:00:00.000.737,=G:\home\ARM_EDITOR\V2603\helpers\udevman_options.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.621,=G:\home\ARM_EDITOR\ver1203\helpers\events_hdr.inc</Transaction>
     <Transaction>1899.12.30 00:00:00.000.621,E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\АРМ РЕДАКТОРА VLC\UStartWindow.dfm=E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\АРМ РЕДАКТОРА VLC\Unit3.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.547,E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\АРМ РЕДАКТОРА VLC\UfrListErrors.dfm=E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\АРМ РЕДАКТОРА VLC\Unit3.dfm</Transaction>
     <Transaction>1899.12.30 00:00:00.000.801,E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\АРМ РЕДАКТОРА VLC\Unit1.pas=E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\АРМ РЕДАКТОРА VLC\UEditedProjects.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.695,E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\АРМ РЕДАКТОРА VLC\UFrSaveProject.dfm=E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\АРМ РЕДАКТОРА VLC\Unit3.dfm</Transaction>
     <Transaction>1899.12.30 00:00:00.000.893,=E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\АРМ РЕДАКТОРА VLC\Unit1.pas</Transaction>
@@ -34,18 +35,17 @@
     <Transaction>1899.12.30 00:00:00.000.121,E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\АРМ РЕДАКТОРА VLC\UMyMenu.pas=E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\АРМ РЕДАКТОРА VLC\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.314,=E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\АРМ РЕДАКТОРА VLC\UfrHotKeys.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.691,=G:\home\ARM_EDITOR\V2603\helpers\synaip.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.710,=G:\home\ARM_EDITOR\ver1203\helpers\ugrtimelines_hdr.inc</Transaction>
     <Transaction>1899.12.30 00:00:00.000.326,=E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\АРМ РЕДАКТОРА VLC\UHotKeys.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.536,=G:\home\ARM_EDITOR\ver1203\helpers\uwebget.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.965,G:\home\ARM_EDITOR\ver1203\АРМ РЕДАКТОРА VLC 04032018\uwebget.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.063,=G:\home\ARM_EDITOR\Ver2903\helpers\uwebredis_common.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.740,E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\АРМ РЕДАКТОРА VLC\UfrProtocols.dfm=E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\АРМ РЕДАКТОРА VLC\Unit3.dfm</Transaction>
     <Transaction>1899.12.30 00:00:00.000.089,E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\АРМ РЕДАКТОРА VLC\UMyOptions.dfm=E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\АРМ РЕДАКТОРА VLC\Unit3.dfm</Transaction>
     <Transaction>1899.12.30 00:00:00.000.769,=G:\home\ARM_EDITOR\ver1203\helpers\udevman_options.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.664,=G:\home\ARM_EDITOR\ver1203\helpers\ugrtimelines_body.inc</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.710,=G:\home\ARM_EDITOR\ver1203\helpers\ugrtimelines_hdr.inc</Transaction>
     <Transaction>1899.12.30 00:00:00.000.148,=G:\home\ARM_EDITOR\АРМ РЕДАКТОРА VLC 04032018\uwebget.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.959,=G:\home\ARM_EDITOR\V2603\helpers\vlcpl.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.685,G:\home\ARM_EDITOR\ver1203\helpers\udevman_options.pas=G:\home\ARM_EDITOR\ver1203\helpers\udevmanagers.pas</Transaction>
-    <Transaction>2018.03.30 08:07:38.063,=G:\home\ARM_EDITOR\Ver2903\helpers\uwebredis_common.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.959,=G:\home\ARM_EDITOR\V2603\helpers\vlcpl.pas</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="..\..\Ver2903"/>
@@ -60,9 +60,9 @@
     <File Path="..\helpers\ugrtimelines_hdr.inc"/>
     <File Path="..\helpers\UPlayer.pas"/>
     <File Path="..\helpers\uwebget.pas"/>
+    <File Path="..\helpers\uwebredis_common.pas"/>
     <File Path="..\helpers\vlcpl.pas"/>
     <File Path="..\helpers\Web.Win.Sockets.pas"/>
-    <File Path="..\helpers\uwebredis_common.pas"/>
     <File Path="MyData.pas"/>
     <File Path="UActPlayList.pas"/>
     <File Path="UAirDraw.pas"/>

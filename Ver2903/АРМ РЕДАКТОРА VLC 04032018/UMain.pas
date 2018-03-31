@@ -647,7 +647,7 @@ var
   CTC: string;
 begin
   try
-     UpdateManagerList;
+           UpdateManagerList;
     // Если ни одного клипа не загруженно в окно подготовки выходим из данного модуля
     // if trim(form1.lbActiveClipID.Caption)='' then exit;
     // Анализируем состояние системы на предмет запуска по времени.
@@ -673,7 +673,7 @@ begin
         Form1.lbTypeTC.Font.Color := clLime;
         MyRemainTime := MyStartPlay - ftm;
         TLParameters.Position := TLParameters.Start;
-        PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
+              PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
         TLZone.DrawTimelines(Form1.imgTimelines.Canvas, bmptimeline);
         // WriteLog('Synchro', '2) Старт TLParameters.Position=' + inttostr(TLParameters.Position)
         // + ' Время до запуска MyRemainTime=' + inttostr(MyRemainTime));
@@ -712,7 +712,7 @@ begin
         if ftm < fen then
         begin
           TLParameters.Position := TLParameters.Start + ftm - MyStartPlay;
-          PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
+                PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
           // WriteLog('Synchro', '5) ftm < fen');
           MediaSetPosition(TLParameters.Position, FALSE, 'TMyThread.DoWork-2');
           // 2
@@ -774,7 +774,7 @@ begin
         begin
           Form1.lbTypeTC.Font.Color := SmoothColor(ProgrammFontColor, 72);
           TLParameters.Position := TLParameters.Finish;
-          PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
+                PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
 
           TLZone.DrawTimelines(Form1.imgTimelines.Canvas, bmptimeline);
           // MyStartPlay := -1;
@@ -792,14 +792,14 @@ begin
           if ftm < MyStartPlay then
           begin
             TLParameters.Position := TLParameters.Start;
-            PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
+                  PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
 
             // WriteLog('Synchro', '8) ftm < MyStartPlay - TRUE  TLParameters.Position=' + inttostr(TLParameters.Position));
           end
           else
           begin
             TLParameters.Position := TLParameters.Start + ftm - MyStartPlay;
-            PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
+                  PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
 
             // WriteLog('Synchro', '8) ftm < MyStartPlay - FALSE  TLParameters.Position=' + inttostr(TLParameters.Position));
           end;
@@ -830,7 +830,7 @@ begin
       begin
         TLParameters.Position :=
           MyDoubleToFrame(pStart + MyTimer.ReadTimer * Rate);
-        PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
+              PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
 
         // WriteLog('TCPlayer', '2) DrawTimelines Position=' + inttostr(TLParameters.Position));
         PredDt := CurrDt;
@@ -892,7 +892,7 @@ begin
             mycpos2 := mycpos1 + myrate;
         end;
         TLParameters.Position := mycpos2;
-        PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
+              PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
 
         // TLParameters.Preroll + (db0 div 40);
         // WriteLog('Synchro', '106)      DBO=' + floattostr(db0));
@@ -916,7 +916,7 @@ begin
       else
         Form1.lbCTLTimeCode.Caption :=
           '' + MyDateTimeToStr(now - TimeCodeDelta);
-      PutJsonStrToServer('CTC',Form1.lbCTLTimeCode.SaveToJSONStr);
+            PutJsonStrToServer('CTC',Form1.lbCTLTimeCode.SaveToJSONStr);
       TLParameters.TLTimeCode :=Form1.lbCTLTimeCode.Caption;
 
       SetClipTimeParameters;
@@ -986,7 +986,7 @@ begin
         end;
         MyPanelAir.AirEvents.DrawTimeCode(Form1.imgEvents.Canvas,
           TLParameters.Position - TLParameters.ZeroPoint);
-          PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
+                PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
       end;
 
       // OldTCTime:=db0;
@@ -1002,7 +1002,7 @@ begin
         if TLParameters.Position >= TLParameters.Finish then
         begin
           TLParameters.Position := TLParameters.Finish;
-          PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
+                PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
           MediaPause;
           SetMediaButtons;
           Form1.lbTypeTC.Caption := '';
@@ -2814,7 +2814,7 @@ begin
         LBTimeCode1.Caption := '*' + MyDateTimeToStr(now - TimeCodeDelta)
       else
         LBTimeCode1.Caption := '' + MyDateTimeToStr(now - TimeCodeDelta);
-      PutJsonStrToServer('CTC',lbTimeCode1.SaveToJSONStr);
+            PutJsonStrToServer('CTC',lbTimeCode1.SaveToJSONStr);
       TLParameters.TLTimeCode :=Form1.lbCTLTimeCode.Caption;
 
     end
@@ -2826,7 +2826,7 @@ begin
         lbCTLTimeCode.Caption := '*' + MyDateTimeToStr(now - TimeCodeDelta)
       else
         lbCTLTimeCode.Caption := '' + MyDateTimeToStr(now - TimeCodeDelta);
-      PutJsonStrToServer('CTC',lbCTLTimeCode.SaveToJSONStr);
+            PutJsonStrToServer('CTC',lbCTLTimeCode.SaveToJSONStr);
       TLParameters.TLTimeCode :=Form1.lbCTLTimeCode.Caption;
     end;
     Form1.Compartido^.Cadena := 'request';
@@ -2876,7 +2876,7 @@ begin
       if TLParameters.Position < TLParameters.Preroll then
       begin
         TLParameters.Position := TLParameters.Preroll;
-        PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
+              PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
         // TLZone.DrawTimelines(imgtimelines.Canvas,bmptimeline);
         exit;
       end;
@@ -2887,7 +2887,7 @@ begin
       if TLParameters.Position > rightlimit then
       begin
         TLParameters.Position := rightlimit;
-        PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
+              PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
         // TLZone.DrawTimelines(imgtimelines.Canvas,bmptimeline);
         exit;
       end;
@@ -2913,7 +2913,7 @@ begin
           Form1.imgTimelines.Width);
         TLParameters.Position := TLParameters.Position +
           trunc((X - TLZone.XViewer) * Step);
-        PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
+              PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
         TLZone.DrawTimelines(Form1.imgTimelines.Canvas, bmptimeline);
         TLZone.XViewer := X;
         SetClipTimeParameters;
@@ -3614,7 +3614,7 @@ begin
           begin // '4|38|Перейти в начало клипа|SHIFT+HOME'
             SaveToUNDO;
             TLParameters.Position := TLParameters.Preroll;
-            PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
+                  PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
             // TLParameters.ZeroPoint;
             crpos := TLZone.TLEditor.CurrentEvents;
             if crpos.Number <> -1 then
@@ -3643,7 +3643,7 @@ begin
             SaveToUNDO;
             TLParameters.Position := TLParameters.Preroll +
               TLParameters.Duration;
-              PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
+                    PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
             crpos := TLZone.TLEditor.CurrentEvents;
             if crpos.Number <> -1 then
               MarkRowPhraseInGrid(Form1.GridGRTemplate, 0, 2, 'File',
@@ -5223,9 +5223,11 @@ var
   jsontmp: tjsonObject;
   JSONstr: string;
 begin
+//  result := '';
   jsontmp := SaveToJSONObject;
   JSONstr := jsontmp.ToString;
-  result := JSONstr;
+  result := JSONstr;jsontmp.free;
+
 end;
 
 

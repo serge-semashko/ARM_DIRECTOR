@@ -5,16 +5,11 @@ var
 begin
   try
     TypeTL := GetVariableFromJson(json, 'TypeTL', TypeTL);
+    Manager := GetVariableFromJson(json, 'Manager', Manager);
     NumberBmp := GetVariableFromJson(json, 'NumberBmp', NumberBmp);
     name := GetVariableFromJson(json, 'Name', Name);
     UserLock := GetVariableFromJson(json, 'UserLock', UserLock);
     IDTimeline := GetVariableFromJson(json, 'IDTimeline', IDTimeline);
-    CountDev := GetVariableFromJson(json, 'CountDev', CountDev);
-    for i1 := 0 to high(DevEvents) do
-    begin
-      tmpjson := tjsonObject(json.getvalue('DevEvents' + IntToStr(i1)));
-      DevEvents[i1].LoadFromJSONObject(tmpjson);
-    end;
     MediaEvent.LoadFromJSONObject(tjsonObject(json.getvalue('MediaEvent')));
     TextEvent.LoadFromJSONObject(tjsonObject(json.getvalue('TextEvent')));
     MediaColor := GetVariableFromJson(json, 'MediaColor', MediaColor);
@@ -24,7 +19,13 @@ begin
     // Protocol : string;                                 //Название протокола и данные для протокола
     Protocol := GetVariableFromJson(json, 'Protocol', Protocol);
     // Manager  : string;                                 //Номер менеджера управления.
-    Manager := GetVariableFromJson(json, 'Manager', Manager);
+
+    CountDev := GetVariableFromJson(json, 'CountDev', CountDev);
+    for i1 := 0 to high(DevEvents) do
+    begin
+      tmpjson := tjsonObject(json.getvalue('DevEvents' + IntToStr(i1)));
+      DevEvents[i1].LoadFromJSONObject(tmpjson);
+    end;
 
   except
     on E: Exception do
@@ -61,7 +62,8 @@ var
 begin
   json := tjsonObject.Create;
   try
-    addVariableToJson(json, 'TypeTL', TypeTL);
+      // Manager  : string;                                 //Номер менеджера управления.
+    addVariableToJson(json, 'Manager', Manager);
     addVariableToJson(json, 'TypeTL', TypeTL);
     addVariableToJson(json, 'NumberBmp', NumberBmp);
     addVariableToJson(json, 'Name', Name);
@@ -79,8 +81,6 @@ begin
     // Protocol : string;                                 //Название протокола и данные для протокола
     addVariableToJson(json, 'Protocol', Protocol);
 
-    // Manager  : string;                                 //Номер менеджера управления.
-    addVariableToJson(json, 'Manager', Manager);
 
   except
     on E: Exception do

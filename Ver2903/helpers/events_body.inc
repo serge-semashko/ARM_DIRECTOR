@@ -119,7 +119,7 @@ var
 begin
   jsontmp := SaveToJSONObject;
   JSONstr := jsontmp.ToString;
-  result := JSONstr;
+  result := JSONstr;jsontmp.free;
 end;
 
 { TMyPhraseJSON }

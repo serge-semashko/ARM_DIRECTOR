@@ -157,7 +157,8 @@ var
 begin
   jsontmp := SaveToJSONObject;
   JSONstr := jsontmp.ToJSON;
-  result := JSONstr;
+  result := JSONstr;jsontmp.free;
+
 end;
 
 { TTLScalerJson }
@@ -231,7 +232,7 @@ var
 begin
   jsontmp := SaveToJSONObject;
   JSONstr := jsontmp.ToJSON;
-  result := JSONstr;
+  result := JSONstr;jsontmp.free;
 end;
 
 { TTLTimelineJSON }
@@ -326,7 +327,7 @@ var
 begin
   jsontmp := SaveToJSONObject;
   JSONstr := jsontmp.ToJSON;
-  result := JSONstr;
+  result := JSONstr;jsontmp.free;
 end;
 
 { TTLEditorJSON }
@@ -438,7 +439,7 @@ var
 begin
   jsontmp := SaveToJSONObject;
   JSONstr := jsontmp.ToJSON;
-  result := JSONstr;
+  result := JSONstr;jsontmp.free;
 end;
 
 { TTLZoneJSON }
@@ -545,5 +546,5 @@ var
 begin
   jsontmp := SaveToJSONObject;
   JSONstr := jsontmp.ToJSON;
-  result := JSONstr;
+  result := JSONstr;jsontmp.free;
 end;

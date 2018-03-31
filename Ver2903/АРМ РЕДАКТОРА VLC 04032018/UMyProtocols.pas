@@ -523,7 +523,7 @@ begin
       FName := extractfilepath(application.ExeName) + FileName;
       if not FileExists(FName) then
         exit;
-      buff.LoadFromFile(Fname);
+      buff.LoadFromFile(FName);
       for i := 0 to buff.Count - 1 do
         ss := ss + trim(buff.Strings[i]);
       ss := GetProtocolsStr(ss, TypeProtocols);

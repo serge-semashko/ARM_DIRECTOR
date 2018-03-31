@@ -431,11 +431,12 @@ begin
               TLZone.TLEditor.DrawEditor(bmptimeline.Canvas, ps);
               for i:=0 to TLZone.Count-1 do begin
                 if TLZone.Timelines[i].TypeTL=tldevice then begin
+                  if TLZone.Timelines[i].Count>0 then begin
+                    if TLParameters.Finish > TLZone.Timelines[i].Events
+                      [TLZone.Timelines[i].Count - 1].Finish then
+                      TLZone.Timelines[i].Events[TLZone.Timelines[i].Count - 1].Finish :=
+                        TLParameters.Finish;
 
-                  if TLParameters.Finish > TLZone.Timelines[i].Events
-                    [TLZone.Timelines[i].Count - 1].Finish then
-                    TLZone.Timelines[i].Events[TLZone.Timelines[i].Count - 1].Finish :=
-                      TLParameters.Finish;
                     if TLParameters.Finish < TLZone.Timelines[i].Events
                       [TLZone.Timelines[i].Count - 1].Finish then begin
                       if TLParameters.Finish >
@@ -453,6 +454,7 @@ begin
                     //  TLZone.Timelines[i].Events[TLZone.Timelines[i].Count - 1].Finish;
                     ps := TLZone.Timelines[i].FindEventPos(TLParameters.ScreenStartFrame);
                     TLZone.Timelines[i].DrawTimeline(bmptimeline.Canvas, i, ps);
+                  end;
                 end;
               end;
 

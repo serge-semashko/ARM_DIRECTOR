@@ -196,7 +196,7 @@ begin
 
 //            synWriteLog('GET_', uri + ' =  ' + outstr);
         end;
-        webWriteLog('TCPaccept>', ' Answer ' + system.copy(outstr, 1, 30));
+        webWriteLog('TCPaccept>', ' Answer ' + system.copy(outstr, 1, 190));
 
         strpcopy(outbuffer,outstr);
         webWriteLog('TCPaccept>', Format('Processed len=%d time=%d ', [rc, timegettime - st]) + ' Answer= ' + system.copy(outstr, 1, 30));
