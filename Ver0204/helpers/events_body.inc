@@ -69,11 +69,13 @@ var
   str1: string;
   js1, JSON: tjsonObject;
   i1, i2: integer;
+  jsarr : tjsonarray;
   (*
     ** сохранение всех переменных в строку JSONDATA в формате JSON
   *)
 begin
   JSON := tjsonObject.Create;
+  JSarr := tjsonArray.Create;
   try
     // jsonstr : string;
     // IDEvent : longint;
@@ -103,8 +105,10 @@ begin
     // Rows : array of TMyPhrases;
     for i1 := Low(Rows) to High(Rows) do
     begin
-      JSON.AddPair('Rows' + IntToStr(i1), Rows[i1].SaveToJSONObject)
+//SSSDBG      JSON.AddPair('Rows' + IntToStr(i1), Rows[i1].SaveToJSONObject);
+      jsarr.add(Rows[i1].SaveToJSONObject);
     end;
+    json.addpair('Rows',jsarr);
   except
     on E: Exception do
   end;
@@ -255,8 +259,10 @@ function TMyPhrasesJSON.SaveToJSONObject: tjsonObject;
 var
   JSON: tjsonObject;
   i1: integer;
+  jsarr : tjsonarray;
 begin
   JSON := tjsonObject.Create;
+  JSarr := tjsonArray.Create;
   addVariableToJson(JSON, 'Top', Top);
   // Top : integer;
   addVariableToJson(JSON, 'Bottom', Bottom);
@@ -265,8 +271,10 @@ begin
   // Count : integer;
   for i1 := Low(Phrases) to High(Phrases) do
   begin
-    JSON.AddPair('Phrases' + IntToStr(i1), Phrases[i1].SaveToJSONObject)
+    jsarr.Add(Phrases[i1].SaveToJSONObject);
+//SSSDBG    JSON.AddPair('Phrases' + IntToStr(i1), Phrases[i1].SaveToJSONObject);
   end;
+  JSON.AddPair('Phrases',jsarr);
   result := JSON;
 
 end;

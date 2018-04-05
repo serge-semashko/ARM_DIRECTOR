@@ -19,8 +19,8 @@ type
 
     TIORedisThread = class(tthread)
         var
-            INBUF: array[0..300000] of ansiCHAR;
-            outBUF: array[0..300000] of ansiCHAR;
+            INBUF: array[0..1000000] of ansiCHAR;
+            outBUF: array[0..1000000] of ansiCHAR;
             TCPCli: TTcpClient;
         function SendWebVarToServer(ID: integer): integer;
         function GetWebVarFromServer(ID: integer): integer;
@@ -240,17 +240,17 @@ var
     putcommand: ansistring;
     st: int64;
 begin
-    webWriteLog('webvars>', 'Get ' + varName);
+    webWriteLog('GETVAR>', 'Get ' + varName);
     result := '';
     for i := 0 to webvar_count - 1 do begin
         if webvars[i].name <> varName then
             continue;
         if webvars[i].changed = -1 then begin
-            webWriteLog('webvars', 'Got ' + varName + ' осярн');
+            webWriteLog('GETVAR>>', 'Got ' + varName + ' осярн');
             exit;
         end;
         result := webvars[i].jsonstr;
-        webWriteLog('webvars', 'Got ' + varName + ' resp=' + system.copy(result, 1, 20));
+        webWriteLog('GETVAR>>', 'Got ' + varName + ' resp=' + system.copy(result, 1, 20));
         exit;
     end;
 end;
@@ -264,7 +264,7 @@ var
     putcommand: ansistring;
     st: int64;
 begin
-    webWriteLog('PutJsonStrToServer>' + varName + ' = ' + system.copy(varvalue, 1, 60));
+    webWriteLog('SETVAR>' + varName + ' = ' + system.copy(varvalue, 1, 60));
     if not DevicesOn then
         exit;
 
@@ -273,10 +273,10 @@ begin
     for i := 0 to webvar_count - 1 do begin
         if webvars[i].name <> varName then
             continue;
-        webWriteLog('PutJsonStrToServer>', 'SET TO OUT find ' + varName + ' =  ' + IntToStr(webvars[i].changed));
+        webWriteLog('SETVAR>', 'SET TO OUT find ' + varName + ' =  ' + IntToStr(webvars[i].changed));
 
         if (webvars[i].jsonstr = varvalue) and (webvars[i].changed < -5) then begin
-            webWriteLog('PutJsonStrToServer>', 'Set to OUT not changed ' + varName + ' =  ' + IntToStr(webvars[i].changed));
+            webWriteLog('SETVAR>', 'Set to OUT not changed ' + varName + ' =  ' + IntToStr(webvars[i].changed));
             webvars_critsect.Leave;
             exit;
         end;
@@ -285,11 +285,11 @@ begin
         webvars[i].changed := -10;
         webvars_critsect.Leave;
         webvars[i].LastUpdate := -1;
-        webWriteLog('webvars', 'Set to OUT ' + varName + ' =  ' + IntToStr(webvars[i].changed));
+        webWriteLog('SETVAR', 'Set to OUT ' + varName + ' =  ' + IntToStr(webvars[i].changed));
         webvars_critsect.Leave;
         exit;
     end;
-    webWriteLog('webvar', 'Set to OUT Add var ' + varName + ' webvar Count=' + IntToStr(webvar_count));
+    webWriteLog('SETVAR', 'Set to OUT Add var ' + varName + ' webvar Count=' + IntToStr(webvar_count));
     inc(webvar_count);
     i := webvar_count - 1;
     webvars[i].Name := varName;
@@ -609,6 +609,12 @@ initialization
     webWriteLog('WEBGET', ' STARTED');
     sleep(500);
     deletefile('webget');
+    finalization;
+       IOredis.Terminate;
+       IOredis.TCPCli.Disconnect;
+       sleep(100);
+      IOredis.free;
+
 
 end.
 

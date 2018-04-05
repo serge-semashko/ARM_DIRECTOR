@@ -61,6 +61,8 @@ type
     private
         Sock: TTCPBlockSocket;
     public
+        inbuff : array[0..1000000] of ansichar;
+        outbuff : array[0..1000000] of ansichar;
         Headers: TStringList;
         InputData, OutputData: TMemoryStream;
         constructor Create(hsock: tSocket);
@@ -92,6 +94,7 @@ type
 function ProcessRequest(URI: string): AnsiString;
 
 var
+    TerminateAll : boolean = false;
     LocalTCPPort: string = '9085';
     EmptyWebVar: TWebVar; // = ('','',-1,'',nil); //'','',-1,'',nil);
     VarCount: integer = 0;
@@ -128,8 +131,8 @@ procedure THTTPSRVForm.TcpserverAccept(Sender: TObject;       //пришло с�
     ClientSocket: TCustomIpClient);
 var
     txt: string;
-    Inbuffer: array[0..300000] of ansichar;
-    OUTBUffer: array[0..300000] of ansichar;
+    Inbuffer: array[0..1300000] of ansichar;
+    OUTBUffer: array[0..1300000] of ansichar;
     tmpBuffer: integer;
     rcstr, hstr: string;
     rc: Integer;
@@ -143,7 +146,7 @@ begin
     hstr := 'Connect H=' + IntToStr(ClientSocket.Handle) + ' ';
     webWriteLog('webget', hstr);
 //    mmo1.Lines.add(FormatDateTime('HH:NN:SS ', now) + 'accept' + hstr);
-    while True do begin
+    while not TerminateAll  do begin
         sleep(1);
         webWriteLog('TCPaccept>', ' Wait for request');
 
@@ -239,7 +242,6 @@ var
 begin
     hstr := 'H=' + IntToStr(ClientSocket.Handle) + ' ';
 //    mmo1.Lines.add(FormatDateTime('HH:NN:SS ', now) + 'accept' + hstr);
-    while True do begin
         FillChar(buffer, 0, High(buffer));
         rc := ClientSocket.ReceiveBuf(buffer, 10000);  //берем буфер
         rcstr := ' ' + IntToStr(rc) + ' ';
@@ -270,9 +272,6 @@ begin
         end;
         ClientSocket.Sendln('HTTP/1.0 ' + '200' + CRLF + 'Content-type: Text/Html' + #13#10 + 'Content-length: ' + IntToStr(length(outstr)) + #13#10 + 'Connection: close' + #13#10 + 'Date: Tue, 20 Mar 2018 14:04:45 +0300' + #13#10 + 'Server: Synapse HTTP server demo' + #13#10 + #13#10 + outstr + crlf);
 
-        exit;
-
-    end;
 
 end;
 
@@ -358,6 +357,14 @@ end;
 
 procedure THTTPSRVForm.quit1Click(Sender: TObject);
 begin
+    webWriteLog('HALT>Start');
+    terminateAll := true;
+    TCPsrv.Close;
+    TCPHTTPsrv.Close;
+    sleep(200);
+    TCPsrv.free;
+    TCPHTTPsrv.free;
+    webWriteLog('HALT>Finish');
     halt;
 end;
 

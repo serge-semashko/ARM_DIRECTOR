@@ -471,28 +471,30 @@ var
   str2: ansistring;
   TLO: TTimeLineOptions;
   TlTimeline :TTlTimeline;
-  sl : tstringlist;
   tle : ansistring;
+  jsarr : tjsonarray;
+  jssave : tstringlist;
 begin
   if LoadProject_active then exit;
-
-     sl := TStringList.Create;
+  jsarr := tjsonarray.create;
+  jsSave := tstringlist.Create;
   for I := 1 to GridTimeLines.RowCount - 1 do
   begin
      tlo := TTimelineOptions(GridTimeLines.Objects[0,i]);
      if tlo = nil  then continue;
+     jsarr.add(tlo.SaveToJSONObject);
      str1:=TLO.SaveToJSONStr;
      PutJsonStrToServer('TLO['+IntToStr(i)+']',str1);
-//     if str1 <> str2  then
-//        showmessage('!error retrieve '+'TLO['+IntToStr(i)+']');
   end;
+  jsSave.Clear;
+  jsSave.add(jsarr.ToString);
+  jsSave.SaveToFile('g:\home\tlo.js');
      str1:=TLParameters.SaveToJSONStr;
      PutJsonStrToServer('TLP',str1);
-//     if str1 <> str2  then
-//        showmessage('!error retrieve '+'TLineparameters');
-//sssscheck
     PutJsonStrToServer('TLEDITOR', TLZone.TLEditor.SaveToJSONstr);
 
+  jsarr.free;
+  jsarr := tjsonarray.create;
 
   for I := 0 to tlzone.count-1 do
   begin
@@ -500,9 +502,14 @@ begin
      if TlTimeline = nil  then continue;
      str1:=TlTimeline.SaveToJSONStr;
      PutJsonStrToServer('TLT['+IntToStr(i)+']',str1);
-     if str1 <> str2  then
-//        showmessage('!error retrieve '+'TLT['+IntToStr(i)+']');
+     jsarr.add(TlTimeline.SaveToJSONObject);
   end;
+  jsSave.Clear;
+  str1 := jsarr.ToString;
+  jsSave.add(jsarr.ToString);
+  jsSave.SaveToFile('g:\home\tlt.js');
+  jsarr.Free;
+  jssave.free;
 
 end;
 
@@ -515,23 +522,29 @@ var
   TlTimeline :TTlTimeline;
   sl : tstringlist;
   tle : ansistring;
+  jsarr : tjsonarray;
+  jssave : tstringlist;
 begin
   if LoadProject_active then exit;
 
      str1:=TLParameters.SaveToJSONStr;
      PutJsonStrToServer('TLP',str1);
     PutJsonStrToServer('TLEDITOR', TLZone.TLEditor.SaveToJSONstr);
-
-
+  jsarr := tjsonarray.create;
+  jsSave := tstringlist.Create;
   for I := 0 to tlzone.count-1 do
   begin
      TlTimeline := TTlTimeline(tlzone.timelines[i]);
      if TlTimeline = nil  then continue;
      str1:=TlTimeline.SaveToJSONStr;
      PutJsonStrToServer('TLT['+IntToStr(i)+']',str1);
-     if str1 <> str2  then
-//        showmessage('!error retrieve '+'TLT['+IntToStr(i)+']');
+     jsarr.add(TlTimeline.SaveToJSONObject);
   end;
+  jsSave.Clear;
+  jsSave.add(jsarr.ToString);
+  jsSave.SaveToFile('g:\home\tlt.js');
+  jsarr.Free;
+  jssave.free;
 
 end;
 

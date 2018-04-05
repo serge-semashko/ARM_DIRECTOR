@@ -19,6 +19,7 @@ procedure ABSWriteLog(log: widestring);
 
 var
     FullLogMode: boolean = false;
+    Net_TimeOut :integer = 1000;
 
 implementation
 
@@ -127,7 +128,7 @@ begin
             Exit;
         end;
         if incount = 0 then begin
-            if timegettime - st > 1000 then begin
+            if timegettime - st > Net_timeout then begin
                 result := readLen;
                 break;
             end;
@@ -144,7 +145,7 @@ begin
                 Exit;
             end;
             webWriteLog('GB>', '====== Look start text =========' + IntToStr(incount) + ' DTime = ' + IntToStr(TimegetTime - st));
-//            webWriteLog('GB>', buff);
+            webWriteLog('GB>', buff);
             StartOfHeaderPos := CharPos(SOH, buff, incount);
             if StartOfHeaderPos >= 0 then
                 incount := StartOfHeaderPos;
@@ -163,7 +164,7 @@ begin
                 webWriteLog('GB>', 'OK SOH Skip ========================== ' + IntToStr(incount))
             else
                 webWriteLog('GB>', 'NO SOH Skip ========================== ' + IntToStr(incount));
-//            webWriteLog('GB>', buff);
+            webWriteLog('GB>', buff);
             webWriteLog('GB>', ' end skip ==========================');
 
             if not BlockStarted then

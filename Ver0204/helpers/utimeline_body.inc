@@ -56,11 +56,13 @@ var
   js1, json: tjsonObject;
   i1, i2: integer;
   jsondata: string;
+  jsarr : tjsonarray;
   (*
     ** сохранение всех переменных в строку JSONDATA в формате JSON
   *)
 
 begin
+  jsarr := tjsonarray.create;
   json := tjsonObject.Create;
   try
       // Manager  : string;                                 //Ќомер менеджера управлени€.
@@ -71,8 +73,12 @@ begin
     addVariableToJson(json, 'UserLock', UserLock);
     addVariableToJson(json, 'IDTimeline', IDTimeline);
     addVariableToJson(json, 'CountDev', CountDev);
-    for i1 := 0 to high(DevEvents) do
-      json.AddPair('DevEvents' + IntToStr(i1), DevEvents[i1].SaveToJSONObject);
+
+    for i1 := 0 to high(DevEvents) do begin
+//SSSDBG      json.AddPair('DevEvents' + IntToStr(i1), DevEvents[i1].SaveToJSONObject);
+      jsarr.add(DevEvents[i1].SaveToJSONObject);
+    end;
+    json.AddPair('DevEvents', jsarr);
     json.AddPair('MediaEvent', MediaEvent.SaveToJSONObject);
     json.AddPair('TextEvent', TextEvent.SaveToJSONObject);
     addVariableToJson(json, 'MediaColor', MediaColor);
@@ -88,6 +94,8 @@ begin
   end;
   result := json;
 end;
+
+
 
 function TTimelineOptionsJSON.SaveToJSONStr: string;
 var

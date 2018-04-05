@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>1899.12.30 00:00:00.000.665,=G:\home\ARM_EDITOR\ver1203\helpers\ugrtimelines_body.inc</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.938,C:\АРМ РЕДАКТОРА\ADMIN\COM-port\UMTXEventList.pas=</Transaction>
     <Transaction>1899.12.30 00:00:00.000.449,G:\home\ARM_EDITOR\ver1203\helpers\ugrtimelines_body.inc=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.938,C:\АРМ РЕДАКТОРА\ADMIN\COM-port\UMTXEventList.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.665,=G:\home\ARM_EDITOR\ver1203\helpers\ugrtimelines_body.inc</Transaction>
     <Transaction>1899.12.30 00:00:00.000.865,C:\LAST ARM\arm_2018_Mar_19-10_15_22\DEVManger 04032018\UNumberManager.dfm=C:\LAST ARM\arm_2018_Mar_19-10_15_22\DEVManger 04032018\Unit1.dfm</Transaction>
     <Transaction>1899.12.30 00:00:00.000.748,C:\АРМ РЕДАКТОРА\ADMIN\DEVManager\NEWDEVManager\DEVManager.dproj=C:\АРМ РЕДАКТОРА\ADMIN\DEVManager\DEVManager\ComPortService.dproj</Transaction>
     <Transaction>1899.12.30 00:00:00.000.748,=E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\JSON\web2002\DeviceManger\UMyEvents.pas</Transaction>
@@ -24,14 +24,14 @@
     <Transaction>1899.12.30 00:00:00.000.142,C:\АРМ РЕДАКТОРА\ADMIN\DEVManager\NEWDEVManager\UMyChars.pas=C:\АРМ РЕДАКТОРА\ADMIN\DEVManager\DEVManager\UMyChars.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.922,G:\home\ARM_EDITOR\DEVManger 04032018\Unit1.pas=G:\home\ARM_EDITOR\DEVManger 04032018\devmanagerhelpers.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.648,C:\АРМ РЕДАКТОРА\ADMIN\DEVManager\NEWDEVManager\UAddCommand.pas=C:\АРМ РЕДАКТОРА\ADMIN\DEVManager\DEVManager\UAddCommand.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.588,=C:\LAST ARM\JSON (1)\web2002\DeviceManger\Unit1.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.697,=G:\home\ARM_EDITOR\ver1203\helpers\vlcpl.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.204,C:\АРМ РЕДАКТОРА\ADMIN\DEVManager\NEWDEVManager\UMySetTC.pas=C:\АРМ РЕДАКТОРА\ADMIN\DEVManager\DEVManager\UMySetTC.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.142,=C:\LAST ARM\JSON (1)\web2002\DeviceManger\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.849,G:\home\ARM_EDITOR\ver1203\helpers\vlcpl.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.204,C:\АРМ РЕДАКТОРА\ADMIN\DEVManager\NEWDEVManager\UMySetTC.pas=C:\АРМ РЕДАКТОРА\ADMIN\DEVManager\DEVManager\UMySetTC.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.697,=G:\home\ARM_EDITOR\ver1203\helpers\vlcpl.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.717,C:\АРМ РЕДАКТОРА\ADMIN\DEVManager\NEWDEVManager\RusErrorStr.pas=C:\АРМ РЕДАКТОРА\ADMIN\DEVManager\DEVManager\RusErrorStr.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.192,C:\АРМ РЕДАКТОРА\ADMIN\DEVManager\NEWDEVManager\UPortOptions.dfm=C:\АРМ РЕДАКТОРА\ADMIN\DEVManager\DEVManager\UPortOptions.dfm</Transaction>
     <Transaction>1899.12.30 00:00:00.000.806,C:\АРМ РЕДАКТОРА\ADMIN\COM-port\Unit1.dfm=C:\АРМ РЕДАКТОРА\ADMIN\COM-port\UPortOptions.dfm</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.142,=C:\LAST ARM\JSON (1)\web2002\DeviceManger\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.588,=C:\LAST ARM\JSON (1)\web2002\DeviceManger\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.767,C:\АРМ РЕДАКТОРА\ADMIN\DEVManager\NEWDEVManager\UMyWork.dfm=C:\АРМ РЕДАКТОРА\ADMIN\DEVManager\DEVManager\UMyWork.dfm</Transaction>
     <Transaction>1899.12.30 00:00:00.000.167,C:\АРМ РЕДАКТОРА\ADMIN\COM-port\Unit2.dfm=C:\АРМ РЕДАКТОРА\ADMIN\COM-port\UDCB.dfm</Transaction>
     <Transaction>1899.12.30 00:00:00.000.410,=C:\LAST ARM\JSON (1)\web2002\DeviceManger\UCommon.pas</Transaction>
@@ -56,26 +56,26 @@
     <Transaction>1899.12.30 00:00:00.000.006,C:\АРМ РЕДАКТОРА\ADMIN\COM-port-Ansi\COM-port\Unit3.dfm=C:\АРМ РЕДАКТОРА\ADMIN\COM-port-Ansi\COM-port\UMyChars.dfm</Transaction>
     <Transaction>1899.12.30 00:00:00.000.864,C:\LAST ARM\arm_2018_Mar_19-10_15_22\DEVManger 04032018\UNumberManager.pas=C:\LAST ARM\arm_2018_Mar_19-10_15_22\DEVManger 04032018\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.923,C:\АРМ РЕДАКТОРА\ADMIN\DEVManager\NEWDEVManager\UDCB.pas=C:\АРМ РЕДАКТОРА\ADMIN\DEVManager\DEVManager\UDCB.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.881,G:\home\ARM_EDITOR\ver1203\helpers\utimeline_hdr.inc=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.619,=G:\home\ARM_EDITOR\ver1203\helpers\utimeline_hdr.inc</Transaction>
     <Transaction>1899.12.30 00:00:00.000.142,C:\АРМ РЕДАКТОРА\ADMIN\DEVManager\NEWDEVManager\UMyChars.dfm=C:\АРМ РЕДАКТОРА\ADMIN\DEVManager\DEVManager\UMyChars.dfm</Transaction>
     <Transaction>1899.12.30 00:00:00.000.dfm,D:\Примеры программных модулей\Delphi\comport\Example\Unit1.dfm=D:\Примеры программных модулей\Delphi\comport\Example\UMTXInput.dfm</Transaction>
     <Transaction>1899.12.30 00:00:00.000.716,C:\АРМ РЕДАКТОРА\ADMIN\COM-port-Ansi\COM-port\UAddCommand.pas=C:\АРМ РЕДАКТОРА\ADMIN\COM-port-Ansi\COM-port\Unit4.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.284,=G:\home\ARM_EDITOR\ver1203\helpers\UPlayer.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.308,G:\home\ARM_EDITOR\ver1203\helpers\UPlayer.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.284,=G:\home\ARM_EDITOR\ver1203\helpers\UPlayer.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.607,=E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\JSON\web2002\DeviceManger\Unit1.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.619,=G:\home\ARM_EDITOR\ver1203\helpers\utimeline_hdr.inc</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.881,G:\home\ARM_EDITOR\ver1203\helpers\utimeline_hdr.inc=</Transaction>
     <Transaction>1899.12.30 00:00:00.000.942,C:\АРМ РЕДАКТОРА\ADMIN\COM-port\UMTXButton.pas=</Transaction>
     <Transaction>1899.12.30 00:00:00.000.740,E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\JSON\arm_2018_Mar_23-08_11_22\DEVManger 04032018\Unit1.pas=E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\JSON\arm_2018_Mar_23-08_11_22\DEVManger 04032018\USetID.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.976,C:\АРМ РЕДАКТОРА\ADMIN\DEVManager\NEWDEVManager\Unit1.pas=C:\АРМ РЕДАКТОРА\ADMIN\DEVManager\NEWDEVManager\UMyInitFile.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.946,C:\АРМ РЕДАКТОРА\ADMIN\COM-port\MTXCommand.pas=</Transaction>
     <Transaction>1899.12.30 00:00:00.000.877,=C:\АРМ РЕДАКТОРА\ADMIN\DEVManager\NEWDEVManager\Unit1.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.740,=E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\JSON\web2002\DeviceManger\UGRTimelines.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.638,=G:\home\ARM_EDITOR\ver1203\helpers\events_hdr.inc</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.740,=E:\Павел Алексеевич\АРМ РЕДАКТОРА_Arh\JSON\web2002\DeviceManger\UGRTimelines.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.582,=C:\АРМ РЕДАКТОРА\ADMIN\COM-port-Ansi\COM-port\Unit4.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.413,C:\АРМ РЕДАКТОРА\ADMIN\COM-port\UCommon.pas=</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.341,=C:\АРМ РЕДАКТОРА\ADMIN\COM-port-Ansi\COM-port\Unit4.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.065,C:\АРМ РЕДАКТОРА\ADMIN\COM-port-Ansi\COM-port\Unit4.pas=C:\АРМ РЕДАКТОРА\ADMIN\COM-port-Ansi\COM-port\UMyWork.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.384,=C:\АРМ РЕДАКТОРА\ADMIN\COM-port-Ansi\COM-port\Unit4.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.065,C:\АРМ РЕДАКТОРА\ADMIN\COM-port-Ansi\COM-port\Unit4.pas=C:\АРМ РЕДАКТОРА\ADMIN\COM-port-Ansi\COM-port\UMyWork.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.341,=C:\АРМ РЕДАКТОРА\ADMIN\COM-port-Ansi\COM-port\Unit4.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.192,C:\АРМ РЕДАКТОРА\ADMIN\DEVManager\NEWDEVManager\UPortOptions.pas=C:\АРМ РЕДАКТОРА\ADMIN\DEVManager\DEVManager\UPortOptions.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.134,=C:\LAST ARM\JSON (1)\web2002\DeviceManger\UMain.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.pas,D:\Примеры программных модулей\Delphi\comport\Example\Unit1.pas=D:\Примеры программных модулей\Delphi\comport\Example\UMTXInput.pas</Transaction>
