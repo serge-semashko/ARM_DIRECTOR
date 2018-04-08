@@ -13,8 +13,6 @@
 *.zip
 *.txt
 webget*.
-
 *.rar
 /vlc*/
-
 /ver1203/HTML5Application/nbproject/private/

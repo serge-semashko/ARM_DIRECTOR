@@ -1,269 +1,489 @@
 "use strict";
-var ev = {
-    "BackGround": "#474749",
-    "ForeGround": "#575759",
-    "Interval": "2",
-    "fsize": "4",
-    "sf5": "#5C5C5E",
-    "sb5": "#4C4C4E",
-    "sct25": "#909092",
-    "sct56": "#AFAFB1",
-    "eTop": "0",
-    "eLeft": "364",
-    "eW": "1556",
-    "eH": "64",
-    "nTop": "0",
-    "nLeft": "187",
-    "nRight": "273",
-    "nBottom": "64",
-    "oTop": "0",
-    "oLeft": "0",
-    "oRight": "182",
-    "oBottom": "64",
-    "sTop": "0",
-    "sLeft": "278",
-    "sRight": "364",
-    "sBottom": "64",
-    "ColorTimeline": "#777779",
-    "ColorEvent": "#98E2EB",
-    "Number": "4",
-    "Dev": "2",
-    "Start": "-7",
-    "Finish": "132",
-    "Duration": "139",
-    "Mix": "0",
-    "Text": "Бутусов крупный план",
-    "Top": "0",
-    "Left": "0",
-    "Right": "1920",
-    "Bottom": "64"
-};
 
-function drawEvent(ev, ps) {
-    var Foreground = intToRGB(ev.ForeGround);
-    var Background = intToRGB(ev.BackGround);
-    var  cfont, cbrush;
-    var sht;
-    ecv.textBaseline = "middle";
-    ev.Mix = Number(ev.Mix);
-    ev.fsize = Number(ev.fsize);
-    ev.Number = Number(ev.Number)+1;
-    ev.Interval = Number(ev.Interval);
-    ev.Duration = Number(ev.Duration);
-    ev.Finish = Number(ev.Finish);
-    ev.Start = Number(ev.Start);
+function MyDrawEvents(cv, Width, Height) {
+  var srccolor = 0;  
+  var Background = rgbFromNum(srccolor);
+  var Foreground = smoothcolor(srccolor,16);
+  var LeftTxt = +LengthNameTL + +MyCursor;
+  var LeftSec = LeftTxt - WidthDevice - IntervalDevice;
+  var LeftDev = LeftSec - WidthDevice;
+  //var LeftNum = LeftDev - WidthDevice - IntervalDevice;
+  var ScreenFrm = Math.floor((Width - LeftTxt)/FrameSize);
+  var ScreenSec = Math.floor(ScreenFrm / 25);
+  cv.fillStyle = Background;
+  cv.fillRect(0,0,Width,Height);
+  var tmph = Height / (+CountEvents + 1);
+  var interval = (tmph / 100) * 10;
+  tmph = tmph - interval;
+  var top = interval;
+  cv.fillStyle = Foreground;
+  for (var i=0; i<=CountEvents + 1; i++) {
+    cv.fillRect(0,top,Width,tmph);
+    top = +top + (+tmph + +interval);
+  }
+  
+  var tptl = TLT[ActiveTL].TypeTL;
+  var LastEvent, strtev, fnshev;
+  var step = 25 * FrameSize;
+  var evColor, evFontName, evSafeZone, evmix, evmixdur, evtext, evdevice;
+  var evcomment, wdthev, evdur, tmpdur;
+          
+  if (+tptl == 0) {
+    if (TLT[ActiveTL].Count > 0) {
+      LastEvent = CurrEvent + CountEvents;
+      if (LastEvent > TLT[ActiveTL].Count-1) {
+        LastEvent = TLT[ActiveTL].Count-1;  
+      }
+      top = interval;
+      
+      evColor = rgbFromNum(TLT[ActiveTL].Events[CurrEvent].Color);
+      evFontName = TLT[ActiveTL].Events[CurrEvent].FontName;
+      evSafeZone = TLT[ActiveTL].Events[CurrEvent].SafeZone;;  
+      evmix = TLT[ActiveTL].Events[CurrEvent].Rows[1].Phrases[0].Text;
+      evmixdur = TLT[ActiveTL].Events[CurrEvent].Rows[1].Phrases[1].Data;
+      evtext = TLT[ActiveTL].Events[CurrEvent].Rows[0].Phrases[1].Text;
+      evdevice = TLT[ActiveTL].Events[CurrEvent].Rows[0].Phrases[0].Data;
+      evcomment = TLT[ActiveTL].Events[CurrEvent].Rows[3].Phrases[0].Text;
+      if (evcomment.charAt(0) == "#") {
+        evtext = evcomment;  
+      }
+      if (evmixdur == "") {
+        evmixdur = 0;  
+      }
+      strtev = (TLT[ActiveTL].Events[CurrEvent].Start - TLP.Position) * FrameSize;
+      evdur = TLT[ActiveTL].Events[CurrEvent].Finish - TLP.Position;
+      fnshev = (TLT[ActiveTL].Events[CurrEvent].Finish - TLP.Position) * FrameSize;
+       
+      wdthev = fnshev - strtev;
+       
+      evmixdur = evmixdur * FrameSize;
+        
+      if (wdthev < evmixdur) {
+        evmixdur = wdthev;
+      }
 
-    ev.Top = Number(ev.Top);
-    ev.Bottom = Number(ev.Bottom);
-    ev.Left = Number(ev.Left);
-    ev.Right = Number(ev.Right);
-
-    ev.nTop = Number(ev.nTop);
-    ev.nBottom = Number(ev.nBottom);
-    ev.nLeft = Number(ev.nLeft);
-    ev.nRight = Number(ev.nRight);
-
-    ev.sTop = Number(ev.sTop);
-    ev.sBottom = Number(ev.sBottom);
-    ev.sLeft = Number(ev.sLeft);
-    ev.sRight = Number(ev.sRight);
-
-    ev.eTop = Number(ev.eTop);
-    ev.eBottom = Number(ev.eBottom);
-    ev.eLeft = Number(ev.eLeft);
-    ev.eRight = Number(ev.eRight);
-
-    ev.oTop = Number(ev.oTop);
-    ev.oBottom = Number(ev.oBottom);
-    ev.oLeft = Number(ev.oLeft);
-    ev.oRight = Number(ev.oRight);
-    // cv.Brush.Color:=Foreground;
-    cbrush = ev.ForeGround;
-    ecv.fillStyle = cbrush;
-    ecv.fillRect(ev.Left, ev.Top, ev.Right-ev.Left, ev.Bottom-ev.Top); // cv.FillRect(Rect);
-    cbrush = ev.sf5; // cv.Brush.Color:=smoothcolor(Foreground,5);
-    ecv.fillRect(ev.eLeft, ev.eTop, ev.eRight - ev.eLeft, ev.eBottom - ev.eTop);  // cv.FillRect(REvent);
-
-
-    // cv.Brush.Color:=ColorTimeline;
-    cbrush = ev.ColorTimeline; // cv.Brush.Color:=ColorTimeline;
-    ecv.fillStyle = cbrush;
-
-    if (ev.Start < 0) {
-        ev.Start = 0;
-    }
-    var rtLeft =ev.eLeft+ev.Start*ev.fsize; // rt.Left := REvent.Left + start * TLParameters.FrameSize;;
-    var rtTop = ev.eTop;
-    var rtRight = ev.eLeft + ev.Finish * ev.fsize;
-    var rtBottom = ev.eBottom;
-
-
-    if (ev.Duration > 0) {
-        ecv.fillRect( rtLeft,rtTop, rtRight-rtLeft, rtBottom-rtTop);
-    }
-
-    if (ev.Number < 0) return;
-
-    if (ev.Mix > 0) {
-        //    if Mix > 0 then begin
-        //      if Mix > Duration then Mix := Duration;
-        if (ev.Mix > ev.Duration) {
-            ev.Mix = ev.Duration
+      cv.fillStyle = smoothcolor(srccolor,80);
+      cv.fillRect(LeftTxt + strtev,  top, fnshev-strtev, tmph);
+      
+      if (evmix == "Mix" || evmix == "Wipe") {
+        cv.beginPath();  
+        cv.moveTo(+LeftTxt + strtev, top);  
+        cv.lineTo(+LeftTxt + strtev, top + tmph);
+        cv.lineTo(+LeftTxt + strtev + evmixdur, top + tmph);
+        cv.lineTo(+LeftTxt + strtev, top);
+        cv.lineWidth = 1;
+        cv.fillStyle = "rgba(255,255,255,.15)";//evsmoothcolor;
+        cv.strokeStyle = "rgba(255,255,255,.15)";//evsmoothcolor;
+        cv.stroke();
+        //edcv.fill;
+        cv.closePath(); 
+        cv.fill();
+        cv.globalAlpha = 1;
+      }  
+      
+      var fs = Math.floor(tmph / 2);
+      if (fs>MaxFontSize) {
+        fs = MaxFontSize;  
+      }
+      cv.font = fs + "pt Arial";
+      
+      if (evtext.charAt(0) == "#") {
+        cv.fillStyle = "yellow";  
+      } else { 
+        cv.fillStyle = cfont;
+      }
+      cv.textBaseline = "middle"; 
+      cv.textAlign  = "left";
+      cv.fillText(evtext, +LeftTxt, +top + +tmph / 2); 
+      
+      cv.fillStyle = Foreground;
+      cv.fillRect(0, +top, +LeftTxt, +tmph);
+      cv.fillStyle = cfont;
+      evtext = GetSeconds(TLP.Position, TLT[ActiveTL].Events[CurrEvent].Finish);//FramesToShortString(evdur);
+      evtext = SecondsToString(evtext);
+      cv.fillText(evtext, +LeftSec + 5, +top + +tmph / 2);
+      
+      cv.fillStyle = evColor;
+      cv.fillRect(+LeftDev-1, top, LeftSec - LeftDev + 2, +tmph);
+      cv.fillStyle = cfont;
+      cv.textAlign  = "center";
+      cv.fillText(evdevice, +LeftDev + (LeftSec - LeftDev) / 2, +top + +tmph / 2);
+      
+      cv.textAlign  = "right";
+      cv.fillText(CurrEvent + EventOffset, +LeftDev - 10, +top + +tmph / 2);
+      
+      if (TLT[ActiveTL].Events[CurrEvent].Start <= TLP.Position &&
+          +TLT[ActiveTL].Events[CurrEvent].Start + +evSafeZone >= TLP.Position) {
+        cv.fillStyle = "rgba(255,255,255,.65)";
+        tmpdur = +fnshev - strtev - 1;//LeftTxt + +TLP.Start;
+        if (tmpdur < 0) {
+          tmpdur = 0;  
         }
-        // if ps <> -1 then begin
-        if (ps != -1) {
+        cv.fillRect(+LeftTxt + 1,  top, tmpdur + strtev, tmph);
+        cv.globalAlpha = 1;
+      }  
+      
+      top = top + tmph + interval;
+      cv.fillStyle = "white";
+      cv.fillRect(LeftTxt + strtev,  top+0.5, fnshev-strtev, tmph-1);
+      
+      if (evmix == "Mix" || evmix == "Wipe") {
+        cv.beginPath();  
+        cv.moveTo(+LeftTxt + strtev, top + tmph-1);  
+        cv.lineTo(+LeftTxt + strtev, top+0.5);
+        cv.lineTo(+LeftTxt + strtev + evmixdur, top+0.5);
+        cv.lineTo(+LeftTxt + strtev, top + tmph-1);
+        cv.lineWidth = 1;
+        cv.fillStyle = "rgba(0,0,0,.15)";//evsmoothcolor;
+        cv.strokeStyle = "rgba(0,0,0,.15)";//evsmoothcolor;
+        cv.stroke();
+        //edcv.fill;
+        cv.closePath(); 
+        cv.fill();
+        cv.globalAlpha = 1;
+      }
+      
+      cv.fillStyle = Foreground;
+      for (var ic=0; ic<=ScreenSec; ic++) {
+        cv.beginPath();  
+        cv.moveTo(+LeftTxt + ic * step, +top);  
+        cv.lineTo(+LeftTxt + ic * step, +top + +tmph);
+        cv.lineWidth = 1;
+        cv.strokeStyle = Foreground;
+        cv.stroke();
+        cv.closePath();  
+      }
+      cv.fillStyle = Foreground;
+      cv.fillRect(0, +top, +LeftTxt, +tmph);
+      cv.textAlign  = "left";
+      cv.fillStyle = cfont;
+      evtext = FramesToShortString(TLP.Position - TLP.Start);
+      cv.fillText(evtext, +LeftDev - 10, +top + +tmph / 2);
+      
+      top = top + tmph + interval;
+      
+      for (var i=CurrEvent + 1; i<=LastEvent; i++) {
+//==============================================================================          
+        evColor = rgbFromNum(TLT[ActiveTL].Events[i].Color);
+        evFontName = TLT[ActiveTL].Events[i].FontName;
+        evSafeZone = TLT[ActiveTL].Events[i].SafeZone;;  
+        evmix = TLT[ActiveTL].Events[i].Rows[1].Phrases[0].Text;
+        evmixdur = TLT[ActiveTL].Events[i].Rows[1].Phrases[1].Data;
+        evtext = TLT[ActiveTL].Events[i].Rows[0].Phrases[1].Text;
+        evdevice = TLT[ActiveTL].Events[i].Rows[0].Phrases[0].Data;
+        evcomment = TLT[ActiveTL].Events[i].Rows[3].Phrases[0].Text;
+        if (evcomment.charAt(0) == "#") {
+          evtext = evcomment;  
+        }
+        if (evmixdur == "") {
+          evmixdur = 0;  
+        }
+        strtev = (TLT[ActiveTL].Events[i].Start - TLP.Position) * FrameSize;
+        evdur = TLT[ActiveTL].Events[i].Finish - TLP.Position;
+        fnshev = (TLT[ActiveTL].Events[i].Finish - TLP.Position) * FrameSize;
+       
+        wdthev = fnshev - strtev;
+       
+        evmixdur = evmixdur * FrameSize;
+        
+        if (wdthev < evmixdur) {
+          evmixdur = wdthev;
+        }
 
-            cbrush = ev.sb5; // cv.Brush.Color := SmoothColor(BackGround,5);
-            ecv.fillStyle = cbrush;
-            // cv.Polygon([Point(rt.Left,rt.Top), Point(rt.Left,rt.Bottom),
-            //     Point(rt.Left + Mix * TLParameters.FrameSize, rt.Top)]);
-            ecv.beginPath();
-            ecv.moveTo(rtLeft, rtTop);
-            ecv.lineTo(rtLeft, rtBottom);
-            ecv.lineTo(rtLeft + ev.Mix * ev.fsize, rtTop);
-            ecv.closePath();
-            ecv.fill();
-            var hgh = rtBottom - rtTop + ev.Interval;
-            // if ps=0 then begin
-            if (ps == 0) {
-                cbrush = ev.sct25; // cv.Brush.Color := SmoothColor(ColorTimeline,25);
-                ecv.fillStyle = cbrush;
-                ecv.beginPath();
-                // cv.Polygon([Point(rt.Left,rt.Top-Interval), Point(rt.Left,rt.Top-hgh),
-                //     Point(rt.Left + Mix * TLParameters.FrameSize, rt.Top-Interval)]);
-                // end else begin
-                ecv.moveTo(rtLeft, rtTop - ev.Interval);
-                ecv.lineTo(rtLeft, rtTop - hgh);
-                ecv.lineTo(rtLeft + ev.Mix * ev.fsize, rtTop - ev.Interval);
-                ecv.closePath();
-                ecv.fill();
-            } else {
-                cbrush = ev.sct25; // cv.Brush.Color := SmoothColor(ColorTimeline,25);
-                ecv.fillStyle = cbrush;
-                ecv.beginPath();
-                // cv.Polygon([Point(rt.Left,rt.Top-Interval), Point(rt.Left,rt.Top-hgh),
-                //     Point(rt.Left + Mix * TLParameters.FrameSize, rt.Top-Interval)]);
-                // end else begin
-                ecv.moveTo(rtLeft, rtTop - ev.Interval);
-                ecv.lineTo(rtLeft, rtTop - hgh);
-                ecv.lineTo(rtLeft + ev.Mix * ev.fsize, rtTop - ev.Interval);
-                ecv.closePath();
-                ecv.fill();
-            }
+        cv.fillStyle = smoothcolor(srccolor,80);
+        cv.fillRect(LeftTxt + strtev,  top, fnshev-strtev, tmph);
+      
+        if (evmix == "Mix" || evmix == "Wipe") {
+          cv.beginPath();  
+          cv.moveTo(+LeftTxt + strtev, top + tmph);  
+          cv.lineTo(+LeftTxt + strtev, top);
+          cv.lineTo(+LeftTxt + strtev + evmixdur, top);
+          cv.lineTo(+LeftTxt + strtev, top + tmph);
+          cv.lineWidth = 1;
+          cv.fillStyle = "rgba(255,255,255,.15)";//evsmoothcolor;
+          cv.strokeStyle = "rgba(255,255,255,.15)";//evsmoothcolor;
+          cv.stroke();
+          //edcv.fill;
+          cv.closePath(); 
+          cv.fill();
+          cv.globalAlpha = 1;
+        }  
+      
+        var fs = Math.floor(tmph / 2);
+        if (fs>MaxFontSize) {
+          fs = MaxFontSize;  
+        }
+        cv.font = fs + "pt Arial";
+        
+        if (evtext.charAt(0) == "#") {
+          cv.fillStyle = "yellow";  
+        } else { 
+          cv.fillStyle = cfont;
+        }
+        cv.textBaseline = "middle"; 
+        cv.textAlign  = "left";
+        cv.fillText(evtext, +LeftTxt, +top + +tmph / 2); 
+      
+        cv.fillStyle = Foreground;
+        cv.fillRect(0, +top, +LeftTxt, +tmph);
+        cv.fillStyle = cfont;
+        evtext = GetSeconds(TLP.Position, TLT[ActiveTL].Events[i].Finish);
+        evtext = SecondsToString(evtext);
+        cv.fillText(evtext, +LeftSec + 5, +top + +tmph / 2);
+      
+        cv.fillStyle = evColor;
+        cv.fillRect(+LeftDev - 1, top, LeftSec - LeftDev + 2, +tmph);
+        cv.fillStyle = cfont;
+        cv.textAlign  = "center";
+        cv.fillText(evdevice, +LeftDev + (LeftSec - LeftDev) / 2, +top + +tmph / 2);
+      
+        cv.textAlign  = "right";
+        cv.fillText(i + EventOffset, +LeftDev - 10, +top + +tmph / 2);
+      
+//        if (TLT[ActiveTL].Events[i].Start <= TLP.Position &&
+//            +TLT[ActiveTL].Events[i].Start + +evSafeZone >= TLP.Position) {
+//          cv.fillStyle = "rgba(255,255,255,.65)";
+//          cv.fillRect(LeftTxt + strtev,  top, fnshev-strtev, tmph);
+//          cv.globalAlpha = 1;
+//        }  
+      
+        top = top - tmph - interval;
+              
+        if (evmix == "Mix" || evmix == "Wipe") {
+          cv.beginPath();  
+          cv.moveTo(+LeftTxt + strtev, top);  
+          cv.lineTo(+LeftTxt + strtev, top + tmph);
+          cv.lineTo(+LeftTxt + strtev + evmixdur, top + tmph);
+          cv.lineTo(+LeftTxt + strtev, top);
+          cv.lineWidth = 1;
+          cv.fillStyle = "rgba(255,255,255,.65)";//evsmoothcolor;
+          cv.strokeStyle = "rgba(255,255,255,.65)";//evsmoothcolor;
+          cv.stroke();
+          //edcv.fill;
+          cv.closePath(); 
+          cv.fill();
+          cv.globalAlpha = 1;
+        }
+        if (i == CurrEvent+1) { 
+          cv.fillStyle = Foreground;
+          for (var ic=0; ic<=ScreenSec; ic++) {
+            cv.beginPath();  
+            cv.moveTo(+LeftTxt + ic * step, +top);  
+            cv.lineTo(+LeftTxt + ic * step, +top + +tmph);
+            cv.lineWidth = 1;
+            cv.strokeStyle = Foreground;
+            cv.stroke();
+            cv.closePath();  
+          }
+        }
+
+        top = top + 2*(tmph + interval);
+//==============================================================================                
+      }
+    }     
+  } else if (+tptl == 1) {
+    var FinishFrm = TLP.Position + ScreenFrm;  
+    var fev, sev;
+    if (TLT[ActiveTL].Count > 0) {
+      fev = -1;
+      sev = 0;
+      for (var i=0; i<TLT[ActiveTL].Count-1; i++) {
+        if (TLT[ActiveTL].Events[i].Finish > TLP.Position){
+          sev = i;
+          break;
+        }  
+      }  
+      fev = sev + CountEvents;
+      if (fev > TLT[ActiveTL].Count-1) {
+        fev = TLT[ActiveTL].Count-1  
+      }
+            
+      top = interval;
+//=============================================================================      
+      evColor = rgbFromNum(TLT[ActiveTL].Events[sev].Color);
+      evFontName = TLT[ActiveTL].Events[sev].FontName;
+      evSafeZone = TLT[ActiveTL].Events[sev].SafeZone;;  
+
+      evtext = TLT[ActiveTL].Events[sev].Rows[0].Phrases[0].Text;
+      evdevice = TLT[ActiveTL].Events[sev].Rows[0].Phrases[0].Data;
+      evcomment = TLT[ActiveTL].Events[sev].Rows[2].Phrases[0].Text;
+      if (evcomment.charAt(0) == "#") {
+        evtext = evcomment;  
+      }
+
+      strtev = (TLT[ActiveTL].Events[sev].Start - TLP.Position) * FrameSize;
+      evdur = TLT[ActiveTL].Events[sev].Finish - TLP.Position;
+      fnshev = (TLT[ActiveTL].Events[sev].Finish - TLP.Position) * FrameSize;
+       
+      wdthev = fnshev - strtev;
+
+      cv.fillStyle = smoothcolor(srccolor,80);
+      cv.fillRect(LeftTxt + strtev,  top, fnshev-strtev, tmph);
+ 
+      var fs = Math.floor(tmph / 2);
+      if (fs>MaxFontSize) {
+        fs = MaxFontSize;  
+      }
+      cv.font = fs + "pt Arial";
+      
+      if (evtext.charAt(0) == "#") {
+        cv.fillStyle = "yellow";  
+      } else { 
+        cv.fillStyle = cfont;
+      }
+      cv.textBaseline = "middle"; 
+      cv.textAlign  = "left";
+      cv.fillText(evtext, +LeftTxt, +top + +tmph / 2); 
+      
+      cv.fillStyle = Foreground;
+      cv.fillRect(0, +top, +LeftTxt, +tmph);
+      cv.fillStyle = cfont;
+      if ((TLT[ActiveTL].Events[sev].Start <= TLP.Position &&
+              +TLT[ActiveTL].Events[sev].Finish >= TLP.Position) ) {
+        evtext = GetSeconds(TLP.Position, TLT[ActiveTL].Events[sev].Finish);
+        evtext = SecondsToString(evtext);
+      } else {
+        if (sev < TLT[ActiveTL].Count) {
+          if (sev == TLT[ActiveTL].Count1) {
+            evtext = GetSeconds(TLP.Position, TLT[ActiveTL].Events[sev].Start);
+            evtext = SecondsToString(evtext);  
+          } else {
+            evtext = GetSeconds(TLP.Position, TLT[ActiveTL].Events[sev+1].Start);//FramesToShortString(evdur);
+            evtext = SecondsToString(evtext);  
+          }  
         } else {
-
-            //        cv.Brush.Color := SmoothColor(ColorTimeline,56);
-            cbrush = ev.sct56;
-            ecv.fillStyle = cbrush;
-            // if start=0 then begin
-            if (ev.Start == 0) {
-                var str = ev.Duration - ev.Mix;//     str:=Duration-Mix;
-                //     if Finish > str then begin
-                if (ev.Finish > str) {
-                    var dlt = (ev.Finish - str) * ev.fsize;//         dlt := (Finish - str) * TLParameters.FrameSize;
-                    var stp = parseInt(dlt * (rtBottom-rtTop)/(ev.Mix*ev.fsize));//  stp := trunc(dlt * ((rt.Bottom-rt.Top) / (Mix * TLParameters.FrameSize)));
-                    //         cv.Polygon([Point(rt.Left,rt.Bottom-stp), Point(rt.Left,rt.Bottom),
-                    //         Point(rt.Left + dlt, rt.Bottom)]);
-                    ecv.beginPath();
-                    ecv.moveTo(rtLeft,rtBottom-stp);
-                    ecv.lineTo(rtLeft,rtBottom);
-                    ecv.lineTo(rtLeft+dlt,rtBottom);
-                    ecv.closePath();
-                    ecv.fill();
-                    //     end;
-                }
-                // end else begin
-            } else {
-                //     cv.Polygon([Point(rt.Left,rt.Top), Point(rt.Left,rt.Bottom),
-                //         Point(rt.Left + Mix * TLParameters.FrameSize, rt.Bottom)]);
-                ecv.beginPath();
-                ecv.moveTo(rtLeft,rtTop);
-                ecv.lneTo(rtLeft,rtBottom);
-                ecv.lineTo(rtLeft+ev.Mix*ev.fsize,rtBottom);
-                ecv.closePath();
-                ecv.fill();
-                // end;
-            }
-
+          evtext = ""; 
         }
-    }
-    //          cv.Brush.Style:=bsClear;
-    cfont = ProgrammFontColor;
-    //    cv.Font.Name:=ProgrammFontName;
-    var s = SecondToShortStr(parseInt((ev.Finish - ev.Start) / 25)+1);
-    ecv.font = mainFont;
-    ecv.fillStyle = cfont;
+      }
+      
+      if (typeof WidthDevice == "undefined") {
+        WidthDevice = LeftTxt / 3.5;   
+      }
+      
+      LeftSec = LeftTxt - + WidthDevice - +IntervalDevice;
+      LeftDev = LeftSec - + WidthDevice;
+      cv.fillText(evtext, +LeftSec + 5, +top + +tmph / 2);
+      
+      //cv.fillStyle = evColor;
+      //cv.fillRect(+LeftDev-1, top, LeftSec - LeftDev + 2, +tmph);
+      //cv.fillStyle = cfont;
+      //cv.textAlign  = "center";
+      //cv.fillText(evdevice, +LeftDev + (LeftSec - LeftDev) / 2, +top + +tmph / 2);
+      
+      cv.textAlign  = "right";
+      cv.fillText(sev + EventOffset, +LeftDev - 10, +top + +tmph / 2);
+      
+      if (TLT[ActiveTL].Events[sev].Start <= TLP.Position &&
+          +TLT[ActiveTL].Events[sev].Start + +evSafeZone >= TLP.Position) {
+        cv.fillStyle = "rgba(255,255,255,.65)";
+        tmpdur = +fnshev - strtev - 1;//LeftTxt + +TLP.Start;
+        if (tmpdur < 0) {
+          tmpdur = 0;  
+        }
+        cv.fillRect(+LeftTxt + 1,  top, tmpdur + strtev, tmph);
+        cv.globalAlpha = 1;
+      }  
+      
+      top = top + tmph + interval;
+      cv.fillStyle = "white";
+      cv.fillRect(LeftTxt + strtev,  top+0.5, fnshev-strtev, tmph-1);
+         
+      cv.fillStyle = Foreground;
+      for (var ic=0; ic<=ScreenSec; ic++) {
+        cv.beginPath();  
+        cv.moveTo(+LeftTxt + ic * step, +top);  
+        cv.lineTo(+LeftTxt + ic * step, +top + +tmph);
+        cv.lineWidth = 1;
+        cv.strokeStyle = Foreground;
+        cv.stroke();
+        cv.closePath();  
+      }
+      cv.fillStyle = Foreground;
+      cv.fillRect(0, +top, +LeftTxt, +tmph);
+      cv.textAlign  = "left";
+      cv.fillStyle = cfont;
+      evtext = FramesToShortString(TLP.Position - TLP.Start);
+      cv.fillText(evtext, +LeftDev - 10, +top + +tmph / 2);
+      
+      top = top + tmph + interval;
+ //=============================================================================
+      
+      for (var i=sev+1; i<=fev; i++) {
+//=============================================================================      
+        evColor = rgbFromNum(TLT[ActiveTL].Events[i].Color);
+        evFontName = TLT[ActiveTL].Events[i].FontName;
+        evSafeZone = TLT[ActiveTL].Events[i].SafeZone;;  
 
-    //    //cv.Font.Size:=DefineFontSizeW(cv,RSecond.Right-RSecond.Left,'0:00');
-    //    cv.TextOut(RSecond.Left, RSecond.Top + (RSecond.Bottom-RSecond.Top-cv.TextHeight('0')) div 2, s);
-    sht = ( ev.sBottom-ev.sTop+textHeight(ecv))/2;
+        evtext = TLT[ActiveTL].Events[i].Rows[0].Phrases[0].Text;
+        evdevice = TLT[ActiveTL].Events[i].Rows[0].Phrases[0].Data;
+        evcomment = TLT[ActiveTL].Events[i].Rows[2].Phrases[0].Text;
+        if (evcomment.charAt(0) == "#") {
+          evtext = evcomment;  
+        }
+ 
+        strtev = (TLT[ActiveTL].Events[i].Start - TLP.Position) * FrameSize;
+        evdur = TLT[ActiveTL].Events[i].Finish - TLP.Position;
+        fnshev = (TLT[ActiveTL].Events[i].Finish - TLP.Position) * FrameSize;
+       
+        wdthev = fnshev - strtev;
 
-    ecv.fillText(s, ev.sLeft, (Number(ev.sTop) + Number(ev.sBottom))/2);
-
-    //    s:=inttostr(Number);
-    //    cv.TextOut(ROrder.Right - cv.TextWidth(s)-2, ROrder.Top + (ROrder.Bottom-ROrder.Top-cv.TextHeight('0')) div 2, s);
-    sht = ( ev.Bottom-ev.Top+textHeight(ecv))/2;
-    ecv.fillText(ev.Number, ev.oRight - textWidth(ev.Number.toString(), ecv), (Number(ev.oTop) + Number(ev.oBottom))/2);
-
-    cbrush = intToRGB(ev.ColorEvent);
-    ecv.fillStyle = cbrush;
-    //    cv.Rectangle(RNumber);
-    var nw = Number(ev.nRight) - Number(ev.nLeft);
-    var nh = Number(ev.nBottom) - Number(ev.nTop);
-    ecv.fillRect(ev.nLeft, ev.nTop, nw, nh);
-    if (ev.Dev >= 0) {
-        s = ev.Dev
-    } else {
-        s = '';
-    }
-    //    cv.TextOut(RNumber.Left + (RNumber.Right - RNumber.Left - cv.TextWidth(s)) div 2,
-    //               RNumber.Top + (RNumber.Bottom-RNumber.Top-cv.TextHeight('0')) div 2, s);
-    ecv.font = mainFont;
-    ecv.fillStyle = cfont;
-    sht = ( ev.nBottom-ev.nTop+textHeight(ecv))/2;
-    ecv.textAlign = "center";
-    ecv.fillText(s, (Number(ev.nLeft) + Number(ev.nRight))/2, (Number(ev.nTop) +Number(ev.nBottom))/2);
-    ecv.textAlign = "left";
-    //  if Number>= 0 then begin
-    if (ev.Number >= 0) {
-        //     cv.Brush.Style:=bsClear;
-        //     cfont=ProgrammFontColor;
-        cfont = ProgrammFontColor;
-        //       cv.Font.Name:=ProgrammFontName;
-        s = parseInt((Number(ev.Finish) - Number(ev.Start)) / 25);
-        //cv.Font.Size:=40;
-        //     //cv.Font.Size:=DefineFontSizeW(cv,RSecond.Right-RSecond.Left,'0:00');
-//        ecv.fillText(s, ev.sLeft, ev.sTop, Number(ev.sRight) - Number(ev.sLeft), Number(ev.sBottom) - Number(ev.sTop));
-
-        s = ev.Number;
-        //     cv.TextOut(ROrder.Right - cv.TextWidth(s)-2, ROrder.Top + (ROrder.Bottom-ROrder.Top-cv.TextHeight('0')) div 2, s);
-
-        //     cv.Brush.Style:=bsSolid;
-        //     cv.Brush.Color:=ColorEvent;
-        //     cv.Rectangle(RNumber);
-        //     if dev >=0 then s:=inttostr(Dev) else s:='';
-        //     cv.TextOut(RNumber.Left + (RNumber.Right - RNumber.Left - cv.TextWidth(s)) div 2,
-        //                RNumber.Top + (RNumber.Bottom-RNumber.Top-cv.TextHeight('0')) div 2, s);
-
-
-    }
-    //    cv.Brush.Style:=bsClear;
-    //    txt :=trim(Text);
-    //    cv.Font.Color:=ProgrammFontColor;
-    cfont = ProgrammFontColor;
-    //    if txt<>'' then if txt[1]='#' then cv.Font.Color:=ProgrammCommentColor;
-    if (ev.Text[0] == "#") {
-        cfont = ProgrammCommentColor;
-    }
-    ecv.fillStyle = cfont;
-    //    cv.Font.Name:=ProgrammFontName;
-    //    //cv.Font.Size:=DefineFontSizeH(cv,REvent.Bottom-REvent.Top - trunc((REvent.Bottom-REvent.Top) / 6));
-    //    //Warning*****************
-    //    cv.TextOut(REvent.Left + 15,REvent.Top + (REvent.Bottom-REvent.Top-cv.TextHeight('0')) div 2, Text);
-    ecv.textAlign = "left";
-    sht = ( ev.eBottom-ev.eTop+textHeight(ecv))/2;
-    ecv.fillText(ev.Text, Number(ev.eLeft) + 20,(ev.eTop+ev.eBottom)/2);
-    //  end;
-
-
+        cv.fillStyle = smoothcolor(srccolor,80);
+        cv.fillRect(LeftTxt + strtev,  top, fnshev-strtev, tmph);
+ 
+        var fs = Math.floor(tmph / 2);
+        if (fs>MaxFontSize) {
+          fs = MaxFontSize;  
+        }
+        cv.font = fs + "pt Arial";
+      
+        if (evtext.charAt(0) == "#") {
+          cv.fillStyle = "yellow";  
+        } else { 
+          cv.fillStyle = cfont;
+        }
+        cv.textBaseline = "middle"; 
+        cv.textAlign  = "left";
+        cv.fillText(evtext, +LeftTxt, +top + +tmph / 2); 
+      
+        cv.fillStyle = Foreground;
+        cv.fillRect(0, +top, +LeftTxt, +tmph);
+        cv.fillStyle = cfont;
+        if ((TLT[ActiveTL].Events[i].Start <= TLP.Position &&
+                +TLT[ActiveTL].Events[i].Finish >= TLP.Position) ) {
+          evtext = GetSeconds(TLP.Position, TLT[ActiveTL].Events[i].Finish);
+          evtext = SecondsToString(evtext);
+        } else {
+          if (i < TLT[ActiveTL].Count) {
+            if (i == TLT[ActiveTL].Count1) {
+              evtext = GetSeconds(TLP.Position, TLT[ActiveTL].Events[i].Start);
+              evtext = SecondsToString(evtext);  
+            } else {
+              evtext = GetSeconds(TLP.Position, TLT[ActiveTL].Events[i].Start);//FramesToShortString(evdur);
+              evtext = SecondsToString(evtext);  
+            }  
+          } else {
+            evtext = ""; 
+          }
+        }
+      
+        if (typeof WidthDevice == "undefined") {
+          WidthDevice = LeftTxt / 3.5;   
+        }
+      
+        LeftSec = LeftTxt - + WidthDevice - +IntervalDevice;
+        LeftDev = LeftSec - + WidthDevice;
+        cv.fillText(evtext, +LeftSec + 5, +top + +tmph / 2);
+      
+        cv.textAlign  = "right";
+        cv.fillText(i + EventOffset, +LeftDev - 10, +top + +tmph / 2);
+            
+        top = top + tmph + interval;
+ //=============================================================================          
+      }
+      
+    }  
+  } else if (+tptl == 2) {
+      
+  }
+  
 }

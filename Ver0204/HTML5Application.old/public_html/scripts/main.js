@@ -5,7 +5,7 @@ var timeStamp = 0;
 var url // = "http://127.0.0.1:9090/get_data&callback=?";
 var dt;
 var mainFont = '28pt Arial';
-var smallFont = '8pt Arial';
+var smallFont = '7pt Arial';
 var dvd = false;
 var startTime = new Date();
 var ncount = 0;
@@ -15,41 +15,9 @@ var globalStart = new Date().getTime();
 var reqStart = new Date().getTime();
 var chupdating = [false, false, false, false, false];
 var scrH, scrW;
-var cv, ecv, dcv, edcv, tlcv, evCanvas, dvCanvas, edCanvas, tvCanvas;
+var cv, ecv, dcv, evCanvas, dvCanvas;
 var ProgrammColor = "#494747";
 var ProgrammFontColor = "#FFFFFF";
-//Переменные для отображения тайм-линий и событий
-var typesrc = "0"; //Вид экрана 0 - All, 1- ev+dv, 2
-var currtlo; //текущая опция тайм линий
-var currtlt; //события текущей тайм линии
-var cfont = ProgrammFontColor;
-var DevValue = [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-                -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]; // секунды до следующего события          
-var CurrEvent = 4; //текущее событие;
-var CurrDevice = 4; // текущее устройство 
-var NextDevice = 9; // следующее устройство
-
-var EventsBKGN = "black";
-var DevicesBKGN = "black";
-var FrameSize = 3; //количество пиксилей на один фрейм
-var StartScrFrame = 250; //кадр в начале экрана 
-var FinishScrFrame = 850; //кадр в конце экрана
-var LengthNameTL = 200;
-var MyCursor = 100;
-var CountEvents = 8; //количесто отображаемых событий
-
-var WidthDevice = 80;
-var IntervalDevice = 10;
-var EventOffset = 30;
-var ActiveTL = 0; //отображаемая тайм-линия
-var ShowEditor = true; 
-var ShowScaler = true;
-var ShowTimelines = true;
-var ShowAllTimelines = true;
-var ShowDevices = true;
-var ShowEvents = true;
-var ShowNameTL = true;
-var MaxFontSize = 28;
 
 function toChart(txtval) {
     txtval = txtval.toString();
@@ -77,15 +45,6 @@ function textWidth(text, cv) {
 }
 //var cfont, dtop, dleft, dh, dw, cpen, cbrush;
 
-function rgbFromNum(num) {
-   var red = (num & 0xFF0000) >>16;
-   var green = (num & 0xFF00) >>8;
-   var blue = num & 255;
-   var decColor = 0x1000000 + red + 0x100 * green + 0x10000 * blue ;
-   return '#'+decColor.toString(16).substr(1);
-}
-
-
 
 function processData(t) {
     if (timeStamp > Number(t.timeStamp)) {
@@ -98,9 +57,7 @@ function processData(t) {
     startTime = newtime;
     dcv.lineWidth = 4;
     ecv.lineWidth = 1;
-    
     var ev, dv, as;
-    if (typesrc = "0") {
     t.dcvW = Number(t.dcvW);
     t.dcvH = Number(t.dcvH);
     t.ecvW = Number(t.ecvW);
@@ -109,8 +66,6 @@ function processData(t) {
     newDate.setDate(newDate.getDate());
     evCanvas.style.visibility = "hidden";
     dvCanvas.style.visibility = "hidden";
-    edCanvas.style.visibility = "hidden";
-    tvCanvas.style.visibility = "hidden";
     //amchart process
     // evCanvas.width = t.ecvW;
     // evCanvas.height = t.ecvH;
@@ -118,97 +73,90 @@ function processData(t) {
     // dvCanvas.height = t.dcvH;
     ecv.transform(1, 0, 0, 1, 0, 0);
     dcv.transform(1, 0, 0, 1, 0, 0);
-    
     evCanvas.width = scrW;
-    evCanvas.height = scrH * 0.52;
+    evCanvas.height = scrH * t.ecvH / (t.ecvH + t.dcvH);
     dvCanvas.width = scrW;
-    dvCanvas.height = scrH * 0.15;
-    edCanvas.width = scrW;
-    edCanvas.height = scrH * 0.28;
-    tvCanvas.width = scrW;
-    tvCanvas.height = scrH * 0.05;
-    
-    
-    //evCanvas.width = scrW;
-    //evCanvas.height = scrH * t.ecvH / (t.ecvH + t.dcvH);
-    //dvCanvas.width = scrW;
-    //dvCanvas.height = scrH * t.dcvH / (t.ecvH + t.dcvH);
-    //edCanvas.height = 0;
-    //tvCanvas.height = 0;
+    dvCanvas.height = scrH * t.dcvH / (t.ecvH + t.dcvH);
 
     ecv.clearRect(0, 0, evCanvas.width, evCanvas.height);
     dcv.clearRect(0, 0, dvCanvas.width, dvCanvas.height);
-    edcv.clearRect(0, 0, edCanvas.width, edCanvas.height);
-    tlcv.clearRect(0, 0, tvCanvas.width, tvCanvas.height);
     ecv.fillStyle = "black";
     dcv.fillStyle = "black";
-    edcv.fillStyle = "black";
-    tlcv.fillStyle = "black";
     ecv.fillRect(0, 0, evCanvas.width, evCanvas.height);
     dcv.fillRect(0, 0, dvCanvas.width, dvCanvas.height);
-    edcv.fillRect(0, 0, edCanvas.width, edCanvas.height);
-    tlcv.fillRect(0, 0, tvCanvas.width, tvCanvas.height);
-    //var kx = scrW / t.ecvW;
-    //var ky = evCanvas.height / t.ecvH;
-    //ecv.transform(kx, 0, 0, ky, 0, 0);
-    //kx = scrW / t.dcvW;
-    //ky = dvCanvas.height / t.dcvH;
+    var kx = scrW / t.ecvW;
+    var ky = evCanvas.height / t.ecvH;
+    ecv.transform(kx, 0, 0, ky, 0, 0);
+    kx = scrW / t.dcvW;
+    ky = dvCanvas.height / t.dcvH;
 
-    //dcv.transform(kx, 0, 0, ky, 0, 0);
-    if (ActiveTL !== -1) {
-        
-      currtlo = TLO[ActiveTL];
-      currtlt = TLT[ActiveTL];
-      MyCursor = TLP.MyCursor;
-      
-      GetScreenBorders();
-      GetCurrEvent();
-                   
-      //    console.log(argx + ' ');
-      //    console.log('\nEvents: ' + JSON.stringify(devs));
-    
-      if (typeof (currtlo) !== "undefined") {
-        drawMyDev(currtlo);  
-      }
-    
-      if (typeof (currtlt) !== "undefined") {
-        MyDrawEvents(ecv,evCanvas.width,evCanvas.height);  
-      }
-      
-      if (typeof (currtlt) !== "undefined") {
-        DrawTimeLines(); 
-        DrawTimeLineNames();  
-        DrawAllTimelines();  
-      }   
-      
+    dcv.transform(kx, 0, 0, ky, 0, 0);
+    var events = t.Event;
+    var airSecond = t.airSecond;
+    var devs = t.Dev;
+    //    console.log(argx + ' ');
+    //    console.log('\nEvents: ' + JSON.stringify(devs));
+    if (typeof (devs) != "undefined") {
+        for (var i = 0; i < 200; i++) {
+            dv = devs[i];
+            if (typeof (dv) != "undefined") {
+                //            console.log('\n=' + i + ' ' + JSON.stringify(dv));
+                drawDev(dv);
+            } else {
+                //            console.log('\n=' + i + '  undef');
+
+            }
+        }
+    }
+    if (typeof (airSecond) != "undefined") {
+        for (var i = 0; i < 200; i++) {
+            as = airSecond[i];
+            if (typeof (as) != "undefined") {
+                //            console.log('\n=' + i + ' ' + JSON.stringify(dv));
+                drawAirSecond(as, i);
+            } else {
+                //            console.log('\n=' + i + '  undef');
+
+            }
+        }
+    }
+
+    if (typeof (events) != "undefined") {
+        for (var i = 1; i < 200; i++) {
+            ev = events[i];
+            if (typeof (ev) != "undefined") {
+                //            console.log('\n=' + i + ' ' + JSON.stringify(dv));
+                drawEvent(ev, i);
+            } else {
+                //            console.log('\n=' + i + '  undef');
+
+            }
+        }
+    }
+    if (typeof (events[0]) != "undefined") {
+        drawEvent(events[0], -1);
+    }
+    if (t.Regim.length < 6) {
+        ecv.fillStyle = "red";
+
     } else {
-      ecv.clearRect(0, 0, evCanvas.width, evCanvas.height);
-      dcv.clearRect(0, 0, dvCanvas.width, dvCanvas.height);
-      edcv.clearRect(0, 0, edCanvas.width, edCanvas.height);
-      tlcv.clearRect(0, 0, tvCanvas.width, tvCanvas.height);
-      ecv.fillStyle = "black";
-      dcv.fillStyle = "black";
-      edcv.fillStyle = "black";
-      tlcv.fillStyle = "black";
-      ecv.fillRect(0, 0, evCanvas.width, evCanvas.height);
-      dcv.fillRect(0, 0, dvCanvas.width, dvCanvas.height);
-      edcv.fillRect(0, 0, edCanvas.width, edCanvas.height);
-      tlcv.fillRect(0, 0, tvCanvas.width, tvCanvas.height);
-      ecv.fillStyle = "white";
-      ecv.font = mainFont;
-      ecv.textAlign = "center";
-      ecv.baseline = "middle";
-      ecv.fillText("Отсутствуют данные", evCanvas.width / 2, evCanvas.height / 2);
+        ecv.fillStyle = "white";
+
+    }
+    ecv.font = mainFont;
+    ecv.textAlign = "right";
+    ecv.baseline = "middle";
+    ev = events[0];
+    if (typeof (ev) != "undefined") {
+        ecv.fillText(t.Regim, ev.Right - 100, (Number(ev.Top) + Number(ev.Bottom)) / 2);
     }
     evCanvas.style.visibility = "visible";
     dvCanvas.style.visibility = "visible";
-    edCanvas.style.visibility = "visible";
-    tvCanvas.style.visibility = "visible";
 
     // document.getElementById("main").style.visibility = true;
 
     //    console.log('\nEvents:' + JSON.stringify(events));
-    }
+
 }
 
 
@@ -298,72 +246,72 @@ window.onload = function () {
     tm = document.getElementById("time");
     var dloc = document.location;
     var hostname;
-    
     evCanvas = document.getElementById("evCanvas");
+
     evCanvas.left = 1;
     evCanvas.height = 599;
     evCanvas.width = 1920;
     ecv = evCanvas.getContext('2d');
-    
     dvCanvas = document.getElementById("dvCanvas");
     dvCanvas.left = 1;
     dvCanvas.height = 139;
     dvCanvas.width = 1920;
     dcv = dvCanvas.getContext('2d');
-    
-    edCanvas = document.getElementById("edCanvas");
-    edCanvas.left = 1;
-    edCanvas.height = 139;
-    edCanvas.width = 1920;
-    edcv = edCanvas.getContext('2d');
-
-    tvCanvas = document.getElementById("tvCanvas");
-    tvCanvas.left = 1;
-    tvCanvas.height = 209;
-    tvCanvas.width = 1920;
-    tlcv = tvCanvas.getContext('2d');
     //    setViewport();
     //    setViewport();
     console.log(url);
     setViewport();
     evCanvas.width = scrW;
-    evCanvas.height = scrH * 0.5;
+    evCanvas.height = scrH * 0.7;
     dvCanvas.width = scrW;
-    dvCanvas.height = scrH * 0.2;
-    edCanvas.width = scrW;
-    edCanvas.height = scrH * 0.1;
-    tvCanvas.width = scrW;
-    tvCanvas.height = scrH * 0.2;
+    dvCanvas.height = scrH * 0.3;
 
     ecv.clearRect(0, 0, evCanvas.width, evCanvas.height);
     dcv.clearRect(0, 0, dvCanvas.width, dvCanvas.height);
-    edcv.clearRect(0, 0, dvCanvas.width, dvCanvas.height);
-    tlcv.clearRect(0, 0, tvCanvas.width, tvCanvas.height);
     ecv.fillStyle = "black";
     dcv.fillStyle = "black";
-    edcv.fillStyle = "black";
-    tlcv.fillStyle = "black";
+    var newColor = rgbFromNum(255 * 0x100);
+    var newColor1 = rgbFromNum(255);
+
+    dcv.fillStyle = newColor;
+    ecv.fillStyle = newColor1;
+    dcv.globalAlpha = 0.9;
     ecv.fillRect(0, 0, evCanvas.width, evCanvas.height);
     dcv.fillRect(0, 0, dvCanvas.width, dvCanvas.height);
-    edcv.fillRect(0, 0, dvCanvas.width, dvCanvas.height);
-    tlcv.fillRect(0, 0, tvCanvas.width, tvCanvas.height);
-    //processData(testData);
-    
-    setInterval(changeTL, 40);
+    var ctx = ecv;
+    var text = "foo bar foo bar";
+    ctx.font = "30pt Arial";
+    ecv.fillStyle = "black";
+        ctx.fillText(text, 100, 100);
 
-//    drawNew();
+    var width = ctx.measureText(text).width;
+    var metrics = ctx.measureText("M");
+    var height =   metrics.width; // ширина заглавной М считается равна высоте . Другого способа оценить высоту текста я не нашел
+    ctx.save();
+        ctx.scale(101/width,40/height);
+        ctx.fillText(text, 100, 100);
+        ctx.restore();
+//    processData(testData);
 };
-
-function changeTL(){
-   ActiveTL = 2;
-   TLP.Position = +TLP.Position + 1;
-   processData(testData);
-   if (TLP.Position >= TLP.Finish) {
-     TLP.Position = TLP.Start;  
-   }
+function RGB2HTML(red, green, blue)
+{
+    var decColor = 0x1000000 + blue + 0x100 * green + 0x10000 * red;
+    return '#' + decColor.toString(16).substr(1);
+}
+function rgbFromNum1(num) {
+    var red = num >> 16;
+    var green = (num & 0xFF00) >> 8;
+    var blue = num & 255;
+    var decColor = 0x1000000 + blue + 0x100 * green + 0x10000 * red;
+    return '#' + decColor.toString(16).substr(1);
+}
+function rgbFromNum(num) {
+    var red = (num & 0xFF0000) >> 16;
+    var green = (num & 0xFF00) >> 8;
+    var blue = num & 255;
+    var decColor = 0x1000000 + red + 0x100 * green + 0x10000 * blue;
+    return '#' + decColor.toString(16).substr(1);
 }
 
-function drawNew() {
-    alert('Проба пера');
-}
+
 // window.addEventListener('resize', setViewport, false);

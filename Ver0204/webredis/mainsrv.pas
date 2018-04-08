@@ -242,6 +242,7 @@ var
 begin
     hstr := 'H=' + IntToStr(ClientSocket.Handle) + ' ';
 //    mmo1.Lines.add(FormatDateTime('HH:NN:SS ', now) + 'accept' + hstr);
+        webWriteLog('HTTPaccept>', ' connect from ' + ClientSocket.RemoteHost);
         FillChar(buffer, 0, High(buffer));
         rc := ClientSocket.ReceiveBuf(buffer, 10000);  //берем буфер
         rcstr := ' ' + IntToStr(rc) + ' ';
@@ -250,7 +251,7 @@ begin
             exit;
         end;
         if Length(buffer) <> 0 then
-//            mmo1.Lines.Add(hstr + rcstr + ' Read:' + buffer);
+        webWriteLog('HTTPaccept>', ' Request ' + system.Copy(buffer,0,300));
             instr := buffer;
 //        for i1 := 1 to length(instr) do uri := u
         i1 := pos(#13, instr) - 1;

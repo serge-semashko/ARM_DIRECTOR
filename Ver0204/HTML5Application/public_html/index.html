@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
 <html>
     <head>
         <title>TEST ARM_EDITOR web client</title>
@@ -12,17 +17,29 @@
         <script src="scripts/TLO.js"></script>
         <script src="scripts/TLT.js"></script>
         <script src="scripts/TLP.js"></script>
+        <script src="scripts/alltimelines.js"></script>
+        <script src="scripts/myutils.js"></script>
         <script src="scripts/main.js"></script>
+        <script src="scripts/typescreen.js"></script>
         <style>
             .myCanvas{
                 margin: -2px;
             }
-        </style>
+        </style>    
     </head>
     <body>
-        <div id="main" class="myCanvas">
-            <canvas id="evCanvas" class="myCanvas"></canvas>
-            <canvas id="dvCanvas" class="myCanvas"></canvas>
+        <div style="display :none" id="time">Dhtvz</div>
+        <div style="display :none" id="atime">aaaa</div>
+        <div id="main">
+            <canvas class=myCanvas id="evCanvas" ></canvas>
+            <canvas class=myCanvas id="dvCanvas" ></canvas>
+            <canvas class=myCanvas id="edCanvas" ></canvas>
+            <canvas class=myCanvas id="tvCanvas" ></canvas>
         </div>
+        <!--<aside>-->
+        <!--<h1></h1>-->
+        <!--</aside>-->
+        <!--<textarea id="area">dddd</textarea>-->
+
     </body>
 </html>
