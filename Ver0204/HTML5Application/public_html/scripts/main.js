@@ -16,10 +16,11 @@ var reqStart = new Date().getTime();
 var chupdating = [false, false, false, false, false];
 var scrH, scrW;
 var cv, ecv, dcv, edcv, tlcv, evCanvas, dvCanvas, edCanvas, tvCanvas;
+var mncv, tmcv, mnCanvas, tmCanvas, tempwidth;
 var ProgrammColor = "#494747";
 var ProgrammFontColor = "#FFFFFF";
 //Переменные для отображения тайм-линий и событий
-var typesrc = "0"; //Вид экрана 0 - All, 1- ev+dv, 2
+var typesrc = "4"; //Вид экрана 0 - All, 1- ev+dv, 2
 var currtlo; //текущая опция тайм линий
 var currtlt; //события текущей тайм линии
 var cfont = ProgrammFontColor;
@@ -29,14 +30,19 @@ var CurrEvent = 4; //текущее событие;
 var CurrDevice = 4; // текущее устройство 
 var NextDevice = 9; // следующее устройство
 
-var EventsBKGN = "black";
-var DevicesBKGN = "black";
-var FrameSize = 3; //количество пиксилей на один фрейм
-var StartScrFrame = 250; //кадр в начале экрана 
-var FinishScrFrame = 850; //кадр в конце экрана
+//var EventsBKGN = "black";
+//var DevicesBKGN = "black";
+var srccolor = 0;  
+var Background = rgbFromNum(srccolor);
+var Foreground = smoothcolor(srccolor,8);
+var Foreground1 = smoothcolor(srccolor,16);
+
+var FrameSize = 1; //количество пиксилей на один фрейм
+//var StartScrFrame = 250; //кадр в начале экрана 
+//var FinishScrFrame = 850; //кадр в конце экрана
 var LengthNameTL = 200;
 var MyCursor = 100;
-var CountEvents = 8; //количесто отображаемых событий
+var CountEvents = 5; //количесто отображаемых событий
 
 var WidthDevice = 80;
 var IntervalDevice = 10;
@@ -49,7 +55,55 @@ var ShowAllTimelines = true;
 var ShowDevices = true;
 var ShowEvents = true;
 var ShowNameTL = true;
-var MaxFontSize = 28;
+var ShowDev1 = true;
+var ShowDev2 = true;
+//ShowEvents, ShowDevices, ShowEditor, ShowScaler, ShowTimelines, ShowNameTL,
+//ShowAllTimelines, ShowDev1, ShowDev2;
+var DefaultScreen0 = [true, true, true, true, true, true, true, true, true];
+var DefaultScreen1 = [true, true, false, false, false, false, false, false, false];
+var DefaultScreen2 = [false, true, true, true, false, false, true, true, true];
+var DefaultScreen3 = [true, false, false, false, false, false, true, true, true];
+var DefaultScreen4 = [true, true, true, true, true, true, true, true, true];
+
+var MaxFontSize = 40;
+
+var EventsDev1 = 4;
+var EventsDev2 = 4;
+var Device1 = 14;
+var Device2 = 2;
+var ArrDev1 = [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+                -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]; // номера событий устройства 1
+var ArrDev2 = [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+                -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]; // номера событий устройства 2  
+var ScreenFields = [0,4,2,5,-1]; 
+//evCanvas, dvCanvas, edCanvas, tvCanvas, tmCanvas 
+var UsesCanvas = [false, false, false, false, false];
+var TimeLineHeight = 20;
+var HeightMenu = 50;
+
+var ClipName = "";
+var SongName = "";
+var SingerName = "";
+var TimeToStart = "";
+
+var Phrase = "";
+var PhraseFactor = 1;
+var StepPhrase = 50;
+
+var DoubleSize = 0;
+
+var RectSound = [0,0,0,0];
+var RectUp = [0,0,0,0];
+var RectDown = [0,0,0,0];
+var RectPlus = [0,0,0,0];
+var RectMinus = [0,0,0,0];
+var mnSoundSelect = false;
+var mnUpSelect = false;
+var mnDownSelect = false;
+var mnPlusSelect = false;
+var mnMinusSelect = false;
+
+var AudioOn = true;
 
 function toChart(txtval) {
     txtval = txtval.toString();
@@ -88,127 +142,47 @@ function rgbFromNum(num) {
 
 
 function processData(t) {
-    if (timeStamp > Number(t.timeStamp)) {
-        return -1;
-    }
-    timeStamp = Number(t.timeStamp);
-    setViewport();
-    newtime = new Date().getTime();
-    //        if ((newtime - starttime) < 30000) return;
-    startTime = newtime;
-    dcv.lineWidth = 4;
-    ecv.lineWidth = 1;
+  
+  if (timeStamp > Number(t.timeStamp)) {
+    return -1;
+  }
+  timeStamp = Number(t.timeStamp);
+  setViewport();
     
-    var ev, dv, as;
-    if (typesrc = "0") {
-    t.dcvW = Number(t.dcvW);
-    t.dcvH = Number(t.dcvH);
-    t.ecvW = Number(t.ecvW);
-    t.ecvH = Number(t.ecvH);
-    var newDate = new Date();
-    newDate.setDate(newDate.getDate());
-    evCanvas.style.visibility = "hidden";
-    dvCanvas.style.visibility = "hidden";
-    edCanvas.style.visibility = "hidden";
-    tvCanvas.style.visibility = "hidden";
-    //amchart process
-    // evCanvas.width = t.ecvW;
-    // evCanvas.height = t.ecvH;
-    // dvCanvas.width = t.dcvW;
-    // dvCanvas.height = t.dcvH;
-    ecv.transform(1, 0, 0, 1, 0, 0);
-    dcv.transform(1, 0, 0, 1, 0, 0);
+  newtime = new Date().getTime();
+  startTime = newtime;
     
-    evCanvas.width = scrW;
-    evCanvas.height = scrH * 0.52;
-    dvCanvas.width = scrW;
-    dvCanvas.height = scrH * 0.15;
-    edCanvas.width = scrW;
-    edCanvas.height = scrH * 0.28;
-    tvCanvas.width = scrW;
-    tvCanvas.height = scrH * 0.05;
-    
-    
-    //evCanvas.width = scrW;
-    //evCanvas.height = scrH * t.ecvH / (t.ecvH + t.dcvH);
-    //dvCanvas.width = scrW;
-    //dvCanvas.height = scrH * t.dcvH / (t.ecvH + t.dcvH);
-    //edCanvas.height = 0;
-    //tvCanvas.height = 0;
+  var newDate = new Date();
+  newDate.setDate(newDate.getDate());
 
-    ecv.clearRect(0, 0, evCanvas.width, evCanvas.height);
-    dcv.clearRect(0, 0, dvCanvas.width, dvCanvas.height);
-    edcv.clearRect(0, 0, edCanvas.width, edCanvas.height);
-    tlcv.clearRect(0, 0, tvCanvas.width, tvCanvas.height);
-    ecv.fillStyle = "black";
-    dcv.fillStyle = "black";
-    edcv.fillStyle = "black";
-    tlcv.fillStyle = "black";
-    ecv.fillRect(0, 0, evCanvas.width, evCanvas.height);
-    dcv.fillRect(0, 0, dvCanvas.width, dvCanvas.height);
-    edcv.fillRect(0, 0, edCanvas.width, edCanvas.height);
-    tlcv.fillRect(0, 0, tvCanvas.width, tvCanvas.height);
-    //var kx = scrW / t.ecvW;
-    //var ky = evCanvas.height / t.ecvH;
-    //ecv.transform(kx, 0, 0, ky, 0, 0);
-    //kx = scrW / t.dcvW;
-    //ky = dvCanvas.height / t.dcvH;
-
-    //dcv.transform(kx, 0, 0, ky, 0, 0);
-    if (ActiveTL !== -1) {
-        
-      currtlo = TLO[ActiveTL];
-      currtlt = TLT[ActiveTL];
-      MyCursor = TLP.MyCursor;
-      
-      GetScreenBorders();
-      GetCurrEvent();
-                   
-      //    console.log(argx + ' ');
-      //    console.log('\nEvents: ' + JSON.stringify(devs));
+  if (ActiveTL !== -1) {
+    //GetScreenBorders();
+    GetCurrEvent();  
     
-      if (typeof (currtlo) !== "undefined") {
-        drawMyDev(currtlo);  
-      }
+    if (typesrc == "0") {
+      SetTypeScreen0();    
+    } //end typesrc = 0;
     
-      if (typeof (currtlt) !== "undefined") {
-        MyDrawEvents(ecv,evCanvas.width,evCanvas.height);  
-      }
-      
-      if (typeof (currtlt) !== "undefined") {
-        DrawTimeLines(); 
-        DrawTimeLineNames();  
-        DrawAllTimelines();  
-      }   
-      
-    } else {
-      ecv.clearRect(0, 0, evCanvas.width, evCanvas.height);
-      dcv.clearRect(0, 0, dvCanvas.width, dvCanvas.height);
-      edcv.clearRect(0, 0, edCanvas.width, edCanvas.height);
-      tlcv.clearRect(0, 0, tvCanvas.width, tvCanvas.height);
-      ecv.fillStyle = "black";
-      dcv.fillStyle = "black";
-      edcv.fillStyle = "black";
-      tlcv.fillStyle = "black";
-      ecv.fillRect(0, 0, evCanvas.width, evCanvas.height);
-      dcv.fillRect(0, 0, dvCanvas.width, dvCanvas.height);
-      edcv.fillRect(0, 0, edCanvas.width, edCanvas.height);
-      tlcv.fillRect(0, 0, tvCanvas.width, tvCanvas.height);
-      ecv.fillStyle = "white";
-      ecv.font = mainFont;
-      ecv.textAlign = "center";
-      ecv.baseline = "middle";
-      ecv.fillText("Отсутствуют данные", evCanvas.width / 2, evCanvas.height / 2);
-    }
-    evCanvas.style.visibility = "visible";
-    dvCanvas.style.visibility = "visible";
-    edCanvas.style.visibility = "visible";
-    tvCanvas.style.visibility = "visible";
-
-    // document.getElementById("main").style.visibility = true;
-
-    //    console.log('\nEvents:' + JSON.stringify(events));
-    }
+    if (typesrc == "1") {
+      SetTypeScreen1();    
+    } //end typesrc = 1;
+    
+    if (typesrc == "2") {
+      SetTypeScreen2();    
+    } //end typesrc = 2;
+    
+    if (typesrc == "3") {
+      SetTypeScreen3();    
+    } //end typesrc = 3;
+    
+    if (typesrc == "4") {
+      SetTypeScreen4();    
+    } //end typesrc = 4;
+    
+    
+  } else {
+    screenNotEvents();
+  } //end ActiveTL  
 }
 
 
@@ -233,9 +207,12 @@ function objconv(indata) {
 }
 
 function setViewport() {
-    scrW = window.innerWidth - 25;
-    scrH = window.innerHeight - 25;
-
+    window.fullScreen = true
+    scrW = window.innerWidth-10; 
+    //|| document.documentElement.clientWidth -25
+    //|| document.body.clientWidth - 25;
+    scrH = window.innerHeight-10;
+    
 }
 //var a = function () {
 //    cv.width = window.innerWidth;
@@ -294,68 +271,165 @@ function handle(e) {
 }
 
 
+var canvasPos = getPosition(mnCanvas);
+var mouseX = 0;
+var mouseY = 0;
+ 
+addEventListener("mousemove", setMousePosition, false);
+addEventListener('mouseup', MyMouseUp, false);
+addEventListener('mouseDown', MyMouseDown, false);
+
+function MyMouseDown(e) {
+  mouseX = e.clientX - canvasPos.x;
+  mouseY = e.clientY - canvasPos.y;
+  if (mouseY < mnCanvas.height) {
+    if (mouseX>RectSound[0] && mouseX<RectSound[2]) {
+      mnSoundSelect = true;
+    }  
+    if (mouseX>RectMinus[0] && mouseX<RectMinus[2]) {
+      mnMinusSelect = true;
+    } 
+    if (mouseX>RectPlus[0] && mouseX<RectPlus[2]) {
+      mnPlusSelect = true;
+    } 
+    if (mouseX>RectDown[0] && mouseX<RectDown[2]) {
+      mnDownSelect = true;
+    } 
+    if (mouseX>RectUp[0] && mouseX<RectUp[2]) {
+      mnUpSelect = true;
+    } 
+  }  
+}
+
+function MyMouseUp(e) {
+  mouseX = e.clientX - canvasPos.x;
+  mouseY = e.clientY - canvasPos.y;
+  //var lf = RectSound[0];
+  //var rt = RectSound[2];
+  if (mouseY < mnCanvas.height) {
+    if (mouseX>RectSound[0] && mouseX<RectSound[2]) {
+      AudioOn = ! AudioOn; 
+      mnSoundSelect = false;
+    }  
+    if (mouseX>RectMinus[0] && mouseX<RectMinus[2]) {
+      if (FrameSize>1) {
+        FrameSize = FrameSize - 1;  
+      } else {
+        FrameSize = 1;  
+      } 
+      mnMinusSelect = false;
+    } 
+    if (mouseX>RectPlus[0] && mouseX<RectPlus[2]) {
+      if (FrameSize<15) {
+        FrameSize = FrameSize + 1;  
+      } else {
+        FrameSize = 15;  
+      }  
+      mnPlusSelect = false;
+    } 
+    if (mouseX>RectDown[0] && mouseX<RectDown[2]) {
+      if (TimeLineHeight>8) {
+        TimeLineHeight = TimeLineHeight - 1;  
+      } else {
+        TimeLineHeight = 8;  
+      } 
+      mnDownSelect = false;
+    } 
+    if (mouseX>RectUp[0] && mouseX<RectUp[2]) {
+      if (TimeLineHeight<35) {
+        TimeLineHeight = TimeLineHeight + 1;  
+      } else {
+        TimeLineHeight = 35;  
+      }  
+      mnUpSelect = false;
+    } 
+  }  
+}
+ 
+function setMousePosition(e) {
+  mouseX = e.clientX - canvasPos.x;
+  mouseY = e.clientY - canvasPos.y;
+  if (mouseY < mnCanvas.height) {
+    if (mouseX>RectSound[0] && mouseX<RectSound[2]) {
+      mnSoundSelect = true;  
+    } else {
+      mnSoundSelect = false;  
+    } 
+    if (mouseX>RectMinus[0] && mouseX<RectMinus[2]) {
+      mnMinusSelect = true;
+    } else {
+      mnMinusSelect = false;  
+    }
+    if (mouseX>RectPlus[0] && mouseX<RectPlus[2]) {
+      mnPlusSelect = true; 
+    } else {
+      mnPlusSelect = false;  
+    }
+    if (mouseX>RectDown[0] && mouseX<RectDown[2]) {
+      mnDownSelect = true;
+    } else {
+      mnDownSelect = false;  
+    }
+    if (mouseX>RectUp[0] && mouseX<RectUp[2]) {
+      mnUpSelect = true;  
+    } else {
+       mnUpSelect = false;  
+    } 
+  } else {
+    mnSoundSelect = false;
+    mnUpSelect = false;
+    mnDownSelect = false;
+    mnPlusSelect = false;
+    mnMinusSelect = false;  
+  }
+}
+
+function getPosition(el) {
+  var xPosition = 0;
+  var yPosition = 0;
+ 
+  while (el) {
+    xPosition += (el.offsetLeft - el.scrollLeft + el.clientLeft);
+    yPosition += (el.offsetTop - el.scrollTop + el.clientTop);
+    el = el.offsetParent;
+  }
+  return {
+    x: xPosition,
+    y: yPosition
+  };
+}
+
+
 window.onload = function () {
     tm = document.getElementById("time");
     var dloc = document.location;
     var hostname;
     
+    mnCanvas = document.getElementById("mnCanvas");
+    mncv = mnCanvas.getContext('2d');
+    
     evCanvas = document.getElementById("evCanvas");
-    evCanvas.left = 1;
-    evCanvas.height = 599;
-    evCanvas.width = 1920;
     ecv = evCanvas.getContext('2d');
     
     dvCanvas = document.getElementById("dvCanvas");
-    dvCanvas.left = 1;
-    dvCanvas.height = 139;
-    dvCanvas.width = 1920;
     dcv = dvCanvas.getContext('2d');
     
     edCanvas = document.getElementById("edCanvas");
-    edCanvas.left = 1;
-    edCanvas.height = 139;
-    edCanvas.width = 1920;
     edcv = edCanvas.getContext('2d');
 
     tvCanvas = document.getElementById("tvCanvas");
-    tvCanvas.left = 1;
-    tvCanvas.height = 209;
-    tvCanvas.width = 1920;
     tlcv = tvCanvas.getContext('2d');
-    //    setViewport();
-    //    setViewport();
-    console.log(url);
-    setViewport();
-    evCanvas.width = scrW;
-    evCanvas.height = scrH * 0.5;
-    dvCanvas.width = scrW;
-    dvCanvas.height = scrH * 0.2;
-    edCanvas.width = scrW;
-    edCanvas.height = scrH * 0.1;
-    tvCanvas.width = scrW;
-    tvCanvas.height = scrH * 0.2;
-
-    ecv.clearRect(0, 0, evCanvas.width, evCanvas.height);
-    dcv.clearRect(0, 0, dvCanvas.width, dvCanvas.height);
-    edcv.clearRect(0, 0, dvCanvas.width, dvCanvas.height);
-    tlcv.clearRect(0, 0, tvCanvas.width, tvCanvas.height);
-    ecv.fillStyle = "black";
-    dcv.fillStyle = "black";
-    edcv.fillStyle = "black";
-    tlcv.fillStyle = "black";
-    ecv.fillRect(0, 0, evCanvas.width, evCanvas.height);
-    dcv.fillRect(0, 0, dvCanvas.width, dvCanvas.height);
-    edcv.fillRect(0, 0, dvCanvas.width, dvCanvas.height);
-    tlcv.fillRect(0, 0, tvCanvas.width, tvCanvas.height);
+    
+    tmCanvas = document.getElementById("tmCanvas");
+    tmcv = tmCanvas.getContext('2d');
+    
     //processData(testData);
     
     setInterval(changeTL, 40);
 
-//    drawNew();
 };
 
 function changeTL(){
-   ActiveTL = 2;
    TLP.Position = +TLP.Position + 1;
    processData(testData);
    if (TLP.Position >= TLP.Finish) {
@@ -363,7 +437,4 @@ function changeTL(){
    }
 }
 
-function drawNew() {
-    alert('Проба пера');
-}
 // window.addEventListener('resize', setViewport, false);

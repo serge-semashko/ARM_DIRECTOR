@@ -2,81 +2,81 @@
   * Created by Zavialov on 14.01.2018.
  */
 
-function DrawAllTimelines() {
+function DrawAllTimelines(cv, Width, Height) {
   var CountTL = TLT.length;
-  var wdth = tvCanvas.width;
+  var wdth = Width;
   var WidthTL = wdth - LengthNameTL;
-  var hght = tvCanvas.height;
+  var hght = Height;
   var hghtl = hght / CountTL;
   var start = TLP.Preroll;
   var finish = TLP.Finish;
   var duration = TLP.Duration;
   var kfx = WidthTL / (finish - start);
   var top = 0;
-  tlcv.fillStyle = rgbFromNum(TLP.BackGround);
-  tlcv.fillRect(0, 0, wdth, hght);
+  cv.fillStyle = rgbFromNum(TLP.BackGround);
+  cv.fillRect(0, 0, wdth, hght);
   
   var lft, wdt, clr, evstr, evfin, tptl;
   for (var i=0; i<CountTL; i++) {
-    tlcv.fillStyle = rgbFromNum(TLP.ForeGround);  
-    tlcv.fillRect(LengthNameTL, top+1, wdth, hghtl-1);
+    cv.fillStyle = rgbFromNum(TLP.ForeGround);  
+    cv.fillRect(LengthNameTL, top+1, wdth, hghtl-1);
     if (finish > duration) {
       wdt = (finish - duration) * kfx;
       lft = duration * kfx;
-      tlcv.fillStyle = smoothcolor(TLP.ForeGround,80);
-      tlcv.globalAlpha = .25;
-      tlcv.fillRect(LengthNameTL + lft, top+1, wdt, hghtl-1);
-      tlcv.globalAlpha = 1;
+      cv.fillStyle = smoothcolor(TLP.ForeGround,80);
+      cv.globalAlpha = .25;
+      cv.fillRect(LengthNameTL + lft, top+1, wdt, hghtl-1);
+      cv.globalAlpha = 1;
     }
     tptl = Number(TLT[i].TypeTL);
     if (tptl == 0) {
       for (var j=0; j<TLT[i].Count; j++) {
-        tlcv.fillStyle = rgbFromNum(TLT[i].Events[j].Color);
+        cv.fillStyle = rgbFromNum(TLT[i].Events[j].Color);
         lft = (TLT[i].Events[j].Start - TLP.Preroll) * kfx;
         wdt = (TLT[i].Events[j].Finish - TLT[i].Events[j].Start) * kfx;
-        tlcv.fillRect(LengthNameTL + lft, top+2, wdt, hghtl-2);  
+        cv.fillRect(LengthNameTL + lft, top+2, wdt, hghtl-2);  
       }  
     } else if (tptl == 1) {
-      tlcv.fillStyle = rgbFromNum(TLO[i].TextEvent.Color);  
+      cv.fillStyle = rgbFromNum(TLO[i].TextEvent.Color);  
       for (var j=0; j<TLT[i].Count; j++) {
         lft = (TLT[i].Events[j].Start - TLP.Preroll) * kfx;
         wdt = (TLT[i].Events[j].Finish - TLT[i].Events[j].Start) * kfx;
-        tlcv.fillRect(LengthNameTL + lft, top+2, wdt, hghtl-2);  
+        cv.fillRect(LengthNameTL + lft, top+2, wdt, hghtl-2);  
       }  
     } else if (tptl == 2) {
       //for (var j=0; j<TLT[i].Count; j++) {
-        tlcv.fillStyle = rgbFromNum(TLO[i].MediaEvent.Color);
+        cv.fillStyle = rgbFromNum(TLO[i].MediaEvent.Color);
         wdt = TLP.Duration * kfx;
-        tlcv.fillRect(LengthNameTL, top+2, wdt, hghtl-2); 
+        cv.fillRect(LengthNameTL, top+2, wdt, hghtl-2); 
       for (var j=0; j<TLT[i].Count; j++) {  
       }  
     }
     top = top + hghtl;
   }
-  tlcv.fillStyle = "black";
-  tlcv.globalAlpha = .5;
+  cv.fillStyle = "black";
+  cv.globalAlpha = .5;
   var pst = (TLP.Position - TLP.Preroll) * kfx;
   var bfr = (MyCursor / FrameSize) * kfx;
   var scrfrm = ((wdth - LengthNameTL) / FrameSize) * kfx; 
-  tlcv.fillRect(LengthNameTL + pst-bfr, 0, scrfrm, hght);
-  tlcv.globalAlpha = 1;
-  tlcv.beginPath();  
-  tlcv.moveTo(LengthNameTL + pst, 0);  
-  tlcv.lineTo(LengthNameTL + pst, +hght);
-  tlcv.lineWidth = 1;
-  tlcv.strokeStyle = "white";
-  tlcv.stroke();
-  tlcv.closePath();
+  cv.fillRect(LengthNameTL + pst-bfr, 0, scrfrm, hght);
+  cv.globalAlpha = 1;
+  cv.beginPath();  
+  cv.moveTo(LengthNameTL + pst, 0);  
+  cv.lineTo(LengthNameTL + pst, +hght);
+  cv.lineWidth = 1;
+  cv.strokeStyle = "white";
+  cv.stroke();
+  cv.closePath();
   
-  tlcv.fillStyle = rgbFromNum(TLP.ForeGround);  
-  tlcv.fillRect(0, 0, LengthNameTL, hght);
+  cv.fillStyle = rgbFromNum(TLP.ForeGround);  
+  cv.fillRect(0, 0, LengthNameTL, hght);
     
 }
 
-function DrawTimeLineNames() {
-  var hght = edCanvas.height;
-  edcv.fillStyle = rgbFromNum(TLP.BackGround);
-  edcv.fillRect(0, 0, LengthNameTL, hght);
+function DrawTimeLineNames(cv, Width, Height) {
+  var hght = Height;
+  cv.fillStyle = rgbFromNum(TLP.BackGround);
+  cv.fillRect(0, 0, LengthNameTL, hght);
   var CountLine = 0;
   if (ShowTimelines) {
     CountLine = CountLine + TLO.length;
@@ -92,48 +92,60 @@ function DrawTimeLineNames() {
   tmph = tmph - interval;
  
   var top = 0;
-  edcv.fillStyle = rgbFromNum(TLP.ForeGround);
+  cv.fillStyle = rgbFromNum(TLP.ForeGround);
   //for (var i=0; i<CountLine; i++) {
   var text, se, sev;
   if (ShowScaler) {
-    edcv.fillRect(0, top, LengthNameTL, tmph);
+    cv.fillRect(0, top, LengthNameTL, tmph);
     top = top + tmph + interval;
   } 
   if (ShowEditor) {
     top = top + 2 * interval;  
-    edcv.fillRect(0, top, LengthNameTL, 3 * tmph);
+    cv.fillRect(0, top, LengthNameTL, 3 * tmph);
     text = TLO[ActiveTL].Name;
     text = text.replace('#$%#$%', ' ');
     var fs = Math.floor(tmph / 2);
     
-    edcv.font = fs + "pt Arial";
-    edcv.fillStyle = cfont;
-    edcv.strokeStyle = cfont;
-    edcv.textBaseline = "middle";
-    edcv.textAlign  = "left";
-    edcv.fillText(text, 10, top+1.5*tmph);
+    cv.font = fs + "pt Arial";
+    cv.fillStyle = cfont;
+    cv.strokeStyle = cfont;
+    cv.textBaseline = "middle";
+    cv.textAlign  = "left";
     
+    var lentxt = cv.measureText(text).width;
+    if (lentxt < LengthNameTL-20) {
+      cv.fillText(text, 10, top+1.5*tmph);  
+    } else {
+      myTextDraw(cv, text, 0, 10, LengthNameTL-20, top, tmph);
+    }
+
     top = top + 3 * tmph + interval;
   }
   if (ShowTimelines) { 
     for (var i=0; i<TLO.length; i++) {
-      edcv.fillStyle = rgbFromNum(TLP.ForeGround);  
-      edcv.fillRect(0, top, LengthNameTL, tmph);
+      cv.fillStyle = rgbFromNum(TLP.ForeGround);  
+      cv.fillRect(0, top, LengthNameTL, tmph);
       text = TLO[i].Name;
       var fs = Math.floor(tmph / 2);
-      edcv.font = fs + "pt Arial";
-      edcv.fillStyle = cfont;
-      edcv.textBaseline = "middle";
-      edcv.textAlign  = "left";
+      cv.font = fs + "pt Arial";
+      cv.fillStyle = cfont;
+      cv.textBaseline = "middle";
+      cv.textAlign  = "left";
       text = text.replace('#$%#$%', ' ');
-      edcv.fillText(text, 10, top+tmph/2);
+      //cv.fillText(text, 10, top+tmph/2);
+      lentxt = cv.measureText(text).width;
+      if (lentxt < LengthNameTL-20) {
+        cv.fillText(text, 10, top+tmph/2);  
+      } else {
+        myTextDraw(cv, text, 0, 10, LengthNameTL-20, top, tmph);
+      }
       top = top + tmph + interval;
     }
   }
 }
 
-function MyDrawScaler(hght) {
-  var wdth = evCanvas.width;
+function MyDrawScaler(cv,Width,Height,hght) {
+  var wdth = Width;
   var WidthTL = wdth - LengthNameTL;
   var ScreenFrm = Math.floor(WidthTL / FrameSize);
   var PosZero = TLP.ZeroPoint;
@@ -175,24 +187,31 @@ function MyDrawScaler(hght) {
       }
     }
     if (hh !== 0) {
-      edcv.beginPath();  
-      edcv.moveTo(stp, hh);  
-      edcv.lineTo(stp, hght);
-      edcv.lineWidth = 1;
-      edcv.strokeStyle = "white";
-      edcv.stroke();
-      edcv.closePath(); 
+      cv.beginPath();  
+      cv.moveTo(stp, hh);  
+      cv.lineTo(stp, hght);
+      cv.lineWidth = 1;
+      cv.strokeStyle = "white";
+      cv.stroke();
+      cv.closePath(); 
     }   
+    
+    if (FrameSize == 1) {
+      cv.font = Math.floor(hght/5*2) + "pt Arial";  
+    } else {
+      cv.font = Math.floor(hght/2) + "pt Arial";  
+    }
+    
+    cv.fillStyle = cfont;
+    cv.textBaseline = "middle";
+    cv.textAlign  = "left";
     
     if (hh == hsec) {
       //text = FramesToShortString(SValue); 
       text = FramesToSecondString(StartFrm + i);
       //fs = Math.floor(hsec / 2);
-      edcv.font = smallFont;//fs + "pt Arial";
-      edcv.fillStyle = cfont;
-      edcv.textBaseline = "middle";
-      edcv.textAlign  = "left";
-      edcv.fillText(text, stp+1, hfrm/2);  
+      
+      cv.fillText(text, stp+1, hfrm/2);  
       //SValue = SValue + 1;   
     }
     //StartFrm = StartFrm + 1;
@@ -211,8 +230,8 @@ function FindEvent(nomtl, ps) {
   return -1;
 }
 
-function MyDrawEditor(Top, Intrvl, Hght) {
-  var wdth = evCanvas.width;
+function MyDrawEditor(cv, Width, Height, Top, Intrvl, Hght) {
+  var wdth = Width;
   var WidthTL = wdth - LengthNameTL;
   var ScreenFrm = Math.floor(WidthTL / FrameSize);
   var CurrFrm = Math.floor(MyCursor / FrameSize);
@@ -290,41 +309,41 @@ function MyDrawEditor(Top, Intrvl, Hght) {
         if (fnshev > WidthTL) {
           fnshev = WidthTL;  
         }
-        edcv.fillStyle = evColor;
-        edcv.fillRect(+LengthNameTL + strtev, Top, wdthev, Hght);
+        cv.fillStyle = evColor;
+        cv.fillRect(+LengthNameTL + strtev, Top, wdthev, Hght);
                   
         if (evmix == "Mix" || evmix == "Wipe") {
-          edcv.beginPath();  
-          edcv.moveTo(+LengthNameTL + strtev, Top);  
-          edcv.lineTo(+LengthNameTL + strtev, Top + Hght);
-          edcv.lineTo(+LengthNameTL + strtev + evmixdur, Top + Hght);
-          edcv.lineTo(+LengthNameTL + strtev, Top);
-          edcv.lineWidth = 1;
-          edcv.fillStyle = "rgba(255,255,255,.15)";//evsmoothcolor;
-          edcv.strokeStyle = "rgba(255,255,255,.15)";//evsmoothcolor;
-          edcv.stroke();
-          //edcv.fill;
-          edcv.closePath(); 
-          edcv.fill();
-          edcv.globalAlpha = 1;
+          cv.beginPath();  
+          cv.moveTo(+LengthNameTL + strtev, Top);  
+          cv.lineTo(+LengthNameTL + strtev, Top + Hght);
+          cv.lineTo(+LengthNameTL + strtev + evmixdur, Top + Hght);
+          cv.lineTo(+LengthNameTL + strtev, Top);
+          cv.lineWidth = 1;
+          cv.fillStyle = "rgba(255,255,255,.15)";//evsmoothcolor;
+          cv.strokeStyle = "rgba(255,255,255,.15)";//evsmoothcolor;
+          cv.stroke();
+          //cv.fill;
+          cv.closePath(); 
+          cv.fill();
+          cv.globalAlpha = 1;
         }  
-        edcv.beginPath();
-        edcv.fillStyle = "rgba(0,0,0,.15)";//evsmoothcolor;
-        edcv.strokeStyle = "rgba(0,0,0,.75)";//evsmoothcolor;
-        edcv.fillRect(+LengthNameTL + strtev, Top, evSafeZone, Hght)
-        edcv.stroke();
-        edcv.closePath();
-        edcv.globalAlpha = 1;
+        cv.beginPath();
+        cv.fillStyle = "rgba(0,0,0,.15)";//evsmoothcolor;
+        cv.strokeStyle = "rgba(0,0,0,.75)";//evsmoothcolor;
+        cv.fillRect(+LengthNameTL + strtev, Top, evSafeZone, Hght)
+        cv.stroke();
+        cv.closePath();
+        cv.globalAlpha = 1;
               
-        edcv.font = smallFont;
-        edcv.fillStyle = cfont;
-        edcv.textBaseline = "middle"; 
-        edcv.textAlign  = "left";
+        cv.font = 2*Intrvl + "pt Arial";// smallFont;
+        cv.fillStyle = cfont;
+        cv.textBaseline = "middle"; 
+        cv.textAlign  = "left";
         evst = TLT[ActiveTL].Events[i].Start - TLP.ZeroPoint;
         evdur = TLT[ActiveTL].Events[i].Finish - TLT[ActiveTL].Events[i].Start;
         uptext = FramesToShortString(evst) + " [" + FramesToShortString(evdur) + "]";
         
-        edcv.fillText(uptext, +LengthNameTL + strtev, Top - Intrvl);
+        cv.fillText(uptext, +LengthNameTL + strtev, Top - Intrvl);
         
         kfh = TLT[ActiveTL].Events[i].Count;
         if (+kfh > 0) {
@@ -339,11 +358,11 @@ function MyDrawEditor(Top, Intrvl, Hght) {
                 evwdt = TLT[ActiveTL].Events[i].Rows[j].Phrases[ic].Rect.Right - evlft;
                 evworkdata = TLT[ActiveTL].Events[i].Rows[j].Phrases[ic].WorkData;
                 if (j == 0) {
-                  evfntsz = evFontSize + "pt " + evFontName; 
-                  //evfntsz = Math.floor(rowheight) + "pt " + evFontName;
+                  //evfntsz = evFontSize + "pt " + evFontName; 
+                  evfntsz = Math.floor((1.5*rowheight)/2+1) + "pt " + evFontName;
                 } else {
-                  evfntsz = evFontSizeSub + "pt " + evFontName;
-                  //evfntsz = Math.floor(rowheight - 4) + "pt " + evFontName;  
+                  //evfntsz = evFontSizeSub + "pt " + evFontName;
+                  evfntsz = Math.floor(rowheight/2+1) + "pt " + evFontName;  
                 }
                 
                 if (evworkdata == "Template") {
@@ -365,34 +384,34 @@ function MyDrawEditor(Top, Intrvl, Hght) {
                 //if (evtext == "") {
                 //  evtext = evdata;  
                 // }
-                edcv.font = evfntsz;//fs + "pt Arial";
+                cv.font = evfntsz;//fs + "pt Arial";
                 if (evname == "Comment") {
                   if (evtext.charAt(0) == "#") {
-                    edcv.fillStyle = "yellow";  
+                    cv.fillStyle = "yellow";  
                   } else { 
-                    edcv.fillStyle = evFontColor;//cfont;
+                    cv.fillStyle = evFontColor;//cfont;
                   }
                 } else {
-                  edcv.fillStyle = evFontColor;  
+                  cv.fillStyle = evFontColor;  
                 }
-                edcv.textBaseline = "bottom";//"middle"; 
-                edcv.textAlign  = "left";
+                cv.textBaseline = "bottom";//"middle"; 
+                cv.textAlign  = "left";
                 evlft = +evlft + +LengthNameTL + +strtev
 
                 if (j == 0) {
-                  edcv.fillText(evtext, +evlft, Top + 1.5 * rowheight);
+                  cv.fillText(evtext, +evlft, Top + 1.5 * rowheight);
                 } else {
-                  edcv.fillText(evtext, +evlft, Top + 1.5 * rowheight + rowheight*j);  
+                  cv.fillText(evtext, +evlft, Top + 1.5 * rowheight + rowheight*j);  
                 }               
               }
             }   
           }
         }
         if (+TLP.Position >= +evstart && +TLP.Position <= +evstart + +evSafeZone) {
-          edcv.fillStyle = "white";
-          edcv.globalAlpha = .75;
-          edcv.fillRect(+LengthNameTL + strtev, Top, wdthev, Hght);
-          edcv.globalAlpha = 1;  
+          cv.fillStyle = "white";
+          cv.globalAlpha = .75;
+          cv.fillRect(+LengthNameTL + strtev, Top, wdthev, Hght);
+          cv.globalAlpha = 1;  
         }
       }  
     
@@ -436,34 +455,34 @@ function MyDrawEditor(Top, Intrvl, Hght) {
         
         wdthev = fnshev - strtev;
         
-        edcv.fillStyle = evColor;
-        edcv.fillRect(+LengthNameTL + strtev, Top, wdthev, Hght); 
+        cv.fillStyle = evColor;
+        cv.fillRect(+LengthNameTL + strtev, Top, wdthev, Hght); 
         
-        edcv.beginPath();
-        edcv.fillStyle = "rgba(0,0,0,.15)";//evsmoothcolor;
-        edcv.strokeStyle = "rgba(0,0,0,.75)";//evsmoothcolor;
-        edcv.fillRect(+LengthNameTL + strtev, Top, evSafeZone, Hght)
-        edcv.stroke();
-        edcv.closePath();
-        edcv.globalAlpha = 1;
+        cv.beginPath();
+        cv.fillStyle = "rgba(0,0,0,.15)";//evsmoothcolor;
+        cv.strokeStyle = "rgba(0,0,0,.75)";//evsmoothcolor;
+        cv.fillRect(+LengthNameTL + strtev, Top, evSafeZone, Hght)
+        cv.stroke();
+        cv.closePath();
+        cv.globalAlpha = 1;
         
-        edcv.beginPath();
-        edcv.fillStyle = "rgba(0,0,0,.15)";//evsmoothcolor;
-        edcv.strokeStyle = "rgba(0,0,0,.75)";//evsmoothcolor;
-        edcv.fillRect(+LengthNameTL + fnshev - evSafeZone, Top, evSafeZone, Hght)
-        edcv.stroke();
-        edcv.closePath();
-        edcv.globalAlpha = 1;
+        cv.beginPath();
+        cv.fillStyle = "rgba(0,0,0,.15)";//evsmoothcolor;
+        cv.strokeStyle = "rgba(0,0,0,.75)";//evsmoothcolor;
+        cv.fillRect(+LengthNameTL + fnshev - evSafeZone, Top, evSafeZone, Hght)
+        cv.stroke();
+        cv.closePath();
+        cv.globalAlpha = 1;
                 
-        edcv.font = smallFont;
-        edcv.fillStyle = cfont;
-        edcv.textBaseline = "middle"; 
-        edcv.textAlign  = "left";
+        cv.font = 2*intrvl + "pt Arial";//smallFont;
+        cv.fillStyle = cfont;
+        cv.textBaseline = "middle"; 
+        cv.textAlign  = "left";
         evst = TLT[ActiveTL].Events[i].Start - TLP.ZeroPoint;
         evdur = TLT[ActiveTL].Events[i].Finish - TLT[ActiveTL].Events[i].Start;
         uptext = FramesToShortString(evst) + " [" + FramesToShortString(evdur) + "]";
         
-        edcv.fillText(uptext, +LengthNameTL + strtev, Top - Intrvl);
+        cv.fillText(uptext, +LengthNameTL + strtev, Top - Intrvl);
         
         kfh = TLT[ActiveTL].Events[i].Count;
         if (+kfh > 0) {
@@ -502,44 +521,44 @@ function MyDrawEditor(Top, Intrvl, Hght) {
                   evtext = TLT[ActiveTL].Events[i].Rows[j].Phrases[ic].Tag;  
                 }
 
-                edcv.font = evfntsz;//fs + "pt Arial";
+                cv.font = evfntsz;//fs + "pt Arial";
                 if (evname == "Comment") {
                   if (evtext.charAt(0) == "#") {
-                    edcv.fillStyle = "yellow";  
+                    cv.fillStyle = "yellow";  
                   } else { 
-                    edcv.fillStyle = evFontColor;//cfont;
+                    cv.fillStyle = evFontColor;//cfont;
                   }
                 } else {
-                  edcv.fillStyle = evFontColor;  
+                  cv.fillStyle = evFontColor;  
                 }
-                edcv.textBaseline = "middle"; 
-                edcv.textAlign  = "left";
+                cv.textBaseline = "middle"; 
+                cv.textAlign  = "left";
                 evlft = +evlft + +LengthNameTL + +strtev
 
                 if (j == 0) {
-                  var fnwidth = edcv.measureText(evtext).width;
-                  var metrics = edcv.measureText("M");
+                  var fnwidth = cv.measureText(evtext).width;
+                  var metrics = cv.measureText("M");
                   var fnheight =   metrics.width;  
                   var kx = wdthev/fnwidth;
                   var ky = rowheight/fnheight;
-                  edcv.save();
-                  edcv.scale(wdthev/fnwidth, rowheight/fnheight);
-                  edcv.fillText(evtext, +evlft/kx, (+Top + rowheight)/ky);
-                  edcv.restore();  
-                  edcv.scale(1, 1);  
-                  //edcv.fillText(evtext, +evlft, Top + 1.5 * rowheight);
+                  cv.save();
+                  cv.scale(wdthev/fnwidth, rowheight/fnheight);
+                  cv.fillText(evtext, +evlft/kx, (+Top + rowheight)/ky);
+                  cv.restore();  
+                  cv.scale(1, 1);  
+                  //cv.fillText(evtext, +evlft, Top + 1.5 * rowheight);
                 } else {
-                  edcv.fillText(evtext, +evlft, Top + 1.5 * rowheight + rowheight*j);  
+                  cv.fillText(evtext, +evlft, Top + 1.5 * rowheight + rowheight*j);  
                 }               
               }
             }   
           }
         }
         if (+TLP.Position >= +evstart && +TLP.Position <= +evstart + +evSafeZone) {
-          edcv.fillStyle = "white";
-          edcv.globalAlpha = .75;
-          edcv.fillRect(+LengthNameTL + strtev, Top, wdthev, Hght);
-          edcv.globalAlpha = 1;  
+          cv.fillStyle = "white";
+          cv.globalAlpha = .75;
+          cv.fillRect(+LengthNameTL + strtev, Top, wdthev, Hght);
+          cv.globalAlpha = 1;  
         }
       }  
       
@@ -560,8 +579,8 @@ function MyDrawEditor(Top, Intrvl, Hght) {
         
     wdthev = fnshev - strtev;  
    
-    edcv.fillStyle = evColor;
-    edcv.fillRect(+LengthNameTL + strtev, Top, wdthev, Hght);
+    cv.fillStyle = evColor;
+    cv.fillRect(+LengthNameTL + strtev, Top, wdthev, Hght);
     
     //evlft = +LengthNameTL + +MyCursor - (TLP.Position-StartFrm) * FrameSize + 2;
     //var CurrOst = Math.floor(MyCursor % FrameSize);
@@ -570,24 +589,24 @@ function MyDrawEditor(Top, Intrvl, Hght) {
     evwdt = 25 * FrameSize;
     
     for (var i=0; i<=ScreenFrm-CurrFrm; i++) {
-      edcv.beginPath();  
-      edcv.moveTo(+evlft, Top);  
-      edcv.lineTo(+evlft, Top + Hght);
-      edcv.lineWidth = 1;
-      edcv.strokeStyle = "white";
-      edcv.stroke();
-      edcv.closePath();  
+      cv.beginPath();  
+      cv.moveTo(+evlft, Top);  
+      cv.lineTo(+evlft, Top + Hght);
+      cv.lineWidth = 1;
+      cv.strokeStyle = "white";
+      cv.stroke();
+      cv.closePath();  
       evlft = evlft + evwdt;
     }
     evlft = +LengthNameTL + +MyCursor;
     for (var i=0; i<=CurrFrm; i++) {
-      edcv.beginPath();  
-      edcv.moveTo(+evlft, Top);  
-      edcv.lineTo(+evlft, Top + Hght);
-      edcv.lineWidth = 1;
-      edcv.strokeStyle = "white";
-      edcv.stroke();
-      edcv.closePath();  
+      cv.beginPath();  
+      cv.moveTo(+evlft, Top);  
+      cv.lineTo(+evlft, Top + Hght);
+      cv.lineWidth = 1;
+      cv.strokeStyle = "white";
+      cv.stroke();
+      cv.closePath();  
       evlft = evlft - evwdt;
     }
     
@@ -624,31 +643,31 @@ function MyDrawEditor(Top, Intrvl, Hght) {
         strtev = strtev * FrameSize;
          
         
-        edcv.fillStyle = evColor;
+        cv.fillStyle = evColor;
         
-        edcv.beginPath();  
-        edcv.moveTo(+evlft, Top + Hght);  
-        edcv.lineTo(+evlft, Top);
-        edcv.lineTo(+evlft + +SafeZone, Top + +SafeZone/2);
-        edcv.lineTo(+evlft, Top + +SafeZone);
-        edcv.lineWidth = 1;
-        edcv.strokeStyle = evColor;
-        edcv.stroke();
-        edcv.closePath();
-        edcv.fill();
+        cv.beginPath();  
+        cv.moveTo(+evlft, Top + Hght);  
+        cv.lineTo(+evlft, Top);
+        cv.lineTo(+evlft + +SafeZone, Top + +SafeZone/2);
+        cv.lineTo(+evlft, Top + +SafeZone);
+        cv.lineWidth = 1;
+        cv.strokeStyle = evColor;
+        cv.stroke();
+        cv.closePath();
+        cv.fill();
         
-        edcv.font = smallFont;
-        edcv.fillStyle = cfont;
-        edcv.textBaseline = "middle"; 
-        edcv.textAlign  = "left";
+        cv.font = smallFont;
+        cv.fillStyle = cfont;
+        cv.textBaseline = "middle"; 
+        cv.textAlign  = "left";
         evst = TLT[ActiveTL].Events[i].Start - TLP.ZeroPoint;
         uptext = FramesToShortString(evst);
         
-        edcv.fillText(uptext, +LengthNameTL + strtev, Top - Intrvl);
+        cv.fillText(uptext, +LengthNameTL + strtev, Top - Intrvl);
         
         kfh = TLT[ActiveTL].Events[i].Count;
         if (+kfh > 0) {
-          rowheight = textHeight(edcv);//Hght / (+kfh + 1);
+          rowheight = textHeight(cv);//Hght / (+kfh + 1);
           for (var j=0; j<kfh; j++) {
             for (var ic=0; ic<TLT[ActiveTL].Events[i].Rows[j].Count; ic++) {
               if (TLT[ActiveTL].Events[i].Rows[j].Phrases[ic].Visible == "True") { 
@@ -683,20 +702,20 @@ function MyDrawEditor(Top, Intrvl, Hght) {
                   evtext = TLT[ActiveTL].Events[i].Rows[j].Phrases[ic].Tag;  
                 }
 
-                edcv.font = smallFont;//evfntsz;//fs + "pt Arial";
+                cv.font = smallFont;//evfntsz;//fs + "pt Arial";
                 if (evname == "Comment") {
                   if (evtext.charAt(0) == "#") {
-                    edcv.fillStyle = "yellow";  
+                    cv.fillStyle = "yellow";  
                   } else { 
-                    edcv.fillStyle = evFontColor;//cfont;
+                    cv.fillStyle = evFontColor;//cfont;
                   }
                 } else {
-                  edcv.fillStyle = evFontColor;  
+                  cv.fillStyle = evFontColor;  
                 }
-                edcv.textBaseline = "middle"; 
-                edcv.textAlign  = "left";
+                cv.textBaseline = "middle"; 
+                cv.textAlign  = "left";
                 evlft = +evlft + +LengthNameTL + +strtev
-                edcv.fillText(evtext, +evlft, +Top + rowheight*j);  
+                cv.fillText(evtext, +evlft, +Top + rowheight*j);  
               }
             }   
           }
@@ -706,8 +725,8 @@ function MyDrawEditor(Top, Intrvl, Hght) {
   }
 } 
 
-function MyDrawTimeline(PosTL, Top, Hght) {
-  var wdth = evCanvas.width;
+function MyDrawTimeline(cv, Width, Height, PosTL, Top, Hght) {
+  var wdth = Width;
   var WidthTL = wdth - LengthNameTL;
   var ScreenFrm = Math.floor(WidthTL / FrameSize);
   var CurrFrm = Math.floor(MyCursor / FrameSize);
@@ -717,7 +736,8 @@ function MyDrawTimeline(PosTL, Top, Hght) {
   var evColor, evFontColor, evFontSize, evFontSizeSub, evFontName, evSafeZone; 
   var evtext, evdata ,evmix, evmixdur, evname, evsmoothcolor;
   var evlft, evwdt, evworkdata, evfntsz, evst, evdur;
-  var tptl = Number(TLT[PosTL].TypeTL);
+  
+  var tptl = +TLT[PosTL].TypeTL;
   
   if (tptl == 0) {
     if (TLT[PosTL].Count > 0) {
@@ -785,31 +805,31 @@ function MyDrawTimeline(PosTL, Top, Hght) {
         if (fnshev > WidthTL) {
           fnshev = WidthTL;  
         }
-        edcv.fillStyle = evColor;
-        edcv.fillRect(+LengthNameTL + strtev, Top, wdthev, Hght);
+        cv.fillStyle = evColor;
+        cv.fillRect(+LengthNameTL + strtev, Top, wdthev, Hght);
         
         if (evmix == "Mix" || evmix == "Wipe") {
-          edcv.beginPath();  
-          edcv.moveTo(+LengthNameTL + strtev, Top);  
-          edcv.lineTo(+LengthNameTL + strtev, Top + Hght);
-          edcv.lineTo(+LengthNameTL + strtev + evmixdur, Top + Hght);
-          edcv.lineTo(+LengthNameTL + strtev, Top);
-          edcv.lineWidth = 1;
-          edcv.fillStyle = "rgba(255,255,255,.15)";//evsmoothcolor;
-          edcv.strokeStyle = "rgba(255,255,255,.15)";//evsmoothcolor;
-          edcv.stroke();
-          //edcv.fill;
-          edcv.closePath(); 
-          edcv.fill();
-          edcv.globalAlpha = 1;
+          cv.beginPath();  
+          cv.moveTo(+LengthNameTL + strtev, Top);  
+          cv.lineTo(+LengthNameTL + strtev, Top + Hght);
+          cv.lineTo(+LengthNameTL + strtev + evmixdur, Top + Hght);
+          cv.lineTo(+LengthNameTL + strtev, Top);
+          cv.lineWidth = 1;
+          cv.fillStyle = "rgba(255,255,255,.15)";//evsmoothcolor;
+          cv.strokeStyle = "rgba(255,255,255,.15)";//evsmoothcolor;
+          cv.stroke();
+          //cv.fill;
+          cv.closePath(); 
+          cv.fill();
+          cv.globalAlpha = 1;
         }  
-        edcv.beginPath();
-        edcv.fillStyle = "rgba(0,0,0,.15)";//evsmoothcolor;
-        edcv.strokeStyle = "rgba(0,0,0,.75)";//evsmoothcolor;
-        edcv.fillRect(+LengthNameTL + strtev, Top, evSafeZone, Hght)
-        edcv.stroke();
-        edcv.closePath();
-        edcv.globalAlpha = 1;
+        cv.beginPath();
+        cv.fillStyle = "rgba(0,0,0,.15)";//evsmoothcolor;
+        cv.strokeStyle = "rgba(0,0,0,.75)";//evsmoothcolor;
+        cv.fillRect(+LengthNameTL + strtev, Top, evSafeZone, Hght)
+        cv.stroke();
+        cv.closePath();
+        cv.globalAlpha = 1;
                
 //=========================              
         for (var ic=0; ic<TLT[PosTL].Events[i].Rows[0].Count; ic++) {
@@ -820,7 +840,8 @@ function MyDrawTimeline(PosTL, Top, Hght) {
             evlft = TLT[PosTL].Events[i].Rows[0].Phrases[ic].Rect.Left;
             evwdt = TLT[PosTL].Events[i].Rows[0].Phrases[ic].Rect.Right - evlft;
             evworkdata = TLT[PosTL].Events[i].Rows[0].Phrases[ic].WorkData;
-            evfntsz = evFontSize + "pt " + evFontName; 
+            evfntsz = Hght/2 + "pt " + evFontName;
+            //evfntsz = evFontSize + "pt " + evFontName; 
                                 
             if (evworkdata == "Template") {
               evtext = TLT[PosTL].Events[i].Rows[0].Phrases[ic].Text;  
@@ -841,31 +862,31 @@ function MyDrawTimeline(PosTL, Top, Hght) {
                 //if (evtext == "") {
                 //  evtext = evdata;  
                 // }
-            edcv.font = evfntsz;//fs + "pt Arial";
+            cv.font = evfntsz;//fs + "pt Arial";
             if (evname == "Comment") {
               if (evtext.charAt(0) == "#") {
-                edcv.fillStyle = "yellow";  
+                cv.fillStyle = "yellow";  
               } else { 
-                edcv.fillStyle = evFontColor;//cfont;
+                cv.fillStyle = evFontColor;//cfont;
               }
             } else {
-              edcv.fillStyle = evFontColor;  
+              cv.fillStyle = evFontColor;  
             }
-            edcv.textBaseline = "middle"; 
-            edcv.textAlign  = "left";
+            cv.textBaseline = "middle"; 
+            cv.textAlign  = "left";
             evlft = +evlft + +LengthNameTL + +strtev
 
-            edcv.fillText(evtext, +evlft, Top + Hght/2);
+            cv.fillText(evtext, +evlft, Top + Hght/2);
                            
           }
         }  
 //============================== 
         if (PosTL == ActiveTL) {
           if (+TLP.Position >= +evstart && +TLP.Position <= +evstart + +evSafeZone) {
-            edcv.fillStyle = "white";
-            edcv.globalAlpha = .75;
-            edcv.fillRect(+LengthNameTL + strtev, Top, wdthev, Hght);
-            edcv.globalAlpha = 1;  
+            cv.fillStyle = "white";
+            cv.globalAlpha = .75;
+            cv.fillRect(+LengthNameTL + strtev, Top, wdthev, Hght);
+            cv.globalAlpha = 1;  
           } 
         }
       }  
@@ -910,23 +931,23 @@ function MyDrawTimeline(PosTL, Top, Hght) {
         
         wdthev = fnshev - strtev;
         
-        edcv.fillStyle = evColor;
-        edcv.fillRect(+LengthNameTL + strtev, Top, wdthev, Hght); 
-        edcv.beginPath();
-        edcv.fillStyle = "rgba(0,0,0,.15)";//evsmoothcolor;
-        edcv.strokeStyle = "rgba(0,0,0,.75)";//evsmoothcolor;
-        edcv.fillRect(+LengthNameTL + strtev, Top, evSafeZone, Hght)
-        edcv.stroke();
-        edcv.closePath();
-        edcv.globalAlpha = 1;
+        cv.fillStyle = evColor;
+        cv.fillRect(+LengthNameTL + strtev, Top, wdthev, Hght); 
+        cv.beginPath();
+        cv.fillStyle = "rgba(0,0,0,.15)";//evsmoothcolor;
+        cv.strokeStyle = "rgba(0,0,0,.75)";//evsmoothcolor;
+        cv.fillRect(+LengthNameTL + strtev, Top, evSafeZone, Hght)
+        cv.stroke();
+        cv.closePath();
+        cv.globalAlpha = 1;
         
-        edcv.beginPath();
-        edcv.fillStyle = "rgba(0,0,0,.15)";//evsmoothcolor;
-        edcv.strokeStyle = "rgba(0,0,0,.75)";//evsmoothcolor;
-        edcv.fillRect(+LengthNameTL + fnshev - evSafeZone, Top, evSafeZone, Hght)
-        edcv.stroke();
-        edcv.closePath();
-        edcv.globalAlpha = 1;
+        cv.beginPath();
+        cv.fillStyle = "rgba(0,0,0,.15)";//evsmoothcolor;
+        cv.strokeStyle = "rgba(0,0,0,.75)";//evsmoothcolor;
+        cv.fillRect(+LengthNameTL + fnshev - evSafeZone, Top, evSafeZone, Hght)
+        cv.stroke();
+        cv.closePath();
+        cv.globalAlpha = 1;
         
 //================================              
         for (var ic=0; ic<TLT[PosTL].Events[i].Rows[0].Count; ic++) {
@@ -956,40 +977,40 @@ function MyDrawTimeline(PosTL, Top, Hght) {
               evtext = TLT[PosTL].Events[i].Rows[0].Phrases[ic].Tag;  
             }
 
-            edcv.font = evfntsz;//fs + "pt Arial";
+            cv.font = evfntsz;//fs + "pt Arial";
             if (evname == "Comment") {
               if (evtext.charAt(0) == "#") {
-                edcv.fillStyle = "yellow";  
+                cv.fillStyle = "yellow";  
               } else { 
-                edcv.fillStyle = evFontColor;//cfont;
+                cv.fillStyle = evFontColor;//cfont;
               }
             } else {
-              edcv.fillStyle = evFontColor;  
+              cv.fillStyle = evFontColor;  
             }
-            edcv.textBaseline = "middle"; 
-            edcv.textAlign  = "left";
+            cv.textBaseline = "middle"; 
+            cv.textAlign  = "left";
             evlft = +evlft + +LengthNameTL + +strtev
 
                 
-            var fnwidth = edcv.measureText(evtext).width;
-            var metrics = edcv.measureText("M");
+            var fnwidth = cv.measureText(evtext).width;
+            var metrics = cv.measureText("M");
             var fnheight =   metrics.width;  
             var kx = wdthev/fnwidth;
             var ky = (Hght/2)/fnheight;
-            edcv.save();
-            edcv.scale(wdthev/fnwidth, (Hght/2)/fnheight);
-            edcv.fillText(evtext, +evlft/kx, (+Top + Hght/2)/ky);
-            edcv.restore();  
-            edcv.scale(1, 1);  
+            cv.save();
+            cv.scale(wdthev/fnwidth, (Hght/2)/fnheight);
+            cv.fillText(evtext, +evlft/kx, (+Top + Hght/2)/ky);
+            cv.restore();  
+            cv.scale(1, 1);  
           }
         }   
 //================================  
         if (PosTL == ActiveTL) {
           if (+TLP.Position >= +evstart && +TLP.Position <= +evstart + +evSafeZone) {
-            edcv.fillStyle = "white";
-            edcv.globalAlpha = .75;
-            edcv.fillRect(+LengthNameTL + strtev, Top, wdthev, Hght);
-            edcv.globalAlpha = 1;  
+            cv.fillStyle = "white";
+            cv.globalAlpha = .75;
+            cv.fillRect(+LengthNameTL + strtev, Top, wdthev, Hght);
+            cv.globalAlpha = 1;  
           }
         }
       }  
@@ -1011,8 +1032,8 @@ function MyDrawTimeline(PosTL, Top, Hght) {
         
     wdthev = fnshev - strtev;  
    
-    edcv.fillStyle = evColor;
-    edcv.fillRect(+LengthNameTL + strtev, Top, wdthev, Hght);
+    cv.fillStyle = evColor;
+    cv.fillRect(+LengthNameTL + strtev, Top, wdthev, Hght);
     
     if (TLT[PosTL].Count > 0) {
       fev = -1;
@@ -1047,27 +1068,27 @@ function MyDrawTimeline(PosTL, Top, Hght) {
         strtev = strtev * FrameSize;
          
         
-        edcv.fillStyle = evColor;
+        cv.fillStyle = evColor;
         
-        edcv.beginPath();  
-        edcv.moveTo(+evlft, Top + Hght);  
-        edcv.lineTo(+evlft, Top);
-        edcv.lineTo(+evlft + +SafeZone/2, Top + +SafeZone/4);
-        edcv.lineTo(+evlft, Top + +SafeZone/2);
-        edcv.lineWidth = 1;
-        edcv.strokeStyle = evColor;
-        edcv.stroke();
-        edcv.closePath();
-        edcv.fill();
+        cv.beginPath();  
+        cv.moveTo(+evlft, Top + Hght);  
+        cv.lineTo(+evlft, Top);
+        cv.lineTo(+evlft + +SafeZone/2, Top + +SafeZone/4);
+        cv.lineTo(+evlft, Top + +SafeZone/2);
+        cv.lineWidth = 1;
+        cv.strokeStyle = evColor;
+        cv.stroke();
+        cv.closePath();
+        cv.fill();
             
       }  
     }
   }
 } 
 
-function DrawTimeLines() {
-  var hght = edCanvas.height;
-  var wdth = edCanvas.width - LengthNameTL;
+function DrawTimeLines(cv, Width, Height) {
+  var hght = Height;
+  var wdth = Width - LengthNameTL;
 //===================================
   //var wdth = evCanvas.width;
   //var WidthTL = wdth - LengthNameTL;
@@ -1077,8 +1098,8 @@ function DrawTimeLines() {
   var FinishFrm = StartFrm + ScreenFrm;
 //===================================
   //var Frames
-  edcv.fillStyle = rgbFromNum(TLP.BackGround);
-  edcv.fillRect(LengthNameTL, 0, wdth, hght);
+  cv.fillStyle = rgbFromNum(TLP.BackGround);
+  cv.fillRect(LengthNameTL, 0, wdth, hght);
   var CountLine = 0;
  
   if (ShowTimelines) {
@@ -1096,50 +1117,50 @@ function DrawTimeLines() {
  
   var top = 0;
   var cbkgnd = smoothcolor(TLP.ForeGround, 16);
-  edcv.fillStyle = cbkgnd; //rgbFromNum(TLP.ForeGround);
+  cv.fillStyle = cbkgnd; //rgbFromNum(TLP.ForeGround);
   //for (var i=0; i<CountLine; i++) {
   var text, se, sev;
   if (ShowScaler) {
-    edcv.fillRect(LengthNameTL, top, wdth, tmph);
-    MyDrawScaler(tmph);
+    cv.fillRect(LengthNameTL, top, wdth, tmph);
+    MyDrawScaler(cv, Width, Height, tmph);
     top = top + tmph + interval;
   } 
   if (ShowEditor) {
-    edcv.fillStyle = cbkgnd;  
+    cv.fillStyle = cbkgnd;  
     top = top + 2 * interval;  
-    edcv.fillRect(LengthNameTL, top, wdth, 3 * tmph);
-    MyDrawEditor(top, interval, 3 * tmph);
+    cv.fillRect(LengthNameTL, top, wdth, 3 * tmph);
+    MyDrawEditor(cv, Width, Height, top, interval, 3 * tmph);
     top = top + 3 * tmph + interval;
   }
   if (ShowTimelines) {
     for (var i=0; i<TLO.length; i++) {
-      edcv.fillStyle = cbkgnd;//smoothcolor(TLP.ForeGround, 8);  
-      edcv.fillRect(LengthNameTL, top, wdth, tmph);
-      MyDrawTimeline(i, top, tmph)
+      cv.fillStyle = cbkgnd;//smoothcolor(TLP.ForeGround, 8);  
+      cv.fillRect(LengthNameTL, top, wdth, tmph);
+      MyDrawTimeline(cv, Width, Height, i, top, tmph)
       top = top + tmph + interval;
     }
   } 
-  edcv.beginPath();  
-  edcv.moveTo(+LengthNameTL + +MyCursor, tmph);  
-  edcv.lineTo(+LengthNameTL + +MyCursor, hght);
-  edcv.lineWidth = 1;
-  edcv.strokeStyle = "white";
-  edcv.stroke();
-  edcv.closePath(); 
+  cv.beginPath();  
+  cv.moveTo(+LengthNameTL + +MyCursor, tmph);  
+  cv.lineTo(+LengthNameTL + +MyCursor, hght);
+  cv.lineWidth = 1;
+  cv.strokeStyle = "white";
+  cv.stroke();
+  cv.closePath(); 
   
   if (TLP.Start > StartFrm) {
     var strp = (TLP.Start - StartFrm) * FrameSize;
-    edcv.fillStyle = "white";
-    edcv.globalAlpha = .20;
-    edcv.fillRect(LengthNameTL, 0, strp, hght);
-    edcv.globalAlpha = 1;
+    cv.fillStyle = "white";
+    cv.globalAlpha = .20;
+    cv.fillRect(LengthNameTL, 0, strp, hght);
+    cv.globalAlpha = 1;
   }
   
   if (TLP.Finish < FinishFrm) {
     var strp = (TLP.Finish - StartFrm) * FrameSize;
-    edcv.fillStyle = "white";
-    edcv.globalAlpha = .20;
-    edcv.fillRect(LengthNameTL + strp, 0, wdth - strp, hght);
-    edcv.globalAlpha = 1;
+    cv.fillStyle = "white";
+    cv.globalAlpha = .20;
+    cv.fillRect(LengthNameTL + strp, 0, wdth - strp, hght);
+    cv.globalAlpha = 1;
   }
 }
