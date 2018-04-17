@@ -75,7 +75,8 @@ var ArrDev1 = [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
                 -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]; // номера событий устройства 1
 var ArrDev2 = [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
                 -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]; // номера событий устройства 2  
-var ScreenFields = [0,4,2,5,-1]; 
+var ScreenFields = [0,4,2,5,-1]; //первое поле
+                                 //
 //evCanvas, dvCanvas, edCanvas, tvCanvas, tmCanvas 
 var UsesCanvas = [false, false, false, false, false];
 var TimeLineHeight = 20;
