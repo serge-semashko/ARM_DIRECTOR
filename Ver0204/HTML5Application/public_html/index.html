@@ -6,6 +6,8 @@ and open the template in the editor.
 -->
 <html>
     <head>
+        <link rel="stylesheet" href="style.css" type="text/css"/>
+
         <title>TEST ARM_EDITOR web client</title>
         <meta charset="UTF-8">
         <meta name="description" content="">
@@ -20,18 +22,77 @@ and open the template in the editor.
         <script src="scripts/alltimelines.js"></script>
         <script src="scripts/myutils.js"></script>
         <script src="scripts/main.js"></script>
+        <script src="scripts/vendor/jquery-1.11.0.min.js "></script>
         <script src="scripts/typescreen.js"></script>
         <style>
+            body{
+            }
+            .m2enu{
+                position: absolute;
+                left: 50%;            
+                margin-right:-50%; 
+            }           
+            th{ 
+                text-align:center ;
+                padding:10px;
+            }
+            td{
+                padding:5px;
+            }
+
             .myCanvas{
                 margin: -3px;
             }
         </style>    
     </head>
     <body>
-        
-        <div style="display :none" id="time">Dhtvz</div>
-        <div style="display :none" id="atime">aaaa</div>
-        <div style="margin:-2px" id="main">
+
+        <div style="display:block;" class="menu" id="select_scr">
+            <table  id="select_menu" cellspacing=0 border=1>
+                <tr>
+                    <th colspan="50" style>
+                        <h2 id="title1">
+                            ARM Director
+                        </h2>
+                    </th>
+                </tr>
+                <tr>
+                <tr >
+                    <th colspan="8">
+                        Полный экран<br>или События устройства
+                    </th>
+                </tr><tr>
+                    <td colspan='4'>
+                        Количество событий
+                    </td>
+                    <td> 
+                        <input id="CountEvents_0" type="number" value=10 min="1" max="31" style="width: 3em;">
+                    </td>
+                </tr>
+                <td colspan='4'>
+                    Тайм-линия
+                </td>
+                <td colspan="3" align="left">
+                    <select class="graphSelect"  id="ActiveTL_0" >
+                    </select>
+
+                </td>
+
+
+                </tr>
+                <tr>
+                    <th colspan='999'>
+                        <button type=submit onClick="execMain_0();" > Продолжить </button>
+                    </th>    
+                </tr>
+                <! =================== typescr=1 ====================/>
+                
+                
+                
+            </table>    
+        </div>
+        <div style="display:none;" id="main">
+            
             <canvas class=myCanvas id="mnCanvas" ></canvas>
             <canvas class=myCanvas id="evCanvas" ></canvas>
             <canvas class=myCanvas id="dvCanvas" ></canvas>
@@ -39,10 +100,55 @@ and open the template in the editor.
             <canvas class=myCanvas id="tvCanvas" ></canvas>
             <canvas class=myCanvas id="tmCanvas" ></canvas>
         </div>
-        <!--<aside>-->
-        <!--<h1></h1>-->
-        <!--</aside>-->
-        <!--<textarea id="area">dddd</textarea>-->
+
+        <script>
+            function addDropdownList(id, val, text ) {
+                text = String(text).replace("#$%#$%", " ")
+                var select, i, option;
+
+                select = document.getElementById(id);
+                option = document.createElement('option');
+                option.value = val;
+                option.text = text;
+                select.add(option);
+            }
+            ; 
+//            $("#title1").html($(window).width()+"Х"+$(window).height());
+            setViewport();
+            var mn = document.getElementById("select_menu"); 
+            
+            $("body").css("font-size","12px");
+            for (var fs=60;fs>1;fs--){
+               $("table,button,input,select").css("font-size",fs+"px");
+               var hd = mn.clientHeight;
+               var wd = mn.clientWidth;
+               
+               if (wd>scrW-10 ) {
+                   continue;
+               };
+               if (hd>scrH-50) {
+                   continue;
+               };
+               break;
+               
+            }
+            
+            
+            var ActiveTL_0 = document.getElementById("ActiveTL_0");
+            var select = ActiveTL_0;
+            for (var i = 0; i <= TLO.length - 1; i++) {
+                addDropdownList("ActiveTL_0", i, TLO[i].Name);
+            };
+            function execMain_0() {
+                typesrc = 0;
+                ActiveTL = document.getElementById("ActiveTL_0").options.selectedIndex;
+                CountEvents = document.getElementById("CountEvents_0").value;
+                $("#select_scr").css("display", "none");
+                $("#main").css("display", "block");
+                window_onload();
+            }
+            
+        </script>
 
     </body>
 </html>

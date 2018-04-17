@@ -219,7 +219,6 @@ function setViewport() {
 //    cv.height = window.innerHeight;
 //
 //}
-addEventListener("keydown", myKeydown);
 
 function myKeydown(e) {
     // switch(e.keyCode){
@@ -275,9 +274,6 @@ var canvasPos = getPosition(mnCanvas);
 var mouseX = 0;
 var mouseY = 0;
  
-addEventListener("mousemove", setMousePosition, false);
-addEventListener('mouseup', MyMouseUp, false);
-addEventListener('mouseDown', MyMouseDown, false);
 
 function MyMouseDown(e) {
   mouseX = e.clientX - canvasPos.x;
@@ -400,7 +396,13 @@ function getPosition(el) {
 }
 
 
-window.onload = function () {
+function window_onload() {
+    addEventListener("keydown", myKeydown);
+
+    addEventListener("mousemove", setMousePosition, false);
+    addEventListener('mouseup', MyMouseUp, false);
+    addEventListener('mouseDown', MyMouseDown, false);
+
     tm = document.getElementById("time");
     var dloc = document.location;
     var hostname;
@@ -424,8 +426,8 @@ window.onload = function () {
     tmcv = tmCanvas.getContext('2d');
     
     //processData(testData);
+    var myInterval = setInterval(changeTL, 40);
     
-    setInterval(changeTL, 40);
 
 };
 
