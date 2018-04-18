@@ -19,6 +19,8 @@ var cv, ecv, dcv, edcv, tlcv, evCanvas, dvCanvas, edCanvas, tvCanvas;
 var mncv, tmcv, mnCanvas, tmCanvas, tempwidth;
 var ProgrammColor = "#494747";
 var ProgrammFontColor = "#FFFFFF";
+var lastPhrase = "";
+var myInterval;
 //Переменные для отображения тайм-линий и событий
 var typesrc = "4"; //Вид экрана 0 - All, 1- ev+dv, 2
 var currtlo; //текущая опция тайм линий
@@ -75,11 +77,10 @@ var ArrDev1 = [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
                 -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]; // номера событий устройства 1
 var ArrDev2 = [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
                 -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]; // номера событий устройства 2  
-var ScreenFields = [0,4,2,5,-1]; //первое поле
-                                 //
+var ScreenFields = [0,4,2,5,-1]; 
 //evCanvas, dvCanvas, edCanvas, tvCanvas, tmCanvas 
 var UsesCanvas = [false, false, false, false, false];
-var TimeLineHeight = 20;
+var TimeLineHeight = 16;
 var HeightMenu = 50;
 
 var ClipName = "";
@@ -98,11 +99,13 @@ var RectUp = [0,0,0,0];
 var RectDown = [0,0,0,0];
 var RectPlus = [0,0,0,0];
 var RectMinus = [0,0,0,0];
+var RectHome = [0,0,0,0];
 var mnSoundSelect = false;
 var mnUpSelect = false;
 var mnDownSelect = false;
 var mnPlusSelect = false;
 var mnMinusSelect = false;
+var mnHomeSelect = false;
 
 var AudioOn = true;
 
@@ -295,6 +298,9 @@ function MyMouseDown(e) {
     if (mouseX>RectUp[0] && mouseX<RectUp[2]) {
       mnUpSelect = true;
     } 
+    if (mouseX>RectHome[0] && mouseX<RectHome[2]) {
+      mnHomeSelect = true;
+    }
   }  
 }
 
@@ -340,6 +346,12 @@ function MyMouseUp(e) {
       }  
       mnUpSelect = false;
     } 
+    if (mouseX>RectHome[0] && mouseX<RectHome[2]) {
+      $("#select_scr").css("display", "block");
+      $("#main").css("display", "none"); 
+      clearInterval (myInterval)
+      mnHomeSelect = false;
+    } 
   }  
 }
  
@@ -372,12 +384,18 @@ function setMousePosition(e) {
     } else {
        mnUpSelect = false;  
     } 
+    if (mouseX>RectHome[0] && mouseX<RectHome[2]) {
+      mnHomeSelect = true;  
+    } else {
+       mnHomeSelect = false;  
+    }
   } else {
     mnSoundSelect = false;
     mnUpSelect = false;
     mnDownSelect = false;
     mnPlusSelect = false;
     mnMinusSelect = false;  
+    mnHomeSelect = false;
   }
 }
 
@@ -427,8 +445,8 @@ function window_onload() {
     tmcv = tmCanvas.getContext('2d');
     
     //processData(testData);
-    var myInterval = setInterval(changeTL, 40);
     
+    myInterval = setInterval(changeTL, 40);
 
 };
 

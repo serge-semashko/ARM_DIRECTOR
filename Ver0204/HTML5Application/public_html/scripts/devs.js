@@ -96,15 +96,14 @@ function drawMyDev(cv,Width,Height,currtl) {
       cv.strokeRect(+rtleft, +rttop, +tmpw, +tmph);
       cv.fillRect(+rtleft + +2, +rttop + +2, +tmpw - +4, +tmph - +4);
       
-      cv.font = smallFont;
+      cv.font = Math.floor(tmph/5) + "pt Arial";//smallFont;
       cv.fillStyle = cpen;
-      cv.fillRect(+rtleft + +1, +rttop + +1, textWidth('00', cv) + 5, textHeight(cv) + 5);
+      cv.fillRect(+rtleft, +rttop, +textWidth('00', cv) + 1, +textHeight(cv) + 1);
       var message = (i+1).toString();
-      //var ttop = rttop + textHeight(cv);
       cv.fillStyle = cfont;
       cv.textBaseline = "middle";
       cv.textAlign  = "center";
-      cv.fillText(message, +rtleft+1+(textWidth('00', cv) + 5)/2, +rttop+1 + (textHeight(cv) + 5)/2);
+      cv.fillText(message, +rtleft + +(textWidth('00', cv))/2, +rttop + +textHeight(cv)/2);
       
       var val1 = DevValue[i];
       if (val1 > -1) {
@@ -139,16 +138,16 @@ function drawMyDev(cv,Width,Height,currtl) {
         cv.strokeRect(+rtleft, +rttop, +tmpw, +tmph);
         cv.fillRect(+rtleft + +2, +rttop + +2, +tmpw - +4, +tmph - +4);
       
-        cv.font = smallFont;
+        cv.font = Math.floor(tmph/5) + "pt Arial";//smallFont;
         cv.fillStyle = cpen;
-        cv.fillRect(+rtleft + +1, +rttop + +1, textWidth('00', cv) + 5, textHeight(cv) + 5);
+        cv.fillRect(+rtleft, +rttop, textWidth('00', cv) + 1, textHeight(cv) + 1);
       //var 
         message = (17+i).toString();
       //var ttop = rttop + textHeight(cv);
         cv.fillStyle = cfont;
         cv.textBaseline = "middle";
         cv.textAlign  = "center";
-        cv.fillText(message, +rtleft+1+(textWidth('00', cv) + 5)/2, +rttop+1 + (textHeight(cv) + 5)/2);
+        cv.fillText(message, +rtleft + +(textWidth('00', cv))/2, +rttop + +textHeight(cv)/2);
         var val1 = DevValue[16+i];
         if (val1 > -1) {
           //cv.font = mainFont;

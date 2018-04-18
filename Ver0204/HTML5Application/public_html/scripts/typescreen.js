@@ -21,12 +21,21 @@ function setDefaultValue(value) {
 function SetTypeScreen0() {
   setDefaultValue(DefaultScreen0);
   
+  //mnCanvas.style = "display : block;";
+  evCanvas.style = "display : block;";
+  dvCanvas.style = "display : block;";
+  edCanvas.style = "display : block;";
+  tvCanvas.style = "display : block;";
+  //tmCanvas.style = "display : block;";
+  
+  
   mnCanvas.style.visibility = "hidden";
   evCanvas.style.visibility = "hidden";
   dvCanvas.style.visibility = "hidden";
   edCanvas.style.visibility = "hidden";
   tvCanvas.style.visibility = "hidden";
-  tmCanvas.style.visibility = "hidden";
+  //tmCanvas.style.visibility = "hidden";
+  tmCanvas.style = "display : none;";
   
   var steph = scrH / 100;
   var stepw =scrW / 17.5;
@@ -35,7 +44,7 @@ function SetTypeScreen0() {
   MyCursor = Math.floor(stepw);
   
   var hdev = ((stepw / 1.75) / 2) * 5;
-  var htmln = (TimeLineHeight / 85 * 100) * (4 + TLT.length);
+  var htmln = (TimeLineHeight / 85 * 100) * (4 + +TLT.length);
 
   HeightMenu = (scrH / 100) * 5;
   var prmenu = HeightMenu / scrH;
@@ -60,9 +69,9 @@ function SetTypeScreen0() {
   
   var prtl = htmln / scrH;
   var prdevices = hdev / scrH;
-  var prevents = 1 - prmenu - prdevices - prtl - pralltl - prcellar;
+  var prevents = 1 - prmenu - prdevices - prtl - pralltl;// - prcellar;
   
-  var hcell = (scrH * prevents) / (CountEvents+1);
+  var hcell = (scrH * prevents) / (+CountEvents + 1);
   if (hcell >= 1.5 * stepw) { 
     DoubleSize = 1;
   } else {
@@ -79,8 +88,8 @@ function SetTypeScreen0() {
   edCanvas.height = scrH * prtl;
   tvCanvas.width = scrW;
   tvCanvas.height = scrH * pralltl;
-  tmCanvas.width = scrW;
-  tmCanvas.height = scrH * prcellar;
+  //tmCanvas.width = scrW;
+  //tmCanvas.height = scrH * prcellar;
     
   mncv.clearRect(0, 0, mnCanvas.width, mnCanvas.height);
   ecv.clearRect(0, 0, evCanvas.width, evCanvas.height);
@@ -131,19 +140,30 @@ function SetTypeScreen0() {
   dvCanvas.style.visibility = "visible";
   edCanvas.style.visibility = "visible";
   tvCanvas.style.visibility = "visible";
-  tmCanvas.style.visibility = "visible";
-    
+  //tmCanvas.style.visibility = "visible";
+  tmCanvas.style = "display : none;";  
 } // end SetTypeScreen0 
 
 function SetTypeScreen1() {
   setDefaultValue(DefaultScreen1);
   
+  //mnCanvas.style = "display : block;";
+  evCanvas.style = "display : block;";
+  dvCanvas.style = "display : block;";
+  //edCanvas.style = "display : block;";
+  //tvCanvas.style = "display : block;";
+  //tmCanvas.style = "display : block;";
+  
   mnCanvas.style.visibility = "hidden";
   evCanvas.style.visibility = "hidden";
   dvCanvas.style.visibility = "hidden";
-  edCanvas.style.visibility = "hidden";
-  tvCanvas.style.visibility = "hidden";
-  tmCanvas.style.visibility = "hidden";
+  //edCanvas.style.visibility = "hidden";
+  //tvCanvas.style.visibility = "hidden";
+  //tmCanvas.style.visibility = "hidden";
+  
+  edCanvas.style = "display : none;";
+  tvCanvas.style = "display : none;";
+  tmCanvas.style = "display : none;";
   
   //var steph = scrH / 100;
   var stepw =scrW / 17.5;
@@ -161,9 +181,9 @@ function SetTypeScreen1() {
   var prmenu = HeightMenu / scrH;
   var prtl = 0.02;
   var prdevices = hdev / scrH;
-  var prevents = 1 - prmenu - prdevices - prtl - pralltl - prcellar;
+  var prevents = 1 - prmenu - prdevices;// - prtl - pralltl - prcellar;
   
-  var hcell = (scrH * prevents) / (CountEvents+1);
+  var hcell = (scrH * prevents) / (+CountEvents+1);
   if (hcell >= 1.5 * stepw) { 
     DoubleSize = 1;
   } else {
@@ -176,12 +196,12 @@ function SetTypeScreen1() {
   evCanvas.height = scrH * prevents;
   dvCanvas.width = scrW;
   dvCanvas.height = scrH * prdevices;
-  edCanvas.width = scrW;
-  edCanvas.height = scrH * prtl;
-  tvCanvas.width = scrW;
-  tvCanvas.height = scrH * pralltl;
-  tmCanvas.width = scrW;
-  tmCanvas.height = scrH * prcellar;
+  //edCanvas.width = scrW;
+  //edCanvas.height = scrH * prtl;
+  //tvCanvas.width = scrW;
+  //tvCanvas.height = scrH * pralltl;
+  //tmCanvas.width = scrW;
+  //tmCanvas.height = scrH * prcellar;
     
   mncv.clearRect(0, 0, mnCanvas.width, mnCanvas.height);
   ecv.clearRect(0, 0, evCanvas.width, evCanvas.height);
@@ -230,9 +250,13 @@ function SetTypeScreen1() {
   mnCanvas.style.visibility = "visible";
   evCanvas.style.visibility = "visible";
   dvCanvas.style.visibility = "visible";
-  edCanvas.style.visibility = "visible";
-  tvCanvas.style.visibility = "visible";
-  tmCanvas.style.visibility = "visible";
+  //edCanvas.style.visibility = "visible";
+  //tvCanvas.style.visibility = "visible";
+  //tmCanvas.style.visibility = "visible";
+  
+  edCanvas.style = "display : none;";
+  tvCanvas.style = "display : none;";
+  tmCanvas.style = "display : none;";
   
 } // end SetTypeScreen1
 
@@ -297,7 +321,7 @@ function SetTypeScreen2() {
   var prmenu = HeightMenu / scrH;
   var prevents = 1 - prmenu - prdevices - prtl - pralltl - prcellar;
   
-  var hcell = (scrH * prevents) / (CountEvents+1);
+  var hcell = (scrH * prevents) / (+CountEvents+1);
   if (hcell >= 1.5 * stepw) { 
     DoubleSize = 1;
   } else {
@@ -461,9 +485,9 @@ function SetTypeScreen3() {
   }
   
   var cntevents = 0;
-  if (ShowEvents) { cntevents = cntevents + CountEvents }
-  if (ShowDev1) { cntevents = cntevents + EventsDev1 }
-  if (ShowDev2) { cntevents = cntevents + EventsDev2 }
+  if (ShowEvents) { cntevents = +cntevents + +CountEvents }
+  if (ShowDev1) { cntevents = +cntevents + +EventsDev1 }
+  if (ShowDev2) { cntevents = +cntevents + +EventsDev2 }
   
   HeightMenu = scrH / 100 * 5;
   var prmenu = HeightMenu / scrH;
@@ -477,7 +501,7 @@ function SetTypeScreen3() {
   var preva = 0.02;
   if (ShowEvents) { preva = prevents - prev1 - prev2; }
 
-  var hcell = (scrH * prevents) / (cntevents+1);
+  var hcell = (scrH * prevents) / (+cntevents+1);
   if (hcell >= 1.5 * stepw) { 
     DoubleSize = 1;
   } else {
@@ -600,16 +624,61 @@ function isField(value) {
   return result;
 } //end isField 
 
+function SetDeviceValue() {
+  for (var i=0; i<5; i++) {
+    if (ScreenFields[i] == 0) {
+      CountEvents = +ScreenFields_2[i]; 
+    } else if (ScreenFields[i] == 4) {
+      Device1 = +ScreenFields_1[i];
+      EventsDev1 = +ScreenFields_2[i];
+    } else if (ScreenFields[i] == 5) {
+      Device2 = +ScreenFields_1[i];
+      EventsDev2 = +ScreenFields_2[i];  
+    }  
+  }  
+}
+
 function SetTypeScreen4() {
   setViewport();  
   setDefaultValue(DefaultScreen4);  
-
+  SetDeviceValue();
+  
+  mnCanvas.style = "display : block;";
   mnCanvas.style.visibility = "hidden";
-  evCanvas.style.visibility = "hidden";
-  dvCanvas.style.visibility = "hidden";
-  edCanvas.style.visibility = "hidden";
-  tvCanvas.style.visibility = "hidden";
-  tmCanvas.style.visibility = "hidden";
+  if (ScreenFields[0] == -1) {
+    evCanvas.style = "display : none;";  
+  } else {
+    evCanvas.style = "display : block;"; 
+    evCanvas.style.visibility = "hidden";
+  }
+  
+  if (ScreenFields[1] == -1) {
+    dvCanvas.style = "display : none;";  
+  } else {
+    dvCanvas.style = "display : block;"; 
+    dvCanvas.style.visibility = "hidden";
+  }
+  
+  if (ScreenFields[2] == -1) {
+    edCanvas.style = "display : none;";  
+  } else {
+    edCanvas.style = "display : block;"; 
+    edCanvas.style.visibility = "hidden";
+  }
+  
+  if (ScreenFields[3] == -1) {
+    tvCanvas.style = "display : none;";  
+  } else {
+    tvCanvas.style = "display : block;"; 
+    tvCanvas.style.visibility = "hidden";
+  }
+  
+  if (ScreenFields[4] == -1) {
+    tmCanvas.style = "display : none;";  
+  } else {
+    tmCanvas.style = "display : block;"; 
+    tmCanvas.style.visibility = "hidden";
+  }
   
   var steph = scrH / 100;
   var stepw =scrW / 17.5;
@@ -628,14 +697,14 @@ function SetTypeScreen4() {
   
 //==============================================================================  
      
-    var prdevices = 0.02; 
-    var prtl = 0.02;
-    var pralltl = 0.02;
+    var prdevices = 0;//0.02; 
+    var prtl = 0;//0.02;
+    var pralltl = 0;//0.02;
     HeightMenu = scrH / 100 * 5;
     var prmenu = HeightMenu / scrH;
-    var prev1 = 0.02;
-    var prev2 = 0.02;
-    var preva = 0.02;
+    var prev1 = 0;//0.02;
+    var prev2 = 0;//0.02;
+    var preva = 0;//0.02;
     
     if (isField(1)) {
       var hdev = ((stepw / 1.75) / 2) * 5;
@@ -673,31 +742,31 @@ function SetTypeScreen4() {
     }
         
   var cntevents = 0;
-  if (isField(0)) { cntevents = cntevents + CountEvents }
+  if (isField(0)) { cntevents = +cntevents + +CountEvents }
   
   var isShowDev1 = isField(4); 
   var isShowDev2 = isField(5);
   
-  if (isShowDev1) { cntevents = cntevents + EventsDev1 }
-  if (isShowDev2) { cntevents = cntevents + EventsDev2 }
+  if (isShowDev1) { cntevents = +cntevents + +EventsDev1 }
+  if (isShowDev2) { cntevents = +cntevents + +EventsDev2 }
   
   var prevents = 1 - prmenu - prtl - pralltl - prdevices;
-  var oneev = prevents / (cntevents+1);
+  var oneev = prevents / (+cntevents+1);
   var cnt1 = 0;
   if (isShowDev1) { 
     prev1 = +EventsDev1 * oneev;
-    cnt1 = cnt1 + 1;
+    cnt1 = +cnt1 + 1;
   }
   if (isShowDev2) { 
     prev2 = +EventsDev2 * oneev;
-    cnt1 = cnt1 + 1;
+    cnt1 = +cnt1 + 1;
   } 
   if (isField(0)) { 
     preva = prevents - prev1 - prev2; 
-    cnt1 = cnt1 + 1;
+    cnt1 = +cnt1 + 1;
   }
   
-  var hcell = (scrH * prevents) / (cntevents+1);
+  var hcell = (scrH * prevents) / (+cntevents+1);
   if (hcell >= 1.5 * stepw) { 
     DoubleSize = 1;
   } else {
@@ -708,9 +777,9 @@ function SetTypeScreen4() {
   if (dlt > 0) {
     if (cnt1 > 0) {
       dlt = dlt / cnt1;
-      if (isShowDev1) { prev1 = prev1 + dlt; }
-      if (isShowDev2) { prev2 = prev2 + dlt; }
-      if (isField(0)) { preva = preva + dlt; }
+      if (isShowDev1) { prev1 = +prev1 + +dlt; }
+      if (isShowDev2) { prev2 = +prev2 + +dlt; }
+      if (isField(0)) { preva = +preva + +dlt; }
     }  
   }
   
@@ -740,7 +809,7 @@ function SetTypeScreen4() {
     }
   } else {
     evCanvas.width = scrW;
-    evCanvas.height = scrH * 0.02;  
+    evCanvas.height = 0;//scrH * 0.02;  
   }
   
   if (ScreenFields[1] !== -1) {
@@ -765,7 +834,7 @@ function SetTypeScreen4() {
     }
   } else {
     dvCanvas.width = scrW;
-    dvCanvas.height = scrH * 0.02;  
+    dvCanvas.height = 0;//scrH * 0.02;  
   }
   
   if (ScreenFields[2] !== -1) {
@@ -790,7 +859,7 @@ function SetTypeScreen4() {
     }
   } else {
     edCanvas.width = scrW;
-    edCanvas.height = scrH * 0.02;  
+    edCanvas.height = 0;//scrH * 0.02;  
   }
 
   if (ScreenFields[3] !== -1) {
@@ -815,7 +884,7 @@ function SetTypeScreen4() {
     }
   } else {
     tvCanvas.width = scrW;
-    tvCanvas.height = scrH * 0.02;  
+    tvCanvas.height = 0;//scrH * 0.02;  
   }
   
   if (ScreenFields[4] !== -1) {
@@ -840,7 +909,7 @@ function SetTypeScreen4() {
     }
   } else {
     tmCanvas.width = scrW;
-    tmCanvas.height = scrH * 0.02;  
+    tmCanvas.height = 0;//scrH * 0.02;  
   }
       
   mncv.clearRect(0, 0, mnCanvas.width, mnCanvas.height);
@@ -1029,11 +1098,48 @@ function SetTypeScreen4() {
   }
   
   mnCanvas.style.visibility = "visible";
-  evCanvas.style.visibility = "visible"; 
-  dvCanvas.style.visibility = "visible"; 
-  edCanvas.style.visibility = "visible"; 
-  tvCanvas.style.visibility = "visible"; 
-  tmCanvas.style.visibility = "visible"; 
+  //evCanvas.style.visibility = "visible"; 
+  //dvCanvas.style.visibility = "visible"; 
+  //edCanvas.style.visibility = "visible"; 
+  //tvCanvas.style.visibility = "visible"; 
+  //tmCanvas.style.visibility = "visible"; 
+  
+  //mnCanvas.style = "display : block;";
+  //mnCanvas.style.visibility = "hidden";
+  if (ScreenFields[0] == -1) {
+    evCanvas.style = "display : none;";  
+  } else {
+    evCanvas.style = "display : block;"; 
+    evCanvas.style.visibility = "visible";
+  }
+  
+  if (ScreenFields[1] == -1) {
+    dvCanvas.style = "display : none;";  
+  } else {
+    dvCanvas.style = "display : block;"; 
+    dvCanvas.style.visibility = "visible";
+  }
+  
+  if (ScreenFields[2] == -1) {
+    edCanvas.style = "display : none;";  
+  } else {
+    edCanvas.style = "display : block;"; 
+    edCanvas.style.visibility = "visible";
+  }
+  
+  if (ScreenFields[3] == -1) {
+    tvCanvas.style = "display : none;";  
+  } else {
+    tvCanvas.style = "display : block;"; 
+    tvCanvas.style.visibility = "visible";
+  }
+  
+  if (ScreenFields[4] == -1) {
+    tmCanvas.style = "display : none;";  
+  } else {
+    tmCanvas.style = "display : block;"; 
+    tmCanvas.style.visibility = "visible";
+  }
  
       
 } // end SetTypeScreen4

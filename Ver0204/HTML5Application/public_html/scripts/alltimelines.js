@@ -474,7 +474,7 @@ function MyDrawEditor(cv, Width, Height, Top, Intrvl, Hght) {
         cv.closePath();
         cv.globalAlpha = 1;
                 
-        cv.font = 2*intrvl + "pt Arial";//smallFont;
+        cv.font = 2*Intrvl + "pt Arial";//smallFont;
         cv.fillStyle = cfont;
         cv.textBaseline = "middle"; 
         cv.textAlign  = "left";

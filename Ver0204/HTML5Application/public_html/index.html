@@ -57,6 +57,12 @@ and open the template in the editor.
                     </th>
                 </tr>
                 <tr>
+                    <th colspan="50" style>
+                        Голос
+                        <select  id="voice_1" class="graphSelect" >
+                        </select>
+                    </th>
+                </tr>
                 <tr >
                     <th colspan="8">
                         <input type="radio" id="contactChoice1"
@@ -212,7 +218,7 @@ and open the template in the editor.
                 </tr>
                 <tr>
                     <td colspan="6">
-                        <input type="checkbox" id="chk4_1" name="option2" value="a2">Показывать шкалу времени
+                        <input type="checkbox" id="chk4_1" name="option2" value="a2">Полный экран  <!Показывать шкалу времени>
                     </td>
                 </tr>
                 <tr>
@@ -305,6 +311,8 @@ and open the template in the editor.
                 CountEvents = document.getElementById("CountEvents_0").value;
                 $("#select_scr").css("display", "none");
                 $("#main").css("display", "block");
+//                speak("проверка1");
+//                speak("проверка2",1,1);
                 window_onload();
             }
             function execMain_4() {
@@ -336,6 +344,86 @@ and open the template in the editor.
 
 
         </script>
+        <script>
+            var synth = window.speechSynthesis;
+            var voiceSelect = document.querySelector('#voice_1');
+            var pitchValue = 1;
+            var rateValue = 2;
 
+            var voices = [];
+            var voiceok = false;
+
+            function populateVoiceList() {
+                voices = synth.getVoices();
+                var selectedIndex = voiceSelect.selectedIndex < 0 ? 0 : voiceSelect.selectedIndex;
+                voiceSelect.innerHTML = '';
+                for (i = 0; i < voices.length; i++) {
+                    if ( (voices[i].lang.indexOf('ru-') < 0)) {
+                        continue;
+
+                    }
+                    voiceok = true;
+                    var option = document.createElement('option');
+                    option.textContent = voices[i].name + ' (' + voices[i].lang + ')';
+
+                    if (voices[i].default) {
+                        option.textContent += ' -- DEFAULT';
+                    }
+
+                    option.setAttribute('data-lang', voices[i].lang);
+                    option.setAttribute('data-name', voices[i].name);
+                    voiceSelect.appendChild(option);
+                }
+                if (!voiceok) {
+                    var option = document.createElement('option');
+                    if (voices.length < 1) {
+                        option.textContent = 'Голоса отсутствуют в системе'
+                    } else {
+                        option.textContent = 'Русские голоса отсутствуют в системе'
+
+                    }
+                    ;
+                    voiceSelect.appendChild(option);
+
+                }
+                voiceSelect.selectedIndex = selectedIndex;
+            }
+
+            populateVoiceList();
+            if (speechSynthesis.onvoiceschanged !== undefined) {
+                speechSynthesis.onvoiceschanged = populateVoiceList;
+            }
+
+            function speak(stext, rateValue, pitchValue) {
+                if (!voiceok){
+                    return;
+                }
+                if (synth.speaking) {
+                    console.error('speechSynthesis.speaking');
+                    return;
+                }
+                rateValue = rateValue || 1;
+                pitchValue = rateValue || 1;
+                if (stext !== '') {
+                    var utterThis = new SpeechSynthesisUtterance(stext);
+                    utterThis.onend = function (event) {
+                        console.log('SpeechSynthesisUtterance.onend');
+                    }
+                    utterThis.onerror = function (event) {
+                        console.error('SpeechSynthesisUtterance.onerror');
+                    }
+                    var selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');
+                    for (i = 0; i < voices.length; i++) {
+                        if (voices[i].name === selectedOption) {
+                            utterThis.voice = voices[i];
+                        }
+                    }
+                    utterThis.pitch = pitchValue;
+                    utterThis.rate = rateValue;
+                    synth.speak(utterThis);
+                }
+            }
+
+        </script>
     </body>
 </html>

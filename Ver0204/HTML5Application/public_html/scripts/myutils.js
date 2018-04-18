@@ -456,7 +456,7 @@ function drawToolBar(cv,Width,Height) {
   cv.font = font2;//Math.floor(Height/2) +  "pt Arial";
   
   //var text = "00000";
-  var otstup = 20 + +Height + 1.5*stepw;//cv.measureText(text).width;
+  var otstup = 20 + +Height + 1*stepw;//cv.measureText(text).width;
   cv.textAlign  = "left";
   var text = "Размер кадра";
   var len = cv.measureText(text).width;
@@ -521,7 +521,7 @@ function drawToolBar(cv,Width,Height) {
   cv.textAlign  = "center";
   cv.fillText("+", otstup + Height/2, 3 + (Height-10) / 2);
   
-  otstup = +otstup + +Height + 1.5*stepw;//cv.measureText("00000").width;
+  otstup = +otstup + +Height + 1*stepw;//cv.measureText("00000").width;
   cv.font = font2;
   cv.textAlign  = "left";
   text = "Высота тайм-линии";
@@ -576,10 +576,35 @@ function drawToolBar(cv,Width,Height) {
   } else {
     rectRound(cv, otstup, 3, Height, Height-10, (Height-10)/2, MColor, "white");
   }
-  
+
   //rectRound(cv, otstup, 3, Height, Height-10, (Height-10)/2, ProgrammColor, "white");
   cv.fillStyle = "white";
   cv.textAlign  = "center";
   cv.fillText("+", otstup + Height/2, 3 + (Height-10) / 2);
-  cv.lineWidth = lwdt;
+  //cv.lineWidth = lwdt;
+  
+  otstup = Width-20-Height;
+  RectHome[0] = otstup;
+  RectHome[1] = 3;
+  RectHome[2] = Width-20;
+  RectHome[3] = Height-10;
+  
+  if (mnHomeSelect) {
+    rectRound(cv, otstup, 3, Height, Height-10, (Height-10)/2, SColor, "white");  
+  } else {
+    rectRound(cv, otstup, 3, Height, Height-10, (Height-10)/2, MColor, "white");  
+  }
+  
+  dltx = Height / 8;
+  dlty = (Height - 10) / 5; 
+  var st = 3 + dlty;
+  cv.lineWidth = 2;
+  for (i=0; i<4; i++) {
+    cv.beginPath();
+    cv.strokeStyle = "white";
+    cv.moveTo(otstup+2*dltx, st + i*dlty);
+    cv.lineTo(otstup+6*dltx, st + i*dlty);
+    cv.stroke();
+    cv.closePath();
+  }
 }
