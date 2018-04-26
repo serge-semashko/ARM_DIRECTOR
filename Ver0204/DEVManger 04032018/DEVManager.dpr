@@ -1,5 +1,5 @@
 program DEVManager;
-
+{$M 163840,16000000}
 uses
   Forms,
   MainUnit in 'MainUnit.pas' {fmMain},

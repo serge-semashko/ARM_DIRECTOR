@@ -447,6 +447,8 @@ var
   OLDdEVICEoN : BOOLEAN;
 begin
 //  if LoadProject_active then exit;
+   PutJsonStrToServer('TLO','');
+   PutJsonStrToServer('TLT','');
   OLDdEVICEoN := DevicesOn;
   DevicesOn := true;
   for I := 1 to 15 do
@@ -486,9 +488,11 @@ begin
      str1:=TLO.SaveToJSONStr;
      PutJsonStrToServer('TLO['+IntToStr(i)+']',str1);
   end;
-  jsSave.Clear;
-  jsSave.add(jsarr.ToString);
-  jsSave.SaveToFile('g:\home\tlo.js');
+//  jsSave.Clear;
+//  jsSave.add(jsarr.ToString);
+//  jsSave.SaveToFile('g:\home\tlo.js');
+  str1:=jsarr.ToString;
+  PutJsonStrToServer('TLO',str1);
      str1:=TLParameters.SaveToJSONStr;
      PutJsonStrToServer('TLP',str1);
     PutJsonStrToServer('TLEDITOR', TLZone.TLEditor.SaveToJSONstr);
@@ -504,10 +508,12 @@ begin
      PutJsonStrToServer('TLT['+IntToStr(i)+']',str1);
      jsarr.add(TlTimeline.SaveToJSONObject);
   end;
-  jsSave.Clear;
+//  jsSave.Clear;
+//  jsSave.add(jsarr.ToString);
+//  jsSave.SaveToFile('g:\home\tlt.js');
   str1 := jsarr.ToString;
-  jsSave.add(jsarr.ToString);
-  jsSave.SaveToFile('g:\home\tlt.js');
+  PutJsonStrToServer('TLT',str1);
+
   jsarr.Free;
   jssave.free;
 
@@ -540,9 +546,9 @@ begin
      PutJsonStrToServer('TLT['+IntToStr(i)+']',str1);
      jsarr.add(TlTimeline.SaveToJSONObject);
   end;
-  jsSave.Clear;
-  jsSave.add(jsarr.ToString);
-  jsSave.SaveToFile('g:\home\tlt.js');
+   str1 := jsarr.ToString;
+  PutJsonStrToServer('TLT',str1);
+
   jsarr.Free;
   jssave.free;
 

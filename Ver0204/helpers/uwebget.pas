@@ -19,8 +19,8 @@ type
 
     TIORedisThread = class(tthread)
         var
-            INBUF: array[0..1000000] of ansiCHAR;
-            outBUF: array[0..1000000] of ansiCHAR;
+            INBUF: array[0..3000000] of ansiCHAR;
+            outBUF: array[0..3000000] of ansiCHAR;
             TCPCli: TTcpClient;
         function SendWebVarToServer(ID: integer): integer;
         function GetWebVarFromServer(ID: integer): integer;
@@ -80,7 +80,7 @@ uses
 
 var
     PortNum: integer = 9090;
-    chbuf: array[0..100000] of char;
+//    chbuf: array[0..100000] of char;
     tmpjSon: ansistring;
     Jevent, JDev, jAirsecond: TStringList;
     Jmain: ansistring;
@@ -240,7 +240,7 @@ var
     putcommand: ansistring;
     st: int64;
 begin
-    webWriteLog('GETVAR>', 'Get ' + varName);
+//    webWriteLog('GETVAR>', 'Get ' + varName);
     result := '';
     for i := 0 to webvar_count - 1 do begin
         if webvars[i].name <> varName then

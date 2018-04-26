@@ -87,11 +87,12 @@ type
         baseName: ansistring;
         changed: int64;
         jsonStr: ansistring;
-        json: TJSONObject;
+        json: TJSONvalue;
     end;
 
 
 function ProcessRequest(URI: string): AnsiString;
+function myHTTPProcessRequest(URI: string): AnsiString;
 
 var
     TerminateAll : boolean = false;
@@ -131,8 +132,8 @@ procedure THTTPSRVForm.TcpserverAccept(Sender: TObject;       //пришло с�
     ClientSocket: TCustomIpClient);
 var
     txt: string;
-    Inbuffer: array[0..1300000] of ansichar;
-    OUTBUffer: array[0..1300000] of ansichar;
+    Inbuffer: array[0..4000000] of ansichar;
+    OUTBUffer: array[0..4000000] of ansichar;
     tmpBuffer: integer;
     rcstr, hstr: string;
     rc: Integer;
@@ -222,7 +223,7 @@ procedure THTTPSRVForm.TcpHTTPserverAccept(Sender: TObject;       //пришло
     ClientSocket: TCustomIpClient);
 var
     txt: string;
-    buffer: array[0..100000] of ansichar;
+    buffer: array[0..10000000] of ansichar;
     tmpBuffer: integer;
     rcstr, hstr: string;
     rc: Integer;
@@ -266,7 +267,7 @@ begin
             i1 := length(uri) - 1;
         uri := system.copy(uri, 1, i1);
 
-        outstr := ProcessRequest(uri);
+        outstr := myHTTPProcessRequest(uri);
         if pos('GET_', uri) > 0 then begin
 
 //            webWriteLog('GET_', uri + ' =  ' + outstr);
@@ -583,7 +584,7 @@ begin
 //  WriteLog('Request process time = '+IntToStr(timeGetTime-st));
 end;
 
-procedure AddWebVar(keyname: ansistring; KeyValue: ansistring; json: tjsonobject);
+procedure AddWebVar(keyname: ansistring; KeyValue: ansistring; json: tjsonvalue);
 var
     i1, i2, i3: integer;
     tnow: int64;
@@ -600,7 +601,7 @@ begin
             TLP_count := 0;
             TLP_time := TimeGetTime;
         end;
-        JSvalue := json.GetValue('Position');
+        JSvalue := tjsonobject(json).GetValue('Position');
         if JSvalue <> nil then
             posstr := JSvalue.Value
         else
@@ -773,7 +774,7 @@ function ProcessRequest(URI: string): AnsiString;
 var
     stmp, jreq, resp, keyName, keyVal, str1: ansistring;
     i1, amppos, pos_var_name: integer;
-    json: tjsonobject;
+    jsval : tjsonvalue;
 begin
 
     if (pos('callback=', URI) <> 0) then begin
@@ -788,7 +789,7 @@ begin
     if pos_var_name > 4 then begin
         keyName := system.copy(URI, pos_var_name, Length(URI));
         if pos('&', keyName) > 0 then
-            keyName := system.Copy(URI, 1, pos('&', keyName) - 1);
+            keyName := system.Copy(keyname, 1, pos('&', keyName) - 1);
         resp := '(' + IntToStr(GetWebVar(keyName).changed) + ')/SET_' + keyName + '=' + GetWebVar(keyName).jSONSTR;
     end;
 
@@ -796,7 +797,7 @@ begin
     if pos_var_name > 4 then begin
         keyName := system.copy(URI, pos_var_name, Length(URI));
         if pos('&', keyName) > 0 then
-            keyName := system.Copy(URI, 1, pos('&', keyName) - 1);
+            keyName := system.Copy(keyname, 1, pos('&', keyName) - 1);
         resp := RemoveWebVar(keyName);
     end;
     pos_var_name := pos('LST_', ansiuppercase(URI)) + 4;
@@ -817,11 +818,17 @@ begin
                 resp := RemoveWebVar(keyName);
             end
             else begin
-                while (str1[length(str1)] <> '}') and (length(str1) > 2) do
+                 if (keyName='TLT') or  (keyName='TLO') then begin
+//                                                            showmessage('TLT')
+                                                        end;
+
+                while (
+                              (str1[length(str1)] <> ']') and  (str1[length(str1)] <> '}') and (length(str1) > 2)
+            ) do
                     system.delete(str1, length(str1), 1);
-                json := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(str1), 0) as TJSONObject;
-                if json <> nil then
-                    AddWebVar(keyName, str1, json)
+                jsval :=TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(str1), 0);
+                if jsval <> nil then
+                    AddWebVar(keyName, str1, jsval)
                 else
                     resp := '{"status":"errformat"}';
 
@@ -831,6 +838,77 @@ begin
     resp := jreq + '(' + resp + ');';
     result := resp;
 end;
+
+
+function MyHTTPProcessRequest(URI: string): AnsiString;
+var
+    stmp, jreq, resp, keyName, keyVal, str1: ansistring;
+    i1, amppos, pos_var_name: integer;
+    jsval : tjsonvalue;
+begin
+
+    if (pos('callback=', URI) <> 0) then begin
+        stmp := copy(URI, pos('callback=', URI) + 9, length(URI));
+        amppos := pos('get_member', stmp);
+        if amppos > 0 then
+            jreq := copy(stmp, 1, amppos - 2);
+    end;
+    resp := HardRec.JSONAll;
+
+    pos_var_name := pos('GET_', ansiuppercase(URI)) + 4;
+    if pos_var_name > 4 then begin
+        keyName := system.copy(URI, pos_var_name, Length(URI));
+        if pos('&', keyName) > 0 then
+            keyName := system.Copy(keyname, 1, pos('&', keyName) - 1);
+        resp := GetWebVar(keyName).jSONSTR;
+    end;
+
+    pos_var_name := pos('DEL_', ansiuppercase(URI)) + 4;
+    if pos_var_name > 4 then begin
+        keyName := system.copy(URI, pos_var_name, Length(URI));
+        if pos('&', keyName) > 0 then
+            keyName := system.Copy(keyname, 1, pos('&', keyName) - 1);
+        resp := RemoveWebVar(keyName);
+    end;
+    pos_var_name := pos('LST_', ansiuppercase(URI)) + 4;
+    if pos_var_name > 4 then begin
+        resp := ListWebVars;
+    end;
+
+    pos_var_name := pos('SET_', ansiuppercase(URI)) + 4;
+    if pos_var_name > 5 then begin
+        resp := '{"status":"ok"}';
+        i1 := pos('=', URI);
+        if i1 > 5 then begin
+            keyName := copy(URI, pos_var_name, i1 - pos_var_name);
+            str1 := copy(URI, i1 + 1, Length(URI));
+            str1 := AnsiReplaceStr(str1,EOT,'');
+            str1 := trim(AnsiReplaceStr(str1,soh,''));
+            if str1 = '' then begin
+                resp := RemoveWebVar(keyName);
+            end
+            else begin
+                 if (keyName='TLT') or  (keyName='TLO') then begin
+//                                                            showmessage('TLT')
+                                                        end;
+
+                while (
+                              (str1[length(str1)] <> ']') and  (str1[length(str1)] <> '}') and (length(str1) > 2)
+            ) do
+                    system.delete(str1, length(str1), 1);
+                jsval :=TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(str1), 0);
+                if jsval <> nil then
+                    AddWebVar(keyName, str1, jsval)
+                else
+                    resp := '{"status":"errformat"}';
+
+            end;
+        end;
+    end;
+    resp := jreq + '(' + resp + ');';
+    result := resp;
+end;
+
 
 function TTCPHttpThrd.ProcessHttpRequest(Request, URI: string): Integer;
 var
@@ -861,7 +939,7 @@ begin
         Headers.add('Content-type: Text/Html');
         l := TStringList.Create;
         try
-            resp := ProcessRequest(URI);
+            resp := MyHTTPProcessRequest(URI);
             resp := jreq + resp;
             l.add(resp);
             l.SaveToStream(OutputData);

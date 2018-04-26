@@ -1,8 +1,17 @@
 "use strict";
 var tm, atm;
-var processActive = false;
+var processLST = false;
+var processTLT = false;
+var processTLO = false;
+var processTLP = false;
 var timeStamp = 0;
 var url // = "http://127.0.0.1:9090/get_data&callback=?";
+var urlTail;
+var newTLT;
+var newTLP;
+var newTLO;
+var newLST;
+var LST;
 var dt;
 var mainFont = '28pt Arial';
 var smallFont = '8pt Arial';

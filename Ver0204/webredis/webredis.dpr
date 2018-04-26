@@ -1,5 +1,5 @@
 program webredis;
-
+{$M 163840,16000000}
 uses
   Forms,
   ipcthrd,
