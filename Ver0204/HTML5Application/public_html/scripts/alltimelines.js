@@ -2,6 +2,72 @@
   * Created by Zavialov on 14.01.2018.
  */
 
+var PosTimelines = [];
+PosTimelines[0] = {
+  top : 0,
+  bottom : 0
+};
+PosTimelines[1] = {
+  top : 0,
+  bottom : 0
+};
+PosTimelines[2] = {
+  top : 0,
+  bottom : 0
+};
+PosTimelines[3] = {
+  top : 0,
+  bottom : 0
+};
+PosTimelines[4] = {
+  top : 0,
+  bottom : 0
+};
+PosTimelines[5] = {
+  top : 0,
+  bottom : 0
+};
+PosTimelines[6] = {
+  top : 0,
+  bottom : 0
+};
+PosTimelines[7] = {
+  top : 0,
+  bottom : 0
+};
+PosTimelines[8] = {
+  top : 0,
+  bottom : 0
+};
+PosTimelines[9] = {
+  top : 0,
+  bottom : 0
+};
+PosTimelines[10] = {
+  top : 0,
+  bottom : 0
+};
+PosTimelines[11] = {
+  top : 0,
+  bottom : 0
+};
+PosTimelines[12] = {
+  top : 0,
+  bottom : 0
+};
+PosTimelines[13] = {
+  top : 0,
+  bottom : 0
+};
+PosTimelines[14] = {
+  top : 0,
+  bottom : 0
+};
+PosTimelines[15] = {
+  top : 0,
+  bottom : 0
+};
+
 function DrawAllTimelines(cv, Width, Height) {
   var CountTL = TLT.length;
   var wdth = Width;
@@ -1123,25 +1189,31 @@ function DrawTimeLines(cv, Width, Height) {
   if (ShowScaler) {
     cv.fillRect(LengthNameTL, top, wdth, tmph);
     MyDrawScaler(cv, Width, Height, tmph);
-    top = top + tmph + interval;
+    top = +top + +tmph + +interval;
   } 
   if (ShowEditor) {
     cv.fillStyle = cbkgnd;  
     top = top + 2 * interval;  
     cv.fillRect(LengthNameTL, top, wdth, 3 * tmph);
     MyDrawEditor(cv, Width, Height, top, interval, 3 * tmph);
-    top = top + 3 * tmph + interval;
+    top = +top + 3 * tmph + +interval;
   }
   if (ShowTimelines) {
     for (var i=0; i<TLO.length; i++) {
-      cv.fillStyle = cbkgnd;//smoothcolor(TLP.ForeGround, 8);  
+      cv.fillStyle = cbkgnd;//smoothcolor(TLP.ForeGround, 8); 
+      PosTimelines[i].top = +top - interval;
+      PosTimelines[i].bottom = +top + +tmph
       cv.fillRect(LengthNameTL, top, wdth, tmph);
       MyDrawTimeline(cv, Width, Height, i, top, tmph)
-      top = top + tmph + interval;
+      top = +top + +tmph + +interval;
     }
   } 
   cv.beginPath();  
-  cv.moveTo(+LengthNameTL + +MyCursor, tmph);  
+  if (ShowScaler) {
+    cv.moveTo(+LengthNameTL + +MyCursor, tmph); 
+  } else {
+    cv.moveTo(+LengthNameTL + +MyCursor, 0);  
+  }  
   cv.lineTo(+LengthNameTL + +MyCursor, hght);
   cv.lineWidth = 1;
   cv.strokeStyle = "white";
@@ -1163,4 +1235,25 @@ function DrawTimeLines(cv, Width, Height) {
     cv.fillRect(LengthNameTL + strp, 0, wdth - strp, hght);
     cv.globalAlpha = 1;
   }
+}
+
+function ChoiceTimelines(Y) {
+  var res = -1;  
+  var istl = false;
+  if (typesrc < 4) { 
+    if (ShowTimelines) { istl = true; };  
+  };
+  if (typesrc == 4) {
+    if (isField(2)) { istl = true; };  
+  }
+  if (istl) {
+    for (var i=0; i<TLT.length; i++) {
+      if (Y > +TimelineCanvasTop + +PosTimelines[i].top 
+          && Y < +TimelineCanvasTop + +PosTimelines[i].bottom) {
+         res = i;
+         break;
+      }  
+    }
+  }
+  return res;
 }

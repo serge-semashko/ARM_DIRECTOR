@@ -1,5 +1,242 @@
 "use strict";
 
+var OldEvent = -1;
+
+function getPhraseSecconds(cnt, len) {
+  var res = "";
+  var scnd = cnt - len;
+  if (scnd > 0) {
+    if (scnd == 1) {
+      res = "одна секунда";  
+    } else if (scnd > 1 && scnd <= 4) {
+      if (scnd == 2) { res = " две секунды"; };
+      if (scnd == 3) { res = " три секунды"; };
+      if (scnd == 4) { res = " четыре секунды"; };
+      //if (scnd == 5) { res = " две секунды"; };
+      //res = scnd + " секунды";  
+    } else {
+      res = scnd + " секунд";  
+    }    
+  }
+  return res
+}
+
+function getDigitsString(val, mode) {
+  var stext = "";
+  var sdigits = "";
+  var thousands = Math.floor(val / 1000);
+  var hh = Math.floor(val % 1000);
+  var hundreds = Math.floor(hh / 100);
+  hh = Math.floor(hh % 100);
+  var tens = Math.floor(hh / 10);
+  var ones = Math.floor(hh % 10);
+  
+  if (thousands > 0) {
+    stext = "тысяча";
+    sdigits = "1000.wav";
+  }
+  if (hundreds > 0) {
+    if (stext !== "") { 
+      stext = stext + " ";
+      sdigits = sdigits + ", ";
+    }  
+    if (hundreds == 1) {
+      stext = stext + "сто";
+      sdigits = sdigits + "100.wav";  
+    } else if (hundreds == 2) {
+      stext = stext + "двести";
+      sdigits = sdigits + "200.wav";  
+    } else if (hundreds == 3) {
+      stext = stext + "триста";
+      sdigits = sdigits + "300.wav";  
+    } else if (hundreds == 4) {
+      stext = stext + "четыреста";
+      sdigits = sdigits + "400.wav";  
+    } else if (hundreds == 5) {
+      stext = stext + "пятьсот";
+      sdigits = sdigits + "500.wav";  
+    } else if (hundreds == 6) {
+      stext = stext + "шестьсот";
+      sdigits = sdigits + "600.wav";  
+    } else if (hundreds == 7) {
+      stext = stext + "семьсот";
+      sdigits = sdigits + "700.wav";  
+    } else if (hundreds == 8) {
+       stext = stext + "восемьсот";
+      sdigits = sdigits + "800.wav"; 
+    } else if (hundreds == 9) {
+      stext = stext + "девятьсот";
+      sdigits = sdigits + "900.wav";  
+    }
+  }
+  if (tens > 0) {
+    if (stext !== "") { 
+      stext = stext + " ";
+      sdigits = sdigits + ", ";
+    } 
+    
+    if (tens == 1) {
+      if (ones == 0) {
+        stext = stext + "десять";
+        sdigits = sdigits + "10.wav";  
+      } else if (ones == 1) {
+        stext = stext + "одинаддцать";
+        sdigits = sdigits + "11.wav";  
+      } else if (ones == 2) {
+        stext = stext + "двенадцать";
+        sdigits = sdigits + "12.wav";  
+      } else if (ones == 3) {
+        stext = stext + "тринадцать";
+        sdigits = sdigits + "13.wav";  
+      } else if (ones == 4) {
+        stext = stext + "четырнадцать";
+        sdigits = sdigits + "14.wav";  
+      } else if (ones == 5) {
+        stext = stext + "пятнадцать";
+        sdigits = sdigits + "15.wav";  
+      } else if (ones == 6) {
+        stext = stext + "шестнадцать";
+        sdigits = sdigits + "16.wav";  
+      } else if (ones == 7) {
+        stext = stext + "семнадцать";
+        sdigits = sdigits + "17.wav";  
+      } else if (ones == 8) {
+        stext = stext + "восемнадцать";
+        sdigits = sdigits + "18.wav";  
+      } else if (ones == 9) {
+        stext = stext + "девятнадцать";
+        sdigits = sdigits + "19.wav";  
+      }
+    } else {  
+      if (tens == 2) {
+        stext = stext + "двадцать";
+        sdigits = sdigits + "20.wav";  
+      } else  if (tens == 3) {
+        stext = stext + "тридцать";
+        sdigits = sdigits + "30.wav";  
+      } else  if (tens == 4) {
+        stext = stext + "сорок";
+        sdigits = sdigits + "40.wav";  
+      } else  if (tens == 5) {
+        stext = stext + "пятьдесят";
+        sdigits = sdigits + "50.wav";  
+      } else  if (tens == 6) {
+        stext = stext + "шестьдесят";
+        sdigits = sdigits + "60.wav";  
+      } else  if (tens == 7) {
+        stext = stext + "семьдесят";
+        sdigits = sdigits + "70.wav";  
+      } else  if (tens == 8) {
+        stext = stext + "восемьдесят";
+        sdigits = sdigits + "80.wav";  
+      } else  if (tens == 9) {
+        stext = stext + "девяносто";
+        sdigits = sdigits + "90.wav";  
+      }
+//==================================================================
+      if (ones !== 0) { 
+        if (stext !== "") { 
+          stext = stext + " ";
+          sdigits = sdigits + ", ";
+        }   
+        if (ones == 1) {
+          stext = stext + "один";
+          sdigits = sdigits + "1.wav"    
+        } else if (ones == 2) {
+          stext = stext + "два";
+          sdigits = sdigits + "2.wav"    
+        } else if (ones == 3) {
+          stext = stext + "три";
+          sdigits = sdigits + "3.wav"    
+        } else if (ones == 4) {
+          stext = stext + "четыре";
+          sdigits = sdigits + "4.wav"    
+        } else if (ones == 5) {
+          stext = stext + "пять";
+          sdigits = sdigits + "5.wav"    
+        } else if (ones == 6) {
+          stext = stext + "шесть";
+          sdigits = sdigits + "6.wav"    
+        } else if (ones == 7) {
+          stext = stext + "семь";
+          sdigits = sdigits + "7.wav"    
+        } else if (ones == 8) {
+          stext = stext + "восемь";
+          sdigits = sdigits + "8.wav"    
+        } else if (ones == 9) {
+          stext = stext + "девять";
+          sdigits = sdigits + "9.wav"    
+        }
+      }
+//==================================================================
+    }  
+  } else {
+    if (ones > 0) {  
+      if (stext !== "") { 
+        stext = stext + " ";
+        sdigits = sdigits + ", ";
+      }  
+      if (ones == 1) {
+        stext = stext + "один";
+        sdigits = sdigits + "1.wav"    
+      } else if (ones == 2) {
+        stext = stext + "два";
+        sdigits = sdigits + "2.wav"    
+      } else if (ones == 3) {
+        stext = stext + "три";
+        sdigits = sdigits + "3.wav"    
+      } else if (ones == 4) {
+        stext = stext + "четыре";
+        sdigits = sdigits + "4.wav"    
+      } else if (ones == 5) {
+        stext = stext + "пять";
+        sdigits = sdigits + "5.wav"    
+      } else if (ones == 6) {
+        stext = stext + "шесть";
+        sdigits = sdigits + "6.wav"    
+      } else if (ones == 7) {
+        stext = stext + "семь";
+        sdigits = sdigits + "7.wav"    
+      } else if (ones == 8) {
+        stext = stext + "восемь";
+        sdigits = sdigits + "8.wav"    
+      } else if (ones == 9) {
+        stext = stext + "девять";
+        sdigits = sdigits + "9.wav"    
+      }
+    }  
+  }
+  var res = "";
+  if (mode == 0) {
+    if (stext !== "") {
+      res = stext + "[" + sdigits + "]";
+    }
+  } else if (mode == 1) {
+    if (stext !== "") {
+      res = stext;
+    }
+  } else if (mode == 2) {
+    if (stext !== "") {
+      res = sdigits;
+    }
+  }
+  return res;
+}
+
+function getCameraPhrase(ev, cam, mode) {
+  var txt = getDigitsString(ev,1) + " камера " + getDigitsString(cam,1);
+  var dgs = getDigitsString(ev,2) + ", камера.wav, " + getDigitsString(cam,2);
+  var res = "";
+  if (mode == 0) {
+    res = txt + "["+ dgs +"}";  
+  } else if (mode == 1) {
+    res = txt;  
+  } else if (mode == 2) {
+    res = dgs;  
+  } 
+  return res;
+}
+
 function MyDrawEvents(cv, Width, Height, menu) {
 
     var LeftTxt = +LengthNameTL + +MyCursor;
@@ -161,41 +398,61 @@ function MyDrawEvents(cv, Width, Height, menu) {
             //phrsec = Math.floor((TLT[ActiveTL].Events[i].Start - TLP.Position) / 25);
             phrdur = TLT[ActiveTL].Events[CurrEvent].Finish - TLT[ActiveTL].Events[CurrEvent].Start;
             var phrsub = TLT[ActiveTL].Events[CurrEvent].Finish - TLP.Position;
+            var phroffset = TLP.Position - TLT[ActiveTL].Events[CurrEvent].Start;
+            var phrost = TLT[ActiveTL].Events[CurrEvent].Finish -90;
+            
             var kadr = CurrEvent + EventOffset + 2;
             if (CurrEvent < TLT[ActiveTL].Count - 1) {
                 var kamera = TLT[ActiveTL].Events[CurrEvent + 1].Rows[0].Phrases[0].Data;
                 if (phrdur < Delta) {
                     PhraseFactor = phrdur / Delta;
-                    Phrase = Phrase = "Кадр " + kadr + " Камера " + kamera + " " + phrsec + " секунд";
+                    Phrase = Phrase = getCameraPhrase(kadr,kamera,PhraseMode);//kadr + " Камера " + kamera + " " + getPhraseSecconds(phrsec, 3); // phrsec + " секунд";
                 } else {
                     PhraseFactor = 1;
-                    if (TLP.Position >= TLT[ActiveTL].Events[CurrEvent].Start &&
-                            TLP.Position <= TLT[ActiveTL].Events[CurrEvent].Start + evSafeZone) {
-                        StepPhrase = +TLT[ActiveTL].Events[CurrEvent].Start + 50;
-                        Phrase = "Кадр " + kadr + " Камера " + kamera + " " + phrsec + " секунд";
-                    }
-                    if (StepPhrase - 25 <= TLP.Position && StepPhrase > TLP.Position) {
-                        Phrase = "";
-                    }
-                    if (TLP.Position >= StepPhrase) {
-
-                        if (phrsub > 150) {
-                            if (phrsub % 125 == 0) {
-                                Phrase = "Кадр " + kadr + " Камера " + kamera + " " + phrsec + " секунд";
-                                StepPhrase = +TLP.Position + 50;
-                            }
-                        } else {
-                            Phrase = phrsec;
+                    //if (TLP.Position >= TLT[ActiveTL].Events[CurrEvent].Start &&
+                    //        TLP.Position <= +TLT[ActiveTL].Events[CurrEvent].Start + +evSafeZone) {
+                    //    //StepPhrase = +TLT[ActiveTL].Events[CurrEvent].Start + 50;
+                    //    Phrase = getCameraPhrase(kadr,kamera,PhraseMode);//kadr + " Камера " + kamera + " " + getPhraseSecconds(phrsec, 3); //phrsec + " секунд";
+                    if (CurrEvent !== OldEvent) {
+                      Phrase = getCameraPhrase(kadr,kamera,PhraseMode);  
+                    } else {
+                    
+                      if (TLP.Position < phrost) {
+                        var tlps = Math.floor(phroffset % 125);
+                        if (tlps < 100) {
+                          Phrase = getCameraPhrase(kadr,kamera,PhraseMode);  
+                        } else  {
+                          Phrase = "";  
                         }
-
+                      } else {
+                        Phrase = "";
+                        if (phrsec !== "0") {
+                          Phrase = getDigitsString(phrsec, PhraseMode)//phrsec;
+                        }  
+                      }
                     }
                 }
+            } 
+            //OldEvent = CurrEvent; 
+            
+            var audio = new Audio();
+            
+            if (!audio.speaking) {
+              audio.preload = 'auto';  
+              audio.src = 'phrases/1000.wav';
+              audio.play();
+              audio.constructor;
             }
-            if (!synth.speaking) {
-                if (Phrase != lastPhrase) {
-                    speak(Phrase);
-                    lastPhrase = Phrase;
-                }
+            
+                       
+            if (AudioOn) {
+              if (!synth.speaking) {
+                  if (Phrase != lastPhrase) {
+                      speak(Phrase);
+                      lastPhrase = Phrase;
+                      OldEvent = CurrEvent;
+                  }
+              }
             }
             if (menu) {
 
@@ -206,7 +463,7 @@ function MyDrawEvents(cv, Width, Height, menu) {
             // }
 //==============================================================================      
             cv.fillStyle = evColor;
-            rectRound(cv, LeftDev - 1, top, LeftSec - LeftDev + 2, +tmph, 5, evColor, evColor);
+            rectHalfRound(cv, LeftDev - 1, top, LeftSec - LeftDev + 2, +tmph, tmph / 3, evColor, evColor);
             //cv.fillRect(+LeftDev-1, top, LeftSec - LeftDev + 2, +tmph);
             cv.fillStyle = cfont;
             //cv.textAlign  = "center";
@@ -371,7 +628,7 @@ function MyDrawEvents(cv, Width, Height, menu) {
                 }
 
                 cv.fillStyle = evColor;
-                rectRound(cv, LeftDev - 1, top, LeftSec - LeftDev + 2, +tmph, 5, evColor, evColor);
+                rectHalfRound(cv, LeftDev - 1, top, LeftSec - LeftDev + 2, +tmph, tmph /3, evColor, evColor);
                 //cv.fillRect(+LeftDev - 1, top, LeftSec - LeftDev + 2, +tmph);
                 cv.fillStyle = cfont;
                 //cv.textAlign  = "center";
@@ -907,7 +1164,7 @@ function MyDrawDevEvents(cv, Width, Height, device, menu) {
 
 
             cv.fillStyle = evColor;
-            rectRound(cv, LeftDev - 1, top, LeftSec - LeftDev + 2, +tmph, 5, evColor, evColor);
+            rectHalfRound(cv, LeftDev - 1, top, LeftSec - LeftDev + 2, +tmph, tmph / 3, evColor, evColor);
             //cv.fillRect(+LeftDev-1, top, LeftSec - LeftDev + 2, +tmph);
             cv.fillStyle = cfont;
             cv.textAlign = "center";
@@ -1087,7 +1344,7 @@ function MyDrawDevEvents(cv, Width, Height, device, menu) {
                     }
 
                     cv.fillStyle = evColor;
-                    rectRound(cv, LeftDev - 1, top, LeftSec - LeftDev + 2, +tmph, 5, evColor, evColor);
+                    rectHalfRound(cv, LeftDev - 1, top, LeftSec - LeftDev + 2, +tmph, tmph / 3, evColor, evColor);
                     //cv.fillRect(+LeftDev - 1, top, LeftSec - LeftDev + 2, +tmph);
                     cv.fillStyle = cfont;
                     cv.textAlign = "center";
@@ -1156,7 +1413,7 @@ function MyDrawDevEvents(cv, Width, Height, device, menu) {
             }
         }
     } else if (+tptl == 1) {
-        var FinishFrm = +Position + ScreenFrm;
+        var FinishFrm = TLP.Position + ScreenFrm;
         var fev, sev;
         if (TLT[ActiveTL].Count > 0) {
             fev = -1;
@@ -1208,7 +1465,12 @@ function MyDrawDevEvents(cv, Width, Height, device, menu) {
             }
             cv.textBaseline = "middle";
             cv.textAlign = "left";
-            cv.fillText(evtext, +LeftTxt, +top + +tmph / 2);
+            lentxt = cv.measureText(evtext).width;
+            if (lentxt <= Width - LeftTxt - 10) {
+                cv.fillText(evtext, +LeftTxt, +top + +tmph / 2);
+            } else {
+                myTextDraw(cv, evtext, LeftTxt, 0, Width - LeftTxt, top, tmph);
+            }
 
             cv.fillStyle = Foreground1;
             cv.fillRect(0, +top, +LeftTxt, +tmph);
@@ -1232,13 +1494,46 @@ function MyDrawDevEvents(cv, Width, Height, device, menu) {
                 }
             }
 
-            // if (typeof WidthDevice == "undefined") {
-            //   WidthDevice = LeftTxt / 3.5;   
-            // }
+            var tmpw = Width / 17.5;
+            var intrv2 = tmpw / 100 * 10;
+            if (interval < 10) {
+                intrv2 = 10
+            }
+            tmpw = tmpw - intrv2;
 
-            // LeftSec = LeftTxt - + WidthDevice - +IntervalDevice;
-            // LeftDev = LeftSec - + WidthDevice;
-            cv.fillText(evtext, +LeftSec + 5, +top + +tmph / 2);
+            WidthDevice = tmpw;
+            IntervalDevice = intrv2;
+
+            LeftTxt = +LengthNameTL + +MyCursor;
+            LeftSec = LeftTxt - WidthDevice - IntervalDevice;
+            LeftDev = LeftSec - WidthDevice;
+            if (DoubleSize == 1) {
+                LeftDev = 2 * (WidthDevice + 1.5 * IntervalDevice);
+                LeftSec = LeftDev + 2 * WidthDevice + IntervalDevice;
+                LeftTxt = LeftSec + 2 * (WidthDevice + IntervalDevice);
+                if (ShowNameTL) {
+                    LengthNameTL = LeftSec;
+                    MyCursor = LeftTxt - LengthNameTL;
+                } else {
+                    LengthNameTL = 0;
+                    MyCursor = LeftTxt;
+                }
+            }
+
+            //if (typeof WidthDevice == "undefined") {
+            //  WidthDevice = LeftTxt / 3.5;   
+            //}
+
+            //LeftSec = LeftTxt - + WidthDevice - +IntervalDevice;
+            //LeftDev = LeftSec - + WidthDevice;
+            //cv.fillText(evtext, +LeftSec + 5, +top + +tmph / 2);
+
+            lentxt = cv.measureText(evtext).width;
+            if (lentxt < LeftTxt - LeftSec - 10) {
+                cv.fillText(evtext, +LeftSec + 5, +top + +tmph / 2);
+            } else {
+                myTextDraw(cv, evtext, LeftSec, 5, LeftTxt - LeftSec - 10, top, tmph);
+            }
 
             //cv.fillStyle = evColor;
             //cv.fillRect(+LeftDev-1, top, LeftSec - LeftDev + 2, +tmph);
@@ -1246,8 +1541,20 @@ function MyDrawDevEvents(cv, Width, Height, device, menu) {
             //cv.textAlign  = "center";
             //cv.fillText(evdevice, +LeftDev + (LeftSec - LeftDev) / 2, +top + +tmph / 2);
             cv.fillStyle = cfont;
-            cv.textAlign = "right";
-            cv.fillText(sev + EventOffset + 1, +LeftDev - 10, +top + +tmph / 2);
+
+            //cv.fillText(sev + EventOffset + 1, +LeftDev - 10, +top + +tmph / 2);
+
+            var evps = sev + +EventOffset + 1;
+            lentxt = cv.measureText(evps).width;
+            if (lentxt < LeftDev - 10) {
+                cv.textAlign = "right";
+                cv.fillText(evps, +LeftDev - 10, +top + +tmph / 2);
+            } else {
+                cv.textAlign = "center";
+                myTextDraw(cv, evps, 0, 10, LeftDev - 10, top, tmph);
+            }
+
+
 
             if (TLT[ActiveTL].Events[sev].Start <= TLP.Position &&
                     +TLT[ActiveTL].Events[sev].Start + +evSafeZone >= TLP.Position) {
@@ -1274,11 +1581,11 @@ function MyDrawDevEvents(cv, Width, Height, device, menu) {
                 cv.stroke();
                 cv.closePath();
             }
-            cv.fillStyle = Foreground;
+            cv.fillStyle = Foreground1;
             cv.fillRect(0, +top, +LeftTxt, +tmph);
             cv.textAlign = "left";
             cv.fillStyle = cfont;
-            evtext = FramesToShortString(Position - Start);
+            evtext = FramesToShortString(TLP.Position - TLP.Start);
             //cv.fillText(evtext, +LeftDev - 10, +top + +tmph / 2);
             //myTextDraw(cv, evtext, 0, 10, LeftTxt, top, tmph);
             lentxt = cv.measureText(evtext).width;
@@ -1329,9 +1636,17 @@ function MyDrawDevEvents(cv, Width, Height, device, menu) {
                 }
                 cv.textBaseline = "middle";
                 cv.textAlign = "left";
-                cv.fillText(evtext, +LeftTxt, +top + +tmph / 2);
 
-                cv.fillStyle = Foreground;
+                lentxt = cv.measureText(evtext).width;
+                if (lentxt <= Width - LeftTxt - 10) {
+                    cv.fillText(evtext, +LeftTxt, +top + +tmph / 2);
+                } else {
+                    myTextDraw(cv, evtext, LeftTxt, 0, Width - LeftTxt, top, tmph);
+                }
+
+                //cv.fillText(evtext, +LeftTxt, +top + +tmph / 2); 
+
+                cv.fillStyle = Foreground1;
                 cv.fillRect(0, +top, +LeftTxt, +tmph);
                 cv.fillStyle = cfont;
                 if ((TLT[ActiveTL].Events[i].Start <= TLP.Position &&
@@ -1352,16 +1667,31 @@ function MyDrawDevEvents(cv, Width, Height, device, menu) {
                     }
                 }
 
-                if (typeof WidthDevice == "undefined") {
-                    WidthDevice = LeftTxt / 3.5;
+                lentxt = cv.measureText(evtext).width;
+                if (lentxt < LeftTxt - LeftSec - 10) {
+                    cv.fillText(evtext, +LeftSec + 5, +top + +tmph / 2);
+                } else {
+                    myTextDraw(cv, evtext, LeftSec, 5, LeftTxt - LeftSec - 10, top, tmph);
                 }
+                //if (typeof WidthDevice == "undefined") {
+                //  WidthDevice = LeftTxt / 3.5;   
+                //}
 
-                LeftSec = LeftTxt - +WidthDevice - +IntervalDevice;
-                LeftDev = LeftSec - +WidthDevice;
-                cv.fillText(evtext, +LeftSec + 5, +top + +tmph / 2);
+                //LeftSec = LeftTxt - + WidthDevice - +IntervalDevice;
+                //LeftDev = LeftSec - + WidthDevice;
+                //cv.fillText(evtext, +LeftSec + 5, +top + +tmph / 2);
 
-                cv.textAlign = "right";
-                cv.fillText(i + EventOffset + 1, +LeftDev - 10, +top + +tmph / 2);
+                evps = i + +EventOffset + 1;
+                lentxt = cv.measureText(evps).width;
+                if (lentxt < LeftDev - 10) {
+                    cv.textAlign = "right";
+                    cv.fillText(evps, +LeftDev - 10, +top + +tmph / 2);
+                } else {
+                    cv.textAlign = "center";
+                    myTextDraw(cv, evps, 0, 10, LeftDev - 10, top, tmph);
+                }
+                //cv.textAlign  = "right";
+                //cv.fillText(i + EventOffset + 1, +LeftDev - 10, +top + +tmph / 2);
 
                 top = top + tmph + interval;
                 //=============================================================================          

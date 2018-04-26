@@ -396,18 +396,37 @@ function rectRound(cv, x, y, wdt, hgh, rds, color1, color2) {
   cv.fill();  
 }
 
+function rectHalfRound(cv, x, y, wdt, hgh, rds, color1, color2) {
+  cv.beginPath();
+  cv.fillStyle = color1;
+  cv.strokeStyle = color2;
+  cv.moveTo(x+rds, y);
+  cv.lineTo(x+wdt, y);
+  //cv.quadraticCurveTo(x+wdt, y, x+wdt, y+rds);
+  cv.lineTo(x+wdt, y+hgh);
+  //cv.quadraticCurveTo(x+wdt, y+hgh, x+wdt-rds, y+hgh);
+  cv.lineTo(x+rds, y+hgh);
+  cv.quadraticCurveTo(x, y+hgh, x, y+hgh-rds);
+  cv.lineTo(x, y+rds);
+  cv.quadraticCurveTo(x, y, x+rds, y);
+  cv.stroke();
+  cv.closePath();
+  cv.fill();  
+}
+
 function drawToolBar(cv,Width,Height) {
+  var MyHeight = ((window.innerHeight-10) / 100) * 5;  
   var MColor = ProgrammColor; 
   var SColor = smoothcolor(ProgrammColor,128);
   var lwdt = cv.lineWidth;
-  var font0 = Math.floor((Height-8) / 2) +  "pt Arial";
-  var font1 = Math.floor(Height / 2) +  "pt Arial";
-  var font2 = Math.floor(Height / 5 * 2) +  "pt Arial";
+  var font0 = Math.floor((MyHeight-8) / 2) +  "pt Arial";
+  var font1 = Math.floor(MyHeight / 2) +  "pt Arial";
+  var font2 = Math.floor(MyHeight / 5 * 2) +  "pt Arial";
   
-  var stepw = Height;
+  var stepw = MyHeight;
   
-  if (Width < 24*Height + 40) {
-    stepw = (Width - 40 - 5 * Height) / 19; 
+  if (Width < 24*MyHeight + 40) {
+    stepw = (Width - 40 - 5 * MyHeight) / 19; 
   }
   
   cv.font = font0;//Math.floor((Height-8) / 2) +  "pt Arial";
@@ -415,15 +434,15 @@ function drawToolBar(cv,Width,Height) {
   cv.lineWidth = 4;
   RectSound[0] = 20
   RectSound[1] = 4;
-  RectSound[2] = 20 + Height;
-  RectSound[3] = Height-10;
+  RectSound[2] = 20 + MyHeight;
+  RectSound[3] = MyHeight-10;
   if (mnSoundSelect) {
-    rectRound(cv, 20, 4, Height, Height-10, (Height-10)/2, SColor, "white");  
+    rectRound(cv, 20, 4, MyHeight, MyHeight-10, (MyHeight-10)/2, SColor, "white");  
   } else {
-    rectRound(cv, 20, 4, Height, Height-10, (Height-10)/2, MColor, "white");
+    rectRound(cv, 20, 4, MyHeight, MyHeight-10, (MyHeight-10)/2, MColor, "white");
   }
-  var dlty = (Height-10) / 5;
-  var dltx = (Height - 2 * dlty) / 2 - dlty/2-2;
+  var dlty = (MyHeight-10) / 5;
+  var dltx = (MyHeight - 2 * dlty) / 2 - dlty/2-2;
   cv.lineWidth = 1;
   cv.beginPath();
   cv.strokeStyle = "white";
@@ -444,9 +463,9 @@ function drawToolBar(cv,Width,Height) {
   cv.textBaseline = "middle"; 
   cv.textAlign  = "left";
   if (AudioOn) {
-    cv.fillText("))", 21+dltx+2*dlty, 2 + (Height-8) / 2);  
+    cv.fillText("))", 21+dltx+2*dlty, 2 + (MyHeight-8) / 2);  
   } else {
-    cv.fillText("x", 21+dltx+2*dlty, 2 + (Height-8) / 2);  
+    cv.fillText("x", 21+dltx+2*dlty, 2 + (MyHeight-8) / 2);  
   }
   
   
@@ -456,50 +475,50 @@ function drawToolBar(cv,Width,Height) {
   cv.font = font2;//Math.floor(Height/2) +  "pt Arial";
   
   //var text = "00000";
-  var otstup = 20 + +Height + 1*stepw;//cv.measureText(text).width;
+  var otstup = 20 + +MyHeight + 1*stepw;//cv.measureText(text).width;
   cv.textAlign  = "left";
   var text = "Размер кадра";
   var len = cv.measureText(text).width;
   if (len < 3.5 * stepw-5) {
-    cv.fillText(text, otstup, 3 + (Height-10) / 2);  
+    cv.fillText(text, otstup, 3 + (MyHeight-10) / 2);  
   } else {
-    myTextDraw(cv, text, otstup, 0, 3.5 * stepw-5, 3, Height-10); 
+    myTextDraw(cv, text, otstup, 0, 3.5 * stepw-5, 3, MyHeight-10); 
   }
-  //cv.fillText(text, otstup + Height/2, 3 + (Height-10) / 2);
+  //cv.fillText(text, otstup + MyHeight/2, 3 + (MyHeight-10) / 2);
   
   otstup = +otstup + 3.5 * stepw + 5;
   cv.font = font1;
   
   RectMinus[0] = otstup;
   RectMinus[1] = 3;
-  RectMinus[2] = otstup + Height;
-  RectMinus[3] = Height-10;
+  RectMinus[2] = otstup + MyHeight;
+  RectMinus[3] = MyHeight-10;
   
   if (mnMinusSelect) {
-    rectRound(cv, otstup, 3, Height, Height-10, (Height-10)/2, SColor, "white");
+    rectRound(cv, otstup, 3, MyHeight, MyHeight-10, (MyHeight-10)/2, SColor, "white");
   } else {
-    rectRound(cv, otstup, 3, Height, Height-10, (Height-10)/2, MColor, "white");
+    rectRound(cv, otstup, 3, MyHeight, MyHeight-10, (MyHeight-10)/2, MColor, "white");
   }
   
   
   cv.fillStyle = "white";
   cv.textAlign  = "center";
-  cv.fillText("-", +otstup + Height/2 , 2 + (Height-10) / 2);
+  cv.fillText("-", +otstup + MyHeight/2 , 2 + (MyHeight-10) / 2);
   
   cv.font = font2;
-  otstup = otstup + Height;
+  otstup = otstup + MyHeight;
   
   var text = FrameSize + "px";
   var len = cv.measureText(text).width;
   if (len < 2 * stepw - 4) {
-    //cv.fillText(text, otstup, 3 + (Height-10) / 2); 
-    cv.fillText(text, +otstup  + +stepw, 3 + (Height-10) / 2);
+    //cv.fillText(text, otstup, 3 + (MyHeight-10) / 2); 
+    cv.fillText(text, +otstup  + +stepw, 3 + (MyHeight-10) / 2);
   } else {
     cv.textAlign  = "left";  
-    myTextDraw(cv, text, otstup, 2, 2*stepw - 4, 3, Height-10); 
+    myTextDraw(cv, text, otstup, 2, 2*stepw - 4, 3, MyHeight-10); 
   }
 
-  //cv.fillText(FrameSize + "px", +otstup  + +Height, 3 + (Height-10) / 2);
+  //cv.fillText(FrameSize + "px", +otstup  + +MyHeight, 3 + (MyHeight-10) / 2);
   
   otstup = +otstup + 2*stepw;
   
@@ -507,29 +526,29 @@ function drawToolBar(cv,Width,Height) {
   
   RectPlus[0] = otstup;
   RectPlus[1] = 3;
-  RectPlus[2] = otstup + Height;
-  RectPlus[3] = Height-10;
+  RectPlus[2] = otstup + MyHeight;
+  RectPlus[3] = MyHeight-10;
   
   if (mnPlusSelect) {
-    rectRound(cv, otstup, 3, Height, Height-10, (Height-10)/2, SColor, "white");
+    rectRound(cv, otstup, 3, MyHeight, MyHeight-10, (MyHeight-10)/2, SColor, "white");
   } else {
-    rectRound(cv, otstup, 3, Height, Height-10, (Height-10)/2, MColor, "white");
+    rectRound(cv, otstup, 3, MyHeight, MyHeight-10, (MyHeight-10)/2, MColor, "white");
   }
   
-  //rectRound(cv, otstup, 3, Height, Height-10, (Height-10)/2, ProgrammColor, "white");
+  //rectRound(cv, otstup, 3, MyHeight, MyHeight-10, (MyHeight-10)/2, ProgrammColor, "white");
   cv.fillStyle = "white";
   cv.textAlign  = "center";
-  cv.fillText("+", otstup + Height/2, 3 + (Height-10) / 2);
+  cv.fillText("+", otstup + MyHeight/2, 3 + (MyHeight-10) / 2);
   
-  otstup = +otstup + +Height + 1*stepw;//cv.measureText("00000").width;
+  otstup = +otstup + +MyHeight + 1*stepw;//cv.measureText("00000").width;
   cv.font = font2;
   cv.textAlign  = "left";
   text = "Высота тайм-линии";
   var len = cv.measureText(text).width;
   if (len < 5 * stepw-5) {
-    cv.fillText(text, otstup, 3 + (Height-10) / 2);  
+    cv.fillText(text, otstup, 3 + (MyHeight-10) / 2);  
   } else {
-    myTextDraw(cv, text, otstup, 0, 5 * stepw-5, 3, Height-10); 
+    myTextDraw(cv, text, otstup, 0, 5 * stepw-5, 3, MyHeight-10); 
   }
   otstup = +otstup + 5 * stepw + 5;
   
@@ -538,29 +557,29 @@ function drawToolBar(cv,Width,Height) {
   
   RectDown[0] = otstup;
   RectDown[1] = 3;
-  RectDown[2] = otstup + Height;
-  RectDown[3] = Height-10;
+  RectDown[2] = otstup + MyHeight;
+  RectDown[3] = MyHeight-10;
   
   if (mnDownSelect) {
-    rectRound(cv, otstup, 3, Height, Height-10, (Height-10)/2, SColor, "white");
+    rectRound(cv, otstup, 3, MyHeight, MyHeight-10, (MyHeight-10)/2, SColor, "white");
   } else {
-    rectRound(cv, otstup, 3, Height, Height-10, (Height-10)/2, MColor, "white");
+    rectRound(cv, otstup, 3, MyHeight, MyHeight-10, (MyHeight-10)/2, MColor, "white");
   }
   
-  //rectRound(cv, otstup, 3, Height, Height-10, (Height-10)/2, ProgrammColor, "white");
+  //rectRound(cv, otstup, 3, MyHeight, MyHeight-10, (MyHeight-10)/2, ProgrammColor, "white");
   cv.fillStyle = "white";
-  cv.fillText("-", otstup + Height/2, 2 + (Height-10) / 2);
+  cv.fillText("-", otstup + MyHeight/2, 2 + (MyHeight-10) / 2);
   
   cv.font = font2;
-  otstup = otstup + Height;
+  otstup = otstup + MyHeight;
   
   var text = TimeLineHeight + "px";
   var len = cv.measureText(text).width;
   if (len < 2 * stepw - 4) {
-    cv.fillText(text, +otstup  + +stepw, 3 + (Height-10) / 2);
+    cv.fillText(text, +otstup  + +stepw, 3 + (MyHeight-10) / 2);
   } else {
     cv.textAlign  = "left";  
-    myTextDraw(cv, text, otstup, 2, 2*stepw - 4, 3, Height-10); 
+    myTextDraw(cv, text, otstup, 2, 2*stepw - 4, 3, MyHeight-10); 
   }
 
   cv.font = font2;
@@ -568,35 +587,35 @@ function drawToolBar(cv,Width,Height) {
   
   RectUp[0] = otstup;
   RectUp[1] = 3;
-  RectUp[2] = otstup + Height;
-  RectUp[3] = Height-10;
+  RectUp[2] = otstup + MyHeight;
+  RectUp[3] = MyHeight-10;
   
   if (mnUpSelect) {
-    rectRound(cv, otstup, 3, Height, Height-10, (Height-10)/2, SColor, "white");
+    rectRound(cv, otstup, 3, MyHeight, MyHeight-10, (MyHeight-10)/2, SColor, "white");
   } else {
-    rectRound(cv, otstup, 3, Height, Height-10, (Height-10)/2, MColor, "white");
+    rectRound(cv, otstup, 3, MyHeight, MyHeight-10, (MyHeight-10)/2, MColor, "white");
   }
 
-  //rectRound(cv, otstup, 3, Height, Height-10, (Height-10)/2, ProgrammColor, "white");
+  //rectRound(cv, otstup, 3, MyHeight, MyHeight-10, (MyHeight-10)/2, ProgrammColor, "white");
   cv.fillStyle = "white";
   cv.textAlign  = "center";
-  cv.fillText("+", otstup + Height/2, 3 + (Height-10) / 2);
+  cv.fillText("+", otstup + MyHeight/2, 3 + (MyHeight-10) / 2);
   //cv.lineWidth = lwdt;
   
-  otstup = Width-20-Height;
+  otstup = Width-20-MyHeight;
   RectHome[0] = otstup;
   RectHome[1] = 3;
   RectHome[2] = Width-20;
-  RectHome[3] = Height-10;
+  RectHome[3] = MyHeight-10;
   
   if (mnHomeSelect) {
-    rectRound(cv, otstup, 3, Height, Height-10, (Height-10)/2, SColor, "white");  
+    rectRound(cv, otstup, 3, MyHeight, MyHeight-10, (MyHeight-10)/2, SColor, "white");  
   } else {
-    rectRound(cv, otstup, 3, Height, Height-10, (Height-10)/2, MColor, "white");  
+    rectRound(cv, otstup, 3, MyHeight, MyHeight-10, (MyHeight-10)/2, MColor, "white");  
   }
   
-  dltx = Height / 8;
-  dlty = (Height - 10) / 5; 
+  dltx = MyHeight / 8;
+  dlty = (MyHeight - 10) / 5; 
   var st = 3 + dlty;
   cv.lineWidth = 2;
   for (i=0; i<4; i++) {

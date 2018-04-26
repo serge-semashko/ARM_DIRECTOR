@@ -82,6 +82,10 @@ var ScreenFields = [0,4,2,5,-1];
 var UsesCanvas = [false, false, false, false, false];
 var TimeLineHeight = 16;
 var HeightMenu = 50;
+var MenuProcent = 5;
+var MenuDown = false;
+var DownPosition = -1;
+var MousePosition = -1;
 
 var ClipName = "";
 var SongName = "";
@@ -91,6 +95,7 @@ var TimeToStart = "";
 var Phrase = "";
 var PhraseFactor = 1;
 var StepPhrase = 50;
+var PhraseMode = 1; //0 - text[files], 1 - text, 2 - files 
 
 var DoubleSize = 0;
 
@@ -189,8 +194,6 @@ function processData(t) {
   } //end ActiveTL  
 }
 
-
-
 function objconv(indata) {
     var result = [];
     var sdate = indata[0];
@@ -282,7 +285,12 @@ var mouseY = 0;
 function MyMouseDown(e) {
   mouseX = e.clientX - canvasPos.x;
   mouseY = e.clientY - canvasPos.y;
+  DownPosition = mouseY;
+  MousePosition = mouseY;
+  MenuDown = true;
   if (mouseY < mnCanvas.height) {
+    //MenuDown = true;
+    //DownPosition = mouseY;  
     if (mouseX>RectSound[0] && mouseX<RectSound[2]) {
       mnSoundSelect = true;
     }  
@@ -309,6 +317,16 @@ function MyMouseUp(e) {
   mouseY = e.clientY - canvasPos.y;
   //var lf = RectSound[0];
   //var rt = RectSound[2];
+  if (MenuDown) {
+    var respos = mouseY - DownPosition;  
+    if (respos > ((window.innerHeight-10)/100)*5) { 
+      MenuProcent = 100; 
+    } else {
+      MenuProcent = 5;  
+    };
+  };
+  MenuDown = false;
+  
   if (mouseY < mnCanvas.height) {
     if (mouseX>RectSound[0] && mouseX<RectSound[2]) {
       AudioOn = ! AudioOn; 
@@ -352,12 +370,33 @@ function MyMouseUp(e) {
       clearInterval (myInterval)
       mnHomeSelect = false;
     } 
+  } else {
+        
+    var dv = ChoiceDevRect(mouseX,mouseY);
+    if (dv !== -1) { 
+        Device1 = +dv + 1 
+        setDeviceNumber(Device1)
+    };
+    var tl = ChoiceTimelines(mouseY);
+    if (tl !== -1) { ActiveTL=tl };
   }  
+  
 }
  
 function setMousePosition(e) {
   mouseX = e.clientX - canvasPos.x;
   mouseY = e.clientY - canvasPos.y;
+  
+  if (MenuDown) {
+    var respos = mouseY - MousePosition;  
+    //var resstep = respos / 100;
+    var dltproc = (respos * 100) / (window.innerHeight - 10)
+    MenuProcent = MenuProcent + dltproc;
+    if (MenuProcent > 50) { MenuProcent = 100; };
+    if (MenuProcent < 5) { MenuProcent = 5; };
+  }
+  MousePosition = mouseY;
+  
   if (mouseY < mnCanvas.height) {
     if (mouseX>RectSound[0] && mouseX<RectSound[2]) {
       mnSoundSelect = true;  
@@ -418,9 +457,9 @@ function getPosition(el) {
 function window_onload() {
     addEventListener("keydown", myKeydown);
 
+    addEventListener('mousedown', MyMouseDown, false);
     addEventListener("mousemove", setMousePosition, false);
     addEventListener('mouseup', MyMouseUp, false);
-    addEventListener('mouseDown', MyMouseDown, false);
 
     tm = document.getElementById("time");
     var dloc = document.location;

@@ -3,6 +3,9 @@
  */
 "use strict";
 
+var DeviceCanvasTop;
+var TimelineCanvasTop;
+
 function setDefaultValue(value) {
 //ShowEvents, ShowDevices, ShowEditor, ShowScaler, ShowTimelines, ShowNameTL,
 //ShowAllTimelines, ShowDev1, ShowDev2;  
@@ -46,7 +49,7 @@ function SetTypeScreen0() {
   var hdev = ((stepw / 1.75) / 2) * 5;
   var htmln = (TimeLineHeight / 85 * 100) * (4 + +TLT.length);
 
-  HeightMenu = (scrH / 100) * 5;
+  HeightMenu = (scrH / 100) * MenuProcent;
   var prmenu = HeightMenu / scrH;
   
   var prcellar = 0.02;
@@ -80,6 +83,8 @@ function SetTypeScreen0() {
   
   mnCanvas.width = scrW;
   mnCanvas.height = scrH * prmenu;
+  if (MenuProcent !== 100) {
+//?????????????????????????      
   evCanvas.width = scrW;
   evCanvas.height = scrH * prevents;
   dvCanvas.width = scrW;
@@ -90,6 +95,8 @@ function SetTypeScreen0() {
   tvCanvas.height = scrH * pralltl;
   //tmCanvas.width = scrW;
   //tmCanvas.height = scrH * prcellar;
+  DeviceCanvasTop = +mnCanvas.height + +evCanvas.height; 
+  TimelineCanvasTop = +mnCanvas.height + +evCanvas.height + +dvCanvas.height; 
     
   mncv.clearRect(0, 0, mnCanvas.width, mnCanvas.height);
   ecv.clearRect(0, 0, evCanvas.width, evCanvas.height);
@@ -142,6 +149,19 @@ function SetTypeScreen0() {
   tvCanvas.style.visibility = "visible";
   //tmCanvas.style.visibility = "visible";
   tmCanvas.style = "display : none;";  
+//??????????????????????????????  
+  } else {
+    evCanvas.height = 0;//scrH * prevents;
+    dvCanvas.height = 0;//scrH * prdevices;
+    edCanvas.height = 0;//scrH * prtl;
+    tvCanvas.height = 0;//scrH * pralltl;
+    tmCanvas.height = 0;//scrH * prcellar;  
+    mncv.clearRect(0, 0, mnCanvas.width, mnCanvas.height); 
+    mncv.fillStyle = ProgrammColor;
+    mncv.fillRect(0, 0, mnCanvas.width, mnCanvas.height);
+    drawToolBar(mncv,mnCanvas.width, mnCanvas.height);
+    mnCanvas.style.visibility = "visible";
+  }
 } // end SetTypeScreen0 
 
 function SetTypeScreen1() {
@@ -202,7 +222,9 @@ function SetTypeScreen1() {
   //tvCanvas.height = scrH * pralltl;
   //tmCanvas.width = scrW;
   //tmCanvas.height = scrH * prcellar;
-    
+  DeviceCanvasTop = +mnCanvas.height + +evCanvas.height;
+  TimelineCanvasTop = +mnCanvas.height + +evCanvas.height + +dvCanvas.height;
+  
   mncv.clearRect(0, 0, mnCanvas.width, mnCanvas.height);
   ecv.clearRect(0, 0, evCanvas.width, evCanvas.height);
   dcv.clearRect(0, 0, dvCanvas.width, dvCanvas.height);
@@ -349,19 +371,22 @@ function SetTypeScreen2() {
   }
   if (! ShowDevices) {
     dvCanvas.width = scrW;  
-    dvCanvas.height = scrH * 0.02;
+    dvCanvas.height = 0;//scrH * 0.02;
   }
   if (! blshowtl) {
     edCanvas.width = scrW;
-    edCanvas.height = scrH * 0.02;
+    edCanvas.height = 0;//scrH * 0.02;
   }
   if (! ShowAllTimelines) {
     tvCanvas.width = scrW;
-    tvCanvas.height = scrH * 0.02;
+    tvCanvas.height = 0;//scrH * 0.02;
   }
   tmCanvas.width = scrW;
-  tmCanvas.height = scrH * 0.02;
-    
+  tmCanvas.height = 0;//scrH * 0.02;
+  
+  DeviceCanvasTop = +mnCanvas.height + +evCanvas.height;
+  TimelineCanvasTop = +mnCanvas.height + +evCanvas.height + +dvCanvas.height;
+  
   mncv.clearRect(0, 0, mnCanvas.width, mnCanvas.height);
   ecv.clearRect(0, 0, evCanvas.width, evCanvas.height);
   dcv.clearRect(0, 0, dvCanvas.width, dvCanvas.height);
@@ -532,25 +557,28 @@ function SetTypeScreen3() {
   }
   if (! ShowEvents) {
     evCanvas.width = scrW;
-    evCanvas.height = scrH * 0.02;
+    evCanvas.height = 0;//scrH * 0.02;
   }
   if (! ShowDev1) {
     dvCanvas.width = scrW;  
-    dvCanvas.height = scrH * 0.02;
+    dvCanvas.height = 0;//scrH * 0.02;
   }
   if (! blshowtl) {
     edCanvas.width = scrW;
-    edCanvas.height = scrH * 0.02;
+    edCanvas.height = 0;//scrH * 0.02;
   }
   if (! ShowAllTimelines) {
     tvCanvas.width = scrW;
-    tvCanvas.height = scrH * 0.02;
+    tvCanvas.height = 0;//scrH * 0.02;
   }
   if (! ShowDev2) {
     tmCanvas.width = scrW;
-    tmCanvas.height = scrH * 0.02;
+    tmCanvas.height = 0;//scrH * 0.02;
   }  
-    
+  
+  DeviceCanvasTop = +mnCanvas.height + +evCanvas.height;
+  TimelineCanvasTop = +mnCanvas.height + +evCanvas.height + +dvCanvas.height;
+  
   mncv.clearRect(0, 0, mnCanvas.width, mnCanvas.height);
   ecv.clearRect(0, 0, evCanvas.width, evCanvas.height);
   dcv.clearRect(0, 0, dvCanvas.width, dvCanvas.height);
@@ -636,6 +664,15 @@ function SetDeviceValue() {
       EventsDev2 = +ScreenFields_2[i];  
     }  
   }  
+}
+
+function setDeviceNumber(dev) {
+  for (var i=0; i< 5; i++) {
+    if (ScreenFields[i] == 4) {
+      ScreenFields_1[i] = dev;
+      break;
+    }  
+  }
 }
 
 function SetTypeScreen4() {
@@ -784,6 +821,8 @@ function SetTypeScreen4() {
   }
   
 //==============================================================================
+  DeviceCanvasTop = 0;
+  
   mnCanvas.width = scrW;
   mnCanvas.height = scrH * prmenu;
   
@@ -793,10 +832,12 @@ function SetTypeScreen4() {
       evCanvas.height = scrH * preva;  
     } else if (ScreenFields[0] == 1) {
       evCanvas.width = scrW;
-      evCanvas.height = scrH * prdevices;  
+      evCanvas.height = scrH * prdevices; 
+      DeviceCanvasTop = mnCanvas.height;
     } else if (ScreenFields[0] == 2) {
       evCanvas.width = scrW;
       evCanvas.height = scrH * prtl;  
+      TimelineCanvasTop = +mnCanvas.height;
     } else if (ScreenFields[0] == 3) {
       evCanvas.width = scrW;
       evCanvas.height = scrH * pralltl;  
@@ -819,9 +860,11 @@ function SetTypeScreen4() {
     } else if (ScreenFields[1] == 1) {
       dvCanvas.width = scrW;
       dvCanvas.height = scrH * prdevices;  
+      DeviceCanvasTop = +mnCanvas.height + +evCanvas.height;
     } else if (ScreenFields[1] == 2) {
       dvCanvas.width = scrW;
-      dvCanvas.height = scrH * prtl;  
+      dvCanvas.height = scrH * prtl; 
+      TimelineCanvasTop = +mnCanvas.height + +evCanvas.height;
     } else if (ScreenFields[1] == 3) {
       dvCanvas.width = scrW;
       dvCanvas.height = scrH * pralltl;  
@@ -843,10 +886,12 @@ function SetTypeScreen4() {
       edCanvas.height = scrH * preva;  
     } else if (ScreenFields[2] == 1) {
       edCanvas.width = scrW;
-      edCanvas.height = scrH * prdevices;  
+      edCanvas.height = scrH * prdevices;
+      DeviceCanvasTop = +mnCanvas.height + +evCanvas.height + +dvCanvas.height;
     } else if (ScreenFields[2] == 2) {
       edCanvas.width = scrW;
-      edCanvas.height = scrH * prtl;  
+      edCanvas.height = scrH * prtl; 
+      TimelineCanvasTop = +mnCanvas.height + +evCanvas.height + +dvCanvas.height;
     } else if (ScreenFields[2] == 3) {
       edCanvas.width = scrW;
       edCanvas.height = scrH * pralltl;  
@@ -868,10 +913,14 @@ function SetTypeScreen4() {
       tvCanvas.height = scrH * preva;  
     } else if (ScreenFields[3] == 1) {
       tvCanvas.width = scrW;
-      tvCanvas.height = scrH * prdevices;  
+      tvCanvas.height = scrH * prdevices;
+      DeviceCanvasTop = +mnCanvas.height + +evCanvas.height + +dvCanvas.height
+                        + +edCanvas.height;
     } else if (ScreenFields[3] == 2) {
       tvCanvas.width = scrW;
-      tvCanvas.height = scrH * prtl;  
+      tvCanvas.height = scrH * prtl;
+      TimelineCanvasTop = +mnCanvas.height + +evCanvas.height + +dvCanvas.height
+                        + +edCanvas.height;
     } else if (ScreenFields[3] == 3) {
       tvCanvas.width = scrW;
       tvCanvas.height = scrH * pralltl;  
@@ -893,10 +942,14 @@ function SetTypeScreen4() {
       tmCanvas.height = scrH * preva;  
     } else if (ScreenFields[4] == 1) {
       tmCanvas.width = scrW;
-      tmCanvas.height = scrH * prdevices;  
+      tmCanvas.height = scrH * prdevices;
+      DeviceCanvasTop = +mnCanvas.height + +evCanvas.height + +dvCanvas.height
+                        + +edCanvas.height + tvCanvas.height;
     } else if (ScreenFields[4] == 2) {
       tmCanvas.width = scrW;
-      tmCanvas.height = scrH * prtl;  
+      tmCanvas.height = scrH * prtl; 
+      TimelineCanvasTop = +mnCanvas.height + +evCanvas.height + +dvCanvas.height
+                        + +edCanvas.height + tvCanvas.height;
     } else if (ScreenFields[4] == 3) {
       tmCanvas.width = scrW;
       tmCanvas.height = scrH * pralltl;  

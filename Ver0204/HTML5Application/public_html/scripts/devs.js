@@ -1,5 +1,200 @@
 /* global dcv */
 
+var DevRects = [];
+DevRects[0] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+DevRects[1] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+DevRects[2] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+DevRects[3] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+DevRects[4] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+DevRects[5] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+DevRects[6] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+DevRects[7] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+DevRects[8] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+DevRects[9] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+DevRects[10] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+DevRects[11] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+DevRects[12] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+DevRects[13] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+DevRects[14] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+DevRects[15] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+DevRects[16] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+DevRects[17] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+DevRects[18] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+DevRects[19] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+DevRects[20] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+DevRects[21] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+DevRects[22] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+DevRects[23] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+DevRects[24] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+DevRects[25] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+DevRects[26] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+DevRects[27] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+DevRects[28] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+DevRects[29] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+DevRects[30] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+DevRects[31] = {
+  left : 0,
+  top : 0,
+  right : 0,
+  bottom : 0
+};
+  
+
 function drawMyDev(cv,Width,Height,currtl) {
   //var srccolor = 0;  
   //var Background = rgbFromNum(srccolor);
@@ -93,6 +288,10 @@ function drawMyDev(cv,Width,Height,currtl) {
       if (i == NextDevice-1) {
        cv.fillStyle = "lime";//"#00FF00";  
       } 
+      DevRects[i].left = +rtleft;
+      DevRects[i].top = +rttop;
+      DevRects[i].right = +rtleft + +tmpw;
+      DevRects[i].bottom = +rttop + +tmph;
       cv.strokeRect(+rtleft, +rttop, +tmpw, +tmph);
       cv.fillRect(+rtleft + +2, +rttop + +2, +tmpw - +4, +tmph - +4);
       
@@ -135,6 +334,11 @@ function drawMyDev(cv,Width,Height,currtl) {
         if (16 + i == NextDevice-1) {
           cv.fillStyle = "lime";//"#00FF00";
         }
+        
+        DevRects[16+i].left = +rtleft;
+        DevRects[16+i].top = +rttop;
+        DevRects[16+i].right = +rtleft + +tmpw;
+        DevRects[16+i].bottom = +rttop + +tmph;
         cv.strokeRect(+rtleft, +rttop, +tmpw, +tmph);
         cv.fillRect(+rtleft + +2, +rttop + +2, +tmpw - +4, +tmph - +4);
       
@@ -164,4 +368,27 @@ function drawMyDev(cv,Width,Height,currtl) {
     
     cv.font = mainFont;
 
+}
+
+function ChoiceDevRect(X,Y) {
+  var res = -1;  
+  var isdev = false;
+  if (typesrc < 4) { 
+    if (ShowDevices) { isdev = true; };  
+  };
+  if (typesrc == 4) {
+    if (isField(1)) { isdev = true; };  
+  }
+  if (isdev) {
+    if (TLO[ActiveTL].TypeTL !== "0") { return res; };
+    for (var i=0; i<TLO[ActiveTL].CountDev; i++) {
+      if (X>DevRects[i].left && X < DevRects[i].right
+          && Y > +DeviceCanvasTop + + DevRects[i].top 
+          && Y < +DeviceCanvasTop + + DevRects[i].bottom) {
+         res = i;
+         break;
+      }  
+    }
+  }
+  return res;
 }
