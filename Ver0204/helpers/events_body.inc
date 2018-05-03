@@ -105,7 +105,7 @@ begin
     // Rows : array of TMyPhrases;
     for i1 := Low(Rows) to High(Rows) do
     begin
-//SSSDBG      JSON.AddPair('Rows' + IntToStr(i1), Rows[i1].SaveToJSONObject);
+      JSON.AddPair('Rows' + IntToStr(i1), Rows[i1].SaveToJSONObject);
       jsarr.add(Rows[i1].SaveToJSONObject);
     end;
     json.addpair('Rows',jsarr);
@@ -272,7 +272,7 @@ begin
   for i1 := Low(Phrases) to High(Phrases) do
   begin
     jsarr.Add(Phrases[i1].SaveToJSONObject);
-//SSSDBG    JSON.AddPair('Phrases' + IntToStr(i1), Phrases[i1].SaveToJSONObject);
+    JSON.AddPair('Phrases' + IntToStr(i1), Phrases[i1].SaveToJSONObject);
   end;
   JSON.AddPair('Phrases',jsarr);
   result := JSON;

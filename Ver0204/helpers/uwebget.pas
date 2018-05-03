@@ -19,8 +19,8 @@ type
 
     TIORedisThread = class(tthread)
         var
-            INBUF: array[0..3000000] of ansiCHAR;
-            outBUF: array[0..3000000] of ansiCHAR;
+            INBUF: array[0..6000000] of ansiCHAR;
+            outBUF: array[0..6000000] of ansiCHAR;
             TCPCli: TTcpClient;
         function SendWebVarToServer(ID: integer): integer;
         function GetWebVarFromServer(ID: integer): integer;
@@ -101,7 +101,8 @@ begin
     if (tmpjSon <> nil) then begin
         tmpstr := tmpjSon.Value;
         tmpstr := AnsiReplaceStr(tmpstr, '#$%#$%', ' ');
-        result := tmpstr;
+
+        result := UTF8decode(tmpstr) ;
     end;
 end;
 
@@ -120,10 +121,11 @@ begin
     FormatSettings.DecimalSeparator := '.';
     vType := varType(varvalue);
     strValue := varvalue;
-    s1 := AnsiReplaceStr(strValue, ' ', '#$%#$%');
     strValue := AnsiReplaceStr(strValue, ' ', '#$%#$%');
     utf8val := stringOf(tencoding.UTF8.GetBytes(strValue));
-    json.AddPair(varName, strValue);
+    json.AddPair(varName, utf8val);
+    s1 :=stringOf(tencoding.UTF8.GetBytes('I am дурачек'));
+    retval := UTF8Decode(s1);
 end;
 
 procedure FillBuff(var buff: array of ansichar; str: ansistring);
@@ -443,11 +445,15 @@ var
     ans: ansistring;
     St: int64;
     chtime: ansistring;
+    str1 : string;
 begin
 
-    webWriteLog('TO SERVER>', 'Send ' + webvars[ID].Name);
+    webWriteLog('TO SERVER>', 'Send('+ intToStr(length(webvars[ID].jsonStr))+')' + webvars[ID].Name);
     St := timeGetTime;
     chtime := IntToStr(St);
+    str1 :='Переменная больше выходного буфера '+webvars[ID].name+' L='+IntToStr(length(webvars[ID].jsonStr))+'>'+IntToStr(high(outBUF));
+    Assert((length(webvars[ID].jsonStr)+200)<high(outBUF),str1);
+
     ans := Process_TCPRequest('/SET_' + webvars[ID].Name + '=' + webvars[ID].jsonStr, resp, chtime, false);
     if ans = '' then begin
         webvars[ID].changed := -St;

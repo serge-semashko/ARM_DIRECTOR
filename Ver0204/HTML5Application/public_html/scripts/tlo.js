@@ -1,4 +1,5 @@
-var TLO = [
+var TLO = [];
+var TLO1 = [
     {"Manager": "1",
         "TypeTL": "0",
         "NumberBmp": "1",

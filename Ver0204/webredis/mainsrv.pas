@@ -8,7 +8,7 @@ uses
     Dialogs, StdCtrls, Buttons, ExtCtrls, HTTPSend, blcksock, winsock, Synautil,
     strutils, system.json, AppEvnts, Menus, inifiles, das_const, ipcthrd,
     TeEngine, Series, TeeProcs, Chart, VclTee.TeeGDIPlus, System.Generics.Collections,
-    mmsystem, Web.Win.Sockets;
+    mmsystem,web.win.sockets;
 type
     THTTPSRVForm = class(TForm)
         Panel1: TPanel;
@@ -42,27 +42,16 @@ type
         procedure ControlWindow(var Msg: TMessage); message WM_SYSCOMMAND;
         procedure IconMouse(var Msg: TMessage); message WM_USER + 1;
     public
-        TCPsrv: TTcpServer;
-        TCPHTTPsrv: TTcpServer;
         procedure Ic(n: Integer; Icon: TIcon);
     end;
 
-    TTCPHttpDaemon = class(TThread)
-    private
-        Sock: TTCPBlockSocket;
-    public
-        constructor Create;
-        destructor Destroy; override;
-        procedure Execute; override;
-        procedure DoExecute;
-    end;
 
     TTCPHttpThrd = class(TThread)
     private
         Sock: TTCPBlockSocket;
     public
-        inbuff : array[0..1000000] of ansichar;
-        outbuff : array[0..1000000] of ansichar;
+        inbuff : array[0..5000000] of ansichar;
+        outbuff : array[0..5000000] of ansichar;
         Headers: TStringList;
         InputData, OutputData: TMemoryStream;
         constructor Create(hsock: tSocket);
@@ -76,8 +65,8 @@ type
         DateTimeSTR: array[0..5] of ansichar;
         UpdateCounter: int64;
         VersionSignature: array[0..5] of ansichar;
-        JSONAll: array[0..1000000] of ansichar;
-        JSONStore: array[0..1000000] of ansichar;
+        JSONAll: array[0..10000000] of ansichar;
+        JSONStore: array[0..10000000] of ansichar;
     end;
 
     PHardRec = ^THardRec;
@@ -95,6 +84,8 @@ function ProcessRequest(URI: string): AnsiString;
 function myHTTPProcessRequest(URI: string): AnsiString;
 
 var
+        TCPHTTPsrv: TTcpServer;
+        TCPsrv: TTcpServer;
     TerminateAll : boolean = false;
     LocalTCPPort: string = '9085';
     EmptyWebVar: TWebVar; // = ('','',-1,'',nil); //'','',-1,'',nil);
@@ -111,7 +102,6 @@ var
     textfromjson: string = '[]';
     currentData: string = '{}';
     HTTP: THTTPSend = nil;
-    HTTPsrv: TTCPHttpDaemon;
     HTTPSRVFORM: THTTPSRVForm;
     URL: string;
     TLP_Time: int64 = -1;
@@ -132,8 +122,8 @@ procedure THTTPSRVForm.TcpserverAccept(Sender: TObject;       //пришло с�
     ClientSocket: TCustomIpClient);
 var
     txt: string;
-    Inbuffer: array[0..4000000] of ansichar;
-    OUTBUffer: array[0..4000000] of ansichar;
+    Inbuffer: array[0..5000000] of ansichar;
+    OUTBUffer: array[0..5000000] of ansichar;
     tmpBuffer: integer;
     rcstr, hstr: string;
     rc: Integer;
@@ -241,7 +231,9 @@ var
     end;
 
 begin
+
     hstr := 'H=' + IntToStr(ClientSocket.Handle) + ' ';
+    TCPHTTPsrv.FreeOnRelease;
 //    mmo1.Lines.add(FormatDateTime('HH:NN:SS ', now) + 'accept' + hstr);
         webWriteLog('HTTPaccept>', ' connect from ' + ClientSocket.RemoteHost);
         FillChar(buffer, 0, High(buffer));
@@ -273,6 +265,7 @@ begin
 //            webWriteLog('GET_', uri + ' =  ' + outstr);
         end;
         ClientSocket.Sendln('HTTP/1.0 ' + '200' + CRLF + 'Content-type: Text/Html' + #13#10 + 'Content-length: ' + IntToStr(length(outstr)) + #13#10 + 'Connection: close' + #13#10 + 'Date: Tue, 20 Mar 2018 14:04:45 +0300' + #13#10 + 'Server: Synapse HTTP server demo' + #13#10 + #13#10 + outstr + crlf);
+        ClientSocket.Close;
 
 
 end;
@@ -409,51 +402,9 @@ begin
 
 end;
 
-constructor TTCPHttpDaemon.Create;
-begin
-    inherited Create(false);
-    sock := TTCPBlockSocket.Create;
-    FreeOnTerminate := true;
-    Priority := tpNormal;
-end;
 
-destructor TTCPHttpDaemon.Destroy;
-begin
-    sock.free;
-    inherited Destroy;
-end;
 
-procedure TTCPHttpDaemon.DoExecute;
-var
-    ClientSock: tSocket;
-begin
-  // writeTimeLog('open sock');
-    with sock do begin
-        CreateSocket;
-        setLinger(true, 10);
-        bind('0.0.0.0', IntToStr(PortNum));
-        listen;
-    // writeTimeLog('Listen sock');
-        repeat
-            if terminated then
-                break;
-            if canread(1000) then begin
-        // writeTimeLog('Client read sock');
-                ClientSock := accept;
-                if lastError = 0 then
-                    TTCPHttpThrd.Create(ClientSock);
-            end;
-        until false;
-    end;
-end;
 
-procedure TTCPHttpDaemon.Execute;
-var
-    st: int64;
-begin
-    st := timegettime;
-    doExecute;
-end;
 
 { TTCPHttpThrd }
 
@@ -626,7 +577,8 @@ begin
         HTTPSRVForm.txt2.Caption := 'CTC:' + formatdatetime(' HH:NN:SS ZZZ ', now) + posstr;
     end
     else
-        HTTPSRVForm.memo1.lines.Values[keyname] := formatdatetime('HH:NN:SS ZZZ', now) + system.copy(KeyValue, 1, 150);
+        HTTPSRVForm.memo1.lines.Values[keyname] := formatdatetime('HH:NN:SS ZZZ ', now)
+            +AnsiReplaceStr(UTF8Decode( UTF8Decode(system.copy((UTF8encode(KeyValue)), 1, 150))),'#$%#$%', ' ');
     for i1 := 0 to VarCount - 1 do begin
         if ansiuppercase(webvars[i1].Name) <> ansiuppercase(keyname) then
             continue;
@@ -775,8 +727,9 @@ var
     stmp, jreq, resp, keyName, keyVal, str1: ansistring;
     i1, amppos, pos_var_name: integer;
     jsval : tjsonvalue;
+    varTime : string;
 begin
-
+     varTime := '';
     if (pos('callback=', URI) <> 0) then begin
         stmp := copy(URI, pos('callback=', URI) + 9, length(URI));
         amppos := pos('get_member', stmp);
@@ -791,6 +744,7 @@ begin
         if pos('&', keyName) > 0 then
             keyName := system.Copy(keyname, 1, pos('&', keyName) - 1);
         resp := '(' + IntToStr(GetWebVar(keyName).changed) + ')/SET_' + keyName + '=' + GetWebVar(keyName).jSONSTR;
+
     end;
 
     pos_var_name := pos('DEL_', ansiuppercase(URI)) + 4;
@@ -845,15 +799,16 @@ var
     stmp, jreq, resp, keyName, keyVal, str1: ansistring;
     i1, amppos, pos_var_name: integer;
     jsval : tjsonvalue;
+    varTime : string;
 begin
-
+     varTime := '';
     if (pos('callback=', URI) <> 0) then begin
         stmp := copy(URI, pos('callback=', URI) + 9, length(URI));
         amppos := pos('get_member', stmp);
         if amppos > 0 then
             jreq := copy(stmp, 1, amppos - 2);
     end;
-    resp := HardRec.JSONAll;
+    resp := '';
 
     pos_var_name := pos('GET_', ansiuppercase(URI)) + 4;
     if pos_var_name > 4 then begin
@@ -861,6 +816,7 @@ begin
         if pos('&', keyName) > 0 then
             keyName := system.Copy(keyname, 1, pos('&', keyName) - 1);
         resp := GetWebVar(keyName).jSONSTR;
+        varTime := IntToStr(GetWebVar(keyName).changed);
     end;
 
     pos_var_name := pos('DEL_', ansiuppercase(URI)) + 4;
@@ -873,6 +829,7 @@ begin
     pos_var_name := pos('LST_', ansiuppercase(URI)) + 4;
     if pos_var_name > 4 then begin
         resp := ListWebVars;
+        varTime := IntToStr(timegettime);
     end;
 
     pos_var_name := pos('SET_', ansiuppercase(URI)) + 4;
@@ -900,12 +857,13 @@ begin
                 if jsval <> nil then
                     AddWebVar(keyName, str1, jsval)
                 else
-                    resp := '{"status":"errformat"}';
+                    resp := '{}';
 
             end;
         end;
     end;
-    resp := jreq + '(' + resp + ');';
+    if resp='' then resp := HardRec.JSONAll;
+    resp := jreq + '({"time":'+vartime+', "varValue": ' + resp + '});';
     result := resp;
 end;
 
@@ -1001,14 +959,15 @@ initialization
 
     if (HardRec.UpdateCounter <> 13131313) then begin
         fillchar(HardRec.JSONAll, 1000000, 0);
-        HardRec.UpdateCounter := 13131313
+        HardRec.UpdateCounter := 13131313;
+        HardRec.JSONAll := '{}'
     end;
     HardRec.UpdateCounter := 0;
 //    varNames := tstringlist.Create;
 //    Varvalues:= tstringlist.Create;
     EmptyWebVar.Name := '';
     EmptyWebVar.baseName := '';
-    EmptyWebVar.jsonStr := '';
+    EmptyWebVar.jsonStr := '{}';
     EmptyWebVar.changed := -1;
     EmptyWebVar.json := nil;
 

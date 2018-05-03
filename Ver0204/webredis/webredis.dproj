@@ -100,6 +100,7 @@
         <BT_BuildType>Debug</BT_BuildType>
         <Debugger_RunParams>netlog</Debugger_RunParams>
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
+        <DCC_MaxStackSize>16048576</DCC_MaxStackSize>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">

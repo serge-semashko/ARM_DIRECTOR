@@ -67,15 +67,18 @@ begin
   try
       // Manager  : string;                                 //Номер менеджера управления.
     addVariableToJson(json, 'Manager', Manager);
+    addVariableToJson(json, 'CountDev', CountDev);
+    // Protocol : string;                                 //Название протокола и данные для протокола
+    addVariableToJson(json, 'Protocol', Protocol);
     addVariableToJson(json, 'TypeTL', TypeTL);
+
     addVariableToJson(json, 'NumberBmp', NumberBmp);
     addVariableToJson(json, 'Name', Name);
     addVariableToJson(json, 'UserLock', UserLock);
     addVariableToJson(json, 'IDTimeline', IDTimeline);
-    addVariableToJson(json, 'CountDev', CountDev);
 
     for i1 := 0 to high(DevEvents) do begin
-//SSSDBG      json.AddPair('DevEvents' + IntToStr(i1), DevEvents[i1].SaveToJSONObject);
+      json.AddPair('DevEvents' + IntToStr(i1), DevEvents[i1].SaveToJSONObject);
       jsarr.add(DevEvents[i1].SaveToJSONObject);
     end;
     json.AddPair('DevEvents', jsarr);
@@ -85,8 +88,6 @@ begin
     addVariableToJson(json, 'TextColor', TextColor);
     addVariableToJson(json, 'CharDuration', CharDuration);
     addVariableToJson(json, 'EventDuration', EventDuration);
-    // Protocol : string;                                 //Название протокола и данные для протокола
-    addVariableToJson(json, 'Protocol', Protocol);
 
 
   except

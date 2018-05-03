@@ -1,4 +1,5 @@
 unit uwebredis_common;
+{$M 1603840,16000000}
 
 interface
 

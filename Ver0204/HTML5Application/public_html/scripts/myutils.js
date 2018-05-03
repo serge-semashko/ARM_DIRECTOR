@@ -53,6 +53,9 @@ function GetDevValues(ev) {
 }
 
 function GetCurrEvent() {
+  if ( typeof TLT[ActiveTL]== "undefined") {
+    return -1; 
+  }     
   var EvCount = TLT[ActiveTL].Count;
   var Position = TLP.Position;
   var strt, fnsh;
@@ -618,7 +621,7 @@ function drawToolBar(cv,Width,Height) {
   dlty = (MyHeight - 10) / 5; 
   var st = 3 + dlty;
   cv.lineWidth = 2;
-  for (i=0; i<4; i++) {
+  for (var i=0; i<4; i++) {
     cv.beginPath();
     cv.strokeStyle = "white";
     cv.moveTo(otstup+2*dltx, st + i*dlty);

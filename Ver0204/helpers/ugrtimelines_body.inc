@@ -324,7 +324,7 @@ begin
   // Events : Array of TMyEvent;
   jsarr := tjsonarray.create;
   for i1 := 0 to Count - 1 do begin
-//SSSDBG    json.AddPair('Events' + inttostr(i1), Events[i1].SaveToJSONObject);
+    json.AddPair('Events' + inttostr(i1), Events[i1].SaveToJSONObject);
     jsarr.add(Events[i1].SaveToJSONObject);
   end;
   json.AddPair('Events', jsarr);

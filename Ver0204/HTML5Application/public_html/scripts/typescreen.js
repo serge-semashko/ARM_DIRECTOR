@@ -678,7 +678,7 @@ function setDeviceNumber(dev) {
 function SetTypeScreen4() {
   setViewport();  
   setDefaultValue(DefaultScreen4);  
-  SetDeviceValue();
+  //SetDeviceValue();
   
   mnCanvas.style = "display : block;";
   mnCanvas.style.visibility = "hidden";

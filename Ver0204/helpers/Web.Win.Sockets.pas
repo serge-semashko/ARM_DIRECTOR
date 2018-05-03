@@ -16,7 +16,7 @@ unit Web.Win.Sockets;
 interface
 
 {$IFDEF MSWINDOWS}
-uses Windows, WinSock, SysUtils, Classes;
+uses Windows, WinSock, SysUtils, Classes, dialogs;
 
 type
   TSocketDomain = (pfUnspec, pfUnix, pfInet,
@@ -306,7 +306,7 @@ type
     procedure ClearThreadPool;
     procedure Execute; override;
     property ServerSocket: TCustomTcpServer read FServerSocket;
-    property ThreadCacheSize: Integer read FThreadCacheSize write SetThreadCacheSize default 10;
+    property ThreadCacheSize: Integer read FThreadCacheSize write SetThreadCacheSize default 20000;
     property ThreadPool: TList read FThreadPool;
     property OnGetThread: TGetThreadEvent read FOnGetThread write FOnGetThread;
   end;
@@ -1106,7 +1106,7 @@ begin
   inherited Create(True);
   FreeOnTerminate := True;
   FServerSocket := AServerSocket;
-  FThreadCacheSize := 10;
+  FThreadCacheSize := 1000;
   FThreadPool := TList.Create;
 end;
 
@@ -1144,7 +1144,7 @@ begin
         if not Assigned(T) then
           T := AddClientSocketThread;
         if Assigned(T) then
-          T.Resume;
+          T.Resume else showmessage('No socket');
         Sleep(0);
       end;
   end;

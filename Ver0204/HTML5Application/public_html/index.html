@@ -6,9 +6,11 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <link rel="stylesheet" href="style.css" type="text/css"/>
+        <link rel="stylesheet" href="css/style.css" type="text/css"/>
 
         <title>TEST ARM_EDITOR web client</title>
+        <meta http-equiv="Cache-Control" content="no-cache">
+        <meta http-equiv="Pragma" content="no-cache">
         <meta charset="UTF-8">
         <meta name="description" content="">
         <script src="scripts/data.js"></script>
@@ -25,48 +27,18 @@ and open the template in the editor.
         <script src="scripts/vendor/jquery-1.11.0.min.js "></script>
         <script src="scripts/typescreen.js"></script>
         <script src="scripts/init.js" ></script>
-        <style>
-            body{
-            }
-            .menu{
-                border-collapse1: collaps2e;
-                sposition: absolute;
-                margin:auto; 
-            }           
-            dd{ 
-                border-right:2px;
-                border-left: 9px;
-            }
-
-            th{ 
-                text-align:center ;
-                padding:10px;
-            }
-            td{
-                padding:5px;
-            }
-
-            .myCanvas{
-                margin: -3px;
-            }
-            .cntr {
-                margin: auto;
-            }
-        </style>    
+        <script src="scripts/webredis_client.js"></script>
+        <meta http-equiv="Cache-Control" content="no-cache">
+        <meta http-equiv="Pragma" content="no-cache">
     </head>
     <body>
-        <! typesrc 0 1 4 
-        кол-во событий countevents
-        Device1
-        Device1
-
-        >
         <div style="display:block;" class="menu" id="select_scr">
             <table  class="menu"  id="select_menu" cellspacing=0 border=1>
                 <tr>
                     <th colspan="50" style>
-                    ARM Director
-                </th>
+                        <p id="armStatus" style="color:red">ARM Director</p>
+                        <p id="serverStatus" style="color:red ">Cервер</p>
+                    </th>
                 </tr>
                 <tr>
                     <td colspan="6">
@@ -92,10 +64,10 @@ and open the template in the editor.
 
                 </tr>
                 <!--                <tr>
-                                    <th colspan="99" style>
-                                        Экран
-                                    </th>
-                                </tr >-->
+                <th colspan="99" style>
+                Экран
+                </th>
+                </tr >-->
 
                 <tr>    
                     <td colspan = 99>   
@@ -118,24 +90,6 @@ and open the template in the editor.
                         <label for="scrChoice2">Настраиваемый экран</label>
                     </td>
                 </tr>
-                <!--                <tr >
-                                    <th colspan="99">
-                                        Настройка экрана
-                                    </th>
-                                </tr>-->
-
-                <!--                <tr>
-                                    <td>1</td>
-                                    <td>2</td>
-                                    <td>3</td>
-                                    <td>4</td>
-                                    <td>5</td>
-                                    <td>6</td>
-                                    <td>7</td>
-                                    <td>8</td>
-                
-                                </tr>    -->
-
                 <tr>
                     <td>
                         1 Поле
@@ -152,14 +106,6 @@ and open the template in the editor.
                         </select>
 
                     </td>
-                    <!--                    
-                                        <td> 
-                                            <input id="scr_1_1" type="number" value=10 min="1" max="31" style="width: 6em;">
-                                        </td>
-                                        <td> 
-                                            <input  id="scr_1_2"  type="number" value=10 min="1" max="31" style="width: 6em;">
-                                        </td>-->
-
                 </tr>
                 <tr>
                     <td>
@@ -177,11 +123,11 @@ and open the template in the editor.
                         </select>
                     </td>
                     <!--                    <td> 
-                                            <input id="scr_2_1" type="number" value=10 min="1" max="31" style="width: 6em;">
-                                        </td>
-                                        <td> 
-                                            <input  id="scr_2_2"  type="number" value=10 min="1" max="31" style="width: 6em;">
-                                        </td>-->
+                    <input id="scr_2_1" type="number" value=10 min="1" max="31" style="width: 6em;">
+                    </td>
+                    <td> 
+                    <input  id="scr_2_2"  type="number" value=10 min="1" max="31" style="width: 6em;">
+                    </td>-->
                 </tr>
                 <tr>
                     <td colspan='1'>
@@ -199,11 +145,11 @@ and open the template in the editor.
                         </select>
                     </td>
                     <!--                    <td> 
-                                            <input id="scr_3_1" type="number" value=10 min="1" max="31" style="width: 6em;">
-                                        </td>
-                                        <td> 
-                                            <input  id="scr_3_2"  type="number" value=10 min="1" max="31" style="width: 6em;">
-                                        </td>-->
+                    <input id="scr_3_1" type="number" value=10 min="1" max="31" style="width: 6em;">
+                    </td>
+                    <td> 
+                    <input  id="scr_3_2"  type="number" value=10 min="1" max="31" style="width: 6em;">
+                    </td>-->
                 </tr>
                 <tr>
                     <td colspan='1'>
@@ -221,11 +167,11 @@ and open the template in the editor.
                         </select>
                     </td>
                     <!--                    <td> 
-                                            <input id="scr_4_1" type="number" value=10 min="1" max="31" style="width: 6em;">
-                                        </td>
-                                        <td> 
-                                            <input  id="scr_4_2"  type="number" value=10 min="1" max="31" style="width: 6em;">
-                                        </td>-->
+                    <input id="scr_4_1" type="number" value=10 min="1" max="31" style="width: 6em;">
+                    </td>
+                    <td> 
+                    <input  id="scr_4_2"  type="number" value=10 min="1" max="31" style="width: 6em;">
+                    </td>-->
                 </tr>
                 <tr>
                     <td colspan='1'>
@@ -243,11 +189,11 @@ and open the template in the editor.
                         </select>
                     </td>
                     <!--                    <td> 
-                                            <input id="scr_5_1" type="number" value=10 min="1" max="31" style="width: 6em;">
-                                        </td>
-                                        <td> 
-                                            <input  id="scr_5_2"  type="number" value=10 min="1" max="31" style="width: 6em;">
-                                        </td>-->
+                    <input id="scr_5_1" type="number" value=10 min="1" max="31" style="width: 6em;">
+                    </td>
+                    <td> 
+                    <input  id="scr_5_2"  type="number" value=10 min="1" max="31" style="width: 6em;">
+                    </td>-->
                 </tr>
                 <tr>
                     <td colspan='6'>
@@ -340,164 +286,6 @@ and open the template in the editor.
         </div>
 
         <script>
-            // ПЕРЕНЕСТИ В MAIN.JS !!!!!!!!!!!!!!!!!!!!!!!11
-            var ScreenFields_1 = [0, 0, 0, 0, 0]; //Второе поле
-            var ScreenFields_2 = [0, 0, 0, 0, 0]; //Третье
-            // ПЕРЕНЕСТИ В MAIN.JS end
-
-            function addDropdownList(id, val, text) {
-                text = String(text).replace("#$%#$%", " ")
-                var select, i, option;
-
-                select = document.getElementById(id);
-                option = document.createElement('option');
-                option.value = val;
-                option.text = text;
-                select.add(option);
-            }
-            ;
-            //            $("#title1").html($(window).width()+"Х"+$(window).height());
-            setViewport();
-            var mn = document.getElementById("select_menu");
-
-            $("body").css("font-size", "12px");
-            for (var fs = 60; fs > 1; fs--) {
-                $("table,button,input,select").css("font-size", fs + "px");
-                var hd = mn.clientHeight;
-                var wd = mn.clientWidth;
-                if (scrW < scrH) {
-                    if (wd > scrW - 30) {
-                        continue;
-                    }
-                } else {
-                    if (hd > scrH - 30) {
-                        continue;
-                    }
-                }
-                break;
-            }
-            for (var i = 0; i <= TLO.length - 1; i++) {
-                addDropdownList("ActiveTL", i, TLO[i].Name);
-            }
-            function execMain_4() {
-//                speak("Test 0", 1.0, 1.4);
-
-                typesrc = 4;
-                var value = $("[name=type01]:checked").val();
-                typesrc = +value;
-                ActiveTL = +document.getElementById("ActiveTL").options.selectedIndex;
-                for (var fn = 1; fn < 6; fn++) {
-                    fldn = "scr_" + fn;
-                    var fld = +document.getElementById(fldn).options.selectedIndex - 1;
-                    ScreenFields[fn - 1] = +document.getElementById(fldn).options.selectedIndex - 1;
-//                    ScreenFields_1[fn - 1] = document.getElementById(fldn + "_1").value;
-//                    ScreenFields_2[fn - 1] = document.getElementById(fldn + "_2").value;
-                }
-                CountEvents = +document.getElementById("CountEvents").value;
-                Device1 = +document.getElementById("dev1").value;
-                Device2 = +document.getElementById("dev2").value;
-                EventsDev1 = +document.getElementById("dev1CountEvents").value;
-                EventsDev2 = +document.getElementById("dev2CountEvents").value;
-
-
-                //ShowEvents, ShowDevices, ShowEditor, ShowScaler, ShowTimelines, ShowNameTL,
-                //ShowAllTimelines, ShowDev1, ShowDev2;
-                DefaultScreen4[3] = document.getElementById("chk4_1").checked;// ShowScaler = document.getElementById("chk4_1").checked;
-                DefaultScreen4[2] = document.getElementById("chk4_2").checked;//ShowEditor = document.getElementById("chk4_2").checked;
-                DefaultScreen4[4] = document.getElementById("chk4_3").checked;// ShowTimelines = document.getElementById("chk4_3").checked;
-                DefaultScreen4[5] = document.getElementById("chk4_4").checked;// ShowTimelines = document.getElementById("chk4_3").checked;
-
-                $("#select_scr").css("display", "none");
-                $("#main").css("display", "block");
-                //                var ss = JSON.stringify(ScreenFields);
-                //                alert("ScreenFields="+JSON.stringify(ScreenFields)+" ScreenFields_1="+JSON.stringify(ScreenFields_1)+
-                //                        " ScreenFields_2="+JSON.stringify(ScreenFields_2)+" DefaultScreen4="+JSON.stringify(DefaultScreen4)) ;
-                window_onload();
-            }
-
-
-        </script>
-        <script>
-            var synth = window.speechSynthesis;
-            var voiceSelect = document.querySelector('#voice_1');
-            var pitchValue = 1;
-            var rateValue = 2;
-
-            var voices = [];
-            var voiceok = false;
-
-            function populateVoiceList() {
-                voices = synth.getVoices();
-                var selectedIndex = voiceSelect.selectedIndex < 0 ? 0 : voiceSelect.selectedIndex;
-                voiceSelect.innerHTML = '';
-                for (i = 0; i < voices.length; i++) {
-                    if ((voices[i].lang.indexOf('ru-') < 0)) {
-                        continue;
-
-                    }
-                    voiceok = true;
-                    var option = document.createElement('option');
-                    option.textContent = voices[i].name + ' (' + voices[i].lang + ')';
-
-                    if (voices[i].default) {
-                        option.textContent += ' -- DEFAULT';
-                    }
-
-                    option.setAttribute('data-lang', voices[i].lang);
-                    option.setAttribute('data-name', voices[i].name);
-                    voiceSelect.appendChild(option);
-                }
-                if (!voiceok) {
-                    var option = document.createElement('option');
-                    if (voices.length < 1) {
-                        option.textContent = 'Голоса отсутствуют в системе'
-                    } else {
-                        option.textContent = 'Русские голоса отсутствуют в системе'
-
-                    }
-                    ;
-                    voiceSelect.appendChild(option);
-
-                }
-                voiceSelect.selectedIndex = selectedIndex;
-            }
-
-            populateVoiceList();
-            if (speechSynthesis.onvoiceschanged !== undefined) {
-                speechSynthesis.onvoiceschanged = populateVoiceList;
-            }
-            speak("Test  10 9 8 7 6 5 4 3 2 1 0", 1.0, 1.4);
-
-            function speak(stext, rateValue, pitchValue) {
-                if (!voiceok) {
-                    return;
-                }
-                if (synth.speaking) {
-                    console.error('speechSynthesis.speaking');
-                    return;
-                }
-                rateValue = rateValue || 1;
-                pitchValue = rateValue || 1;
-                if (stext !== '') {
-                    var utterThis = new SpeechSynthesisUtterance(stext);
-                    utterThis.onend = function (event) {
-                        console.log('SpeechSynthesisUtterance.onend');
-                    };
-                    utterThis.onerror = function (event) {
-                        console.error('SpeechSynthesisUtterance.onerror');
-                    };
-                    var selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');
-                    for (i = 0; i < voices.length; i++) {
-                        if (voices[i].name === selectedOption) {
-                            utterThis.voice = voices[i];
-                        }
-                    }
-                    utterThis.pitch = pitchValue;
-                    utterThis.rate = rateValue;
-                    synth.speak(utterThis);
-                }
-            }
-
         </script>
     </body>
 </html>

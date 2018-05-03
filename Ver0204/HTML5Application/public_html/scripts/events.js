@@ -1,4 +1,4 @@
-"use strict";
+﻿"use strict";
 
 var OldEvent = -1;
 
@@ -80,7 +80,7 @@ function getDigitsString(val, mode) {
         stext = stext + "десять";
         sdigits = sdigits + "10.wav";  
       } else if (ones == 1) {
-        stext = stext + "одинаддцать";
+        stext = stext + "одиннаддцать";
         sdigits = sdigits + "11.wav";  
       } else if (ones == 2) {
         stext = stext + "двенадцать";
@@ -235,6 +235,63 @@ function getCameraPhrase(ev, cam, mode) {
     res = dgs;  
   } 
   return res;
+}
+
+function MySpeecker(url) {
+  if (audio.paused) {
+    audio.preload = 'auto';  
+    audio.src = url;
+    audio.playbackRate = 1.25;
+    audio.play();
+    if (files.length <= 0) {
+      files = [];  
+    } else {
+      files.splice(-1);
+    }
+  } 
+  return audio.paused;
+}
+
+function GetNamesFromStr(str) {
+  var ss = str;
+  var ps = str.indexOf(", ");
+  var i = 0;
+  if (ps <= 0) {
+    files[0] = str;
+    return;
+  }
+  while (ps > 0) {
+    files[i] = ss.substr(0,ps);
+    ss = ss.substr(ps+2,ss.length);
+    ps = ss.indexOf(", ");
+    i = +i + 1;
+  } 
+  if (ss !== "") {
+    files[i] = ss;  
+  }
+  files.reverse();
+}
+
+function filesSpeaker(str) {
+  if (files.length == 0) {
+    if  (lastPhrase !== Phrase) {  
+      GetNamesFromStr(str);  
+      //if (files.length > 1) { OldEvent = CurrEvent; };
+      //audio.paused = true;
+    }
+    //if (files.length > 1) { OldEvent = CurrEvent; };
+  } else {
+    if (files.length > 0) {
+      //var notspeech = 
+      if (files[files.length-1] !== "") {
+        MySpeecker("phrases/" + files[files.length-1]);
+      } else {
+        files = [];  
+      }
+      //if (notspeech) { files.splice(0,1); }
+      //files.splice(0,0);
+    }  
+  } 
 }
 
 function MyDrawEvents(cv, Width, Height, menu) {
@@ -406,7 +463,7 @@ function MyDrawEvents(cv, Width, Height, menu) {
                 var kamera = TLT[ActiveTL].Events[CurrEvent + 1].Rows[0].Phrases[0].Data;
                 if (phrdur < Delta) {
                     PhraseFactor = phrdur / Delta;
-                    Phrase = Phrase = getCameraPhrase(kadr,kamera,PhraseMode);//kadr + " Камера " + kamera + " " + getPhraseSecconds(phrsec, 3); // phrsec + " секунд";
+                    Phrase = getCameraPhrase(kadr,kamera,PhraseMode);//kadr + " Камера " + kamera + " " + getPhraseSecconds(phrsec, 3); // phrsec + " секунд";
                 } else {
                     PhraseFactor = 1;
                     //if (TLP.Position >= TLT[ActiveTL].Events[CurrEvent].Start &&
@@ -419,7 +476,7 @@ function MyDrawEvents(cv, Width, Height, menu) {
                     
                       if (TLP.Position < phrost) {
                         var tlps = Math.floor(phroffset % 125);
-                        if (tlps < 100) {
+                        if (tlps < 150) {
                           Phrase = getCameraPhrase(kadr,kamera,PhraseMode);  
                         } else  {
                           Phrase = "";  
@@ -433,27 +490,28 @@ function MyDrawEvents(cv, Width, Height, menu) {
                     }
                 }
             } 
-            //OldEvent = CurrEvent; 
+
             
-            var audio = new Audio();
-            
-            if (!audio.speaking) {
-              audio.preload = 'auto';  
-              audio.src = 'phrases/1000.wav';
-              audio.play();
-              audio.constructor;
-            }
-            
+    
                        
             if (AudioOn) {
-              if (!synth.speaking) {
-                  if (Phrase != lastPhrase) {
-                      speak(Phrase);
-                      lastPhrase = Phrase;
-                      OldEvent = CurrEvent;
-                  }
+              if (typeSpeeker == "0") {
+                PhraseMode = 2;  
+                filesSpeaker(Phrase);
+                lastPhrase = Phrase;
+                OldEvent = CurrEvent;  
+              } else  { 
+                PhraseMode = 1;  
+                if (!synth.speaking) {
+                    if (Phrase != lastPhrase) {
+                        speak(Phrase);
+                        lastPhrase = Phrase;
+                        OldEvent = CurrEvent;
+                    }
+                }
               }
-            }
+            } // if (AudioOn)
+            
             if (menu) {
 
                 cv.textAlign = "left";
@@ -703,7 +761,7 @@ function MyDrawEvents(cv, Width, Height, menu) {
             fev = -1;
             sev = 0;
             for (var i = 0; i < TLT[ActiveTL].Count - 1; i++) {
-                if (TLT[ActiveTL].Events[i].Finish > TLP.Position) {
+                if (+TLT[ActiveTL].Events[i].Finish > +TLP.Position) {
                     sev = i;
                     break;
                 }
@@ -1179,7 +1237,7 @@ function MyDrawDevEvents(cv, Width, Height, device, menu) {
 
             cv.textAlign = "right";
             //cv.fillText(FirstEvent + EventOffset + 1, +LeftDev - 10, +top + +tmph / 2);
-            var evps = +CurrEvent + +EventOffset + 1;
+            var evps = +FirstEvent + +EventOffset + 1;
             lentxt = cv.measureText(evps).width;
             if (lentxt < LeftDev - 10) {
                 cv.textAlign = "right";
@@ -1359,7 +1417,7 @@ function MyDrawDevEvents(cv, Width, Height, device, menu) {
 
                     cv.textAlign = "right";
                     //cv.fillText(IndexEvent + EventOffset + 1, +LeftDev - 10, +top + +tmph / 2);
-                    var evps = +CurrEvent + +EventOffset + i + 1;
+                    var evps = +IndexEvent + +EventOffset + i + 1;
                     lentxt = cv.measureText(evps).width;
                     if (lentxt < LeftDev - 10) {
                         cv.textAlign = "right";
@@ -1419,7 +1477,7 @@ function MyDrawDevEvents(cv, Width, Height, device, menu) {
             fev = -1;
             sev = 0;
             for (var i = 0; i < TLT[ActiveTL].Count - 1; i++) {
-                if (TLT[ActiveTL].Events[i].Finish > TLP.Position) {
+                if (+TLT[ActiveTL].Events[i].Finish > +TLP.Position) {
                     sev = i;
                     break;
                 }

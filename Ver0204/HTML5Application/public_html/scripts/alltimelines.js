@@ -714,8 +714,8 @@ function MyDrawEditor(cv, Width, Height, Top, Intrvl, Hght) {
         cv.beginPath();  
         cv.moveTo(+evlft, Top + Hght);  
         cv.lineTo(+evlft, Top);
-        cv.lineTo(+evlft + +SafeZone, Top + +SafeZone/2);
-        cv.lineTo(+evlft, Top + +SafeZone);
+        cv.lineTo(+evlft + +evSafeZone, Top + +evSafeZone/2);
+        cv.lineTo(+evlft, Top + +evSafeZone);
         cv.lineWidth = 1;
         cv.strokeStyle = evColor;
         cv.stroke();
@@ -1139,8 +1139,8 @@ function MyDrawTimeline(cv, Width, Height, PosTL, Top, Hght) {
         cv.beginPath();  
         cv.moveTo(+evlft, Top + Hght);  
         cv.lineTo(+evlft, Top);
-        cv.lineTo(+evlft + +SafeZone/2, Top + +SafeZone/4);
-        cv.lineTo(+evlft, Top + +SafeZone/2);
+        cv.lineTo(+evlft + +evSafeZone/2, Top + +evSafeZone/4);
+        cv.lineTo(+evlft, Top + +evSafeZone/2);
         cv.lineWidth = 1;
         cv.strokeStyle = evColor;
         cv.stroke();
