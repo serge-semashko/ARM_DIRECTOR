@@ -6,7 +6,7 @@ interface
 uses
     Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
     Dialogs, StdCtrls, Buttons, ExtCtrls, HTTPSend, blcksock, winsock, Synautil,
-    strutils, system.json, AppEvnts, Menus, inifiles, das_const, ipcthrd,
+    strutils, system.json, AppEvnts, Menus, inifiles, das_const,
     TeEngine, Series, TeeProcs, Chart, VclTee.TeeGDIPlus, System.Generics.Collections,
     mmsystem,web.win.sockets;
 type
@@ -61,15 +61,6 @@ type
         function ProcessHttpRequest(Request, URI: string): Integer;
     end;
 
-    THardRec = packed record
-        DateTimeSTR: array[0..5] of ansichar;
-        UpdateCounter: int64;
-        VersionSignature: array[0..5] of ansichar;
-        JSONAll: array[0..10000000] of ansichar;
-        JSONStore: array[0..10000000] of ansichar;
-    end;
-
-    PHardRec = ^THardRec;
 
     TWebVar = packed record
         Name: ansistring;
@@ -95,9 +86,6 @@ var
     Keyvalues: tstringlist;
     JsonVars: tstringlist;
     PrevUpdates: Integer = 0;
-    HardRec: PHardRec;
-    testbuf: array[0..1000] of byte absolute HardRec;
-    shared: tsharedmem;
     PortNum: Integer = 9090;
     textfromjson: string = '[]';
     currentData: string = '{}';
@@ -736,7 +724,7 @@ begin
         if amppos > 0 then
             jreq := copy(stmp, 1, amppos - 2);
     end;
-    resp := HardRec.JSONAll;
+    resp := '{"":""}';
 
     pos_var_name := pos('GET_', ansiuppercase(URI)) + 4;
     if pos_var_name > 4 then begin
@@ -862,7 +850,7 @@ begin
             end;
         end;
     end;
-    if resp='' then resp := HardRec.JSONAll;
+    if resp='' then resp := '{}';
     resp := jreq + '({"time":'+vartime+', "varValue": ' + resp + '});';
     result := resp;
 end;
@@ -953,18 +941,6 @@ var
     ini: tinifile;
 
 initialization
-    shared := tsharedmem.Create('webredis tempore mutanur', sizeof(ThardRec) + 1000);
-
-    HardRec := Pointer(Integer(shared.Buffer) + 100);
-
-    if (HardRec.UpdateCounter <> 13131313) then begin
-        fillchar(HardRec.JSONAll, 1000000, 0);
-        HardRec.UpdateCounter := 13131313;
-        HardRec.JSONAll := '{}'
-    end;
-    HardRec.UpdateCounter := 0;
-//    varNames := tstringlist.Create;
-//    Varvalues:= tstringlist.Create;
     EmptyWebVar.Name := '';
     EmptyWebVar.baseName := '';
     EmptyWebVar.jsonStr := '{}';

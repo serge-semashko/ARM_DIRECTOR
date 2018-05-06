@@ -53,6 +53,9 @@ function GetDevValues(ev) {
 }
 
 function GetCurrEvent() {
+  if ( typeof TLT == "undefined") {
+    return -1; 
+  }     
   if ( typeof TLT[ActiveTL]== "undefined") {
     return -1; 
   }     

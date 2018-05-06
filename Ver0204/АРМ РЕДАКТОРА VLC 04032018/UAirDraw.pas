@@ -356,106 +356,106 @@ end;
 
 procedure TAirOneEvent.SendHTTPOneEvent(nom: integer);
 begin
-
-  try
-    SaveToJson;
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'BackGround',
-      CTHTML(ColorToRgb(BackGround)));
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'ForeGround',
-      CTHTML(ColorToRgb(ForeGround)));
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'Interval', inttostr(Interval));
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'fsize',
-      inttostr(TLParameters.FrameSize));
-
-    // ROrder : TRect;
-    // (*HTTP*) addVariable(1,'Event', inttostr(nom),'',inttostr());
-    // RNumber : TRect;
-    // (*HTTP*) addVariable(1,'Event', inttostr(nom),'',inttostr());
-    // RSecond : Trect;
-    // (*HTTP*) addVariable(1,'Event', inttostr(nom),'',inttostr());
-    // REvent : TRect;
-    // (*HTTP*) addVariable(1,'Event', inttostr(nom),'',inttostr());
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'sf5',
-      CTHTML(ColorToRgb(SmoothColor(ForeGround, 5))));
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'sb5',
-      CTHTML(SmoothColor(BackGround, 5)));
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'sct25',
-      CTHTML(ColorToRgb(SmoothColor(ColorTimeline, 25))));
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'sct56',
-      CTHTML(ColorToRgb(SmoothColor(ColorTimeline, 56))));
-
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'eTop', inttostr(REvent.Top));
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'eLeft', inttostr(REvent.Left));
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'eRight', inttostr(REvent.Right));
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'eBottom', inttostr(REvent.Bottom));
-
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'nTop', inttostr(RNumber.Top));
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'nLeft', inttostr(RNumber.Left));
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'nRight', inttostr(RNumber.Right));
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'nBottom', inttostr(RNumber.Bottom));
-
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'oTop', inttostr(ROrder.Top));
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'oLeft', inttostr(ROrder.Left));
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'oRight', inttostr(ROrder.Right));
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'oBottom', inttostr(ROrder.Bottom));
-
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'sTop', inttostr(RSecond.Top));
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'sLeft', inttostr(RSecond.Left));
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'sRight', inttostr(RSecond.Right));
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'sBottom', inttostr(RSecond.Bottom));
-
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'ColorTimeline',
-      CTHTML(ColorToRgb(ColorTimeline)));
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'ColorEvent',
-      CTHTML(ColorToRgb(ColorEvent)));
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'Number', inttostr(Number));
-    (* HTTP *) addVariable(1, 'Event', inttostr(nom), 'Dev', inttostr(Dev));
-    (* HTTP *) addVariable(1, 'Event', inttostr(nom), 'Start', inttostr(Start));
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'Finish', inttostr(Finish));
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'Duration', inttostr(Duration));
-    (* HTTP *) addVariable(1, 'Event', inttostr(nom), 'Mix', inttostr(Mix));
-    (* HTTP *) addVariable(1, 'Event', inttostr(nom), 'Text', Text);
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'Top', inttostr(Rect.Top));
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'Left', inttostr(Rect.Left));
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'Right', inttostr(Rect.Right));
-    (* HTTP *)
-    addVariable(1, 'Event', inttostr(nom), 'Bottom', inttostr(Rect.Bottom));
-  except
-    on E: Exception do
-      WriteLog('MAIN', 'TAirOneEvent.SendHTTPOneEvent | ' + E.Message);
-  end;
+//
+//  try
+//    SaveToJson;
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'BackGround',
+//      CTHTML(ColorToRgb(BackGround)));
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'ForeGround',
+//      CTHTML(ColorToRgb(ForeGround)));
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'Interval', inttostr(Interval));
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'fsize',
+//      inttostr(TLParameters.FrameSize));
+//
+//    // ROrder : TRect;
+//    // (*HTTP*) addVariable(1,'Event', inttostr(nom),'',inttostr());
+//    // RNumber : TRect;
+//    // (*HTTP*) addVariable(1,'Event', inttostr(nom),'',inttostr());
+//    // RSecond : Trect;
+//    // (*HTTP*) addVariable(1,'Event', inttostr(nom),'',inttostr());
+//    // REvent : TRect;
+//    // (*HTTP*) addVariable(1,'Event', inttostr(nom),'',inttostr());
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'sf5',
+//      CTHTML(ColorToRgb(SmoothColor(ForeGround, 5))));
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'sb5',
+//      CTHTML(SmoothColor(BackGround, 5)));
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'sct25',
+//      CTHTML(ColorToRgb(SmoothColor(ColorTimeline, 25))));
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'sct56',
+//      CTHTML(ColorToRgb(SmoothColor(ColorTimeline, 56))));
+//
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'eTop', inttostr(REvent.Top));
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'eLeft', inttostr(REvent.Left));
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'eRight', inttostr(REvent.Right));
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'eBottom', inttostr(REvent.Bottom));
+//
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'nTop', inttostr(RNumber.Top));
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'nLeft', inttostr(RNumber.Left));
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'nRight', inttostr(RNumber.Right));
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'nBottom', inttostr(RNumber.Bottom));
+//
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'oTop', inttostr(ROrder.Top));
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'oLeft', inttostr(ROrder.Left));
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'oRight', inttostr(ROrder.Right));
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'oBottom', inttostr(ROrder.Bottom));
+//
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'sTop', inttostr(RSecond.Top));
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'sLeft', inttostr(RSecond.Left));
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'sRight', inttostr(RSecond.Right));
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'sBottom', inttostr(RSecond.Bottom));
+//
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'ColorTimeline',
+//      CTHTML(ColorToRgb(ColorTimeline)));
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'ColorEvent',
+//      CTHTML(ColorToRgb(ColorEvent)));
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'Number', inttostr(Number));
+//    (* HTTP *) addVariable(1, 'Event', inttostr(nom), 'Dev', inttostr(Dev));
+//    (* HTTP *) addVariable(1, 'Event', inttostr(nom), 'Start', inttostr(Start));
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'Finish', inttostr(Finish));
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'Duration', inttostr(Duration));
+//    (* HTTP *) addVariable(1, 'Event', inttostr(nom), 'Mix', inttostr(Mix));
+//    (* HTTP *) addVariable(1, 'Event', inttostr(nom), 'Text', Text);
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'Top', inttostr(Rect.Top));
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'Left', inttostr(Rect.Left));
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'Right', inttostr(Rect.Right));
+//    (* HTTP *)
+//    addVariable(1, 'Event', inttostr(nom), 'Bottom', inttostr(Rect.Bottom));
+//  except
+//    on E: Exception do
+//      WriteLog('MAIN', 'TAirOneEvent.SendHTTPOneEvent | ' + E.Message);
+//  end;
 end;
 
 function TAirOneEvent.Init(cv: tcanvas; tp, hgh, intrv, sz1, sz2, sz3,
@@ -1350,70 +1350,70 @@ procedure TPanelAir.SendHTTPEvents;
 var
   i: integer;
 begin
-  try
-    (* HTTP *)
-    addVariable(1, 'EventsBackGround',
-      CTHTML(ColorToRgb(AirEvents.BackGround)));
-    (* HTTP *)
-    addVariable(1, 'EventsForeGround',
-      CTHTML(ColorToRgb(AirEvents.ForeGround)));
-    AirEvents.CurrEvent.SendHTTPOneEvent(0);
-
-    (* HTTP *) addVariable(1, 'EventsCount', inttostr(AirEvents.Count));
-    AirEvents.CurrTime.SendHttp;
-    for i := 0 to AirEvents.Count - 1 do
-      AirEvents.Events[i].SendHTTPOneEvent(i + 1);
-  except
-    on E: Exception do
-      WriteLog('MAIN', 'TPanelAir.SendHTTPEvents | ' + E.Message);
-  end;
+//  try
+//    (* HTTP *)
+//    addVariable(1, 'EventsBackGround',
+//      CTHTML(ColorToRgb(AirEvents.BackGround)));
+//    (* HTTP *)
+//    addVariable(1, 'EventsForeGround',
+//      CTHTML(ColorToRgb(AirEvents.ForeGround)));
+//    AirEvents.CurrEvent.SendHTTPOneEvent(0);
+//
+//    (* HTTP *) addVariable(1, 'EventsCount', inttostr(AirEvents.Count));
+//    AirEvents.CurrTime.SendHttp;
+//    for i := 0 to AirEvents.Count - 1 do
+//      AirEvents.Events[i].SendHTTPOneEvent(i + 1);
+//  except
+//    on E: Exception do
+//      WriteLog('MAIN', 'TPanelAir.SendHTTPEvents | ' + E.Message);
+//  end;
 end;
 
 procedure TPanelAir.SendHTTPDevice;
 var
   cnt: integer;
 begin
-  try
-    with AirDevices do
-    begin
-      for cnt := 0 to Count - 1 do
-      begin
-        (* HTTP *)
-        addVariable(1, 'Dev', inttostr(cnt), 'Number',
-          inttostr(Devices[cnt].Number));
-        (* HTTP *)
-        addVariable(1, 'Dev', inttostr(cnt), 'Value',
-          inttostr(Devices[cnt].Value));
-        with Devices[cnt] do
-        begin
-          (* HTTP *)
-          addVariable(1, 'Dev', inttostr(cnt), 'Top', inttostr(Rect.Top));
-          (* HTTP *)
-          addVariable(1, 'Dev', inttostr(cnt), 'Left', inttostr(Rect.Left));
-          (* HTTP *)
-          addVariable(1, 'Dev', inttostr(cnt), 'Right', inttostr(Rect.Right));
-          (* HTTP *)
-          addVariable(1, 'Dev', inttostr(cnt), 'Bottom', inttostr(Rect.Bottom));
-        end;
-        if Devices[cnt].Curr then (* HTTP *)
-          addVariable(1, 'Dev', inttostr(cnt), 'Curr', 'Yes')
-        else (* HTTP *)
-          addVariable(1, 'Dev', inttostr(cnt), 'Curr', 'No');
-        if Devices[cnt].next then (* HTTP *)
-          addVariable(1, 'Dev', inttostr(cnt), 'Next', 'Yes')
-        else (* HTTP *)
-          addVariable(1, 'Dev', inttostr(cnt), 'Next', 'No');
-        (* HTTP *)
-        addVariable(1, 'Dev', inttostr(cnt), 'Text', Devices[cnt].Text);
-        (* HTTP *)
-        addVariable(1, 'Dev', inttostr(cnt), 'Color',
-          CTHTML(ColorToRgb(Devices[cnt].Color)));
-      end;
-    end;
-  except
-    on E: Exception do
-      WriteLog('MAIN', 'TPanelAir.SendHTTPDevice | ' + E.Message);
-  end;
+//  try
+//    with AirDevices do
+//    begin
+//      for cnt := 0 to Count - 1 do
+//      begin
+//        (* HTTP *)
+//        addVariable(1, 'Dev', inttostr(cnt), 'Number',
+//          inttostr(Devices[cnt].Number));
+//        (* HTTP *)
+//        addVariable(1, 'Dev', inttostr(cnt), 'Value',
+//          inttostr(Devices[cnt].Value));
+//        with Devices[cnt] do
+//        begin
+//          (* HTTP *)
+//          addVariable(1, 'Dev', inttostr(cnt), 'Top', inttostr(Rect.Top));
+//          (* HTTP *)
+//          addVariable(1, 'Dev', inttostr(cnt), 'Left', inttostr(Rect.Left));
+//          (* HTTP *)
+//          addVariable(1, 'Dev', inttostr(cnt), 'Right', inttostr(Rect.Right));
+//          (* HTTP *)
+//          addVariable(1, 'Dev', inttostr(cnt), 'Bottom', inttostr(Rect.Bottom));
+//        end;
+//        if Devices[cnt].Curr then (* HTTP *)
+//          addVariable(1, 'Dev', inttostr(cnt), 'Curr', 'Yes')
+//        else (* HTTP *)
+//          addVariable(1, 'Dev', inttostr(cnt), 'Curr', 'No');
+//        if Devices[cnt].next then (* HTTP *)
+//          addVariable(1, 'Dev', inttostr(cnt), 'Next', 'Yes')
+//        else (* HTTP *)
+//          addVariable(1, 'Dev', inttostr(cnt), 'Next', 'No');
+//        (* HTTP *)
+//        addVariable(1, 'Dev', inttostr(cnt), 'Text', Devices[cnt].Text);
+//        (* HTTP *)
+//        addVariable(1, 'Dev', inttostr(cnt), 'Color',
+//          CTHTML(ColorToRgb(Devices[cnt].Color)));
+//      end;
+//    end;
+//  except
+//    on E: Exception do
+//      WriteLog('MAIN', 'TPanelAir.SendHTTPDevice | ' + E.Message);
+//  end;
 end;
 
 procedure TPanelAir.SetValues;
@@ -1423,9 +1423,9 @@ begin
       exit;
     try
       ExportInProgress := true;
-      BeginJson;
-      SetValues_40mc;
-      SaveJson;
+//      BeginJson;
+//      SetValues_40mc;
+//      SaveJson;
     finally
     end;
     ExportInProgress := false;
@@ -1442,44 +1442,44 @@ var
   s: string;
 begin
   try
-    (* HTTP *) addVariable(1, 'Regim', form1.lbMode.Caption);
-    (* HTTP *)
-    addVariable(1, 'LeftScreenFrame', inttostr(TLParameters.ScreenStartFrame));
-    (* HTTP *)
-    addVariable(1, 'RightScreenFrame', inttostr(TLParameters.ScreenEndFrame));
-    (* HTTP *) addVariable(1, 'ecvH', inttostr(bmpEvents.Height));
-    (* HTTP *) addVariable(1, 'ecvW', inttostr(bmpEvents.Width));
-    (* HTTP *) addVariable(1, 'dcvH', inttostr(bmpAirDevices.Height));
-    (* HTTP *) addVariable(1, 'dcvW', inttostr(bmpAirDevices.Width));
-    (* HTTP *) addVariable(1, 'CurrPosition', inttostr(TLParameters.Position));
-    (* HTTP *) addVariable(1, 'StartClip', inttostr(TLParameters.Start));
-    (* HTTP *) addVariable(1, 'EndClip', inttostr(TLParameters.Finish));
-    (* HTTP *) addVariable(1, 'Duration', inttostr(TLParameters.Duration));
-    (* HTTP *) addVariable(1, 'Preroll', inttostr(TLParameters.Preroll));
-    (* HTTP *) addVariable(1, 'ZeroPoint', inttostr(TLParameters.ZeroPoint));
-    (* HTTP *) addVariable(1, 'FrameSize', inttostr(TLParameters.FrameSize));
-    (* HTTP *) addVariable(1, 'ClipName', form1.Label2.Caption);
-    case TLParameters.vlcmode of
-      play: (* HTTP *)
-        addVariable(1, 'StatePlayer', 'Play');
-      Stop: (* HTTP *)
-        addVariable(1, 'StatePlayer', 'Stop');
-      Paused: (* HTTP *)
-        addVariable(1, 'StatePlayer', 'Pause');
-    end;
+//    (* HTTP *) addVariable(1, 'Regim', form1.lbMode.Caption);
+//    (* HTTP *)
+//    addVariable(1, 'LeftScreenFrame', inttostr(TLParameters.ScreenStartFrame));
+//    (* HTTP *)
+//    addVariable(1, 'RightScreenFrame', inttostr(TLParameters.ScreenEndFrame));
+//    (* HTTP *) addVariable(1, 'ecvH', inttostr(bmpEvents.Height));
+//    (* HTTP *) addVariable(1, 'ecvW', inttostr(bmpEvents.Width));
+//    (* HTTP *) addVariable(1, 'dcvH', inttostr(bmpAirDevices.Height));
+//    (* HTTP *) addVariable(1, 'dcvW', inttostr(bmpAirDevices.Width));
+//    (* HTTP *) addVariable(1, 'CurrPosition', inttostr(TLParameters.Position));
+//    (* HTTP *) addVariable(1, 'StartClip', inttostr(TLParameters.Start));
+//    (* HTTP *) addVariable(1, 'EndClip', inttostr(TLParameters.Finish));
+//    (* HTTP *) addVariable(1, 'Duration', inttostr(TLParameters.Duration));
+//    (* HTTP *) addVariable(1, 'Preroll', inttostr(TLParameters.Preroll));
+//    (* HTTP *) addVariable(1, 'ZeroPoint', inttostr(TLParameters.ZeroPoint));
+//    (* HTTP *) addVariable(1, 'FrameSize', inttostr(TLParameters.FrameSize));
+//    (* HTTP *) addVariable(1, 'ClipName', form1.Label2.Caption);
+//    case TLParameters.vlcmode of
+//      play: (* HTTP *)
+//        addVariable(1, 'StatePlayer', 'Play');
+//      Stop: (* HTTP *)
+//        addVariable(1, 'StatePlayer', 'Stop');
+//      Paused: (* HTTP *)
+//        addVariable(1, 'StatePlayer', 'Pause');
+//    end;
     with TLZone do
     begin
       // Если тайм-линия Медиа
       if TLEditor.TypeTL = tlmedia then
       begin
-        (* HTTP *) addVariable(1, 'TypeTL', 'Media');
+//        (* HTTP *) addVariable(1, 'TypeTL', 'Media');
         exit;
       end;
 
       // Если текстовая тайм-линия
       if TLEditor.TypeTL = tltext then
       begin
-        (* HTTP *) addVariable(1, 'TypeTL', 'Text');
+//        (* HTTP *) addVariable(1, 'TypeTL', 'Text');
         AirEvents.CurrEvent.Clear;
         AirEvents.CurrTime.Start := -1;
         AirEvents.CurrTime.Finish := -1;
@@ -1519,10 +1519,10 @@ begin
       end;
 
       // Если тайм-линия устройств
-      (* HTTP *) addVariable(1, 'TypeTL', 'Device');
+//      (* HTTP *) addVariable(1, 'TypeTL', 'Device');
       with AirDevices do
       begin
-        (* HTTP *) addVariable(1, 'CountDevice', inttostr(Count));
+//        (* HTTP *) addVariable(1, 'CountDevice', inttostr(Count));
         for j := 0 to Count - 1 do
         begin
           Devices[j].Value := -1;
@@ -1651,74 +1651,74 @@ end;
 
 procedure TAirSecond.SendHttp;
 begin
-  try
-    // BackGround : TColor;
-    // ForeGround : TColor;
-    // Color      : TColor;
-    // Start      : longint;
-    // Finish     : longint;
-    // Duration   : longint;
-    // Mix        : longint;
-    // Rect       : TRect;
-    // RTC        : TRect;
-    // RSecond    : TRect;
-
-    (* HTTP *)
-    addVariable(1, 'airSecond', inttostr(0), 'BackGround',
-      CTHTML(ColorToRgb(BackGround)));
-    (* HTTP *)
-    addVariable(1, 'airSecond', inttostr(0), 'sc56',
-      CTHTML(ColorToRgb(SmoothColor(ForeGround, 56))));
-    (* HTTP *)
-    addVariable(1, 'airSecond', inttostr(0), 'ForeGround',
-      CTHTML(ColorToRgb(ForeGround)));
-    (* HTTP *)
-    addVariable(1, 'airSecond', inttostr(0), 'Color',
-      CTHTML(ColorToRgb(Color)));
-    (* HTTP *)
-    addVariable(1, 'airSecond', inttostr(0), 'Start', inttostr(Start));
-    (* HTTP *)
-    addVariable(1, 'airSecond', inttostr(0), 'Finish', inttostr(Finish));
-    (* HTTP *)
-    addVariable(1, 'airSecond', inttostr(0), 'Duration', inttostr(Duration));
-    (* HTTP *) addVariable(1, 'airSecond', inttostr(0), 'Mix', inttostr(Mix));
-    (* HTTP *)
-    (* HTTP *)
-    addVariable(1, 'airSecond', inttostr(0), 'Left', inttostr(Rect.Left));
-    (* HTTP *)
-    addVariable(1, 'airSecond', inttostr(0), 'Top', inttostr(Rect.Top));
-    (* HTTP *)
-    addVariable(1, 'airSecond', inttostr(0), 'Right', inttostr(Rect.Right));
-    (* HTTP *)
-    addVariable(1, 'airSecond', inttostr(0), 'Bottom', inttostr(Rect.Bottom));
-
-    (* HTTP *)
-    addVariable(1, 'airSecond', inttostr(0), 'tcLeft', inttostr(RTC.Left));
-    (* HTTP *)
-    addVariable(1, 'airSecond', inttostr(0), 'tcTop', inttostr(RTC.Top));
-    (* HTTP *)
-    addVariable(1, 'airSecond', inttostr(0), 'tcRight', inttostr(RTC.Right));
-    (* HTTP *)
-    addVariable(1, 'airSecond', inttostr(0), 'tcBottom', inttostr(RTC.Bottom));
-
-    (* HTTP *)
-    addVariable(1, 'airSecond', inttostr(0), 'sLeft', inttostr(RSecond.Left));
-    (* HTTP *)
-    addVariable(1, 'airSecond', inttostr(0), 'sTop', inttostr(RSecond.Top));
-    (* HTTP *)
-    addVariable(1, 'airSecond', inttostr(0), 'sRight', inttostr(RSecond.Right));
-    (* HTTP *)
-    addVariable(1, 'airSecond', inttostr(0), 'sBottom',
-      inttostr(RSecond.Bottom));
-    (* HTTP *)
-    addVariable(1, 'airSecond', '0', 'fsize', inttostr(TLParameters.FrameSize));
-    (* HTTP *)
-    addVariable(1, 'airSecond', '0', 'timeCode',
-      FramesToShortStr(TLParameters.Position - TLParameters.ZeroPoint));
-  except
-    on E: Exception do
-      WriteLog('MAIN', 'TAirSecond.SendHttp | ' + E.Message);
-  end;
+//  try
+//    // BackGround : TColor;
+//    // ForeGround : TColor;
+//    // Color      : TColor;
+//    // Start      : longint;
+//    // Finish     : longint;
+//    // Duration   : longint;
+//    // Mix        : longint;
+//    // Rect       : TRect;
+//    // RTC        : TRect;
+//    // RSecond    : TRect;
+//
+//    (* HTTP *)
+//    addVariable(1, 'airSecond', inttostr(0), 'BackGround',
+//      CTHTML(ColorToRgb(BackGround)));
+//    (* HTTP *)
+//    addVariable(1, 'airSecond', inttostr(0), 'sc56',
+//      CTHTML(ColorToRgb(SmoothColor(ForeGround, 56))));
+//    (* HTTP *)
+//    addVariable(1, 'airSecond', inttostr(0), 'ForeGround',
+//      CTHTML(ColorToRgb(ForeGround)));
+//    (* HTTP *)
+//    addVariable(1, 'airSecond', inttostr(0), 'Color',
+//      CTHTML(ColorToRgb(Color)));
+//    (* HTTP *)
+//    addVariable(1, 'airSecond', inttostr(0), 'Start', inttostr(Start));
+//    (* HTTP *)
+//    addVariable(1, 'airSecond', inttostr(0), 'Finish', inttostr(Finish));
+//    (* HTTP *)
+//    addVariable(1, 'airSecond', inttostr(0), 'Duration', inttostr(Duration));
+//    (* HTTP *) addVariable(1, 'airSecond', inttostr(0), 'Mix', inttostr(Mix));
+//    (* HTTP *)
+//    (* HTTP *)
+//    addVariable(1, 'airSecond', inttostr(0), 'Left', inttostr(Rect.Left));
+//    (* HTTP *)
+//    addVariable(1, 'airSecond', inttostr(0), 'Top', inttostr(Rect.Top));
+//    (* HTTP *)
+//    addVariable(1, 'airSecond', inttostr(0), 'Right', inttostr(Rect.Right));
+//    (* HTTP *)
+//    addVariable(1, 'airSecond', inttostr(0), 'Bottom', inttostr(Rect.Bottom));
+//
+//    (* HTTP *)
+//    addVariable(1, 'airSecond', inttostr(0), 'tcLeft', inttostr(RTC.Left));
+//    (* HTTP *)
+//    addVariable(1, 'airSecond', inttostr(0), 'tcTop', inttostr(RTC.Top));
+//    (* HTTP *)
+//    addVariable(1, 'airSecond', inttostr(0), 'tcRight', inttostr(RTC.Right));
+//    (* HTTP *)
+//    addVariable(1, 'airSecond', inttostr(0), 'tcBottom', inttostr(RTC.Bottom));
+//
+//    (* HTTP *)
+//    addVariable(1, 'airSecond', inttostr(0), 'sLeft', inttostr(RSecond.Left));
+//    (* HTTP *)
+//    addVariable(1, 'airSecond', inttostr(0), 'sTop', inttostr(RSecond.Top));
+//    (* HTTP *)
+//    addVariable(1, 'airSecond', inttostr(0), 'sRight', inttostr(RSecond.Right));
+//    (* HTTP *)
+//    addVariable(1, 'airSecond', inttostr(0), 'sBottom',
+//      inttostr(RSecond.Bottom));
+//    (* HTTP *)
+//    addVariable(1, 'airSecond', '0', 'fsize', inttostr(TLParameters.FrameSize));
+//    (* HTTP *)
+//    addVariable(1, 'airSecond', '0', 'timeCode',
+//      FramesToShortStr(TLParameters.Position - TLParameters.ZeroPoint));
+//  except
+//    on E: Exception do
+//      WriteLog('MAIN', 'TAirSecond.SendHttp | ' + E.Message);
+//  end;
 end;
 
 initialization

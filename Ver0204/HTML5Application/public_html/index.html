@@ -33,10 +33,10 @@ and open the template in the editor.
     </head>
     <body>
         <div style="display:block;" class="menu" id="select_scr">
-            <table  class="menu"  id="select_menu" cellspacing=0 border=1>
+            <table  class="menu"  id="select_menu" cellspacing=0 border=0>
                 <tr>
                     <th colspan="50" style>
-                        <p id="armStatus" style="color:red">ARM Director</p>
+                        <p id="armStatus" style="color:red">ARM Director v1</p>
                         <p id="serverStatus" style="color:red ">Cервер</p>
                     </th>
                 </tr>
@@ -71,21 +71,21 @@ and open the template in the editor.
 
                 <tr>    
                     <td colspan = 99>   
-                        <input checked type="radio" id="scrChoice0"
+                        <input onClick="execMain()" checked type="radio" id="scrChoice0"
                                name="type01" value="0">
                         <label for="scrChoice0">Полный экран</label>
                     </td>
                 </tr>
                 <tr>    
                     <td colspan = 99>   
-                        <input checked type="radio" id="scrChoice1"
+                        <input onClick="execMain()" checked type="radio" id="scrChoice1"
                                name="type01" value="1">
                         <label for="scrChoice1">Экран События устройства</label>
                     </td>
                 </tr>
                 <tr>    
                     <td colspan = 99>   
-                        <input checked type="radio" id="scrChoice2"
+                        <input checked onClick="execMain()" type="radio" id="scrChoice2"
                                name="type01" value="4">
                         <label for="scrChoice2">Настраиваемый экран</label>
                     </td>
@@ -205,16 +205,14 @@ and open the template in the editor.
                 </tr>
 
                 <tr>
-                    <td colspan='6'>
+                    <td colspan='3'>
                         Устройство 1
                     </td>
                     <td> 
                         <input id="dev1" type="number" value=10 min="1" max="31" style="width: 6em;">
                     </td>
-                </tr>
-                <tr>
-                    <td colspan='6'>
-                        Количество событий Устройство 1
+                    <td colspan='2'>
+                        Количество событий
                     </td>
                     <td> 
                         <input id="dev1CountEvents" type="number" value=10 min="1" max="31" style="width: 6em;">
@@ -222,16 +220,14 @@ and open the template in the editor.
                 </tr>
 
                 <tr>
-                    <td colspan='6'>
+                    <td colspan='3'>
                         Устройство 2
                     </td>
                     <td> 
                         <input id="dev2" type="number" value=10 min="1" max="31" style="width: 6em;">
                     </td>
-                </tr>
-                <tr>
-                    <td colspan='6'>
-                        Количество событий Устройство 2
+                    <td colspan='2'>
+                        Количество событий
                     </td>
                     <td> 
                         <input id="dev2CountEvents" type="number" value=10 min="1" max="31" style="width: 6em;">
@@ -248,31 +244,22 @@ and open the template in the editor.
                     <td colspan="6" align="left">
                         <input type="checkbox" id="chk4_2" name="option2" value="a2">Показывать выбранную тайм линию  
                     </td>
-                    <td colspan="2" align="left">
+                    <td colspan="3" align="left">
                         <select class="graphSelect"  id="ActiveTL" >
                         </select>
 
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="6">
+                    <td colspan="9">
                         <input type="checkbox" id="chk4_3" name="option2" value="a2">Показывать тайм-линии
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="6">
+                    <td colspan="9">
                         <input type="checkbox" id="chk4_4" name="option2" value="a2">Показывать имена тайм-линий
                     </td>
                 </tr>    
-                <tr>
-                    <th colspan='999'>
-                        <button type=submit onClick="execMain_4();" > Продолжить </button>
-                    </th>    
-                </tr>
-                <! =================== typescr=2 ====================/>
-
-
-
             </table>    
         </div>
         <div style="display:none;" id="main">

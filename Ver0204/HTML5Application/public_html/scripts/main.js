@@ -370,9 +370,9 @@ function MyMouseUp(e) {
             mnUpSelect = false;
         }
         if (mouseX > RectHome[0] && mouseX < RectHome[2]) {
-            $("#select_scr").css("display", "block");
-            $("#main").css("display", "none");
-            clearInterval(myInterval)
+            initControls();
+            
+//            clearInterval(myInterval)
             mnHomeSelect = false;
         }
     } else {
@@ -506,9 +506,8 @@ function window_onload() {
 ;
 
 function changeTL() {
-    if ($("#select_scr").css("display") == "block") {
-        return;
-    }
+//    if ($("#select_scr").css("display") == "block") {
+//        return;
     if (typeof newTLP == "undefined") {
         return;
     }

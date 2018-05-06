@@ -34,6 +34,13 @@ function initControls() {
             inp[i].checked = true;
         }
     }
+    var inp = document.getElementsByName('voice');
+    for (var i = 0; i < inp.length; i++) {
+        if (inp[i].type == "radio" && (typeSpeeker == +inp[i].value)) {
+            inp[i].checked = true;
+        }
+    }
+
     document.getElementById("ActiveTL").options.selectedIndex = +ActiveTL;
     document.getElementById("CountEvents").value = +CountEvents;
     document.getElementById("dev1").value = Device1;
@@ -48,21 +55,22 @@ function initControls() {
     document.getElementById("chk4_2").checked = DefaultScreen4[2];//ShowEditor = document.getElementById("chk4_2").checked;
     document.getElementById("chk4_3").checked = DefaultScreen4[4];// ShowTimelines = document.getElementById("chk4_3").checked;
     document.getElementById("chk4_4").checked = DefaultScreen4[5];// ShowTimelines = document.getElementById("chk4_3").checked;
-    
+
     for (var fn = 1; fn < 6; fn++) {
         fldn = "scr_" + fn;
         var fld = +document.getElementById(fldn).options.selectedIndex - 1;
-        document.getElementById(fldn).options.selectedIndex = ScreenFields[fn - 1]+1;
+        document.getElementById(fldn).options.selectedIndex = ScreenFields[fn - 1] + 1;
     }
-    
-    
+
+
     $("#select_scr").css("display", "block");
     $("#main").css("display", "none");
 }
-function execMain_4() {
+function execMain() {
 //                speak("Test 0", 1.0, 1.4);
 
-    var value = $("[name=type01]:checked").val();
+    var value = +$("[name=type01]:checked").val();
+    typeSpeeker = +$("[name=voice]:checked").val();
     typesrc = +value;
     ActiveTL = +document.getElementById("ActiveTL").options.selectedIndex;
     for (var fn = 1; fn < 6; fn++) {
@@ -99,6 +107,18 @@ function testGZIP() {
     console.log(uarr);
 
 }
+function setViewport() {
+    window.fullScreen = true
+    scrW = window.innerWidth - 10;
+    //|| document.documentElement.clientWidth -25
+    //|| document.body.clientWidth - 25;
+    scrH = window.innerHeight - 10;
+
+}
+
+window.onclose = function() {
+       clearInterval(myInterval)
+}
 window.onload = function () {
     var dloc = document.location;
     var hostname;
@@ -118,15 +138,16 @@ window.onload = function () {
         $("table,button,input,select").css("font-size", fs + "px");
         var hd = mn.clientHeight;
         var wd = mn.clientWidth;
-        if (scrW < scrH) {
-            if (wd > scrW - 30) {
-                continue;
-            }
-        } else {
-            if (hd > scrH - 30) {
-                continue;
-            }
+//        if (scrW < scrH) {
+        if (wd > scrW *2/ 4) {
+            continue;
         }
+//        } 
+//        else {
+//            if (hd > scrH - 30) {
+//                continue;
+//            }
+//        }
         break;
     }
 
@@ -138,14 +159,22 @@ window.onload = function () {
     setInterval(getTLP, 21);
     setInterval(getTLT, 4421);
     setInterval(getTLO, 4421);
+    showPage();
+    window_onload();
+
 //    hidePage();
 };
 function hidePage() {
     $("#select_scr").css("display", "none");
     $("#main").css("display", "block");
-    window_onload();
 
 }
+function showPage() {
+    $("#select_scr").css("display", "block");
+    $("#main").css("display", "hide");
+
+}
+
 function initVoice() {
     var synth = window.speechSynthesis;
     var voiceSelect = document.querySelector('#voice_1');
