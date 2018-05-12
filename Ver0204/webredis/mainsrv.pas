@@ -8,7 +8,7 @@ uses
     Dialogs, StdCtrls, Buttons, ExtCtrls, HTTPSend, blcksock, winsock, Synautil,
     strutils, system.json, AppEvnts, Menus, inifiles, das_const,
     TeEngine, Series, TeeProcs, Chart, VclTee.TeeGDIPlus, System.Generics.Collections,
-    mmsystem,web.win.sockets;
+    mmsystem,web.win.sockets, zlibexapi,ZLIBEX;
 type
     THTTPSRVForm = class(TForm)
         Panel1: TPanel;
@@ -65,23 +65,35 @@ type
     TWebVar = packed record
         Name: ansistring;
         baseName: ansistring;
+        base_ind : integer;
         changed: int64;
         jsonStr: ansistring;
         json: TJSONvalue;
     end;
+    TWebarray = packed record
+        Name: ansistring;
+        changed: int64;
+        values : tstringlist;
+    end;
 
-
+function compress2send(instr:ansistring):ansistring;
 function ProcessRequest(URI: string): AnsiString;
 function myHTTPProcessRequest(URI: string): AnsiString;
+Procedure Update_Array(basename:string;baseind, changed: integer; varvalue:ansistring);
 
 var
+   var_array : array[0..1000] of TWebarray;
+   array_count : integer = 0;
+
         TCPHTTPsrv: TTcpServer;
         TCPsrv: TTcpServer;
     TerminateAll : boolean = false;
     LocalTCPPort: string = '9085';
     EmptyWebVar: TWebVar; // = ('','',-1,'',nil); //'','',-1,'',nil);
+
     VarCount: integer = 0;
-    webvars: array[0..10000] of twebvar;
+    webvars : array[0..10000] of twebvar;
+
     KeyNames: tstringlist;
     Keyvalues: tstringlist;
     JsonVars: tstringlist;
@@ -92,18 +104,45 @@ var
     HTTP: THTTPSend = nil;
     HTTPSRVFORM: THTTPSRVForm;
     URL: string;
+    TLP_position : ansistring= '';
+    TLP_value : ansistring= '';
     TLP_Time: int64 = -1;
     TLP_count: int64 = 0;
     TLP_speed: ansistring = '';
     CTC_Time: int64 = -1;
     CTC_count: int64 = 0;
     CTC_speed: ansistring = '';
+    hexmap : array[0..15] of ansichar = ('0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F');
 
 implementation
 
 uses
     shellapi, uwebredis_common;
 {$R *.dfm}
+function compress2send(instr:ansistring):ansistring;
+var
+   tmpstr : ansistring;
+   i1 : integer;
+   t1,t2,st : int64;
+   pch : pansichar;
+begin
+     st := timegettime;
+     getmem(pch,10000000);
+
+    tmpstr := ZCompressStr(INSTR,zcLevel3);
+    Assert(length(tmpstr)<=3000000,'Строка после компрессии больше 3мб');
+    t1 := timeGetTime-st;
+    result := '';
+    FillChar(pch^,10000000,0);
+    for i1 := 1 to length(tmpstr) do begin
+                                        pch[2*(i1-1)] := hexmap[ord(tmpstr[i1]) shr 4];
+                                        pch[2*(i1-1)+1] := hexmap[ord(tmpstr[i1]) and $0f];
+                                     end;
+    result := pch;
+    t2 := timeGetTime-st;
+    webWriteLog('len('+inttostr(length(instr))+')='+inttostr(length(result))+' compress , total time='+IntToStr(t1)+' '+IntToStr(t2));
+    freemem(pch);
+end;
 
 
 procedure THTTPSRVForm.TcpserverAccept(Sender: TObject;       //пришло сообщение
@@ -232,7 +271,10 @@ begin
             exit;
         end;
         if Length(buffer) <> 0 then
-        webWriteLog('HTTPaccept>', ' Request ' + system.Copy(buffer,0,300));
+        webWriteLog('HTTPaccept>', ' <Request> ');
+        webWriteLog('HTTPaccept>', buffer);
+        webWriteLog('HTTPaccept>', ' </Request> ');
+//           system.Copy(buffer,0,300));
             instr := buffer;
 //        for i1 := 1 to length(instr) do uri := u
         i1 := pos(#13, instr) - 1;
@@ -252,7 +294,13 @@ begin
 
 //            webWriteLog('GET_', uri + ' =  ' + outstr);
         end;
-        ClientSocket.Sendln('HTTP/1.0 ' + '200' + CRLF + 'Content-type: Text/Html' + #13#10 + 'Content-length: ' + IntToStr(length(outstr)) + #13#10 + 'Connection: close' + #13#10 + 'Date: Tue, 20 Mar 2018 14:04:45 +0300' + #13#10 + 'Server: Synapse HTTP server demo' + #13#10 + #13#10 + outstr + crlf);
+        ClientSocket.Sendln('HTTP/1.0 ' + '200' + CRLF +
+        'Access-Control-Allow-Origin: *'+ CRLF +
+        'Content-type: Text/Html' + #13#10 +
+        'Content-length: ' + IntToStr(length(outstr)) + #13#10 +
+        'Connection: close' + #13#10 +
+        'Date: Tue, 20 Mar 2018 14:04:45 +0300' + #13#10 +
+        'Server: Synapse HTTP server demo' + #13#10 + #13#10 + outstr + crlf);
         ClientSocket.Close;
 
 
@@ -523,13 +571,45 @@ begin
 //  WriteLog('Request process time = '+IntToStr(timeGetTime-st));
 end;
 
+Procedure Update_Array(basename:string;baseind, changed: integer; varvalue:ansistring);
+var
+ i1,i2,i3 : integer;
+ lst : tstringlist;
+begin
+if basename = 'TLO' then
+   baseind := baseind-1;
+
+  for i1 := 0  to array_count-1 do
+  begin
+       if basename<> var_array[i1].Name then continue;
+       while var_array[i1].values.Count<=baseind do var_array[i1].values.Add('{}');
+       var_array[i1].values[baseind]:=varvalue;
+       var_array[i1].changed:=changed;
+       exit;
+
+  end;
+  inc(array_count);
+  var_array[array_count-1].Name := basename;
+  var_array[array_count-1].changed := changed;
+  var_array[array_count-1].values := tstringlist.Create;
+  while var_array[array_count-1].values.Count<=baseind do var_array[array_count-1].values.Add('{}');
+  var_array[array_count-1].values[baseind]:=varvalue;
+
+
+
+
+
+
+end;
 procedure AddWebVar(keyname: ansistring; KeyValue: ansistring; json: tjsonvalue);
 var
     i1, i2, i3: integer;
     tnow: int64;
     JSvalue: TJSONValue;
     posstr: string;
+    s1 : string;
 begin
+    webWriteLog('addWebVar>'+keyname);
     tnow := timeGetTime;
     if keyname = 'TLP' then begin
 
@@ -541,11 +621,12 @@ begin
             TLP_time := TimeGetTime;
         end;
         JSvalue := tjsonobject(json).GetValue('Position');
-        if JSvalue <> nil then
-            posstr := JSvalue.Value
-        else
+        if JSvalue <> nil then begin
+           TLP_value := KeyValue;
+            posstr := JSvalue.Value;
+            TLP_position :=posstr;
+        end  else
             posstr := 'NIL';
-
         posstr := posstr + ' UPD/sec = ' + TLP_speed;
         HTTPSRVForm.txt1.Caption := 'TLP:' + formatdatetime('TLP: HH:NN:SS ZZZ ', now) + ' position:' + posstr;
 
@@ -567,26 +648,38 @@ begin
     else
         HTTPSRVForm.memo1.lines.Values[keyname] := formatdatetime('HH:NN:SS ZZZ ', now)
             +AnsiReplaceStr(UTF8Decode( UTF8Decode(system.copy((UTF8encode(KeyValue)), 1, 150))),'#$%#$%', ' ');
+
     for i1 := 0 to VarCount - 1 do begin
         if ansiuppercase(webvars[i1].Name) <> ansiuppercase(keyname) then
             continue;
-        webvars[i1].BaseName := keyname;
-
-        if pos('[', keyname) > 1 then
-            webvars[i1].BaseName := system.Copy(keyname, 1, pos('[', keyname) - 1);
         webvars[i1].changed := tnow;
         webvars[i1].jsonstr := KeyValue;
         webvars[i1].json.free;
         webvars[i1].json := json;
+        if webvars[i1].BaseName<>'' then update_array(webvars[i1].BaseName, webvars[i1].base_ind,webvars[i1].changed,KeyValue);
         exit;
     end;
     inc(varCount);
     i1 := varCount - 1;
-    if pos('[', keyname) > 1 then
-        webvars[i1].BaseName := system.Copy(keyname, 1, pos('[', keyname) - 1);
+    if keyname = 'TLO[3]' then
+    i1 := varCount - 1;
+
     webvars[i1].changed := tnow;
     webvars[i1].jsonstr := KeyValue;
     webvars[i1].name := keyname;
+    if pos('[', keyname) > 1 then begin
+        webvars[i1].BaseName := system.Copy(keyname, 1, pos('[', keyname) - 1);
+        if pos(']', keyname) > 1 then begin
+            s1 := system.Copy(keyname,pos('[', keyname)+1, pos(']', keyname) - pos('[', keyname)-1 );
+            val(s1,i2,i3);
+            if i3=0 then begin
+                     webvars[i1].BaseName := system.Copy(keyname, 1, pos('[', keyname) - 1);
+                     webvars[i1].Base_ind := i2;
+                     update_array(webvars[i1].BaseName, webvars[i1].base_ind,webvars[i1].changed,KeyValue);
+            end;
+        end;
+    end;
+
 
 end;
 
@@ -691,7 +784,51 @@ begin
 
 end;
 
-function ListWebVars: ansistring;
+function GetWeb_ARRay(keyName: ansistring): TWebVar;
+var
+    i1, i2, i3: integer;
+    str1: string;
+    json: tjsonobject;
+    baseName: ansistring;
+    SelName: AnsiString;
+    Selvalue: AnsiString;
+    jsarr :TJSONArray;
+    maxid : integer;
+    tmjs : TWebVar;
+begin
+    result := EmptyWebVar;
+    for i1 := 0 to array_count - 1 do begin
+        if var_array[i1].Name <> keyName then
+            continue;
+        if var_array[i1].changed < 0 then continue;
+        result.jsonStr:='[';
+        for i2 := 0 to var_array[i1].values.Count-1 do
+        begin
+          if length(var_array[i1].values[i2])<5 then
+          begin
+             result.jsonStr := '';
+             result.changed := -1;
+             exit;
+          end;
+
+          if i2  = (var_array[i1].values.Count-1)
+          then
+              result.jsonStr:=result.jsonStr+ansistring(var_array[i1].values[i2])
+          else
+              result.jsonStr:=result.jsonStr+ansistring(var_array[i1].values[i2])+',';
+
+        end;
+
+       result.jsonStr:=result.jsonStr+']';
+       result.changed := var_array[i1].changed;
+
+    end;
+end;
+
+
+
+
+function ListWebVars: ansistring;overload;
 var
     i1, i2, i3: integer;
     str1: string;
@@ -709,6 +846,31 @@ begin
     end;
     result := result + '}';
 end;
+
+function http_ListWebVars: ansistring;overload;
+var
+    i1, i2, i3: integer;
+    str1: string;
+    json: tjsonobject;
+    baseName: ansistring;
+    SelName: AnsiString;
+    Selvalue: AnsiString;
+begin
+    result := '{';
+    for i1 := 0 to array_count - 1 do begin
+            result := result + '"' + var_array[i1].Name + '"' + ':"' + IntToStr(var_array[i1].changed) + '",';
+    end;
+    if TLP_position<>'' then
+          result := result + '"TLP_value":' + TLP_value+ ',';
+    for i1 := 0 to VarCount - 1 do begin
+        if (webvars[i1].Name = 'TLT') or (webvars[i1].Name = 'TLO') then continue;
+        result := result + '"' + webvars[i1].Name + '"' + ':"' + IntToStr(webvars[i1].changed) + '",';
+    end;
+    if result[length(result)]=',' then system.Delete(result,length(result),1 );
+
+    result := result + '}';
+end;
+
 
 function ProcessRequest(URI: string): AnsiString;
 var
@@ -784,11 +946,15 @@ end;
 
 function MyHTTPProcessRequest(URI: string): AnsiString;
 var
-    stmp, jreq, resp, keyName, keyVal, str1: ansistring;
+    stmp, jreq, resp,compressed_resp, keyName, keyVal, str1: ansistring;
     i1, amppos, pos_var_name: integer;
     jsval : tjsonvalue;
     varTime : string;
+    compress : boolean;
+    ans_var :twebvar;
+
 begin
+     compress := false;
      varTime := '';
     if (pos('callback=', URI) <> 0) then begin
         stmp := copy(URI, pos('callback=', URI) + 9, length(URI));
@@ -804,7 +970,20 @@ begin
         if pos('&', keyName) > 0 then
             keyName := system.Copy(keyname, 1, pos('&', keyName) - 1);
         resp := GetWebVar(keyName).jSONSTR;
+        if (keyName = 'TLT')  or (keyName = 'TLO') then compress := true;
+
         varTime := IntToStr(GetWebVar(keyName).changed);
+    end;
+    pos_var_name := pos('ARR_', ansiuppercase(URI)) + 4;
+    if pos_var_name > 4 then begin
+        keyName := system.copy(URI, pos_var_name, Length(URI));
+        if pos('&', keyName) > 0 then
+            keyName := system.Copy(keyname, 1, pos('&', keyName) - 1);
+        ans_var := GetWeb_ARRay(keyName);
+        resp := ans_var.jSONSTR;
+        if (keyName = 'TLT')  or (keyName = 'TLO') then compress := true;
+
+        varTime := IntToStr(ans_var.changed);
     end;
 
     pos_var_name := pos('DEL_', ansiuppercase(URI)) + 4;
@@ -816,7 +995,7 @@ begin
     end;
     pos_var_name := pos('LST_', ansiuppercase(URI)) + 4;
     if pos_var_name > 4 then begin
-        resp := ListWebVars;
+        resp := http_ListWebVars;
         varTime := IntToStr(timegettime);
     end;
 
@@ -833,13 +1012,7 @@ begin
                 resp := RemoveWebVar(keyName);
             end
             else begin
-                 if (keyName='TLT') or  (keyName='TLO') then begin
-//                                                            showmessage('TLT')
-                                                        end;
-
-                while (
-                              (str1[length(str1)] <> ']') and  (str1[length(str1)] <> '}') and (length(str1) > 2)
-            ) do
+                while ((str1[length(str1)] <> ']') and  (str1[length(str1)] <> '}') and (length(str1) > 2)) do
                     system.delete(str1, length(str1), 1);
                 jsval :=TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(str1), 0);
                 if jsval <> nil then
@@ -851,7 +1024,12 @@ begin
         end;
     end;
     if resp='' then resp := '{}';
-    resp := jreq + '({"time":'+vartime+', "varValue": ' + resp + '});';
+    if compress then  compressed_resp := '"'+compress2send(resp)+'"'
+                else compressed_resp := resp;
+    if varTime=''  then vartime := '-1';
+
+    webWriteLog('HTTP request='+keyname+' Len orig='+inttostr(length(resp))+' len compressed='+inttostr(length(compressed_resp))+' compress='+floattostr(length(resp)/length(compressed_resp)));
+    resp := jreq + '({"time":'+vartime+', "varValue": ' + compressed_resp + '});';
     result := resp;
 end;
 
@@ -939,13 +1117,21 @@ end;
 
 var
     ini: tinifile;
-
+  INSTR, OUTSTR,tmpstr : AnsiString;
+  i1 : integer;
 initialization
+
     EmptyWebVar.Name := '';
     EmptyWebVar.baseName := '';
     EmptyWebVar.jsonStr := '{}';
     EmptyWebVar.changed := -1;
     EmptyWebVar.json := nil;
+//    OUTSTR := ZCompressStr(INSTR,zcLevel3);
+//    tmpstr := '';
+//    for i1 := 1 to length(outstr) do tmpstr := tmpstr+format('%x',[ord(outstr[i1])]);
+//
+//    INSTR := '1234567890abcdefgh';
+
 
 end.
 

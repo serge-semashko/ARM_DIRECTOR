@@ -4,8 +4,10 @@
  * and open the template in the editor.
  */
 var dbg = false;
+var serverReady = "aquamarine";
+var net_active = false;
 var firstEnter = true;
-var processLST = false;
+var processLST = true;
 var processTLT = false;
 var processTLO = false;
 var TLT_req = false;
@@ -15,7 +17,8 @@ var processTLP = false;
 var TLP_OK = false;
 var TLT_OK = false;
 var TLO_OK = false;
-var CTC_OK = false;
+var CTC_OK = true;
+var LST_OK = true;
 var newTLP;
 var newTLT;
 var newTLO;
@@ -26,7 +29,68 @@ var lastTLTtime = 0;
 var lastTLOtime = 0;
 var lastLSTtime = 0;
 var lastCTCtime = 0;
+function myLog(msg) {
+    console.log(new Date + ' ' + msg);
+}
+function pureAjax() {
+    isUp = false;
+    isAccepted = false;
+    var reqlst = url + "LST_";
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        console.log("ajax ready state change state=" + xhr.readyState + " status=" + xhr.status + " status=" + xhr.responseText);
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var resp = xhr.responseText;
+            resp = resp.substr(1, resp.length - 3);
+            console.log("ajax pure load " + xhr.responseText);
+            var res = JSON.parse(resp);
+        }
+    }
+    xhr.open('GET', reqlst, true); //note non-ssl port
+    xhr.onload = function () {
+        console.log("ajax pure load");
+    };
+    xhr.onerror = function () {
+        console.log("ajax pure error");
+    };
+    console.log("ajax pure send");
+    xhr.send();
+    console.log("ajax exit");
+}
 
+function myAjax(url) {
+    try {
+        var reqlst = url;
+        var result = "no";
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', reqlst, false); //note non-ssl port
+        xhr.send();
+        if (xhr.status == 200) {
+            result = "#ans:" + xhr.responseText;
+            var resp = xhr.responseText;
+            resp = resp.substr(1, resp.length - 3);
+//            console.log("ajax pure load " + xhr.responseText);
+            var retobj = JSON.parse(resp);
+            return  retobj;
+        } else
+            return "No status 200";
+    } finally {
+
+    }
+//    console.log("ajax exit res=" + result);
+}
+
+function objFromRedis(instr) {
+    var pako = window.pako;
+    var data = new Uint8Array(instr.length / 2);
+    var b;
+    for (var i = 0; i < instr.length; i++) {
+        var b = parseInt(instr[2 * i] + instr[2 * i + 1], 16);
+        data[i] = b;
+    }
+    var strLST = pako.inflate(data, {to: 'string'});
+    return JSON.parse(strLST);
+}
 function checkObjectOk(obj, lastTime) {
     if (typeof obj === "undefined") {
         return false;
@@ -41,261 +105,141 @@ function checkObjectOk(obj, lastTime) {
     return true;
 }
 function getTLP() {
-    if (!processTLP) {
-        return;
+    if (checkObjectOk(t, lastTLPtime)) {
+        TLP_OK = true;
+        newTLP = (t.varValue);
+        lastTLPTime = +t.time;
     }
-    if (processTLT || processTLO) {
-        return;
-    }
-//     console.log("!!!!req TLP");
-
-    $.ajax({
-        type: "POST",
-        dataType: "json",
-//        url: url + "GET_TLP" + urlTail,
-        url: url + "GET_TLP" + urlTail,
-        data: {
-            "get_member": "id"
-        },
-        success: function (t) {
-            if (checkObjectOk(t, lastTLPtime)) {
-                newTLP = t.varValue;
-                lastTLPTime = +t.time;
-//                console.log("TLP OK");
-
-            }
-        },
-        error: function (error) {
-//     console.log("\n####AJAX  TLP error:" + JSON.stringify(error));
-        },
-        complete: function (error) {
-//            console.log("\n####AJAX  TLP error:" + JSON.stringify(error));
-        }
-    })
+//    myLog("#AJAX  TLP final");
 }
 function getTLT() {
-    if (!processTLT) {
-        return;
-    }
-    if (TLT_req) {
-        return;
-    }
-//     console.log("request TLT " + processTLT);
-    TLT_req = true;
-    $.ajax({
-        type: "POST",
-        dataType: "json",
-        url: url + "GET_TLT" + urlTail,
-        data: {
-            "get_member": "id"
-        },
-        success: function (t) {
-//     console.log("GOT  TLT data");
-            TLT_req = false;
-            if (checkObjectOk(t, lastTLTtime)) {
-//     console.log("GOT  TLT success");
-                newTLT = t.varValue;
-                lastTLTtime = +t.time;
-                processTLT = false;
-                TLT_OK = true;
-            }
-        },
-        error: function (error) {
-            TLT_req = false;
-//     console.log("\n####AJAX  TLT error:" + JSON.stringify(error));
-        },
-        complete: function () {
-            TLT_req = false;
-//     console.log("\n####AJAX  TLT complete:");
+    myLog("#AJAX  TLT start");
+    try {
+        t = myAjax(url + "ARR_TLT");
+        if ("object" == typeof t) {
+            myLog("#AJAX  TLT success");
+        } else {
+            myLog("#AJAX  TLT error:  " + t);
+            throw "#AJAX  TLT error:  " + t;
         }
-
-    })
-
+        myLog("#AJAX TLT success");
+        if (checkObjectOk(t, lastTLTtime)) {
+            myLog("GOT  TLT success time=" + t.time);
+            newTLT = objFromRedis(t.varValue);
+            TLT_OK = true;
+            lastTLTtime = +t.time;
+            processTLT = false;
+            TLT_OK = true;
+        }
+    } finally {
+    }
+    myLog("#AJAX  TLT final");
 }
 function getTLO() {
-    if (!processTLO) {
-        return;
-    }
-    if (TLO_req) {
-        return;
-    }
-    TLO_req = true;
-
-    $.ajax({
-        type: "POST",
-        dataType: "json",
-        url: url + "GET_TLO" + urlTail,
-        data: {
-            "get_member": "id"
-        },
-        success: function (t) {
-            if (checkObjectOk(t, lastTLOtime)) {
-//     console.log("GOT  TLO success");
-                TLO_OK = true;
-                newTLO = t.varValue;
-                lastTLOtime = +t.time;
-                processTLO = false;
-                var select = document.getElementById("ActiveTL");
-//                select.options.length = 0;
-                
-
-                for (var i = 0; i <= newTLO.length - 1; i++) {
-                    addDropdownList("ActiveTL", i, newTLO[i].Name);
-                }
-
-            }
-            TLO_req = false;
-        },
-        error: function (error) {
-//     console.log("\n####AJAX  TLO error:" + JSON.stringify(error));
-            TLO_req = false;
-        },
-        complete: function () {
-            TLO_req = false;
-//     console.log("\n####AJAX  TLO complete:");
+    myLog("#AJAX  TLO start:");
+    try {
+        t = myAjax(url + "ARR_TLO");
+        if ("object" == typeof t) {
+            myLog("#AJAX  TLO success");
+        } else {
+            myLog("#AJAX  TLO error:  " + t);
+            throw "#AJAX  TLO error:  " + t;
         }
 
-    });
+        if (checkObjectOk(t, lastTLOtime)) {
+            myLog("GOT  TLO success t=" + t.time);
+            TLO_OK = true;
+            newTLO = objFromRedis(t.varValue);
+            lastTLOtime = +t.time;
+            processTLO = false;
+            var select = document.getElementById("ActiveTL");
+            for (var i = 0; i <= newTLO.length - 1; i++) {
+                addDropdownList("ActiveTL", i, newTLO[i].Name);
+            }
+        }
+    } finally {
+
+    }
+    myLog("#AJAX  TLO complete:");
 }
 
-function getCTC() {
-    if (processCTC) {
-        return;
-    }
-    processCTC = true;
-    $.ajax({
-        type: "POST",
-        dataType: "json",
-        url: url + "GET_CTC" + urlTail,
-        data: {
-            "get_member": "id"
-        },
-        success: function (t) {
-            if (checkObjectOk(t, lastCTCtime)) {
-                newCTC = t.varValue;
-                lastCTCTtime = t.time;
-            }
-            processCTC = false;
-        },
-        error: function (error) {
-//     console.log("\n####AJAX  CTC error:" + JSON.stringify(error));
-            processCTC = false;
-        }
-    });
-}
 function getLST() {
-//console.log("\n###Agetson nucloweb start");
-//    dt = new Date().getTime() - globalStart;
-//    atm.html(" nc=" + ncount + " oc=" + ocount + " " + dt);
-//    if (processLST) {
-//        return;
-//    }
-    if (processTLT || processTLO) {
-        return;
+    var t = myAjax(url + "LST_");
+    if ("object" == typeof t) {
+//            myLog("#AJAX  LST success" + JSON.stringify(t));
+    } else {
+        myLog("#AJAX  LST error:  " + t);
+        return false;
+        ;
     }
-    processLST = true;
-    var aj = $.ajax({
-        type: "POST",
-        dataType: "json",
-        url: url + "LST_" + urlTail,
-        data: {
-            "get_member": "id"
-        },
-        success: function (t) {
-//     console.log("\n####AJAX  ok:");
-            processLST = false;
-            if (checkObjectOk(t, lastLSTtime)) {
-                $("#serverStatus").css("color", "blue");
-                newLST = t.varValue;
-                lastLSTtime = t.time;
-                if (newLST.TLO != undefined) {
-                    TLOtime = +newLST.TLO
-                    if ((TLOtime != lastTLOtime) && (TLOtime != -1)) {
-//     console.log(' need new TLT');
-                        processTLO = true;
-                        TLO_OK = false;
-                    } else {
+    if (checkObjectOk(t, lastLSTtime)) {
+        LST_OK = true;
+        newLST = (t.varValue);
+        lastLSTtime = t.time;
 
-                        processTLO = false;
-                    }
+        if (newLST.TLO != undefined) {
+            TLOtime = +newLST.TLO
+            if ((TLOtime != lastTLOtime) && (TLOtime != -1)) {
+//                    myLog(' need new TLO oldtime=' + lastTLOtime + "newtime=" + TLOtime);
+
+                TLO_OK = false;
+                getTLO();
+            }
+        }
+        if (newLST.TLT != undefined) {
+            TLTtime = +newLST.TLT;
+            if ((TLTtime != lastTLTtime) && (TLTtime != -1)) {
+                TLT_OK = false;
+                getTLT();
+//                    myLog(' need new TLT oldtime=' + lastTLTtime + "newtime=" + TLTtime);
+            }
+        }
+        if (newLST.TLP_value != undefined) {
+            var obj = newLST.TLP_value;
+            if (!(typeof obj === "undefined")) {
+                if (!(Object.keys(obj).length === 0)) {
+                    newTLP = newLST.TLP_value;
+                    TLP_OK = true;
+                } else {
                 }
-                if (newLST.TLT != undefined) {
-                    TLTtime = +newLST.TLT;
-                    if ((TLTtime != lastTLTtime) && (TLTtime != -1)) {
-//     console.log(' need new TLT');
-                        processTLT = true;
-                        TLT_OK = false;
-                    } else {
-                        processTLT = false;
-                    }
-                }
-                if (newLST.TLP != undefined) {
-                    TLPtime = +newLST.TLP
-                    if ((TLPtime != lastTLPtime) && (TLPtime != -1)) {
-                        if (TLO_OK && TLT_OK) {
-                            $("#armStatus").css("color", "blue");
-                            if (firstEnter) {
-                                firstEnter = false;
-                                hidePage();
-                            }
-                            processTLP = true;
-                        } else {
-                            processTLP = false;
-                        }
-                    } else {
-                        processTLP = false;
-                    }
-                }
-                if (newLST.CTC != undefined) {
-                    CTCtime = +newLST.CTC
-                }
-//                console.log(' TLO TLT TLP CTC=' + TLOtime + ' ' + TLTtime + ' ' + TLPtime + ' ' + CTCtime + ' ');
-//                console.log(' LST=' + lastLSTtime + ' ' + JSON.stringify(newLST));
+//                    myLog(' need new TLT oldtime=' + lastTLTtime + "newtime=" + TLTtime);
+            } else {
+                TLP_OK = false;
 
             }
-        },
-        error: function (error) {
-//     console.log("\n####AJAX  LST error:" + JSON.stringify(error));
-            processLST = false;
-        },
-        complete: function () {
-            processLST = false;
-//     console.log("\n####AJAX  LST complete:");
-        },
-        done: function () {
-            processLST = false;
-//     console.log("\n####AJAX  LST done:");
-        },
-        abort: function () {
-            processLST = false;
-//     console.log("\n####AJAX  LST abort:");
-        },
-        always: function () {
-            processLST = false;
-//     console.log("\n####AJAX  LST always:");
-        },
-        fail: function () {
-            processLST = false;
-//     console.log("\n####AJAX  LST fail:");
-        },
-        state: function () {
-            processLST = false;
-//     console.log("\n####AJAX  LST state:");
-        },
-        statusCode: function () {
-            processLST = false;
-//     console.log("\n####AJAX  LST statusCode:");
-        },
-        progress: function () {
-            processLST = false;
-//     console.log("\n####AJAX  LST progress");
-        },
-        promise: function () {
-            processLST = false;
-//     console.log("\n####AJAX  LST promise");
         }
-    });
-//     console.log("ajax " + JSON.stringify(aj));
 
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+
+function net_process() {
+    myLog(" net_process " + net_active);
+
+    if (net_active) {
+        return;
+    }
+    net_active = true;
+    try {
+        if (!getLST())
+            return;
+        if (LST_OK) {
+            $("#serverStatus").css("color", serverReady);
+        }
+        if (TLT_OK && TLO_OK && TLP_OK) {
+            $("#armStatus").css("color", "aquamarine");
+        }
+        if (firstEnter) {
+            firstEnter = false;
+            hidePage();
+        }
+
+    } finally {
+        net_active = false;
+    }
 
 }

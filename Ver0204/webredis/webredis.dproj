@@ -111,6 +111,9 @@
         </DCCReference>
         <DCCReference Include="..\helpers\Web.Win.Sockets.pas"/>
         <DCCReference Include="..\helpers\uwebredis_common.pas"/>
+        <DCCReference Include="ZLibEx.pas"/>
+        <DCCReference Include="ZLibExApi.pas"/>
+        <DCCReference Include="ZLibExGZ.pas"/>
         <None Include="..\helpers\utimeline_body.inc"/>
         <None Include="..\helpers\utimeline_hdr.inc"/>
         <BuildConfiguration Include="Debug">

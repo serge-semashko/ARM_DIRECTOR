@@ -4,9 +4,11 @@
  * and open the template in the editor.
  */
 var modeChanged = true;
+var netInterval;
 var uarr = new Uint8Array();
 var ScreenFields_1 = [0, 0, 0, 0, 0]; //Второе поле
 var ScreenFields_2 = [0, 0, 0, 0, 0]; //Третье
+//
 //
 //
 //
@@ -43,7 +45,7 @@ function initControls() {
 
     document.getElementById("ActiveTL").options.selectedIndex = +ActiveTL;
     document.getElementById("CountEvents").value = +CountEvents;
-    document.getElementById("dev1").value = Device1;
+    document.getElementById("dev1").value = +Device1;
     document.getElementById("dev2").value = +Device2;
     document.getElementById("dev1CountEvents").value = +EventsDev1;
     document.getElementById("dev2CountEvents").value = +EventsDev2;
@@ -116,8 +118,8 @@ function setViewport() {
 
 }
 
-window.onclose = function() {
-       clearInterval(myInterval)
+window.onclose = function () {
+    clearInterval(myInterval)
 }
 window.onload = function () {
     var dloc = document.location;
@@ -134,32 +136,42 @@ window.onload = function () {
     var mn = document.getElementById("select_menu");
 
     $("body").css("font-size", "12px");
-    for (var fs = 60; fs > 1; fs--) {
-        $("table,button,input,select").css("font-size", fs + "px");
-        var hd = mn.clientHeight;
-        var wd = mn.clientWidth;
-//        if (scrW < scrH) {
-        if (wd > scrW *2/ 4) {
-            continue;
+    var wdth = 50;
+    var fs = Math.floor(scrH / 50);
+    var kfc = 1;
+    if (scrW < scrH) {
+        var fs = Math.floor(scrH / 50);
+        kfc = scrH / scrW;
+        if (kfc < 1.3) {
+            wdth = 75;
+        } else {
+            wdth = 96;
         }
-//        } 
-//        else {
-//            if (hd > scrH - 30) {
-//                continue;
-//            }
-//        }
-        break;
+    } else {
+        kfc = scrW / scrH;
+        if (kfc < 1.2) {
+            wdth = 65;
+        } else if (kfc < 1.4) {
+            wdth = 50;
+        } else {
+            wdth = 40;
+        }
     }
+    $("tr").css("height", fs + "px");
+    $("table").css("width", wdth + "%");
+    $("table").css("height", scrH + "px");
+    if (fs < 10)
+        fs = 12;
+    $("table,button,input,select").css("font-size", fs + "px");
 
-//    setInterval(getLST, 11);
-    getTLT();
-    getTLO();
     initControls();
-    setInterval(getLST, 1131);
-    setInterval(getTLP, 21);
-    setInterval(getTLT, 4421);
-    setInterval(getTLO, 4421);
+    net_active = false;
+//    setInterval(net_process(), 3140);
+    $(document).ajaxComplete(function () {
+        console.log("Triggered ajaxComplete handler.");
+    });
     showPage();
+    netInterval = setInterval(net_process, 40);
     window_onload();
 
 //    hidePage();
@@ -170,6 +182,7 @@ function hidePage() {
 
 }
 function showPage() {
+
     $("#select_scr").css("display", "block");
     $("#main").css("display", "hide");
 

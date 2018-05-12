@@ -411,6 +411,8 @@ Procedure LoadProject(mode : boolean; vs : integer);
 Procedure ClearGridTimeLinesToServer(GridTimeLines: tstringgrid);
 Procedure PutGridTimeLinesToServer(GridTimeLines: tstringgrid);
 Procedure PutTimeLinesToServer( vs : integer);
+Procedure Put_TLT_ToServer( ind : integer);
+Procedure Put_TLO_ToServer( ind : integer);
 // ===========SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSs=============================
 // ========================  Helpers для классов. Сохранения в JSON и загрузка ==
 // ==============================================================================
@@ -455,6 +457,7 @@ begin
   begin
      PutJsonStrToServer('TLO['+IntToStr(i)+']','');
   end;
+  PutJsonStrToServer('TLO','');
   PutJsonStrToServer('TLP','');
   //PutJsonStrToServer('TLEDITOR', '');
 
@@ -462,6 +465,7 @@ begin
   begin
      PutJsonStrToServer('TLT['+IntToStr(i)+']','');
   end;
+  PutJsonStrToServer('TLT','');
   DevicesOn := OLDdEVICEoN;
   sleep(300);
 end;
@@ -554,6 +558,47 @@ begin
 
 end;
 
+
+
+Procedure Put_TLT_ToServer( ind : integer);
+var
+  i: integer;
+  str1: ansistring;
+  str2: ansistring;
+  TLO: TTimeLineOptions;
+  TlTimeline :TTlTimeline;
+  sl : tstringlist;
+  tle : ansistring;
+  jsarr : tjsonarray;
+  jssave : tstringlist;
+begin
+  i := ind;
+  TlTimeline := TTlTimeline(tlzone.timelines[i]);
+  if TlTimeline = nil  then exit;
+  if LoadProject_active then exit;
+  str1:=TlTimeline.SaveToJSONStr;
+  PutJsonStrToServer('TLT['+IntToStr(i)+']',str1);
+end;
+
+Procedure Put_TLO_ToServer( ind : integer);
+var
+  i: integer;
+  str1: ansistring;
+  str2: ansistring;
+  TLO: TTimeLineOptions;
+  TlTimeline :TTlTimeline;
+  sl : tstringlist;
+  tle : ansistring;
+  jsarr : tjsonarray;
+  jssave : tstringlist;
+begin
+  if LoadProject_active then exit;
+  i := ind;
+  tlo := TTimelineOptions(Form1.GridTimeLines.Objects[0,i]);
+  if tlo = nil  then exit;
+  str1:=TLO.SaveToJSONStr;
+  PutJsonStrToServer('TLO['+IntToStr(i)+']',str1);
+end;
 
 // ===========SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSs=============================
 // ========================  END Helpers для классов. Сохранения в JSON и загрузка ==

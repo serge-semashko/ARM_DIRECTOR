@@ -146,7 +146,7 @@ begin
                 Exit;
             end;
             webWriteLog('GB>', '====== Look start text =========' + IntToStr(incount) + ' DTime = ' + IntToStr(TimegetTime - st));
-            webWriteLog('GB>', buff);
+//            webWriteLog('GB>', buff);
             StartOfHeaderPos := CharPos(SOH, buff, incount);
             if StartOfHeaderPos >= 0 then
                 incount := StartOfHeaderPos;
@@ -165,7 +165,7 @@ begin
                 webWriteLog('GB>', 'OK SOH Skip ========================== ' + IntToStr(incount))
             else
                 webWriteLog('GB>', 'NO SOH Skip ========================== ' + IntToStr(incount));
-            webWriteLog('GB>', buff);
+//            webWriteLog('GB>', buff);
             webWriteLog('GB>', ' end skip ==========================');
 
             if not BlockStarted then

@@ -20,7 +20,10 @@ uses
   System.SysConst,
   dialogs,
   Web.Win.Sockets in '..\helpers\Web.Win.Sockets.pas',
-  uwebredis_common in '..\helpers\uwebredis_common.pas';
+  uwebredis_common in '..\helpers\uwebredis_common.pas',
+  ZLibEx in 'ZLibEx.pas',
+  ZLibExApi in 'ZLibExApi.pas',
+  ZLibExGZ in 'ZLibExGZ.pas';
 
 // http in 'http.pas';
 

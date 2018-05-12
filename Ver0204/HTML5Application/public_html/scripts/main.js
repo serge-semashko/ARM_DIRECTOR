@@ -1,8 +1,9 @@
-"use strict";
+﻿"use strict";
 var tm, atm;
 var timeStamp = 0;
 var url // = "http://127.0.0.1:9090/get_data&callback=?";
 var urlTail;
+var jq = "&callback=jQuery111009211847694793347_1526031523810?get_member=id&_=1526031523811";
 var LST;
 var dt;
 var mainFont = '28pt Arial';
@@ -23,13 +24,13 @@ var ProgrammFontColor = "#FFFFFF";
 var lastPhrase = "";
 var myInterval;
 //Переменные для отображения тайм-линий и событий
-var typesrc = "0"; //Вид экрана 0 - All, 1- ev+dv, 2
+var typesrc = "4"; //Вид экрана 0 - All, 1- ev+dv, 2
 var currtlo; //текущая опция тайм линий
 var currtlt; //события текущей тайм линии
 var cfont = ProgrammFontColor;
 var DevValue = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]; // секунды до следующего события          
-var CurrEvent = 4; //текущее событие;
+var CurrEvent = 0; //текущее событие;
 var CurrDevice = 4; // текущее устройство 
 var NextDevice = 9; // следующее устройство
 
@@ -70,15 +71,15 @@ var DefaultScreen4 = [true, true, true, true, true, true, true, true, true];
 
 var MaxFontSize = 40;
 
-var EventsDev1 = 4;
-var EventsDev2 = 4;
+var EventsDev1 = 5;
+var EventsDev2 = 5;
 var Device1 = 14;
 var Device2 = 2;
 var ArrDev1 = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]; // номера событий устройства 1
 var ArrDev2 = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]; // номера событий устройства 2  
-var ScreenFields = [0, 4, 2, 5, -1];
+var ScreenFields = [0, 1, 4, -1, -1];
 //evCanvas, dvCanvas, edCanvas, tvCanvas, tmCanvas 
 var UsesCanvas = [false, false, false, false, false];
 var TimeLineHeight = 16;
@@ -116,7 +117,9 @@ var mnHomeSelect = false;
 
 var AudioOn = true;
 var audio = new Audio();
+audio.playbackRate = 1.25;
 var typeSpeeker = 0; //0 internal, 1 external
+var FirstPhrase = false;
 
 function toChart(txtval) {
     txtval = txtval.toString();
@@ -336,6 +339,13 @@ function MyMouseUp(e) {
         if (mouseX > RectSound[0] && mouseX < RectSound[2]) {
             AudioOn = !AudioOn;
             mnSoundSelect = false;
+            //if (AudioOn) {
+            //  if (!audio.paused) {
+            //    audio = 0;
+            //    audio = new Audio();
+            //    audio.playbackRate = 1.25;
+            //  }  
+            //}
         }
         if (mouseX > RectMinus[0] && mouseX < RectMinus[2]) {
             if (FrameSize > 1) {
