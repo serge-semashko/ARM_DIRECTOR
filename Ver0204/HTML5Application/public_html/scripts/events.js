@@ -404,6 +404,12 @@ function filesSpeaker(str) {
 function MyDrawEvents(cv, Width, Height, menu) {
 
     var LeftTxt = +LengthNameTL + +MyCursor;
+    if (isNaN(WidthDevice)) widthCellDev(Width);//{
+    //  WidthDevice = Width / 17.5;
+    //  IntervalDevice = 0.1 * WidthDevice; 
+    //  if (IntervalDevice<10) { IntervalDevice = 10 }
+    //  WidthDevice = WidthDevice - IntervalDevice;
+    //}
     var LeftSec = LeftTxt - WidthDevice - IntervalDevice;
     var LeftDev = LeftSec - WidthDevice;
     if (DoubleSize == 1) {
@@ -593,7 +599,7 @@ function MyDrawEvents(cv, Width, Height, menu) {
                     }
                 } 
             } else {
-              PhraseFactor = 2.5;
+              PhraseFactor = 2.1;
               if (typeSpeeker == "0") {
                 Phrase = "камера.wav, " + getDigitsString(phrsec, PhraseMode, 1);   
               } else {
@@ -943,21 +949,22 @@ function MyDrawEvents(cv, Width, Height, menu) {
                 }
             }
 
-            var tmpw = Width / 17.5;
-            var intrv2 = tmpw / 100 * 10;
-            if (interval < 10) {
-                intrv2 = 10
-            }
-            tmpw = tmpw - intrv2;
+            //var tmpw = Width / 17.5;
+            //var intrv2 = tmpw / 100 * 10;
+            //if (interval < 10) {
+            //    intrv2 = 10
+            //}
+            //tmpw = tmpw - intrv2;
 
-            WidthDevice = tmpw;
-            IntervalDevice = intrv2;
+            //WidthDevice = tmpw;
+            //IntervalDevice = intrv2;
+            widthCellDev(Width);
 
             LeftTxt = +LengthNameTL + +MyCursor;
             LeftSec = LeftTxt - WidthDevice - IntervalDevice;
             LeftDev = LeftSec - WidthDevice;
             if (DoubleSize == 1) {
-                LeftDev = 2 * (WidthDevice + 1.5 * IntervalDevice);
+                LeftDev = 2 * (WidthDevice + 1.5*IntervalDevice);
                 LeftSec = LeftDev + 2 * WidthDevice + IntervalDevice;
                 LeftTxt = LeftSec + 2 * (WidthDevice + IntervalDevice);
                 if (ShowNameTL) {
@@ -1153,7 +1160,8 @@ function MyDrawEvents(cv, Width, Height, menu) {
 } //End function MyDrawEvents
 
 function MyDrawDevEvents(cv, Width, Height, device, menu) {
-
+   
+    if (isNaN(WidthDevice)) widthCellDev(Width);
     var LeftTxt = +LengthNameTL + +MyCursor;
     var LeftSec = LeftTxt - WidthDevice - IntervalDevice;
     var LeftDev = LeftSec - WidthDevice;
@@ -1178,14 +1186,23 @@ function MyDrawDevEvents(cv, Width, Height, device, menu) {
     cv.fillRect(0, 0, Width, Height);
 
     var CNTEvents, DEVNumber, FirstEvent, IndexEvent;
+    //if (TLT[ActiveTL].Count <= 0) return;
     if (device == 0) {
         CNTEvents = EventsDev1;
         DEVNumber = Device1;
-        FirstEvent = ArrDev1[0];
+        if (TLT[ActiveTL].Count <= 0) {
+            FirstEvent = -1;
+        } else {
+            FirstEvent = ArrDev1[0];
+        }
     } else {
         CNTEvents = EventsDev2;
         DEVNumber = Device2;
-        FirstEvent = ArrDev2[0]
+        if (TLT[ActiveTL].Count <= 0) {
+            FirstEvent = -1;
+        } else {
+            FirstEvent = ArrDev2[0];
+        }
     }
 
     var tmph;
@@ -1210,12 +1227,15 @@ function MyDrawDevEvents(cv, Width, Height, device, menu) {
         cv.fillRect(0, top, Width, tmph);
         top = +top + (+tmph + +interval);
     }
+    
+    if (TLT[ActiveTL].Count <= 0) return;
+    
     var tptl = TLT[ActiveTL].TypeTL;
     var LastEvent, strtev, fnshev;
     var step = 25 * FrameSize;
     var evColor, evFontName, evSafeZone, evmix, evmixdur, evtext, evdevice;
     var evcomment, wdthev, evdur, tmpdur, Start, Finish;
-
+     
     if (+tptl == 0) {
         if (FirstEvent !== -1) {
             //LastEvent = FirstEvent + CNTEvents;
@@ -1335,11 +1355,21 @@ function MyDrawDevEvents(cv, Width, Height, device, menu) {
             cv.textAlign = "center";
             //cv.fillText(evdevice, +LeftDev + (LeftSec - LeftDev) / 2, +top + +tmph / 2);
             lentxt = cv.measureText(evdevice).width;
+            //lentxt = cv.measureText(evdevice).width;
             if (lentxt < LeftSec - LeftDev) {
+                cv.textAlign = "center";
                 cv.fillText(evdevice, +LeftDev + (LeftSec - LeftDev) / 2, +top + +tmph / 2);
             } else {
-                myTextDraw(cv, evdevice, LeftDev + interval, 0, LeftSec - LeftDev, top, tmph);
+                cv.textAlign = "left";
+                myTextDraw(cv, evdevice, LeftDev, 0, LeftSec - LeftDev, top, tmph);
             }
+            
+            
+            //if (lentxt < LeftSec - LeftDev) {
+            //    cv.fillText(evdevice, +LeftDev + (LeftSec - LeftDev) / 2, +top + +tmph / 2);
+            //} else {
+            //    myTextDraw(cv, evdevice, LeftDev + interval, 0, LeftSec - LeftDev, top, tmph);
+            //}
 
 
             cv.textAlign = "right";
@@ -1515,11 +1545,20 @@ function MyDrawDevEvents(cv, Width, Height, device, menu) {
                     cv.textAlign = "center";
                     //cv.fillText(evdevice, +LeftDev + (LeftSec - LeftDev) / 2, +top + +tmph / 2);
                     lentxt = cv.measureText(evdevice).width;
+                    
                     if (lentxt < LeftSec - LeftDev) {
-                        cv.fillText(evdevice, +LeftDev + (LeftSec - LeftDev) / 2, +top + +tmph / 2);
+                      cv.textAlign = "center"; 
+                      cv.fillText(evdevice, +LeftDev + (LeftSec - LeftDev) / 2, +top + +tmph / 2);
                     } else {
-                        myTextDraw(cv, evdevice, LeftDev + interval, 0, LeftSec - LeftDev, top, tmph);
+                      cv.textAlign = "left";
+                      myTextDraw(cv, evdevice, LeftDev, 0, LeftSec - LeftDev, top, tmph);
                     }
+                    
+                    //if (lentxt < LeftSec - LeftDev) {
+                    //    cv.fillText(evdevice, +LeftDev + (LeftSec - LeftDev) / 2, +top + +tmph / 2);
+                    //} else {
+                    //    myTextDraw(cv, evdevice, LeftDev + interval, 0, LeftSec - LeftDev, top, tmph);
+                    //}
 
 
                     cv.textAlign = "right";
@@ -1659,15 +1698,17 @@ function MyDrawDevEvents(cv, Width, Height, device, menu) {
                 }
             }
 
-            var tmpw = Width / 17.5;
-            var intrv2 = tmpw / 100 * 10;
-            if (interval < 10) {
-                intrv2 = 10
-            }
-            tmpw = tmpw - intrv2;
+            //var tmpw = Width / 17.5;
+            //var intrv2 = tmpw / 100 * 10;
+            //if (interval < 10) {
+            //    intrv2 = 10
+            //}
+            //tmpw = tmpw - intrv2;
 
-            WidthDevice = tmpw;
-            IntervalDevice = intrv2;
+            //WidthDevice = tmpw;
+            //IntervalDevice = intrv2;
+            
+            widthCellDev(Width);
 
             LeftTxt = +LengthNameTL + +MyCursor;
             LeftSec = LeftTxt - WidthDevice - IntervalDevice;

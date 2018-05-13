@@ -267,8 +267,8 @@ var
     st: int64;
 begin
     webWriteLog('SETVAR>' + varName + ' = ' + system.copy(varvalue, 1, 60));
-    if not DevicesOn then
-        exit;
+//    if not DevicesOn then
+//        exit;
 
     Result := 'ok';
     webvars_critsect.Acquire;

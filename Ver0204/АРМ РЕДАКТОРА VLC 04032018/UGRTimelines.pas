@@ -3551,6 +3551,8 @@ begin
         form1.imgLayer0.Canvas.FillRect(form1.imgLayer0.Canvas.ClipRect);
         if TLParameters.vlcmode <> play then
           DrawTimelines(form1.imgTimelines.Canvas, bmptimeline);
+          //Put_TLT_ToServer(ps);
+
       end;
 
       DownTimeline := false;
@@ -3566,7 +3568,9 @@ begin
         (form1.GridClips.Objects[0, psc] as TGridRows).MyCells[3].UpdatePhrase
           ('Dur', framestostr(TLParameters.Finish - TLParameters.Start));
       end;
-      if TLParameters.vlcmode <> play then LoadProject(false,1);
+      //if TLParameters.vlcmode <> play then
+      Put_TLT_ToServer(TLEditor.Index-1);
+      //if TLParameters.vlcmode <> play then LoadProject(false,1);
       cv.Refresh;
     finally
     end;

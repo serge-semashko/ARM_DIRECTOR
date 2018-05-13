@@ -3,6 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+var socket;
+var LST_time = new Date().getTime();
+var LST_count = 0 ;
+
+var LST_req = 0;
+var LST_ans = 0;
+
+var async_time = new Date().getTime();
+var async_req = 0;
+var async_ans = 0;
+var async_count = 0;
+
+var serial_time = new Date().getTime();
+var serial_req = 0;
+var serial_ans = 0;
+var serial_count = 0;
+
 var dbg = false;
 var serverReady = "aquamarine";
 var net_active = false;
@@ -29,7 +46,13 @@ var lastTLTtime = 0;
 var lastTLOtime = 0;
 var lastLSTtime = 0;
 var lastCTCtime = 0;
+function net_init() {
+//    setInterval(serial_net_process, 1);
+    setInterval(async_net_process, 50);
+
+}
 function myLog(msg) {
+
     console.log(new Date + ' ' + msg);
 }
 function pureAjax() {
@@ -162,16 +185,7 @@ function getTLO() {
     }
     myLog("#AJAX  TLO complete:");
 }
-
-function getLST() {
-    var t = myAjax(url + "LST_");
-    if ("object" == typeof t) {
-//            myLog("#AJAX  LST success" + JSON.stringify(t));
-    } else {
-        myLog("#AJAX  LST error:  " + t);
-        return false;
-        ;
-    }
+function proc_LST(t) {
     if (checkObjectOk(t, lastLSTtime)) {
         LST_OK = true;
         newLST = (t.varValue);
@@ -209,21 +223,26 @@ function getLST() {
             }
         }
 
-        return true;
-    } else {
-        return false;
     }
+
+}
+function getLST() {
+    var t = myAjax(url + "LST_");
+    if ("object" == typeof t) {
+//            myLog("#AJAX  LST success" + JSON.stringify(t));
+    } else {
+        myLog("#AJAX  LST error:  " + t);
+        return false;
+
+    }
+    processLST(t);
+    return true;
 }
 
 
 
-function net_process() {
-    myLog(" net_process " + net_active);
-
-    if (net_active) {
-        return;
-    }
-    net_active = true;
+function serial_net_process() {
+    myLog(" serial net_process");
     try {
         if (!getLST())
             return;
@@ -239,7 +258,73 @@ function net_process() {
         }
 
     } finally {
-        net_active = false;
     }
 
+}
+function async_net_process() {
+//    try {
+    if (LST_req > 10) {
+        return;
+    }
+    LST_req++;
+    $.ajax({
+        type: "POST",
+        global: false,
+        dataType: "json",
+        url: url + "LST_" + urlTail,
+        data: {
+            "get_member": "id"
+        },
+        success: function (t) {
+            LST_count++;
+            if ( (new Date().getTime()-  LST_time) >1000 ){
+                LST_time = new Date().getTime();
+                myLog("LST_count = "+LST_count+" активных запросов="+LST_req) ;
+                LST_count = 0;
+            }
+            if (checkObjectOk(t, lastLSTtime)) {
+                $("#serverStatus").css("color", "blue");
+                proc_LST(t);
+                $("#serverStatus").css("color", serverReady);
+                if (TLT_OK && TLO_OK && TLP_OK) {
+                    $("#armStatus").css("color", "aquamarine");
+                    if (firstEnter) {
+                        firstEnter = false;
+                        hidePage();
+                    }
+
+                }
+
+            }
+
+            processLST = false;
+        },
+        complete: function (t) {
+            LST_req--;
+        }
+
+    });
+}
+
+function net_sock() {
+    socket = new WebSocket("ws://localhost:9095");
+//    У объекта socket есть четыре коллбэка: один при получении данных и три – при изменениях в состоянии соединения:
+    socket.onopen = function () {
+        alert("Соединение установлено.");
+        socket.send("/LST_");
+    };
+    socket.onclose = function (event) {
+        if (event.wasClean) {
+            alert('Соединение закрыто чисто');
+        } else {
+            alert('Обрыв соединения'); // например, "убит" процесс сервера
+        }
+        alert('Код: ' + event.code + ' причина: ' + event.reason);
+    };
+    socket.onmessage = function (event) {
+        alert("Получены данные " + event.data);
+    };
+    socket.onerror = function (error) {
+        alert("Ошибка " + error.message);
+    };
 }

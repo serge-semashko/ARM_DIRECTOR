@@ -457,15 +457,14 @@ begin
   begin
      PutJsonStrToServer('TLO['+IntToStr(i)+']','');
   end;
-  PutJsonStrToServer('TLO','');
   PutJsonStrToServer('TLP','');
-  //PutJsonStrToServer('TLEDITOR', '');
+  PutJsonStrToServer('TLO', '');
 
   for I := 0 to 15 do
   begin
      PutJsonStrToServer('TLT['+IntToStr(i)+']','');
   end;
-  PutJsonStrToServer('TLT','');
+  PutJsonStrToServer('TLT', '');
   DevicesOn := OLDdEVICEoN;
   sleep(300);
 end;
@@ -2304,7 +2303,8 @@ begin
 
             if TLParameters.vlcmode = play then
             begin
-                LoadProject(false,1);
+                //LoadProject(false,1);
+                Put_TLT_ToServer(ps);
                 exit;
             end;
             // TLZone.DrawTimelines(Form1.imgtimelines.Canvas,bmptimeline);
@@ -2340,7 +2340,8 @@ begin
 
             if TLParameters.vlcmode = play then
             begin
-                LoadProject(false,1);
+                //LoadProject(false,1);
+                Put_TLT_ToServer(ps);
                 exit;
             end;
           end;
@@ -2376,22 +2377,26 @@ begin
 
             if TLParameters.vlcmode = play then
             begin
-                LoadProject(false,1);
+                //LoadProject(false,1);
+                Put_TLT_ToServer(ps);
                 exit;
             end;
           end;
         end;
     end;
     TLZone.DrawTimelines(form1.imgtimelines.Canvas, bmpTimeline);
+    Put_TLT_ToServer(ps);
   except
     on E: Exception do
        begin
              WriteLog('MAIN', 'UCommon.InsertEventToEditTimeline Number=' +
                      inttostr(nom) + ' | ' + E.Message);
-            LoadProject(false,1);
+            //LoadProject(false,1);
+            Put_TLT_ToServer(ps);
        end;
     end;
-    LoadProject(false,1);
+    Put_TLT_ToServer(ps);
+    //LoadProject(false,1);
 
 end;
 

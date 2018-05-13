@@ -35,6 +35,7 @@ type
         procedure quit1Click(Sender: TObject);
         procedure FormShow(Sender: TObject);
         procedure TcpserverAccept(Sender: TObject; ClientSocket: TCustomIpClient);
+        procedure webSocketserverAccept(Sender: TObject; ClientSocket: TCustomIpClient);
         procedure TcphttpserverAccept(Sender: TObject; ClientSocket: TCustomIpClient);
         procedure Timer1Timer(Sender: TObject);
     private
@@ -46,20 +47,19 @@ type
     end;
 
 
-    TTCPHttpThrd = class(TThread)
-    private
-        Sock: TTCPBlockSocket;
-    public
-        inbuff : array[0..5000000] of ansichar;
-        outbuff : array[0..5000000] of ansichar;
-        Headers: TStringList;
-        InputData, OutputData: TMemoryStream;
-        constructor Create(hsock: tSocket);
-        destructor Destroy; override;
-        procedure Execute; override;
-        procedure doExecute;
-        function ProcessHttpRequest(Request, URI: string): Integer;
-    end;
+//    TTCPHttpThrd = class(TThread)
+//    private
+//        Sock: TTCPBlockSocket;
+//    public
+//        inbuff : array[0..5000000] of ansichar;
+//        outbuff : array[0..5000000] of ansichar;
+//        Headers: TStringList;
+//        InputData, OutputData: TMemoryStream;
+//        constructor Create(hsock: tSocket);
+//        destructor Destroy; override;
+//        procedure Execute; override;
+//        procedure doExecute;
+//    end;
 
 
     TWebVar = packed record
@@ -86,6 +86,7 @@ var
    array_count : integer = 0;
 
         TCPHTTPsrv: TTcpServer;
+        webSocketsrv: TTcpServer;
         TCPsrv: TTcpServer;
     TerminateAll : boolean = false;
     LocalTCPPort: string = '9085';
@@ -235,6 +236,130 @@ begin
     end;
 
 end;
+
+
+procedure THTTPSRVForm.webSocketserverAccept(Sender: TObject;       //пришло сообщение
+    ClientSocket: TCustomIpClient);
+var
+    txt: string;
+    Inbuffer: array[0..5000000] of ansichar;
+    OUTBUffer: array[0..5000000] of ansichar;
+    tmpBuffer: integer;
+    rcstr, hstr: string;
+    rc: Integer;
+    outstr, instr, uri: AnsiString;
+    resp: ansistring;
+    i1: integer;
+    incount: integer;
+    st: int64;
+    chTime: ansistring;
+begin
+    hstr := 'Connect H=' + IntToStr(ClientSocket.Handle) + ' ';
+    sleep(300);
+    FillChar(Inbuffer,1000000,0);
+    rc := recv(ClientSocket.Handle, inbuffer,1000000, 0);
+    webWriteLog('websocket>', inbuffer);
+    outstr := 'HTTP/1.1 101 Switching Protocols'+crlf+
+            'Date: Wed, 25 Oct 2017 10:07:34 GMT'+crlf+
+            'Connection: Upgrade'+crlf+
+            'Upgrade: WebSocket'+crlf+crlf;
+    strpcopy(outbuffer,outstr);
+    rc := Send(ClientSocket.handle, outbuffer[0], length(outstr), 0);
+        if rc <= 0 then begin
+            rc := WSAGetlastError;
+            webWriteLog('websocket>', ' DISconnect by other sid. Checked on wait incoming packet' + SysErrorMessage(rc));
+            ClientSocket.Disconnect;
+            Exit;
+        end;
+    rc := Send(ClientSocket.handle, outbuffer[0], length(outstr), 0);
+        if rc <= 0 then begin
+            rc := WSAGetlastError;
+            webWriteLog('websocket>', ' DISconnect by other sid. Checked on wait incoming packet' + SysErrorMessage(rc));
+            ClientSocket.Disconnect;
+            Exit;
+        end;
+    rc := Send(ClientSocket.handle, outbuffer[0], length(outstr), 0);
+        if rc <= 0 then begin
+            rc := WSAGetlastError;
+            webWriteLog('websocket>', ' DISconnect by other sid. Checked on wait incoming packet' + SysErrorMessage(rc));
+            ClientSocket.Disconnect;
+            Exit;
+        end;
+
+//    mmo1.Lines.add(FormatDateTime('HH:NN:SS ', now) + 'accept' + hstr);
+    while not TerminateAll  do begin
+        sleep(1);
+        webWriteLog('websocket>', ' Wait for request');
+
+        rc := recv(ClientSocket.Handle, inbuffer[0], 1, MSG_PEEK);
+        if rc <= 0 then begin
+            rc := WSAGetlastError;
+            webWriteLog('websocket>', ' DISconnect by other sid. Checked on wait incoming packet' + SysErrorMessage(rc));
+            ClientSocket.Disconnect;
+            Exit;
+        end;
+        st := timegettime;
+        webWriteLog('websocket>', 'Begin receive block');
+
+        rc := ReceiveBlob(ClientSocket.Handle, inbuffer, 200000);
+        if rc < 0 then begin
+            rc := WSAGetlastError;
+            ;
+            webWriteLog('websocket>', ' DISconnect BY ERROR AFTER receive blob');
+            ClientSocket.Disconnect;
+            Exit;
+        end;
+
+        instr := inbuffer;
+
+        webWriteLog('websocket>', Format('Received len=%d time=%d ', [rc, timegettime - st]) + ' Request= ' + system.copy(instr, 1, 30));
+        while length(instr) > 5 do begin
+            if system.copy(instr, 1, 5) = '/GET_' then
+                break;
+            if system.copy(instr, 1, 5) = '/SET_' then
+                break;
+            if system.copy(instr, 1, 5) = '/DEL_' then
+                break;
+            if system.copy(instr, 1, 5) = '/TIM_' then
+                break;
+            if system.copy(instr, 1, 5) = '/ADD_' then
+                break;
+            if system.copy(instr, 1, 5) = '/UPD_' then
+                break;
+            if system.copy(instr, 1, 5) = '/LST_' then
+                break;
+            system.Delete(instr, 1, 1);
+
+        end;
+        uri := instr;
+        i1 := pos(' ', uri) - 1;
+        if i1 > 1 then
+            uri := system.copy(uri, 1, i1);
+        webWriteLog('websocket>', ' Request ' + system.copy(uri, 1, 30));
+
+        outstr :=soh+ ProcessRequest(uri)+eot+#0;
+        if pos('GET_', uri) > 0 then begin
+
+//            synWriteLog('GET_', uri + ' =  ' + outstr);
+        end;
+        webWriteLog('websocket>', ' Answer ' + system.copy(outstr, 1, 190));
+
+        strpcopy(outbuffer,outstr);
+        webWriteLog('websocket>', Format('Processed len=%d time=%d ', [rc, timegettime - st]) + ' Answer= ' + system.copy(outstr, 1, 30));
+        rc := Send(ClientSocket.handle, outbuffer[0], length(outstr), 0);
+        webWriteLog('wwebsocket>', ' send ' + IntToStr(rc));
+        if rc < 0 then begin
+            rc := WSAGetlastError;
+            webWriteLog('websocket>', ' DISconnect BY ERROR AFTER SEND ERR = ' + syserrormessage(rc));
+            ClientSocket.Disconnect;
+            Exit;
+        end;
+        webWriteLog('websocket>', Format('Completed time=%d ', [timegettime - st]));
+    end;
+
+end;
+
+
 
 procedure THTTPSRVForm.TcpHTTPserverAccept(Sender: TObject;       //пришло сообщение
     ClientSocket: TCustomIpClient);
@@ -444,132 +569,132 @@ end;
 
 { TTCPHttpThrd }
 
-constructor TTCPHttpThrd.Create(hsock: tSocket);
-begin
-//    writeTimeLog('TCPHttpThrd.Create');
-    inherited Create(false);
-    sock := TTCPBlockSocket.Create;
-    Headers := TStringList.Create;
-    InputData := TMemoryStream.Create;
-    OutputData := TMemoryStream.Create;
-    sock.socket := hsock;
-    FreeOnTerminate := true;
-    Priority := tpNormal;
-end;
-
-destructor TTCPHttpThrd.Destroy;
-begin
-    sock.free;
-    Headers.free;
-    InputData.free;
-    OutputData.free;
-    inherited Destroy;
-end;
-
-procedure TTCPHttpThrd.doExecute;
-var
-    b: byte;
-    timeout: Integer;
-    s: string;
-    method, URI, protocol: string;
-    size: Integer;
-    X, n: Integer;
-    resultcode: Integer;
-    rsstr: string;
-    st: int64;
-
-    procedure addMark(num: integer);
-    begin
-        rsstr := rsstr + format('%d %dms ', [num, TimegetTime - st]);
-        st := TimegetTime;
-    end;
-
-begin
-    rsstr := '';
-    st := timegettime;
-    addMark(1);
-    timeout := 1200;
-  // read request line
-    s := sock.RecvString(timeout);
-    WriteLog('URI ' + s);
-    addMark(2);
-    if sock.lastError <> 0 then
-        Exit;
-    if s = '' then
-        Exit;
-    method := fetch(s, ' ');
-    if (s = '') or (method = '') then
-        Exit;
-    URI := fetch(s, ' ');
-    if URI = '' then
-        Exit;
-    protocol := fetch(s, ' ');
-//    protocol :=  'HTTP/1.0';
-    Headers.Clear;
-    size := -1;
-  // read request headers
-    if protocol <> '' then begin
-        if pos('HTTP/', protocol) <> 1 then
-            Exit;
-        repeat
-
-            s := sock.RecvString(timeout);
-            if pos('Host:', s) > 0 then
-                rsstr := s + rsstr;
-            addMark(3);
-            if sock.lastError <> 0 then
-                Exit;
-            if s <> '' then
-                Headers.add(s);
-            if pos('CONTENT-LENGTH:', Uppercase(s)) = 1 then
-                size := StrToIntDef(SeparateRight(s, ' '), -1);
-        until s = '';
-    end;
-  // recv document...
-    InputData.Clear;
-    if size >= 0 then begin
-        InputData.SetSize(size);
-        X := sock.RecvBufferEx(InputData.Memory, size, timeout);
-        addMark(4);
-        InputData.SetSize(X);
-        if sock.lastError <> 0 then
-            Exit;
-    end;
-    OutputData.Clear;
-    resultcode := ProcessHttpRequest(method, URI);
-    sock.SendString('HTTP/1.0 ' + IntToStr(resultcode) + CRLF);
-    if protocol <> '' then begin
-        Headers.add('Content-length: ' + IntToStr(OutputData.size));
-        Headers.add('Connection: close');
-        Headers.add('Date: ' + Rfc822DateTime(now));
-        Headers.add('Server: Synapse HTTP server demo');
-        Headers.add('');
-        addMark(5);
-        for n := 0 to Headers.count - 1 do
-            sock.SendString(Headers[n] + CRLF);
-        addMark(6);
-        headers.SaveToFile('g:\home\headers.txt');
-    end;
-    if sock.lastError <> 0 then
-        Exit;
-    sock.SendBuffer(OutputData.Memory, OutputData.size);
-    addMark(7);
-    addMark(8);
-
-    sock.CloseSocket;
-    addMark(9);
-    webWriteLog('tcpip', 'Request process ' + rsstr);
-    webWriteLog('Request process ' + rsstr);
-end;
-
-procedure TTCPHttpThrd.Execute;
-var
-    st: int64;
-begin
-    st := timegettime;
-    doExecute;
-//  WriteLog('Request process time = '+IntToStr(timeGetTime-st));
-end;
+//constructor TTCPHttpThrd.Create(hsock: tSocket);
+//begin
+////    writeTimeLog('TCPHttpThrd.Create');
+//    inherited Create(false);
+//    sock := TTCPBlockSocket.Create;
+//    Headers := TStringList.Create;
+//    InputData := TMemoryStream.Create;
+//    OutputData := TMemoryStream.Create;
+//    sock.socket := hsock;
+//    FreeOnTerminate := true;
+//    Priority := tpNormal;
+//end;
+//
+//destructor TTCPHttpThrd.Destroy;
+//begin
+//    sock.free;
+//    Headers.free;
+//    InputData.free;
+//    OutputData.free;
+//    inherited Destroy;
+//end;
+//
+//procedure TTCPHttpThrd.doExecute;
+//var
+//    b: byte;
+//    timeout: Integer;
+//    s: string;
+//    method, URI, protocol: string;
+//    size: Integer;
+//    X, n: Integer;
+//    resultcode: Integer;
+//    rsstr: string;
+//    st: int64;
+//
+//    procedure addMark(num: integer);
+//    begin
+//        rsstr := rsstr + format('%d %dms ', [num, TimegetTime - st]);
+//        st := TimegetTime;
+//    end;
+//
+//begin
+//    rsstr := '';
+//    st := timegettime;
+//    addMark(1);
+//    timeout := 1200;
+//  // read request line
+//    s := sock.RecvString(timeout);
+//    WriteLog('URI ' + s);
+//    addMark(2);
+//    if sock.lastError <> 0 then
+//        Exit;
+//    if s = '' then
+//        Exit;
+//    method := fetch(s, ' ');
+//    if (s = '') or (method = '') then
+//        Exit;
+//    URI := fetch(s, ' ');
+//    if URI = '' then
+//        Exit;
+//    protocol := fetch(s, ' ');
+////    protocol :=  'HTTP/1.0';
+//    Headers.Clear;
+//    size := -1;
+//  // read request headers
+//    if protocol <> '' then begin
+//        if pos('HTTP/', protocol) <> 1 then
+//            Exit;
+//        repeat
+//
+//            s := sock.RecvString(timeout);
+//            if pos('Host:', s) > 0 then
+//                rsstr := s + rsstr;
+//            addMark(3);
+//            if sock.lastError <> 0 then
+//                Exit;
+//            if s <> '' then
+//                Headers.add(s);
+//            if pos('CONTENT-LENGTH:', Uppercase(s)) = 1 then
+//                size := StrToIntDef(SeparateRight(s, ' '), -1);
+//        until s = '';
+//    end;
+//  // recv document...
+//    InputData.Clear;
+//    if size >= 0 then begin
+//        InputData.SetSize(size);
+//        X := sock.RecvBufferEx(InputData.Memory, size, timeout);
+//        addMark(4);
+//        InputData.SetSize(X);
+//        if sock.lastError <> 0 then
+//            Exit;
+//    end;
+//    OutputData.Clear;
+//    resultcode := ProcessHttpRequest(method, URI);
+//    sock.SendString('HTTP/1.0 ' + IntToStr(resultcode) + CRLF);
+//    if protocol <> '' then begin
+//        Headers.add('Content-length: ' + IntToStr(OutputData.size));
+//        Headers.add('Connection: close');
+//        Headers.add('Date: ' + Rfc822DateTime(now));
+//        Headers.add('Server: Synapse HTTP server demo');
+//        Headers.add('');
+//        addMark(5);
+//        for n := 0 to Headers.count - 1 do
+//            sock.SendString(Headers[n] + CRLF);
+//        addMark(6);
+//        headers.SaveToFile('g:\home\headers.txt');
+//    end;
+//    if sock.lastError <> 0 then
+//        Exit;
+//    sock.SendBuffer(OutputData.Memory, OutputData.size);
+//    addMark(7);
+//    addMark(8);
+//
+//    sock.CloseSocket;
+//    addMark(9);
+//    webWriteLog('tcpip', 'Request process ' + rsstr);
+//    webWriteLog('Request process ' + rsstr);
+//end;
+//
+//procedure TTCPHttpThrd.Execute;
+//var
+//    st: int64;
+//begin
+//    st := timegettime;
+//    doExecute;
+////  WriteLog('Request process time = '+IntToStr(timeGetTime-st));
+//end;
 
 Procedure Update_Array(basename:string;baseind, changed: integer; varvalue:ansistring);
 var
@@ -1034,45 +1159,6 @@ begin
 end;
 
 
-function TTCPHttpThrd.ProcessHttpRequest(Request, URI: string): Integer;
-var
-    l: TStringList;
-    str1, str2, resp: ansistring;
-    pos_var_name: integer;
-    str3: string;
-    stmp, jreq: string;
-    amppos: Integer;
-    json, json1: tjsonobject;
-    i1, i2, i3: integer;
-    keyname: ansistring;
-    keyval: ansistring;
-    I: Integer;
-    MyRequest: string;
-    jSONSTR: string;
-begin
-    exit;
-  // sample of precessing HTTP request:
-  // InputData is uploaded document, headers is stringlist with request headers.
-  // Request is type of request and URI is URI of request
-  // OutputData is document with reply, headers is stringlist with reply headers.
-  // Result is result code
-//    WritetimeLog(URI);
-    result := 504;
-    if Request = 'GET' then begin
-        Headers.Clear;
-        Headers.add('Content-type: Text/Html');
-        l := TStringList.Create;
-        try
-            resp := MyHTTPProcessRequest(URI);
-            resp := jreq + resp;
-            l.add(resp);
-            l.SaveToStream(OutputData);
-        finally
-            l.free;
-        end;
-        result := 200;
-    end;
-end;
 
 procedure THTTPSRVForm.terminate1Click(Sender: TObject);
 begin
@@ -1110,6 +1196,19 @@ begin
         webWriteLog(IntToStr(rc) + ' HTTPSRV ' + syserrormessage(rc) + ' ');
         tcphttpsrv.Free;
     end;
+
+    webSocketsrv := ttcpserver.Create(nil);
+    webSocketsrv.LocalPort := IntToStr(StrToInt(LocalTCPPort)+10);
+    webSocketsrv.OnAccept := webSocketserverAccept;
+    webSocketsrv.Active := true;
+    rc := WSAGetlastError;
+
+    if rc <> 0 then begin
+        webWriteLog(IntToStr(rc) + ' webSocketsrv ' + syserrormessage(rc) + ' ');
+        tcpsrv.Free;
+    end;
+
+
 
 
 end;

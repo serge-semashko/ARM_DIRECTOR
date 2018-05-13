@@ -3,7 +3,6 @@ var tm, atm;
 var timeStamp = 0;
 var url // = "http://127.0.0.1:9090/get_data&callback=?";
 var urlTail;
-var jq = "&callback=jQuery111009211847694793347_1526031523810?get_member=id&_=1526031523811";
 var LST;
 var dt;
 var mainFont = '28pt Arial';
@@ -50,6 +49,9 @@ var CountEvents = 5; //количесто отображаемых событи�
 
 var WidthDevice = 80;
 var IntervalDevice = 10;
+var HeightDevice = 55;
+var HOffsetDevice = 5;
+
 var EventOffset = 30;
 var ActiveTL = 0; //отображаемая тайм-линия
 var ShowEditor = true;
@@ -115,7 +117,7 @@ var mnPlusSelect = false;
 var mnMinusSelect = false;
 var mnHomeSelect = false;
 
-var AudioOn = true;
+var AudioOn = false;
 var audio = new Audio();
 audio.playbackRate = 1.25;
 var typeSpeeker = 0; //0 internal, 1 external
@@ -324,9 +326,13 @@ function MyMouseUp(e) {
     //var lf = RectSound[0];
     //var rt = RectSound[2];
     if (MenuDown) {
+        
         var respos = mouseY - DownPosition;
         if (respos > ((window.innerHeight - 10) / 100) * 5) {
             MenuProcent = 100;
+            //function sh() {
+              // $("#mymenu").slideToggle("slow");
+            //}
         } else {
             MenuProcent = 5;
         }
@@ -409,7 +415,7 @@ function setMousePosition(e) {
     if (MenuDown) {
         var respos = mouseY - MousePosition;
         //var resstep = respos / 100;
-        var dltproc = (respos * 100) / (window.innerHeight - 10)
+        var dltproc = (respos * 100) / (window.innerHeight - 10);
         MenuProcent = MenuProcent + dltproc;
         if (MenuProcent > 50) {
             MenuProcent = 100;
@@ -470,6 +476,8 @@ function getPosition(el) {
     while (el) {
         xPosition += (el.offsetLeft - el.scrollLeft + el.clientLeft);
         yPosition += (el.offsetTop - el.scrollTop + el.clientTop);
+        //xPosition += (el.clientLeft);
+        //yPosition += (el.clientTop);
         el = el.offsetParent;
     }
     return {

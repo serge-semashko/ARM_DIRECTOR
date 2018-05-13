@@ -46,7 +46,13 @@ function SetTypeScreen0() {
   LengthNameTL = Math.floor(stepw * 2,5);
   MyCursor = Math.floor(stepw);
   
-  var hdev = ((stepw / 1.75) / 2) * 5;
+  var hdev;
+  if (scrH<scrW) {
+    hdev = ((stepw / 1.75) / 2) * 5;  
+  } else {
+    hdev = 0.065 * scrH;   
+  }
+  
   var htmln = (TimeLineHeight / 85 * 100) * (4 + +TLT.length);
 
   HeightMenu = (scrH / 100) * MenuProcent;
@@ -191,7 +197,12 @@ function SetTypeScreen1() {
   LengthNameTL = 0; //Math.floor(stepw * 2,5);
   MyCursor = Math.floor(stepw * 3);
   
-  var hdev = ((stepw / 1.75) / 2) * 5;
+  var hdev;
+  if (scrH<scrW) {
+    hdev = ((stepw / 1.75) / 2) * 5;  
+  } else {
+    hdev = 0.065 * scrH;   
+  }
   //var htmln = (TimeLineHeight / 85 * 100) * (4 + TLT.length);
   //var halltl = 4 * 16;
   
@@ -718,14 +729,16 @@ function SetTypeScreen4() {
   }
   
   var steph = scrH / 100;
-  var stepw =scrW / 17.5;
+  //var stepw =scrW / 17.5;
   
-  IntervalDevice = stepw / 100 * 10;
-  if (IntervalDevice<10) { IntervalDevice = 10 }
-  WidthDevice = stepw - IntervalDevice;
+  //IntervalDevice = stepw / 100 * 10;
+  //if (IntervalDevice<10) { IntervalDevice = 10 }
+  //WidthDevice = stepw - IntervalDevice;
+  widthCellDev(scrW);
+  var stepw = +WidthDevice;
   
   if (ShowNameTL) { 
-    LengthNameTL = Math.floor(stepw * 2,5);
+    LengthNameTL = Math.floor((scrW / 17.5) * 2,5);
     MyCursor = Math.floor(stepw);
   } else {
     LengthNameTL = 0;  
@@ -744,7 +757,12 @@ function SetTypeScreen4() {
     var preva = 0;//0.02;
     
     if (isField(1)) {
-      var hdev = ((stepw / 1.75) / 2) * 5;
+      var hdev;
+      if (scrH<scrW) {
+        hdev = ((stepw / 1.75) / 2) * 5;  
+      } else {
+        hdev = 0.065 * scrH;   
+      }
       prdevices = hdev / scrH;
     }
 

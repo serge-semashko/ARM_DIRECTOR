@@ -24,7 +24,7 @@ and open the template in the editor.
         <script src="scripts/myutils.js"></script>
         <script src="scripts/main.js"></script>
         <script src="scripts/vendor/pako.min.js"></script>
-        <script src="scripts/vendor/jquery-1.11.0.min.js "></script>
+        <script src="scripts/vendor/jquery-3.3.1.js "></script>
         <script src="scripts/typescreen.js"></script>
         <script src="scripts/init.js" ></script>
         <script src="scripts/webredis_client.js"></script>
@@ -32,57 +32,54 @@ and open the template in the editor.
         <meta http-equiv="Pragma" content="no-cache">
     </head>
     <body>
+        <script>
+        </script>
+        <p class="log"> eeee </p>
+
         <div style="display:block; background-color:#494747; color:white; font-family:Arial;" class="menu" id="select_scr">
             <table  width="60%" class="menu"  id="select_menu" cellspacing=0 border=0>
                 <tr>
-                    <th colspan="5">
-                        <h2 id="armStatus" style="color:red; line-height:0.5; padding-top:0px; padding-bottom:0px;">ARM Director v1</h2>
+                    <th colspan="4" id="armStatus" style="color:red; padding-top:0px; padding-bottom:0px;">
+                        <!--<h2 >ARM Director v1</h2>-->
+                        ARM Director v1
                         <!--<p id="serverStatus" style="color:red">Cервер</p>-->
                     </th>
-                    <th colspan="1">
+                    <th colspan="2" id="serverStatus" style="color:red">
                         <!--<p id="armStatus" style="color:red">ARM Director</p>-->
-                        <h6 id="serverStatus" style="color:red">Cервер</h6>
+                        <!--<h6 >Cервер</h6>-->
+                        Cервер
                     </th>
                 </tr>
-                
-                <tr style="height:20px"><td colspan="6" align="center" style="color:lime">Тип экрана:</td></tr>
-                <tr>
-                    <td width="10%"> </td> 
-                    <td width="10%"> </td>
-                    <td width="10%"> </td>
-                    <td width="10%"> </td>
-                    <td width="10%"> </td>
-                    <td width="10%"> </td>
-                </tr>
-                <!--                <tr>
-                <th colspan="99" style>
-                Экран
-                </th>
-                </tr >-->
+
+                <tr style="border-bottom:1px solid lime;"><td colspan="6" align="left" style="color:lime">Тип экрана:</td></tr>
+
 
                 <tr>  
-                    <td colspan ="3"  style="color:aqua"> 
+                    <td colspan ="4"  style="color:aqua" id="myscreen0"> 
                         <input onClick="execMain()" checked type="radio" id="scrChoice0"
                                name="type01" value="0">
                         <label for="scrChoice0">Полный экран</label>
                     </td>
+                    <td id="myinfo" colspan ="2" rowspan ="3" align="center" style="color:aquamarine; padding: 10px" > 
+                        Для выбора экрана<br>нажмите<br>на его название.
+                    </td>
                 </tr>
                 <tr>   
-                    <td colspan ="3" style="color:aqua">   
+                    <td colspan ="4" style="color:aqua" id="myscreen1">   
                         <input onClick="execMain()" checked type="radio" id="scrChoice1"
                                name="type01" value="1">
-                        <label for="scrChoice1">Экран События устройства</label>
+                        <label for="scrChoice1">События, устройства</label>
                     </td>
                 </tr>
                 <tr>    
-                    <td colspan ="6" style="color:aqua">   
+                    <td colspan ="4" style="color:aqua" id="myscreen2">   
                         <input checked onClick="execMain()" type="radio" id="scrChoice2"
                                name="type01" value="4">
                         <label for="scrChoice2">Настраиваемый экран</label>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="3" style="color:aquamarine; padding-left:10%;" align="left">1 Поле</td>
+                    <td colspan="3" style="color:aqua; padding-left:10%;" align="left">1 Поле</td>
                     <td colspan="3" align="right">
                         <select  id="scr_1" class="graphSelect" style="width: 90%;">
                             <option value="-1">Не используется</option>
@@ -97,7 +94,7 @@ and open the template in the editor.
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="3" style="color:aquamarine; padding-left:10%;">2 Поле</td>
+                    <td colspan="3" style="color:aqua; padding-left:10%;">2 Поле</td>
                     <td  colspan="3" align="right">
                         <select  id="scr_2" class="graphSelect" style="width: 90%;">
                             <option value="-1">Не используется</option>
@@ -109,15 +106,9 @@ and open the template in the editor.
                             <option value="5">События  устройства 2 </option>
                         </select>
                     </td>
-                    <!--                    <td> 
-                    <input id="scr_2_1" type="number" value=10 min="1" max="31" style="width: 6em;">
-                    </td>
-                    <td> 
-                    <input  id="scr_2_2"  type="number" value=10 min="1" max="31" style="width: 6em;">
-                    </td>-->
                 </tr>
                 <tr>
-                    <td colspan="3" style="color:aquamarine; padding-left:10%;">3 Поле</td>
+                    <td colspan="3" style="color:aqua; padding-left:10%;">3 Поле</td>
                     <td colspan="3" align="right">
                         <select id="scr_3"  class="graphSelect" style="width: 90%;">
                             <option value="-1">Не используется</option>
@@ -129,15 +120,9 @@ and open the template in the editor.
                             <option value="5">События  устройства 2 </option>
                         </select>
                     </td>
-                    <!--                    <td> 
-                    <input id="scr_3_1" type="number" value=10 min="1" max="31" style="width: 6em;">
-                    </td>
-                    <td> 
-                    <input  id="scr_3_2"  type="number" value=10 min="1" max="31" style="width: 6em;">
-                    </td>-->
                 </tr>
                 <tr>
-                    <td colspan="3" style="color:aquamarine; padding-left:10%;">4 Поле</td>
+                    <td colspan="3" style="color:aqua; padding-left:10%;">4 Поле</td>
                     <td  colspan="3" align="right">
                         <select id="scr_4" class="graphSelect" style="width: 90%;">
                             <option value="-1">Не используется</option>
@@ -149,15 +134,9 @@ and open the template in the editor.
                             <option value="5">События  устройства 2 </option>
                         </select>
                     </td>
-                    <!--                    <td> 
-                    <input id="scr_4_1" type="number" value=10 min="1" max="31" style="width: 6em;">
-                    </td>
-                    <td> 
-                    <input  id="scr_4_2"  type="number" value=10 min="1" max="31" style="width: 6em;">
-                    </td>-->
                 </tr>
                 <tr>
-                    <td colspan="3" style="color:aquamarine; padding-left:10%;">5 Поле</td>
+                    <td colspan="3" style="color:aqua; padding-left:10%;">5 Поле</td>
                     <td  colspan="3" align="right">
                         <select id="scr_5" class="graphSelect" style="width: 90%;">
                             <option value="-1">Не используется</option>
@@ -169,23 +148,23 @@ and open the template in the editor.
                             <option value="5">События  устройства 2 </option>
                         </select>
                     </td>
-                    <!--                    <td> 
-                    <input id="scr_5_1" type="number" value=10 min="1" max="31" style="width: 6em;">
-                    </td>
-                    <td> 
-                    <input  id="scr_5_2"  type="number" value=10 min="1" max="31" style="width: 6em;">
-                    </td>-->
                 </tr>
-                <tr><td colspan="6"> </td></tr>
-                <tr><td colspan="6"> </td></tr>
-                <tr><td colspan="6" align="center" style="color:lime">Параметры:</td></tr>
-                <tr><td colspan="6"> </td></tr>
-                <tr><td colspan="6"> </td></tr>
+
+                <tr>
+                    <td width="16.7%"> </td> 
+                    <td width="16.6%"> </td>
+                    <td width="16.6%"> </td>
+                    <td width="16.6%"> </td>
+                    <td width="16.6%"> </td>
+                    <td width="16.6%"> </td>
+                </tr>
+                <tr><td colspan="6" align="left" style="color:lime; border-bottom:1px solid lime;">Cинтезатор голоса:</td></tr>
+
                 <tr>
                     <td colspan="3" style="color:aqua;">
                         <input checked  type="radio" id="extVoice"
                                name="voice" value="0">
-                        <label for="extVoice">Встроенный синтезатор голоса</label>
+                        <label for="extVoice">Встроенный</label>
                     <td colspan="3" align="right">
                         <select  id="voice_0" class="graphSelect" style="width: 90%;">
                         </select>
@@ -197,18 +176,18 @@ and open the template in the editor.
                     <td colspan="3" style="color:aqua;">
                         <input  type="radio" id="extVoice"
                                 name="voice" value="1">
-                        <label for="extVoice">Внешний синтезатор голоса</label>
+                        <label for="extVoice">Внешний</label>
                     <td colspan="3" align="right">
                         <select  id="voice_1" class="graphSelect" style="width: 90%;">
                         </select>
                     </td>
 
                 </tr>
-                <tr><td colspan="6"> </td></tr>
-                <tr><td colspan="6"> </td></tr>
+
+                <tr><td colspan="6" align="left" style="color:lime; border-bottom:1px solid lime;">События:</td></tr>
                 <tr>
-                    <td colspan='5' style="padding-left:3%; color:aquamarine;">
-                         Количество событий
+                    <td colspan='5' style="padding-left:3%; color:aqua;">
+                        Количество:
                     </td>
                     <td align="right"> 
                         <input id="CountEvents" type="number" value=10 min="1" max="31" style="width: 90%; text-align:center;">
@@ -216,14 +195,14 @@ and open the template in the editor.
                 </tr>
 
                 <tr>
-                    <td colspan='2' style="padding-left:3%;; color:aquamarine;">
-                         Устройство 1
+                    <td colspan='2' style="padding-left:3%;; color:aqua;">
+                        Устройство 1:
                     </td>
                     <td align="left"> 
                         <input id="dev1" type="number" value=10 min="1" max="31" style="width: 90%; text-align:center;">
                     </td>
-                    <td colspan='2' style="padding-left:3%;; color:aquamarine;">
-                         Количество событий
+                    <td colspan='2' style="padding-left:3%;; color:aqua;">
+                        Количество:
                     </td>
                     <td align="right"> 
                         <input id="dev1CountEvents" type="number" value=10 min="1" max="31" style="width: 90%; text-align:center;">
@@ -231,29 +210,29 @@ and open the template in the editor.
                 </tr>
 
                 <tr>
-                    <td colspan='2' style="padding-left:3%;; color:aquamarine;">
-                         Устройство 2
+                    <td colspan='2' style="padding-left:3%;; color:aqua;">
+                        Устройство 2:
                     </td>
                     <td align="left"> 
                         <input id="dev2" type="number" value=10 min="1" max="31" style="width: 90%; text-align:center;">
                     </td>
-                    <td colspan='2' style="padding-left:3%;; color:aquamarine;">
-                         Количество событий
+                    <td colspan='2' style="padding-left:3%;; color:aqua;">
+                        Количество:
                     </td>
                     <td align="right"> 
                         <input id="dev2CountEvents" type="number" value=10 min="1" max="31" style="width: 90%; text-align:center;">
                     </td>
                 </tr>
-                <tr><td colspan="6"> </td></tr>
-                <tr><td colspan="6"> </td></tr>
+
+                <tr><td colspan="6" align="left" style="color:lime; border-bottom:1px solid lime;">Тайм-линии:</td></tr>
                 <tr>
                     <td colspan="6" style="color:aqua;">
-                        <input type="checkbox" id="chk4_1" name="option2" value="a2">Показывать шкалу времени
+                        <input type="checkbox" id="chk4_1" name="option2" value="a2"> Шкала времени
                     </td>
                 </tr>
                 <tr>
                     <td colspan="3" align="left" style="color:aqua;">
-                        <input type="checkbox" id="chk4_2" name="option2" value="a2">Показывать выбранную тайм линию  
+                        <input type="checkbox" id="chk4_2" name="option2" value="a2"> Выбранная тайм-линия  
                     </td>
                     <td colspan="3" align="right">
                         <select class="graphSelect"  id="ActiveTL" style="width: 90%;">
@@ -263,17 +242,16 @@ and open the template in the editor.
                 </tr>
                 <tr>
                     <td colspan="6" style="color:aqua;">
-                        <input type="checkbox" id="chk4_3" name="option2" value="a2">Показывать тайм-линии
+                        <input type="checkbox" id="chk4_3" name="option2" value="a2"> Список тайм-линий
                     </td>
                 </tr>
-                <tr>
+                <tr style="border-bottom:1px solid lime;">
                     <td colspan="6" style="color:aqua;">
-                        <input type="checkbox" id="chk4_4" name="option2" value="a2">Показывать имена тайм-линий
+                        <input type="checkbox" id="chk4_4" name="option2" value="a2"> Название тайм-линий
                     </td>
                 </tr> 
-                <tr><td colspan="6"> </td></tr>
-                <tr><td colspan="6"> </td></tr>
-                <tr><td colspan="6"> </td></tr>
+                <tr><td> </td></tr>
+                <tr><td id="website" colspan="6" align="center" style="color:aquamarine;">Сайт разработчика   www.mvsgroup.tv</td></tr>
             </table>    
         </div>
         <div style="display:none;" id="main">

@@ -13,14 +13,32 @@ function GetSeconds(ps,fn) {
 }
 
 function GetSecondsPhrase(ps,fn) {
-  var scnd = fn - ps
-  if (scnd < 20) return 0;
-  if (scnd < 35) return 1;
-  if (scnd < 60) return 2; 
-  if (scnd < 85) return 3;
-  if (scnd < 110) return 4;
-  if (scnd < 135) return 5;
-  return 0;
+  var scnd = Math.floor((fn - ps) / 25);
+  var ost = (fn - ps) % 25;
+  if (ost > 12) { 
+    scnd = scnd + 1;
+  } else {
+    scnd = 0;  
+  }
+  return scnd;  
+    
+//  var scnd = fn - ps
+//  
+//  if (scnd < 15) return 0;
+//  if (scnd < 35) return 1;
+//  if (scnd < 60) return 2; 
+//  if (scnd < 85) return 3;
+//  if (scnd < 110) return 4;
+//  if (scnd < 135) return 5;
+//  return 0;
+}
+
+function ClearDevValues() {
+  for (var i=0; i < 32; i++) { 
+    DevValue[i] = -1; 
+    ArrDev1[i] = -1;
+    ArrDev2[i] = -1;
+  }   
 }
 
 function GetDevValues(ev) {
@@ -28,13 +46,15 @@ function GetDevValues(ev) {
   //var Cnt = TLT.length;
   var Position = TLP.Position;
   var dv, cv, cev, scnd, cnt1, cnt2;
-  for (var i=0; i < 32; i++) { 
-    DevValue[i] = -1; 
-    ArrDev1[i] = -1;
-    ArrDev2[i] = -1;
+ // for (var i=0; i < 32; i++) { 
+ //   DevValue[i] = -1; 
+ //   ArrDev1[i] = -1;
+ //   ArrDev2[i] = -1;
     cnt1 = 0;
     cnt2 = 0;
-  } 
+ // } 
+  
+  if (EvCount <= 0) return;
   
   for (var j=+ev; j<+EvCount; j++) {
     dv = TLT[ActiveTL].Events[j].Rows[0].Phrases[0].Data;
@@ -72,7 +92,9 @@ function GetCurrEvent() {
   var cv, cev; 
   var tl = Number(TLT[ActiveTL].TypeTL); 
   if (tl == 0) {
+    ClearDevValues();  
     for (var i=0; i<EvCount; i++) {
+        
       strt = TLT[ActiveTL].Events[i].Start;
       fnsh = TLT[ActiveTL].Events[i].Finish;
       if (+Position >= +strt && +fnsh >= +Position) {
@@ -98,12 +120,12 @@ function GetCurrEvent() {
   }
 }
 
-function GetScreenBorders() {
+//function GetScreenBorders() {
   //setViewport();
-  var wdth = evCanvas.width;
+  //var wdth = evCanvas.width;
   //StartScrFrame = Math.floor(MyCursor / FrameSize);
   //FinishScrFrame = Math.floor((wdth - LengthNameTL - MyCursor) / FrameSize); 
-}
+//}
 
 function TwoDigit(zn) {
   var s = zn;
@@ -415,9 +437,7 @@ function rectHalfRound(cv, x, y, wdt, hgh, rds, color1, color2) {
   cv.strokeStyle = color2;
   cv.moveTo(x+rds, y);
   cv.lineTo(x+wdt, y);
-  //cv.quadraticCurveTo(x+wdt, y, x+wdt, y+rds);
   cv.lineTo(x+wdt, y+hgh);
-  //cv.quadraticCurveTo(x+wdt, y+hgh, x+wdt-rds, y+hgh);
   cv.lineTo(x+rds, y+hgh);
   cv.quadraticCurveTo(x, y+hgh, x, y+hgh-rds);
   cv.lineTo(x, y+rds);
@@ -425,6 +445,24 @@ function rectHalfRound(cv, x, y, wdt, hgh, rds, color1, color2) {
   cv.stroke();
   cv.closePath();
   cv.fill();  
+}
+
+function isShowTimelines() {
+  var res = false;
+  if (+typesrc == 0) {
+    res = DefaultScreen0[2] || DefaultScreen0[3] || DefaultScreen0[4];  
+  } else if (+typesrc == 1) {
+    res = DefaultScreen1[2] || DefaultScreen1[3] || DefaultScreen1[4];  
+  } else if (+typesrc == 4) {
+    for (var i=0; i<5; i++) {
+      if (+ScreenFields[i] == 2) {
+        res = true; 
+        break;
+      }  
+    };    
+    //res = DefaultScreen4[2] || DefaultScreen4[3] || DefaultScreen4[4];  
+  }
+  return res; 
 }
 
 function drawToolBar(cv,Width,Height) {
@@ -439,34 +477,35 @@ function drawToolBar(cv,Width,Height) {
   var stepw = MyHeight;
   
   if (Width < 24*MyHeight + 40) {
-    stepw = (Width - 40 - 5 * MyHeight) / 19; 
+    stepw = (Width - 40) / 22; 
   }
   
   cv.font = font0;//Math.floor((Height-8) / 2) +  "pt Arial";
   
+  var loffset = 0.5*stepw;
   cv.lineWidth = 4;
-  RectSound[0] = 20
+  RectSound[0] = loffset-5;
   RectSound[1] = 4;
-  RectSound[2] = 20 + MyHeight;
+  RectSound[2] = +loffset + +stepw + 10;
   RectSound[3] = MyHeight-10;
   if (mnSoundSelect) {
-    rectRound(cv, 20, 4, MyHeight, MyHeight-10, (MyHeight-10)/2, SColor, SColor);  
+    rectRound(cv, loffset-5, 4, +stepw+10, MyHeight-10, (MyHeight-10)/2, SColor, SColor);  
   } else {
     //rectRound(cv, 20, 4, MyHeight, MyHeight-10, (MyHeight-10)/2, MColor, "white");
   }
   var dlty = (MyHeight-10) / 5;
-  var dltx = (MyHeight - 2 * dlty) / 2 - dlty/2-2;
+  var dltx = (stepw - 2 * dlty) / 2 - dlty/2-2;
   cv.lineWidth = 1;
   cv.beginPath();
   cv.strokeStyle = "white";
   cv.fillStyle = "white";
-  cv.moveTo(20+dltx, 4+2*dlty);
-  cv.lineTo(20+dltx+dlty, 4+2*dlty);
-  cv.lineTo(20+dltx+2*dlty, 4+dlty);
-  cv.lineTo(20+dltx+2*dlty, 4+4*dlty);
-  cv.lineTo(20+dltx+dlty, 4+3*dlty);
-  cv.lineTo(20+dltx, 4+3*dlty);
-  cv.lineTo(20+dltx, 4+2*dlty);
+  cv.moveTo(loffset+dltx, 4+2*dlty);
+  cv.lineTo(loffset+dltx+dlty, 4+2*dlty);
+  cv.lineTo(loffset+dltx+2*dlty, 4+dlty);
+  cv.lineTo(loffset+dltx+2*dlty, 4+4*dlty);
+  cv.lineTo(loffset+dltx+dlty, 4+3*dlty);
+  cv.lineTo(loffset+dltx, 4+3*dlty);
+  cv.lineTo(loffset+dltx, 4+2*dlty);
   cv.stroke();
   cv.closePath();
   cv.fill();
@@ -476,9 +515,9 @@ function drawToolBar(cv,Width,Height) {
   cv.textBaseline = "middle"; 
   cv.textAlign  = "left";
   if (AudioOn) {
-    cv.fillText("))", 21+dltx+2*dlty, 2 + (MyHeight-8) / 2);  
+    cv.fillText("))", +loffset+1+dltx+2*dlty, 2 + (MyHeight-8) / 2);  
   } else {
-    cv.fillText("x", 21+dltx+2*dlty, 2 + (MyHeight-8) / 2);  
+    cv.fillText("x", +loffset+1+dltx+2*dlty, 2 + (MyHeight-8) / 2);  
   }
   
   
@@ -488,40 +527,40 @@ function drawToolBar(cv,Width,Height) {
   cv.font = font2;//Math.floor(Height/2) +  "pt Arial";
   
   //var text = "00000";
-  var otstup = 20 + +MyHeight + 1*stepw;//cv.measureText(text).width;
+  var otstup = 20 + +stepw + 1*stepw;//cv.measureText(text).width;
   cv.textAlign  = "left";
   var text = "Размер кадра:";
   var len = cv.measureText(text).width;
-  if (len < 3.5 * stepw-5) {
+  if (len < 4.5 * stepw-5) {
     cv.fillText(text, otstup, 3 + (MyHeight-10) / 2);  
   } else {
-    myTextDraw(cv, text, otstup, 0, 3.5 * stepw-5, 3, MyHeight-10); 
+    myTextDraw(cv, text, otstup, 0, 4.5 * stepw-5, 3, MyHeight-10); 
   }
   //cv.fillText(text, otstup + MyHeight/2, 3 + (MyHeight-10) / 2);
   
   otstup = +otstup + 3.5 * stepw + 15;
   cv.font = font1;
   
-  RectMinus[0] = otstup;
+  RectMinus[0] = otstup-5;
   RectMinus[1] = 3;
-  RectMinus[2] = otstup + MyHeight;
+  RectMinus[2] = +otstup + +stepw + 10;
   RectMinus[3] = MyHeight-10;
   
   if (mnMinusSelect) {
-    rectRound(cv, otstup, 3, MyHeight, MyHeight-10, (MyHeight-10)/2, SColor, SColor);
+    rectRound(cv, otstup-5, 3, +stepw+10, MyHeight-10, (MyHeight-10)/2, SColor, SColor);
   } else {
     //rectRound(cv, otstup, 3, MyHeight, MyHeight-10, (MyHeight-10)/2, MColor, "white");
   }
 //========================================
   var dlty = (MyHeight-10) / 5;
-  var dltx = MyHeight / 5;
+  var dltx = stepw / 5;
   cv.lineWidth = 1;
   cv.beginPath();
   cv.strokeStyle = "white";
   cv.fillStyle = "white";
   cv.moveTo(+otstup+dltx, 2*dlty);
   cv.lineTo(+otstup+4*dltx, 2*dlty);
-  cv.lineTo(+otstup+3*dlty, 4*dlty);
+  cv.lineTo(+otstup+2.5*dltx, 4*dlty);
   cv.lineTo(+otstup+dltx, 2*dlty);
   cv.stroke();
   cv.closePath();
@@ -533,7 +572,7 @@ function drawToolBar(cv,Width,Height) {
 //  cv.fillText("-", +otstup + MyHeight/2 , 2 + (MyHeight-10) / 2);
   
   cv.font = font2;
-  otstup = +otstup + +MyHeight;
+  otstup = +otstup + +stepw;
   
   var text = FrameSize + "px";
   var len = cv.measureText(text).width;
@@ -551,13 +590,13 @@ function drawToolBar(cv,Width,Height) {
   
   cv.font = font1;
   
-  RectPlus[0] = otstup;
+  RectPlus[0] = otstup-5;
   RectPlus[1] = 3;
-  RectPlus[2] = otstup + MyHeight;
+  RectPlus[2] = +otstup + +stepw + 10;
   RectPlus[3] = MyHeight-10;
   
   if (mnPlusSelect) {
-    rectRound(cv, otstup, 3, MyHeight, MyHeight-10, (MyHeight-10)/2, SColor, SColor);
+    rectRound(cv, otstup-5, 3, +stepw+10, MyHeight-10, (MyHeight-10)/2, SColor, SColor);
   } else {
     //rectRound(cv, otstup, 3, MyHeight, MyHeight-10, (MyHeight-10)/2, MColor, "white");
   }
@@ -571,7 +610,7 @@ function drawToolBar(cv,Width,Height) {
   cv.fillStyle = "white";
   cv.moveTo(+otstup+dltx, 4*dlty);
   cv.lineTo(+otstup+4*dltx, 4*dlty);
-  cv.lineTo(+otstup+3*dlty, 2*dlty);
+  cv.lineTo(+otstup+2.5*dltx, 2*dlty);
   cv.lineTo(+otstup+dltx, 4*dlty);
   cv.stroke();
   cv.closePath();
@@ -582,28 +621,30 @@ function drawToolBar(cv,Width,Height) {
   //cv.textAlign  = "center";
   //cv.fillText("+", otstup + MyHeight/2, 3 + (MyHeight-10) / 2);
   
-  otstup = +otstup + +MyHeight + 1*stepw;//cv.measureText("00000").width;
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
+  if (isShowTimelines()) {
+  otstup = +otstup + +stepw + 1*stepw;//cv.measureText("00000").width;
   cv.font = font2;
   cv.textAlign  = "left";
   text = "Высота тайм-линии:";
   var len = cv.measureText(text).width;
-  if (len < 5 * stepw-5) {
+  if (len < 6 * stepw-5) {
     cv.fillText(text, otstup, 3 + (MyHeight-10) / 2);  
   } else {
-    myTextDraw(cv, text, otstup, 0, 5 * stepw-5, 3, MyHeight-10); 
+    myTextDraw(cv, text, otstup, 0, 6 * stepw-5, 3, MyHeight-10); 
   }
   otstup = +otstup + 5 * stepw + 15;
   
   cv.font = font1;
   cv.textAlign  = "center";
   
-  RectDown[0] = otstup;
+  RectDown[0] = otstup-5;
   RectDown[1] = 3;
-  RectDown[2] = otstup + MyHeight;
+  RectDown[2] = +otstup + +stepw + 10;
   RectDown[3] = MyHeight-10;
   
   if (mnDownSelect) {
-    rectRound(cv, otstup, 3, MyHeight, MyHeight-10, (MyHeight-10)/2, SColor, SColor);
+    rectRound(cv, otstup-5, 3, +stepw+10, MyHeight-10, (MyHeight-10)/2, SColor, SColor);
   } else {
     //rectRound(cv, otstup, 3, MyHeight, MyHeight-10, (MyHeight-10)/2, MColor, "white");
   }
@@ -617,7 +658,7 @@ function drawToolBar(cv,Width,Height) {
   cv.fillStyle = "white";
   cv.moveTo(+otstup+dltx, 2*dlty);
   cv.lineTo(+otstup+4*dltx, 2*dlty);
-  cv.lineTo(+otstup+3*dlty, 4*dlty);
+  cv.lineTo(+otstup+2.5*dltx, 4*dlty);
   cv.lineTo(+otstup+dltx, 2*dlty);
   cv.stroke();
   cv.closePath();
@@ -628,7 +669,7 @@ function drawToolBar(cv,Width,Height) {
   //cv.fillText("-", otstup + MyHeight/2, 2 + (MyHeight-10) / 2);
   
   cv.font = font2;
-  otstup = otstup + MyHeight;
+  otstup = otstup + stepw;
   
   var text = TimeLineHeight + "px";
   var len = cv.measureText(text).width;
@@ -642,13 +683,13 @@ function drawToolBar(cv,Width,Height) {
   cv.font = font2;
   otstup = +otstup + 1.5*stepw;
   
-  RectUp[0] = otstup;
+  RectUp[0] = otstup-5;
   RectUp[1] = 3;
-  RectUp[2] = otstup + MyHeight;
+  RectUp[2] = +otstup + +stepw + 10;
   RectUp[3] = MyHeight-10;
   
   if (mnUpSelect) {
-    rectRound(cv, otstup, 3, MyHeight, MyHeight-10, (MyHeight-10)/2, SColor, SColor);
+    rectRound(cv, otstup-5, 3, +stepw+10, MyHeight-10, (MyHeight-10)/2, SColor, SColor);
   } else {
     //rectRound(cv, otstup, 3, MyHeight, MyHeight-10, (MyHeight-10)/2, MColor, "white");
   }
@@ -661,40 +702,43 @@ function drawToolBar(cv,Width,Height) {
   cv.fillStyle = "white";
   cv.moveTo(+otstup+dltx, 4*dlty);
   cv.lineTo(+otstup+4*dltx, 4*dlty);
-  cv.lineTo(+otstup+3*dlty, 2*dlty);
+  cv.lineTo(+otstup+2.5*dltx, 2*dlty);
   cv.lineTo(+otstup+dltx, 4*dlty);
   cv.stroke();
   cv.closePath();
   cv.fill();
 //======================================== 
-
+  }
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   //rectRound(cv, otstup, 3, MyHeight, MyHeight-10, (MyHeight-10)/2, ProgrammColor, "white");
   //cv.fillStyle = "white";
   cv.textAlign  = "center";
  // cv.fillText("+", otstup + MyHeight/2, 3 + (MyHeight-10) / 2);
   //cv.lineWidth = lwdt;
   
-  otstup = Width-20-MyHeight;
-  RectHome[0] = otstup;
+  var roffset = stepw / 2;
+  
+  otstup = Width-roffset-stepw;
+  RectHome[0] = otstup-5;
   RectHome[1] = 3;
-  RectHome[2] = Width-20;
+  RectHome[2] = Width-roffset+10;
   RectHome[3] = MyHeight-10;
   
   if (mnHomeSelect) {
-    rectRound(cv, otstup, 3, MyHeight, MyHeight-10, (MyHeight-10)/2, SColor, SColor);  
+    rectRound(cv, otstup-5, 3, +stepw+10, MyHeight-10, (MyHeight-10)/2, SColor, SColor);  
   } else {
     //rectRound(cv, otstup, 3, MyHeight, MyHeight-10, (MyHeight-10)/2, MColor, "white");  
   }
   
-  dltx = MyHeight / 8;
+  dltx = stepw / 8;
   dlty = (MyHeight - 10) / 5; 
   var st = 3 + dlty;
   cv.lineWidth = 2;
   for (var i=0; i<4; i++) {
     cv.beginPath();
     cv.strokeStyle = "white";
-    cv.moveTo(otstup+2*dltx, st + i*dlty);
-    cv.lineTo(otstup+6*dltx, st + i*dlty);
+    cv.moveTo(otstup+dltx, st + i*dlty);
+    cv.lineTo(otstup+7*dltx, st + i*dlty);
     cv.stroke();
     cv.closePath();
   }

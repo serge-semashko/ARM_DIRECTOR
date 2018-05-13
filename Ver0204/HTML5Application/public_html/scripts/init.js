@@ -4,11 +4,10 @@
  * and open the template in the editor.
  */
 var modeChanged = true;
-var netInterval;
 var uarr = new Uint8Array();
 var ScreenFields_1 = [0, 0, 0, 0, 0]; //Второе поле
 var ScreenFields_2 = [0, 0, 0, 0, 0]; //Третье
-//
+//var synth;
 //
 //
 //
@@ -64,10 +63,17 @@ function initControls() {
         document.getElementById(fldn).options.selectedIndex = ScreenFields[fn - 1] + 1;
     }
 
-
+    //$("#main").css("display", "none");
     $("#select_scr").css("display", "block");
+    //$("#select_scr").slideToggle("slow");
     $("#main").css("display", "none");
 }
+
+function setInfo() {
+  //$("#serverStatus").css("color", "limegreen"); 
+  document.all.myinfo.innerHTML="Для выбора экрана<br>нажмите<br>на его название.";
+}
+
 function execMain() {
 //                speak("Test 0", 1.0, 1.4);
 
@@ -75,6 +81,17 @@ function execMain() {
     typeSpeeker = +$("[name=voice]:checked").val();
     typesrc = +value;
     ActiveTL = +document.getElementById("ActiveTL").options.selectedIndex;
+    if (ActiveTL == -1) {
+        setTimeout(setInfo,1000);
+        document.all.myinfo.innerHTML="Нет данных<br>или<br>связи с сервером";
+        return;
+    } //else {
+      //if (TLT[ActiveTL].Count<=0) {
+      //  setTimeout(setInfo,1000);
+      //  document.all.myinfo.innerHTML="Выбранная тайм-линия не содержит событий";
+      //  return;  
+      //}
+    //}
     for (var fn = 1; fn < 6; fn++) {
         fldn = "scr_" + fn;
         var fld = +document.getElementById(fldn).options.selectedIndex - 1;
@@ -118,9 +135,92 @@ function setViewport() {
 
 }
 
-window.onclose = function () {
-    clearInterval(myInterval)
+function optionTable(fs,wdth) {
+    $("tr").css("height",fs + "px");
+    $("th").css("height",2*fs + "px");
+    $("td").css("height",fs + "px");
+    $("table").css("width",wdth + "%");
+    //$("#main").css("height",(scrH-10)/2 + "px");
+    $("table").css("height",scrH + "px");
+    if (fs<12) fs = 12;
+    $("table,button,input,select").css("font-size", fs + "px");
+    $("#website").css("font-size", fs/3*2 + "px");
+    $("#armStatus").css("font-size", 2*fs + "px");
+    $("#serverStatus").css("font-size", fs/3*2 + "px");
+    $("#myscreen0").css("font-size", 1.25*fs + "px");
+    $("#myscreen1").css("font-size", 1.25*fs + "px");
+    $("#myscreen2").css("font-size", 1.25*fs + "px");  
+    $("#myinfo").css("font-size", fs-2 + "px");
+    $("body").css("overflow-y","hidden");
+    $("body").css("overflow: -moz-scrollbars-none;");
+    $("body").css("-ms-overflow-style: none;");
+    $("body").css("::-webkit-scrollbar { width: 0; }");  
 }
+
+window.onresize = function() {
+  var dloc = document.location;
+    var hostname;
+    if (dloc.hostname.length < 3) {
+        hostname = "localhost";
+    } else {
+        hostname = dloc.hostname;
+    }
+    
+    console.log(hostname + " ");
+    url = "http://" + hostname + ":9090/";
+    urlTail = "&callback=?";
+    setViewport();
+    var mn = document.getElementById("select_menu");
+    document.all.serverStatus.innerHTML=hostname;
+    
+    $("body").css("font-size", "12px");
+    var wdth = 50;
+    var fs = Math.floor(scrH / 50);
+    var kfc = 1;
+    if (scrW<scrH) {
+      var fs = Math.floor(scrH / 50);
+      kfc = scrH /scrW; 
+      if (kfc < 1.3) {
+        wdth = 75;  
+      } else {
+        wdth = 96;
+      }
+    } else {
+      kfc = scrW /scrH;
+      if (kfc < 1.2) {
+        wdth = 65;  
+      } else if (kfc < 1.4) {
+        wdth = 50;  
+      } else {
+        wdth = 40;  
+      }
+    }
+    optionTable(fs,wdth);
+//        $("tr").css("height",fs + "px");
+//        $("th").css("height",2*fs + "px");
+//        $("td").css("height",fs + "px");
+//        $("table").css("width",wdth + "%");
+//        //$("#main").css("height",(scrH-10)/2 + "px");
+//        $("table").css("height",scrH + "px");
+//        if (fs<14) fs = 14;
+//        $("table,button,input,select").css("font-size", fs + "px");
+//        $("#website").css("font-size", fs/3*2 + "px");
+//        $("#armStatus").css("font-size", 2*fs + "px");
+//        $("#serverStatus").css("font-size", fs/3*2 + "px");
+//        $("#myscreen0").css("font-size", 1.25*fs + "px");
+//        $("#myscreen1").css("font-size", 1.25*fs + "px");
+//        $("#myscreen2").css("font-size", 1.25*fs + "px");  
+//        $("#myinfo").css("font-size", fs-2 + "px");
+//        $("body").css("overflow-y","hidden");
+//        $("body").css("overflow: -moz-scrollbars-none;");
+//        $("body").css("-ms-overflow-style: none;");
+//        $("body").css("::-webkit-scrollbar { width: 0; }");
+};
+
+window.onclose = function() {
+       clearInterval(myInterval);
+};
+
 window.onload = function () {
     var dloc = document.location;
     var hostname;
@@ -129,49 +229,62 @@ window.onload = function () {
     } else {
         hostname = dloc.hostname;
     }
+    
     console.log(hostname + " ");
     url = "http://" + hostname + ":9090/";
     urlTail = "&callback=?";
     setViewport();
     var mn = document.getElementById("select_menu");
-
+    document.all.serverStatus.innerHTML=hostname;
+    
+    //initVoice();
+    
     $("body").css("font-size", "12px");
     var wdth = 50;
     var fs = Math.floor(scrH / 50);
     var kfc = 1;
-    if (scrW < scrH) {
-        var fs = Math.floor(scrH / 50);
-        kfc = scrH / scrW;
-        if (kfc < 1.3) {
-            wdth = 75;
-        } else {
-            wdth = 96;
-        }
+    if (scrW<scrH) {
+      var fs = Math.floor(scrH / 50);
+      kfc = scrH /scrW; 
+      if (kfc < 1.3) {
+        wdth = 75;  
+      } else {
+        wdth = 96;
+      }
     } else {
-        kfc = scrW / scrH;
-        if (kfc < 1.2) {
-            wdth = 65;
-        } else if (kfc < 1.4) {
-            wdth = 50;
-        } else {
-            wdth = 40;
-        }
+      kfc = scrW /scrH;
+      if (kfc < 1.2) {
+        wdth = 65;  
+      } else if (kfc < 1.4) {
+        wdth = 50;  
+      } else {
+        wdth = 40;  
+      }
     }
-    $("tr").css("height", fs + "px");
-    $("table").css("width", wdth + "%");
-    $("table").css("height", scrH + "px");
-    if (fs < 10)
-        fs = 12;
-    $("table,button,input,select").css("font-size", fs + "px");
-
+    optionTable(fs,wdth);
+//        $("tr").css("height",fs + "px");
+//        $("th").css("height",2*fs + "px");
+//        $("td").css("height",fs + "px");
+//        $("table").css("width",wdth + "%");
+//        //$("#main").css("height",(scrH-10)/2 + "px");
+//        $("table").css("height",scrH + "px");
+//        if (fs<14) fs = 14;
+//        $("table,button,input,select").css("font-size", fs + "px");
+//        $("#website").css("font-size", fs/3*2 + "px");
+//        $("#armStatus").css("font-size", 2*fs + "px");
+//        $("#serverStatus").css("font-size", fs/3*2 + "px");
+//        $("#myscreen0").css("font-size", 1.25*fs + "px");
+//        $("#myscreen1").css("font-size", 1.25*fs + "px");
+//        $("#myscreen2").css("font-size", 1.25*fs + "px");  
+//        $("#myinfo").css("font-size", fs-2 + "px");
+//        $("body").css("overflow-y","hidden");
+//        $("body").css("overflow: -moz-scrollbars-none;");
+//        $("body").css("-ms-overflow-style: none;");
+//        $("body").css("::-webkit-scrollbar { width: 0; }");
+       
     initControls();
-    net_active = false;
-//    setInterval(net_process(), 3140);
-    $(document).ajaxComplete(function () {
-        console.log("Triggered ajaxComplete handler.");
-    });
+    net_init();
     showPage();
-    netInterval = setInterval(net_process, 40);
     window_onload();
 
 //    hidePage();
@@ -179,13 +292,11 @@ window.onload = function () {
 function hidePage() {
     $("#select_scr").css("display", "none");
     $("#main").css("display", "block");
-
 }
-function showPage() {
 
+function showPage() {
     $("#select_scr").css("display", "block");
     $("#main").css("display", "hide");
-
 }
 
 function initVoice() {
@@ -243,6 +354,7 @@ function populateVoiceList() {
     }
     voiceSelect.selectedIndex = selectedIndex;
 }
+
 function speak(stext, rateValue, pitchValue) {
     if (!voiceok) {
         return;

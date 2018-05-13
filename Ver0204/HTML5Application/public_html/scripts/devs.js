@@ -194,12 +194,24 @@ DevRects[31] = {
   bottom : 0
 };
   
+function widthCellDev(Width) {
+  WidthDevice = Width / 17.5;
+  IntervalDevice = 0.1 * WidthDevice; 
+  if (IntervalDevice<5) IntervalDevice = 5;
+  WidthDevice = WidthDevice - IntervalDevice;  
+}  
+
+function heightCellDev(Height,Count) {
+  HeightDevice = (Height - 2*IntervalDevice) / 2;  
+  if (+Count>16) {
+    HOffsetDevice = IntervalDevice / 2;  
+  } else {
+    HOffsetDevice = (+HeightDevice + +IntervalDevice) / 2;  
+  } 
+}
 
 function drawMyDev(cv,Width,Height,currtl) {
-  //var srccolor = 0;  
-  //var Background = rgbFromNum(srccolor);
-  //var Foreground = smoothcolor(srccolor,8);
-  //var Foreground1 = smoothcolor(srccolor,16);  
+
   cv.lineWidth = 4;
   cv.textBaseline = "top";
   cv.textAlign  = "left";
@@ -214,26 +226,30 @@ function drawMyDev(cv,Width,Height,currtl) {
     cv.fillStyle = Foreground1;//DevicesBKGN;
     cv.fillRect(0,0,wdth,hght);
     
-    WidthDevice = 80;
-    IntervalDevice = 10;
+    //WidthDevice = Width / 17.5;
+    //IntervalDevice = 0.1 * WidthDevice;
+    widthCellDev(Width);
+    
     if (currtl.TypeTL == "0") {
         
-      currtl.CountDev = Number(currtl.CountDev);
-      tmph = (hght / 5) * 2;
-      tmpw = tmph * 1.75;
-      tmph = tmph.toFixed();
-      tmpw = tmpw.toFixed();
+      //currtl.CountDev = Number(currtl.CountDev);
+      heightCellDev(Height,+currtl.CountDev);
+      
+      tmph = HeightDevice;//(hght / 5) * 2;
+      tmpw = WidthDevice;//tmph * 1.75;
+      //tmph = tmph.toFixed();
+      //tmpw = tmpw.toFixed();
       tmpw1 = tmpw * 14.5;
       if (tmpw1 > tmpwdth) {
         tmpw = tmpwdth / 14.5;
         tmph = tmpw / 1.75;
-        tmph = tmph.toFixed();
-        tmpw = tmpw.toFixed();
+        //tmph = tmph.toFixed();
+        //tmpw = tmpw.toFixed();
       }
       cntw1 = tmpwdth / tmpw + 2;
       cntw1 = Math.floor(cntw1) - 3;
-      if (cntw1>=currtl.CountDev+2) {
-        cntw1 = currtl.CountDev;
+      if (cntw1>=+currtl.CountDev+2) {
+        cntw1 = +currtl.CountDev;
         cntw2 = 0;
         cnth = 1;
       } else {
@@ -242,7 +258,7 @@ function drawMyDev(cv,Width,Height,currtl) {
          //tmpw = tmpw.toFixed();
          //tmph = tmph.toFixed();
       
-         if (currtl.CountDev <=  +16) {
+         if (+currtl.CountDev <=  +16) {
            cntw1 = currtl.CountDev;
            cntw2 = +0;
            cnth = +1;
@@ -253,27 +269,29 @@ function drawMyDev(cv,Width,Height,currtl) {
          }
       }   
     }
-    interval = tmpw / 100 * 10;
-    if (interval<10) { interval = 10 }
-    tmpw = tmpw - interval;
+    interval = IntervalDevice;
+    //if (interval<10) { interval = 10 }
+    //tmpw = tmpw - interval;
     
-    if (tmpwdth > 14 * (tmpw + interval)) {
-      offsetw = +LengthNameTL + +MyCursor - 2 * tmpw - interval;
-    } else {
-      offsetw = +LengthNameTL + +MyCursor - 3 * tmpw - 2 * interval;  
-    }
-    if (cnth !== 2) {
-      offseth = (hght - tmph) / 2;
-    } else {
-      offseth = (hght - 2 * tmph - interval) / 2;  
-    }
-    offseth = offseth.toFixed();
+    //if (tmpwdth > 14 * (tmpw + interval)) {
+    //  offsetw = +LengthNameTL + +MyCursor - 2 * tmpw - interval;
+    //} else {
+    //  offsetw = +LengthNameTL + +MyCursor - 3 * tmpw - 2 * interval;  
+    //}
     
-    rtleft = offsetw;
+    //offsetw = tmph;
+    //if (cnth !== 2) {
+    //  offseth = (hght - tmph) / 2;
+    //} else {
+    //  offseth = (hght - 2 * tmph - interval) / 2;  
+    //}
+    offseth = HOffsetDevice;//offseth.toFixed();
+    
+    rtleft = +tmpw + +interval//offsetw;
     rttop = offseth;
     
-    IntervalDevice = interval;
-    WidthDevice = tmpw;
+   // IntervalDevice = interval;
+   // WidthDevice = tmpw;
     //var devnm;
     
     for (var i = 0; i < cntw1; i++) {
@@ -290,8 +308,8 @@ function drawMyDev(cv,Width,Height,currtl) {
       } 
       DevRects[i].left = +rtleft;
       DevRects[i].top = +rttop;
-      DevRects[i].right = +rtleft + +tmpw;
-      DevRects[i].bottom = +rttop + +tmph;
+      DevRects[i].right = +rtleft + +tmpw + +interval;
+      DevRects[i].bottom = +rttop + +tmph + +interval;
       cv.strokeRect(+rtleft, +rttop, +tmpw, +tmph);
       cv.fillRect(+rtleft + +2, +rttop + +2, +tmpw - +4, +tmph - +4);
       
@@ -320,7 +338,7 @@ function drawMyDev(cv,Width,Height,currtl) {
     
     if (cntw2 > 0) {
       rttop = +rttop + +interval + +tmph;
-      rtleft = offsetw;
+      rtleft = +tmpw + +interval
       for (var i = 0; i < cntw2; i++) {
         
         cpen = rgbFromNum(currtl.DevEvents[16+i].Color);
@@ -337,8 +355,8 @@ function drawMyDev(cv,Width,Height,currtl) {
         
         DevRects[16+i].left = +rtleft;
         DevRects[16+i].top = +rttop;
-        DevRects[16+i].right = +rtleft + +tmpw;
-        DevRects[16+i].bottom = +rttop + +tmph;
+        DevRects[16+i].right = +rtleft + +tmpw + +interval;
+        DevRects[16+i].bottom = +rttop + +tmph + +interval;
         cv.strokeRect(+rtleft, +rttop, +tmpw, +tmph);
         cv.fillRect(+rtleft + +2, +rttop + +2, +tmpw - +4, +tmph - +4);
       

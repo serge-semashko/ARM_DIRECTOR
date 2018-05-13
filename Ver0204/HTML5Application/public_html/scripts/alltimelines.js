@@ -1002,7 +1002,7 @@ function MyDrawTimeline(cv, Width, Height, PosTL, Top, Hght) {
         cv.beginPath();
         cv.fillStyle = "rgba(0,0,0,.15)";//evsmoothcolor;
         cv.strokeStyle = "rgba(0,0,0,.75)";//evsmoothcolor;
-        cv.fillRect(+LengthNameTL + strtev, Top, evSafeZone, Hght)
+        cv.fillRect(+LengthNameTL + strtev, Top, evSafeZone, Hght);
         cv.stroke();
         cv.closePath();
         cv.globalAlpha = 1;
@@ -1010,7 +1010,7 @@ function MyDrawTimeline(cv, Width, Height, PosTL, Top, Hght) {
         cv.beginPath();
         cv.fillStyle = "rgba(0,0,0,.15)";//evsmoothcolor;
         cv.strokeStyle = "rgba(0,0,0,.75)";//evsmoothcolor;
-        cv.fillRect(+LengthNameTL + fnshev - evSafeZone, Top, evSafeZone, Hght)
+        cv.fillRect(+LengthNameTL + fnshev - evSafeZone, Top, evSafeZone, Hght);
         cv.stroke();
         cv.closePath();
         cv.globalAlpha = 1;
@@ -1055,7 +1055,7 @@ function MyDrawTimeline(cv, Width, Height, PosTL, Top, Hght) {
             }
             cv.textBaseline = "middle"; 
             cv.textAlign  = "left";
-            evlft = +evlft + +LengthNameTL + +strtev
+            evlft = +evlft + +LengthNameTL + +strtev;
 
                 
             var fnwidth = cv.measureText(evtext).width;
@@ -1189,20 +1189,20 @@ function DrawTimeLines(cv, Width, Height) {
   if (ShowScaler) {
     cv.fillRect(LengthNameTL, top, wdth, tmph);
     MyDrawScaler(cv, Width, Height, tmph);
-    top = +top + +tmph + +interval;
+    top = +top + +tmph + +2*interval;
   } 
   if (ShowEditor) {
     cv.fillStyle = cbkgnd;  
-    top = top + 2 * interval;  
+    top = top + interval;  
     cv.fillRect(LengthNameTL, top, wdth, 3 * tmph);
     MyDrawEditor(cv, Width, Height, top, interval, 3 * tmph);
-    top = +top + 3 * tmph + +interval;
+    top = +top + 3 * tmph + interval;
   }
   if (ShowTimelines) {
     for (var i=0; i<TLO.length; i++) {
       cv.fillStyle = cbkgnd;//smoothcolor(TLP.ForeGround, 8); 
-      PosTimelines[i].top = +top - interval;
-      PosTimelines[i].bottom = +top + +tmph
+      PosTimelines[i].top = +top + 3*interval;
+      PosTimelines[i].bottom = +top + +tmph + 3*interval;
       cv.fillRect(LengthNameTL, top, wdth, tmph);
       MyDrawTimeline(cv, Width, Height, i, top, tmph)
       top = +top + +tmph + +interval;
