@@ -4,10 +4,12 @@
  * and open the template in the editor.
  */
 var socket;
+var max_request = 20;
 var LST_time = new Date().getTime();
-var LST_count = 0 ;
+var LST_count = 0;
 
 var LST_req = 0;
+var LST_fired = 0;
 var LST_ans = 0;
 
 var async_time = new Date().getTime();
@@ -51,9 +53,15 @@ function net_init() {
     setInterval(async_net_process, 50);
 
 }
-function myLog(msg) {
+var options = {
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+};
 
-    console.log(new Date + ' ' + msg);
+function myLog(msg) {
+    console.log(new Date().toLocaleString("ru", options) + ' ' + new Date().getMilliseconds() +" "+ msg);
+
 }
 function pureAjax() {
     isUp = false;
@@ -192,20 +200,33 @@ function proc_LST(t) {
         lastLSTtime = t.time;
 
         if (newLST.TLO != undefined) {
-            TLOtime = +newLST.TLO
-            if ((TLOtime != lastTLOtime) && (TLOtime != -1)) {
+            TLOtime = +newLST.TLO;
+            var TLO1time = +newLST["TLO[1]"];
+            if (TLO1time == -1) {
+                TLO_OK = true;
+                newTLO = [];
+            } else {
+                if ((TLOtime != lastTLOtime) && (TLOtime != -1)) {
 //                    myLog(' need new TLO oldtime=' + lastTLOtime + "newtime=" + TLOtime);
 
-                TLO_OK = false;
-                getTLO();
+                    TLO_OK = false;
+                    getTLO();
+                }
             }
+
         }
         if (newLST.TLT != undefined) {
             TLTtime = +newLST.TLT;
-            if ((TLTtime != lastTLTtime) && (TLTtime != -1)) {
-                TLT_OK = false;
-                getTLT();
+            var TLT1time = +newLST["TLT[0]"];
+            if (TLT1time == -1) {
+                TLT_OK = true;
+                newTLT = [];
+            } else {
+                if ((TLTtime != lastTLTtime) && (TLTtime != -1)) {
+                    TLT_OK = false;
+                    getTLT();
 //                    myLog(' need new TLT oldtime=' + lastTLTtime + "newtime=" + TLTtime);
+                }
             }
         }
         if (newLST.TLP_value != undefined) {
@@ -262,48 +283,53 @@ function serial_net_process() {
 
 }
 function async_net_process() {
-//    try {
-    if (LST_req > 10) {
+    if ((new Date().getTime() - LST_time) > 1000) {
+        LST_time = new Date().getTime();
+        myLog("За секунду: ответов webredis= " + LST_count + ", завершено запросов=" + LST_req + " активных запросов=" + LST_req);
+        LST_count = 0;
+        LST_ans = 0;
+
+    }
+    if (LST_req > max_request) {
         return;
     }
     LST_req++;
-    $.ajax({
-        type: "POST",
-        global: false,
-        dataType: "json",
-        url: url + "LST_" + urlTail,
-        data: {
-            "get_member": "id"
-        },
-        success: function (t) {
-            LST_count++;
-            if ( (new Date().getTime()-  LST_time) >1000 ){
-                LST_time = new Date().getTime();
-                myLog("LST_count = "+LST_count+" активных запросов="+LST_req) ;
-                LST_count = 0;
-            }
-            if (checkObjectOk(t, lastLSTtime)) {
-                $("#serverStatus").css("color", "blue");
-                proc_LST(t);
-                $("#serverStatus").css("color", serverReady);
-                if (TLT_OK && TLO_OK && TLP_OK) {
-                    $("#armStatus").css("color", "aquamarine");
-                    if (firstEnter) {
-                        firstEnter = false;
-                        hidePage();
+        $.ajax({
+            type: "POST",
+            global: false,
+            dataType: "json",
+            url: url + "LST_" + urlTail,
+            data: {
+                "get_member": "id"
+            },
+            success: function (t) {
+                LST_count++;
+                if (checkObjectOk(t, lastLSTtime)) {
+                    $("#serverStatus").css("color", "blue");
+                    proc_LST(t);
+                    $("#serverStatus").css("color", serverReady);
+                    if (TLT_OK && TLO_OK && TLP_OK) {
+                        $("#armStatus").css("color", "aquamarine");
+                        if (firstEnter) {
+                            firstEnter = false;
+                            hidePage();
+                        }
+
                     }
 
                 }
 
+                processLST = false;
+            },
+            complete: function (t) {
+                LST_ans++;
+                LST_req--;
+            },
+            error: function (t) {
+                myLog("ajax error")
             }
 
-            processLST = false;
-        },
-        complete: function (t) {
-            LST_req--;
-        }
-
-    });
+        });
 }
 
 function net_sock() {

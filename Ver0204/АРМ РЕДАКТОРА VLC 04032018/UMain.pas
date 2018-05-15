@@ -647,7 +647,7 @@ var
   CTC: string;
 begin
   try
-           UpdateManagerList;
+    UpdateManagerList;
     // Если ни одного клипа не загруженно в окно подготовки выходим из данного модуля
     // if trim(form1.lbActiveClipID.Caption)='' then exit;
     // Анализируем состояние системы на предмет запуска по времени.
@@ -748,22 +748,22 @@ begin
 
       MyShiftOld := MyShift;
 
-      if (MyShiftDelta <> 0) and MakeLogging then
-      begin
-        // WriteLog('Synchro', '7) (MyShiftDelta<>0) and MakeLogging = TRUE');
-        if MySinhro = chltc then
-        begin
-          // WriteLog('MAIN', 'TMyThread.DoWork Изменение Тайм-код LTC | Системное время =' +
-          // TimeToTimeCodeStr(now) + ' Смещение=' + TimeToTimeCodeStr(MyShift));
-          // WriteLog('Synchro', '7) MySinhro=chltc - TRUE');
-        end
-        else
-        begin
-          // WriteLog('MAIN', 'TMyThread.DoWork Изменение системного времени | Системное время =' +
-          // TimeToTimeCodeStr(now));
-          // WriteLog('Synchro', '7) MySinhro=chltc - FALSE');
-        end;
-      end;
+     // if (MyShiftDelta <> 0) and MakeLogging then
+     // begin
+     //   // WriteLog('Synchro', '7) (MyShiftDelta<>0) and MakeLogging = TRUE');
+     //   if MySinhro = chltc then
+     //   begin
+     //     // WriteLog('MAIN', 'TMyThread.DoWork Изменение Тайм-код LTC | Системное время =' +
+     //     // TimeToTimeCodeStr(now) + ' Смещение=' + TimeToTimeCodeStr(MyShift));
+     //     // WriteLog('Synchro', '7) MySinhro=chltc - TRUE');
+     //   end
+     //   else
+     //   begin
+     //     // WriteLog('MAIN', 'TMyThread.DoWork Изменение системного времени | Системное время =' +
+     //     // TimeToTimeCodeStr(now));
+     //     // WriteLog('Synchro', '7) MySinhro=chltc - FALSE');
+     //   end;
+     // end;
       if (TimeToFrames(msd) >= SynchDelay) and (TLParameters.vlcmode = play) then
       begin
         // if (MyShiftDelta<>0) and (mode=play) then begin
@@ -976,14 +976,14 @@ begin
       if Form1.PanelAir.Visible then
       begin
         // MyPanelAir.Draw(Form1.ImgDevices.Canvas,Form1.ImgEvents.Canvas,TLZone.TLEditor.Index);
-        if MyDoubleToFrame(db0) mod 1 = 0 then
-        begin
+        //if MyDoubleToFrame(db0) mod 1 = 0 then
+        //begin
           // dbld1 := MyTimer.ReadTimer; //=======
           MyPanelAir.AirEvents.Draw(Form1.imgEvents.Canvas);
           MyPanelAir.AirDevices.Draw(Form1.ImgDevices.Canvas);
           // dbld2 := MyTimer.ReadTimer;//========
           // if makelogging then WriteLog('TC', 'MyPanelAir=' + MyTimeToStr);
-        end;
+        //end;
         MyPanelAir.AirEvents.DrawTimeCode(Form1.imgEvents.Canvas,
           TLParameters.Position - TLParameters.ZeroPoint);
                 PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);

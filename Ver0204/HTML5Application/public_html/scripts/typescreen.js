@@ -47,7 +47,7 @@ function SetTypeScreen0() {
   MyCursor = Math.floor(stepw);
   
   var hdev;
-  if (scrH<scrW) {
+  if (+scrH<+scrW) {
     hdev = ((stepw / 1.75) / 2) * 5;  
   } else {
     hdev = 0.065 * scrH;   
@@ -758,7 +758,7 @@ function SetTypeScreen4() {
     
     if (isField(1)) {
       var hdev;
-      if (scrH<scrW) {
+      if (+scrH<+scrW) {
         hdev = ((stepw / 1.75) / 2) * 5;  
       } else {
         hdev = 0.065 * scrH;   

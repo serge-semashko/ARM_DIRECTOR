@@ -368,7 +368,7 @@ type
   end;
 
 implementation
-
+uses uwebredis_common;
 threadvar
   ThreadObject: TClientSocketThread;
 
@@ -1144,7 +1144,7 @@ begin
         if not Assigned(T) then
           T := AddClientSocketThread;
         if Assigned(T) then
-          T.Resume else showmessage('No socket');
+          T.Resume else absWriteLog('TCP server  ERROR!!! No socket');
         Sleep(0);
       end;
   end;

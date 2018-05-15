@@ -1424,7 +1424,7 @@ begin
     try
       ExportInProgress := true;
 //      BeginJson;
-//      SetValues_40mc;
+      SetValues_40mc;
 //      SaveJson;
     finally
     end;

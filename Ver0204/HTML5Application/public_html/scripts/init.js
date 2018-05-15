@@ -7,6 +7,14 @@ var modeChanged = true;
 var uarr = new Uint8Array();
 var ScreenFields_1 = [0, 0, 0, 0, 0]; //Второе поле
 var ScreenFields_2 = [0, 0, 0, 0, 0]; //Третье
+var synth = window.speechSynthesis;
+var voiceSelect ;
+var pitchValue = 1;
+var rateValue = 2;
+var voices = [];
+var voiceok = false;
+
+
 //var synth;
 //
 //
@@ -28,7 +36,7 @@ function addDropdownList(id, val, text) {
 ;
 //            $("#title1").html($(window).width()+"Х"+$(window).height());
 function initControls() {
-
+    ReadVoices();
     var inp = document.getElementsByName('type01');
     for (var i = 0; i < inp.length; i++) {
         if (inp[i].type == "radio" && (typesrc == +inp[i].value)) {
@@ -76,7 +84,7 @@ function setInfo() {
 
 function execMain() {
 //                speak("Test 0", 1.0, 1.4);
-
+    
     var value = +$("[name=type01]:checked").val();
     typeSpeeker = +$("[name=voice]:checked").val();
     typesrc = +value;
@@ -144,7 +152,7 @@ function optionTable(fs,wdth) {
     $("table").css("height",scrH + "px");
     if (fs<12) fs = 12;
     $("table,button,input,select").css("font-size", fs + "px");
-    $("#website").css("font-size", fs/3*2 + "px");
+    $("#website").css("font-size", fs/4*3 + "px");
     $("#armStatus").css("font-size", 2*fs + "px");
     $("#serverStatus").css("font-size", fs/3*2 + "px");
     $("#myscreen0").css("font-size", 1.25*fs + "px");
@@ -171,7 +179,7 @@ window.onresize = function() {
     urlTail = "&callback=?";
     setViewport();
     var mn = document.getElementById("select_menu");
-    document.all.serverStatus.innerHTML=hostname;
+    document.all.serverStatus.innerHTML=url;//hostname;
     
     $("body").css("font-size", "12px");
     var wdth = 50;
@@ -196,25 +204,7 @@ window.onresize = function() {
       }
     }
     optionTable(fs,wdth);
-//        $("tr").css("height",fs + "px");
-//        $("th").css("height",2*fs + "px");
-//        $("td").css("height",fs + "px");
-//        $("table").css("width",wdth + "%");
-//        //$("#main").css("height",(scrH-10)/2 + "px");
-//        $("table").css("height",scrH + "px");
-//        if (fs<14) fs = 14;
-//        $("table,button,input,select").css("font-size", fs + "px");
-//        $("#website").css("font-size", fs/3*2 + "px");
-//        $("#armStatus").css("font-size", 2*fs + "px");
-//        $("#serverStatus").css("font-size", fs/3*2 + "px");
-//        $("#myscreen0").css("font-size", 1.25*fs + "px");
-//        $("#myscreen1").css("font-size", 1.25*fs + "px");
-//        $("#myscreen2").css("font-size", 1.25*fs + "px");  
-//        $("#myinfo").css("font-size", fs-2 + "px");
-//        $("body").css("overflow-y","hidden");
-//        $("body").css("overflow: -moz-scrollbars-none;");
-//        $("body").css("-ms-overflow-style: none;");
-//        $("body").css("::-webkit-scrollbar { width: 0; }");
+
 };
 
 window.onclose = function() {
@@ -222,6 +212,7 @@ window.onclose = function() {
 };
 
 window.onload = function () {
+    
     var dloc = document.location;
     var hostname;
     if (dloc.hostname.length < 3) {
@@ -235,7 +226,7 @@ window.onload = function () {
     urlTail = "&callback=?";
     setViewport();
     var mn = document.getElementById("select_menu");
-    document.all.serverStatus.innerHTML=hostname;
+    document.all.serverStatus.innerHTML=url;//hostname;
     
     //initVoice();
     
@@ -284,6 +275,8 @@ window.onload = function () {
        
     initControls();
     net_init();
+    initInternalVoice();
+    initVoice();
     showPage();
     window_onload();
 
@@ -299,9 +292,23 @@ function showPage() {
     $("#main").css("display", "hide");
 }
 
+function initInternalVoice() {
+  var objSel = document.getElementById("voice_0");
+  if (objSel.selectedIndex > -1) {
+    dirvoice = objSel.options[objSel.selectedIndex].text;  
+  } else {
+    dirvoice = "Default";    
+  }
+  
+  if (!audio.paused) {
+    audio = 0;
+    audio = new Audio();
+  } 
+}
+
 function initVoice() {
     var synth = window.speechSynthesis;
-    var voiceSelect = document.querySelector('#voice_1');
+    voiceSelect = document.querySelector('#voice_1');
     var pitchValue = 1;
     var rateValue = 2;
 
@@ -316,11 +323,9 @@ function initVoice() {
     populateVoiceList();
 //    speak("Test  10 9 8 7 6 5 4 3 2 1 0", 1.0, 1.4);
 
-
-
 }
 function populateVoiceList() {
-    voices = synth.getVoices();
+    var voices = synth.getVoices();
     var selectedIndex = voiceSelect.selectedIndex < 0 ? 0 : voiceSelect.selectedIndex;
     voiceSelect.innerHTML = '';
     console.log("voices " + voices.length);

@@ -124,8 +124,6 @@ begin
     strValue := AnsiReplaceStr(strValue, ' ', '#$%#$%');
     utf8val := stringOf(tencoding.UTF8.GetBytes(strValue));
     json.AddPair(varName, utf8val);
-    s1 :=stringOf(tencoding.UTF8.GetBytes('I am дурачек'));
-    retval := UTF8Decode(s1);
 end;
 
 procedure FillBuff(var buff: array of ansichar; str: ansistring);

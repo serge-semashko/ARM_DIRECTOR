@@ -1240,6 +1240,8 @@ function DrawTimeLines(cv, Width, Height) {
 function ChoiceTimelines(Y) {
   var res = -1;  
   var istl = false;
+  if (isNaN(TLT.length)) return -1;
+  if(TLT.length == 0) return -1;
   if (typesrc < 4) { 
     if (ShowTimelines) { istl = true; };  
   };

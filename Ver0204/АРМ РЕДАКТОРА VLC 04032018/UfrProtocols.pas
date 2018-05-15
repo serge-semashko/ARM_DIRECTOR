@@ -213,7 +213,8 @@ begin
     if ARow<>-1 then begin
       (Form1.GridTimeLines.Objects[0,ARow] as TTimelineOptions).Protocol:=STRVendors;
       (Form1.GridTimeLines.Objects[0,ARow] as TTimelineOptions).Manager:=STRManager;
-      PutGridTimeLinesToServer(Form1.GridTimeLines);
+      Put_TLO_ToServer(ARow);
+      //PutGridTimeLinesToServer(Form1.GridTimeLines);
     end;
     if ListTypeDevices <> nil then
     begin

@@ -62,6 +62,8 @@ begin
   StopPosition := getVariableFromJson(json, 'StopPosition', StopPosition);
   // Scaler : real;              //Отношение ширины Bitmap к ширине экрана
   Scaler := getVariableFromJson(json, 'Scaler', Scaler);
+  TimeToStart := getVariableFromJson(json, 'TimeToStart', TimeToStart);
+
 
 end;
 
@@ -143,7 +145,9 @@ begin
     // StopPosition : longint;     //Позиция остановки клип (кадры)
     addVariableToJson(json, 'StopPosition', StopPosition);
     // Scaler : real;              //Отношение ширины Bitmap к ширине экрана
+
     addVariableToJson(json, 'Scaler', Scaler);
+    addVariableToJson(json, 'TimeToStart', TimeToStart);
   except
     on E: Exception do
   end;

@@ -574,7 +574,7 @@ begin
   i := ind;
   TlTimeline := TTlTimeline(tlzone.timelines[i]);
   if TlTimeline = nil  then exit;
-  if LoadProject_active then exit;
+  //if LoadProject_active then exit;
   str1:=TlTimeline.SaveToJSONStr;
   PutJsonStrToServer('TLT['+IntToStr(i)+']',str1);
 end;
@@ -591,7 +591,7 @@ var
   jsarr : tjsonarray;
   jssave : tstringlist;
 begin
-  if LoadProject_active then exit;
+  //if LoadProject_active then exit;
   i := ind;
   tlo := TTimelineOptions(Form1.GridTimeLines.Objects[0,i]);
   if tlo = nil  then exit;
@@ -1606,8 +1606,14 @@ begin
   txt := '';
   if (MyStartPlay <> -1) then
     txt := 'Старт в (' + trim(FramesToStr(MyStartPlay)) + ')';
-  if (MyRemainTime <> -1) and form1.MySynhro.Checked { MyStartReady } then
+  if (MyRemainTime <> -1) and form1.MySynhro.Checked { MyStartReady } then begin
     txt := 'До старта (' + trim(FramesToShortStr(MyRemainTime)) + ')';
+    TLParameters.TimeToStart := inttostr(MyRemainTime);
+    PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
+  end else begin
+    //txt := '';
+    TLParameters.TimeToStart := '';
+  end;
 
   form1.lbTypeTC.Caption := txt;
   // if txt<>'' then begin

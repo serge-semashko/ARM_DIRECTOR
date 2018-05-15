@@ -6,7 +6,9 @@ interface
 uses
     Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
     Dialogs, StdCtrls, Buttons, ExtCtrls, HTTPSend, blcksock, winsock, Synautil,
-    strutils, system.json, AppEvnts, Menus, inifiles, das_const,
+    strutils,
+//     system.json,
+     AppEvnts, Menus, inifiles, das_const,
     TeEngine, Series, TeeProcs, Chart, VclTee.TeeGDIPlus, System.Generics.Collections,
     mmsystem,web.win.sockets, zlibexapi,ZLIBEX;
 type
@@ -68,7 +70,7 @@ type
         base_ind : integer;
         changed: int64;
         jsonStr: ansistring;
-        json: TJSONvalue;
+//        json: TJSONvalue;
     end;
     TWebarray = packed record
         Name: ansistring;
@@ -726,11 +728,11 @@ if basename = 'TLO' then
 
 
 end;
-procedure AddWebVar(keyname: ansistring; KeyValue: ansistring; json: tjsonvalue);
+procedure AddWebVar(keyname: ansistring; KeyValue: ansistring{; json: tjsonvalue});
 var
     i1, i2, i3: integer;
     tnow: int64;
-    JSvalue: TJSONValue;
+//    JSvalue: TJSONValue;
     posstr: string;
     s1 : string;
 begin
@@ -745,15 +747,20 @@ begin
             TLP_count := 0;
             TLP_time := TimeGetTime;
         end;
-        JSvalue := tjsonobject(json).GetValue('Position');
-        if JSvalue <> nil then begin
-           TLP_value := KeyValue;
-            posstr := JSvalue.Value;
-            TLP_position :=posstr;
-        end  else
-            posstr := 'NIL';
-        posstr := posstr + ' UPD/sec = ' + TLP_speed;
-        HTTPSRVForm.txt1.Caption := 'TLP:' + formatdatetime('TLP: HH:NN:SS ZZZ ', now) + ' position:' + posstr;
+//        JSvalue := tjsonobject(json).GetValue('Position');
+//        if JSvalue <> nil then begin
+//            posstr := JSvalue.Value;
+//            TLP_position :=posstr;
+//        end  else
+//            posstr := 'NIL';
+//        posstr := posstr + ' UPD/sec = ' + TLP_speed;
+         TLP_value := KeyValue;
+        if pos('Position',KeyValue)>1 then begin
+           TLP_position :=system.copy(KeyValue,pos('"Position',KeyValue),23);
+           TLP_position :=system.copy(TLP_position,1,pos(',',TLP_position)-1);
+
+        end;
+        HTTPSRVForm.txt1.Caption := 'TLP:' + formatdatetime('TLP: HH:NN:SS ZZZ ', now) + ' ' + TLP_position;
 
     end
     else if keyname = 'CTC' then begin
@@ -779,8 +786,8 @@ begin
             continue;
         webvars[i1].changed := tnow;
         webvars[i1].jsonstr := KeyValue;
-        webvars[i1].json.free;
-        webvars[i1].json := json;
+//        webvars[i1].json.free;
+//        webvars[i1].json := json;
         if webvars[i1].BaseName<>'' then update_array(webvars[i1].BaseName, webvars[i1].base_ind,webvars[i1].changed,KeyValue);
         exit;
     end;
@@ -821,7 +828,6 @@ begin
         IF keyname<>'TLP' THEN  HTTPSRVForm.memo1.lines.Values[keyname] := 'deleted ' + formatdatetime('HH:NN:SS ZZZ', now);
         webvars[i1].changed := -1;
         result := '{"RC":0,"status":"Deleted"}';
-
         exit;
     end;
 end;
@@ -886,7 +892,7 @@ function GetWebVar(keyName: ansistring): TWebVar;
 var
     i1, i2, i3: integer;
     str1: string;
-    json: tjsonobject;
+//    json: tjsonobject;
     baseName: ansistring;
     SelName: AnsiString;
     Selvalue: AnsiString;
@@ -913,11 +919,11 @@ function GetWeb_ARRay(keyName: ansistring): TWebVar;
 var
     i1, i2, i3: integer;
     str1: string;
-    json: tjsonobject;
+//    json: tjsonobject;
     baseName: ansistring;
     SelName: AnsiString;
     Selvalue: AnsiString;
-    jsarr :TJSONArray;
+//    jsarr :TJSONArray;
     maxid : integer;
     tmjs : TWebVar;
 begin
@@ -957,7 +963,7 @@ function ListWebVars: ansistring;overload;
 var
     i1, i2, i3: integer;
     str1: string;
-    json: tjsonobject;
+//    json: tjsonobject;
     baseName: ansistring;
     SelName: AnsiString;
     Selvalue: AnsiString;
@@ -976,7 +982,7 @@ function http_ListWebVars: ansistring;overload;
 var
     i1, i2, i3: integer;
     str1: string;
-    json: tjsonobject;
+//    json: tjsonobject;
     baseName: ansistring;
     SelName: AnsiString;
     Selvalue: AnsiString;
@@ -1001,7 +1007,7 @@ function ProcessRequest(URI: string): AnsiString;
 var
     stmp, jreq, resp, keyName, keyVal, str1: ansistring;
     i1, amppos, pos_var_name: integer;
-    jsval : tjsonvalue;
+//    jsval : tjsonvalue;
     varTime : string;
 begin
      varTime := '';
@@ -1055,11 +1061,12 @@ begin
                               (str1[length(str1)] <> ']') and  (str1[length(str1)] <> '}') and (length(str1) > 2)
             ) do
                     system.delete(str1, length(str1), 1);
-                jsval :=TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(str1), 0);
-                if jsval <> nil then
-                    AddWebVar(keyName, str1, jsval)
-                else
-                    resp := '{"status":"errformat"}';
+
+//                jsval :=TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(str1), 0);
+//                if jsval <> nil then
+                    AddWebVar(keyName, str1 {, jsval});
+//                else
+//                    resp := '{"status":"errformat"}';
 
             end;
         end;
@@ -1073,7 +1080,7 @@ function MyHTTPProcessRequest(URI: string): AnsiString;
 var
     stmp, jreq, resp,compressed_resp, keyName, keyVal, str1: ansistring;
     i1, amppos, pos_var_name: integer;
-    jsval : tjsonvalue;
+//    jsval : tjsonvalue;
     varTime : string;
     compress : boolean;
     ans_var :twebvar;
@@ -1139,11 +1146,11 @@ begin
             else begin
                 while ((str1[length(str1)] <> ']') and  (str1[length(str1)] <> '}') and (length(str1) > 2)) do
                     system.delete(str1, length(str1), 1);
-                jsval :=TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(str1), 0);
-                if jsval <> nil then
-                    AddWebVar(keyName, str1, jsval)
-                else
-                    resp := '{}';
+//                jsval :=TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(str1), 0);
+//                if jsval <> nil then
+                    AddWebVar(keyName, str1{, jsval});
+//                else
+//                    resp := '{}';
 
             end;
         end;
@@ -1224,7 +1231,7 @@ initialization
     EmptyWebVar.baseName := '';
     EmptyWebVar.jsonStr := '{}';
     EmptyWebVar.changed := -1;
-    EmptyWebVar.json := nil;
+//    EmptyWebVar.json := nil;
 //    OUTSTR := ZCompressStr(INSTR,zcLevel3);
 //    tmpstr := '';
 //    for i1 := 1 to length(outstr) do tmpstr := tmpstr+format('%x',[ord(outstr[i1])]);

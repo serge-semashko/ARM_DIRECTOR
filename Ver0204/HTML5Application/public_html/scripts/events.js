@@ -393,7 +393,9 @@ function filesSpeaker(str) {
   } else {
     if (files.length > 0) {
       if (files[files.length-1] !== "") {
-        MySpeecker("phrases/" + files[files.length-1]);
+        var dir = "";
+        if (dirvoice !== "") dir = dirvoice + "/";
+        MySpeecker("phrases/" + dir + files[files.length-1]);
       } else {
         files = []; 
       }
@@ -557,73 +559,108 @@ function MyDrawEvents(cv, Width, Height, menu) {
             var phrfrms = (TLT[ActiveTL].Events[CurrEvent].Finish - TLT[ActiveTL].Events[CurrEvent].Start); 
             var phrdur = Math.floor(phrfrms / 25);
             var phrost = 0;//TLT[ActiveTL].Events[CurrEvent].Finish -90;
-            var kadr = CurrEvent + EventOffset + 2;
-            if (phrfrms>=35) {
-                if (CurrEvent < TLT[ActiveTL].Count - 1) {
-                    var kamera = TLT[ActiveTL].Events[CurrEvent + 1].Rows[0].Phrases[0].Data;
-                    if (CurrEvent !== OldEvent) {
-                        //files = [];
-                        if (+phrdur >= 10) {
-                          PhraseFactor = 1.25;  
-                          Phrase = getCameraPhrase(kadr,kamera,PhraseMode) + ", " + getDigitsString(phrsec-2, PhraseMode, 0);  
-                        } else {
-                          if (+phrfrms <= 85) {
-                            PhraseFactor = 1 + (1.25 / ((+phrfrms + 10) / 25));  
-                          } else { 
-                            PhraseFactor = 1.25;
-                          }
-                          Phrase = getCameraPhrase(kadr,kamera,PhraseMode) + ", пауза.wav";
-                          if (phrdur>=3) { Phrase = Phrase + ", пауза.wav"; }
-                        }
-                        FirstPhrase = true;
-                        OldEvent = CurrEvent;
+            var kadr = +CurrEvent + +EventOffset + 2;
+            
+            if (TLP.vlcMode == "0" || TLP.vlcMode ==  "2") {
+                if (TLP.TimeToStart !== "") { 
+                    if (lastTimeToStart == "") {
+                        PhraseFactor = 1.25;  
+                        var kamera = TLT[ActiveTL].Events[CurrEvent].Rows[0].Phrases[0].Data;
+                        Phrase = getCameraPhrase(kadr-1,kamera,PhraseMode); 
+                        //lastTimeToStart = TLP.TimeToStart;
                     } else {
-                        if (!FirstPhrase) {
-                          if (phrsec<=5) {
-                            Phrase = "";
-                            if (phrdur>=2) {
-                              phrsec = GetSecondsPhrase(TLP.Position, TLT[ActiveTL].Events[CurrEvent].Finish);  
-                              if (phrsec > 0) {  
-                                Phrase = getDigitsString(phrsec, PhraseMode, 1);//phrsec;
-                              }
-                            }
-                          } else {
-                            phrost = phrsec % 5;
-                            if (phrost === 0) {
-                              Phrase = getCameraPhrase(kadr,kamera,PhraseMode) + ", " + getDigitsString(phrsec-2, PhraseMode, 0);  
-                            } else {
-                              Phrase = "";
-                            }
-                          }
+                        Phrase = ""; 
+                        phrsec = GetSeconds(0, TLP.TimeToStart);  
+                        if (phrsec > 0) {  
+                          PhraseFactor = 1.25;
+                          Phrase = getDigitsString(phrsec, PhraseMode, 1);//phrsec;
+                        } else {
+                          PhraseFactor = 1.25;  
+                          var kamera = TLT[ActiveTL].Events[CurrEvent + 1].Rows[0].Phrases[0].Data;
+                          Phrase = getCameraPhrase(kadr,kamera,PhraseMode);   
                         }
-                    }
-                } 
-            } else {
-              PhraseFactor = 2.1;
-              if (typeSpeeker == "0") {
-                Phrase = "камера.wav, " + getDigitsString(phrsec, PhraseMode, 1);   
-              } else {
-                Phrase = "камера " + getDigitsString(phrsec, PhraseMode, 1);  
-              }
-            }
-                      
-            if (AudioOn) {
-              if (typeSpeeker == "0") {
-                PhraseMode = 2;  
-                filesSpeaker(Phrase);
-                //lastPhrase = Phrase;
-                //OldEvent = CurrEvent;  
-              } else  { 
-                PhraseMode = 1;  
-                if (!synth.speaking) {
-                    if (Phrase != lastPhrase) {
-                        speak(Phrase);
-                        lastPhrase = Phrase;
-                        OldEvent = CurrEvent;
                     }
                 }
-              }
-            } // if (AudioOn)
+                lastTimeToStart = TLP.TimeToStart;
+            } else {
+                if (phrfrms>=35) {
+                    if (CurrEvent < TLT[ActiveTL].Count - 1) {
+                        var kamera = TLT[ActiveTL].Events[CurrEvent + 1].Rows[0].Phrases[0].Data;
+                        if (CurrEvent !== OldEvent) {
+                            //files = [];
+                            if (+phrdur >= 10) {
+                              PhraseFactor = 1.25;  
+                              Phrase = getCameraPhrase(kadr,kamera,PhraseMode) + ", " + getDigitsString(phrsec-2, PhraseMode, 0);  
+                            } else {
+                              if (+phrfrms <= 85) {
+                                PhraseFactor = 1 + (1.25 / ((+phrfrms + 10) / 25));  
+                              } else { 
+                                PhraseFactor = 1.25;
+                              }
+                              if (typeSpeeker == "0") {
+                                Phrase = getCameraPhrase(kadr,kamera,PhraseMode) + ", пауза.wav";
+                                if (phrdur>=3) { Phrase = Phrase + ", пауза.wav"; }
+                              } else {
+                                Phrase = getCameraPhrase(kadr,kamera,PhraseMode) + "    ";   
+                              }
+                            }
+                            FirstPhrase = true;
+                            OldEvent = CurrEvent;
+                        } else {
+                            if (!FirstPhrase) {
+                              if (phrsec<=5) {
+                                Phrase = "";
+                                if (phrdur>=2) {
+                                  phrsec = GetSecondsPhrase(TLP.Position, TLT[ActiveTL].Events[CurrEvent].Finish);  
+                                  if (phrsec > 0) {  
+                                    Phrase = getDigitsString(phrsec, PhraseMode, 1);//phrsec;
+                                  }
+                                }
+                              } else {
+                                phrost = phrsec % 5;
+                                if (phrost === 0) {
+                                  Phrase = getCameraPhrase(kadr,kamera,PhraseMode) + ", " + getDigitsString(phrsec-2, PhraseMode, 0);  
+                                } else {
+                                  Phrase = "";
+                                }
+                              }
+                            }
+                        }
+                    } 
+                } else {
+                  PhraseFactor = 2.1;
+                  if (typeSpeeker == "0") {
+                    Phrase = "камера.wav, " + getDigitsString(phrsec, PhraseMode, 1);   
+                  } else {
+                    Phrase = "камера " + getDigitsString(phrsec, PhraseMode, 1);  
+                  }
+                }
+            }
+            
+            var enableAudio = false;
+            if (TLP.TimeToStart !== "") enableAudio = true;
+            if (TLP.vlcMode == "1") enableAudio = true;
+            
+            if (enableAudio) {
+                if (AudioOn) {
+                  if (typeSpeeker == "0") {
+                    PhraseMode = 2;  
+                    filesSpeaker(Phrase);
+                    //lastPhrase = Phrase;
+                    //OldEvent = CurrEvent;  
+                  } else  { 
+                    PhraseMode = 1;  
+                    if (!synth.speaking) {
+                        if (Phrase != lastPhrase) {
+                            speak(Phrase,PhraseFactor-0.15,1.4);
+                            lastPhrase = Phrase;
+                            OldEvent = CurrEvent;
+                            FirstPhrase = false;
+                        }
+                    }
+                  }
+                } // if (AudioOn)
+            }
             
             if (menu) {
 
@@ -702,9 +739,15 @@ function MyDrawEvents(cv, Width, Height, menu) {
             cv.fillStyle = Foreground1;
             cv.fillRect(0, +top, +LeftTxt, +tmph);
             cv.textAlign = "left";
-            cv.fillStyle = cfont;
-            evtext = FramesToShortString(TLP.Position - TLP.Start);
-
+            //cv.fillStyle = cfont;
+            
+            if (TLP.TimeToStart !== "") {
+              cv.fillStyle = "lime";
+              evtext = FramesToShortString(+TLP.TimeToStart);  
+            } else {
+              cv.fillStyle = cfont;
+              evtext = FramesToShortString(TLP.Position - TLP.Start);
+            }
             //lentxt = cv.measureText(evtext).width;
             lentxt = cv.measureText("00:00:00").width;
             var offx = Math.floor((LeftTxt - lentxt) / 20) * 10;
@@ -1329,7 +1372,7 @@ function MyDrawDevEvents(cv, Width, Height, device, menu) {
             cv.fillStyle = Foreground1;
             cv.fillRect(0, +top, +LeftTxt, +tmph);
             cv.fillStyle = cfont;
-            if (Start <= Position && Finish >= Position) {
+            if (+Start <= +Position && +Finish >= +Position) {
                 cv.fillStyle = "red";
                 evtext = GetSeconds(Position, Finish);//FramesToShortString(evdur);
                 evtext = SecondsToString(evtext);
@@ -1385,13 +1428,13 @@ function MyDrawDevEvents(cv, Width, Height, device, menu) {
             }
 
 
-            if (Start <= Position && +Start + +evSafeZone >= Position) {
+            if (+Start <= +Position && +Start + +evSafeZone >= Position) {
                 cv.fillStyle = "rgba(255,255,255,.65)";
                 tmpdur = +fnshev - strtev - 1;//LeftTxt + +TLP.Start;
                 if (tmpdur < 0) {
                     tmpdur = 0;
                 }
-                cv.fillRect(+LeftTxt + 1, top, tmpdur + strtev, tmph);
+                cv.fillRect(+LeftTxt + 1, top, +tmpdur + +strtev, tmph);
                 cv.globalAlpha = 1;
             }
             top = top + tmph + interval;
@@ -1430,8 +1473,16 @@ function MyDrawDevEvents(cv, Width, Height, device, menu) {
             cv.fillStyle = Foreground1;
             cv.fillRect(0, +top, +LeftTxt, +tmph);
             cv.textAlign = "left";
-            cv.fillStyle = cfont;
-            evtext = FramesToShortString(TLP.Position - TLP.Start);
+            //cv.fillStyle = cfont;
+            
+            if (TLP.TimeToStart !== "") {
+              cv.fillStyle = "lime";
+              evtext = FramesToShortString(+TLP.TimeToStart);  
+            } else {
+              cv.fillStyle = cfont;
+              evtext = FramesToShortString(TLP.Position - TLP.Start);
+            }
+            //evtext = FramesToShortString(TLP.Position - TLP.Start);
             //cv.fillText(evtext, +LeftDev - 10, +top + +tmph / 2);
             //myTextDraw(cv, evtext, 0, 10, LeftTxt, top, tmph);
 

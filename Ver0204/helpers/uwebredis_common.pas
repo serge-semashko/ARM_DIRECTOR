@@ -4,7 +4,7 @@ unit uwebredis_common;
 interface
 
 uses
-    mmsystem, system.classes, system.sysutils, Web.Win.Sockets, winsock;
+    mmsystem, system.classes, system.sysutils,  winsock;
 
 const
     SOH = #01; // Start of header - Начало блока данных
@@ -23,6 +23,7 @@ var
     Net_TimeOut :integer = 1000;
 
 implementation
+uses Web.Win.Sockets;
 
 procedure ABSWriteLog(log: widestring);
 var
@@ -48,6 +49,23 @@ begin
     finally
 
     end;
+
+    try
+        lfname := paramstr(0) + '.error.txt';
+        if FileExists(lfname) then
+            ff := TFileStream.create(lfname, fmOpenWrite or fmShareDenyNone)
+        else
+            ff := TFileStream.create(lfname, fmCreate or fmShareDenyNone);
+        ff.seek(0, soFromEnd);
+        DecodeDate(now, Year, Month, Day);
+        txt := FormatDateTime('dd.mm.yyyy hh:mm:ss:zzz ', now);
+        txt := '!!! ' + txt + log + #13#10;
+        ff.write(txt[1], length(txt));
+        ff.free;
+    finally
+
+    end;
+
 end;
 
 procedure webWriteLog(log: widestring); overload;

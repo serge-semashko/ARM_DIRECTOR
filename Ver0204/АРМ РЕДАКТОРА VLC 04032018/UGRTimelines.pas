@@ -39,6 +39,7 @@ Type
     VLCMode: TPlayerMode;
     command : string;
     TLTimeCode : string;
+    TimeToStart : string;
     procedure InitParameters;
     procedure UpdateParameters;
     procedure SetScreenBoanders;

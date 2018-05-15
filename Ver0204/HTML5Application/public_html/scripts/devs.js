@@ -239,13 +239,13 @@ function drawMyDev(cv,Width,Height,currtl) {
       tmpw = WidthDevice;//tmph * 1.75;
       //tmph = tmph.toFixed();
       //tmpw = tmpw.toFixed();
-      tmpw1 = tmpw * 14.5;
-      if (tmpw1 > tmpwdth) {
-        tmpw = tmpwdth / 14.5;
-        tmph = tmpw / 1.75;
-        //tmph = tmph.toFixed();
-        //tmpw = tmpw.toFixed();
-      }
+      //tmpw1 = tmpw * 14.5;
+      //if (tmpw1 > tmpwdth) {
+      //  tmpw = tmpwdth / 14.5;
+      //  tmph = tmpw / 1.75;
+      //  //tmph = tmph.toFixed();
+      //  //tmpw = tmpw.toFixed();
+      //}
       cntw1 = tmpwdth / tmpw + 2;
       cntw1 = Math.floor(cntw1) - 3;
       if (cntw1>=+currtl.CountDev+2) {
@@ -391,6 +391,8 @@ function drawMyDev(cv,Width,Height,currtl) {
 function ChoiceDevRect(X,Y) {
   var res = -1;  
   var isdev = false;
+  if (isNaN(TLO.length)) return -1;
+  if(TLO.length == 0) return -1;
   if (typesrc < 4) { 
     if (ShowDevices) { isdev = true; };  
   };

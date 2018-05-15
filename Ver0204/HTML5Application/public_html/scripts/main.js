@@ -1,4 +1,4 @@
-п»ї"use strict";
+"use strict";
 var tm, atm;
 var timeStamp = 0;
 var url // = "http://127.0.0.1:9090/get_data&callback=?";
@@ -21,17 +21,18 @@ var mncv, tmcv, mnCanvas, tmCanvas, tempwidth;
 var ProgrammColor = "#494747";
 var ProgrammFontColor = "#FFFFFF";
 var lastPhrase = "";
+var lastTimeToStart = "";
 var myInterval;
-//РџРµСЂРµРјРµРЅРЅС‹Рµ РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ С‚Р°Р№Рј-Р»РёРЅРёР№ Рё СЃРѕР±С‹С‚РёР№
-var typesrc = "4"; //Р’РёРґ СЌРєСЂР°РЅР° 0 - All, 1- ev+dv, 2
-var currtlo; //С‚РµРєСѓС‰Р°СЏ РѕРїС†РёСЏ С‚Р°Р№Рј Р»РёРЅРёР№
-var currtlt; //СЃРѕР±С‹С‚РёСЏ С‚РµРєСѓС‰РµР№ С‚Р°Р№Рј Р»РёРЅРёРё
+//Переменные для отображения тайм-линий и событий
+var typesrc = "4"; //Вид экрана 0 - All, 1- ev+dv, 2
+var currtlo; //текущая опция тайм линий
+var currtlt; //события текущей тайм линии
 var cfont = ProgrammFontColor;
 var DevValue = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]; // СЃРµРєСѓРЅРґС‹ РґРѕ СЃР»РµРґСѓСЋС‰РµРіРѕ СЃРѕР±С‹С‚РёСЏ          
-var CurrEvent = 0; //С‚РµРєСѓС‰РµРµ СЃРѕР±С‹С‚РёРµ;
-var CurrDevice = 4; // С‚РµРєСѓС‰РµРµ СѓСЃС‚СЂРѕР№СЃС‚РІРѕ 
-var NextDevice = 9; // СЃР»РµРґСѓСЋС‰РµРµ СѓСЃС‚СЂРѕР№СЃС‚РІРѕ
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]; // секунды до следующего события          
+var CurrEvent = 0; //текущее событие;
+var CurrDevice = 4; // текущее устройство 
+var NextDevice = 9; // следующее устройство
 
 //var EventsBKGN = "black";
 //var DevicesBKGN = "black";
@@ -40,12 +41,12 @@ var Background = rgbFromNum(srccolor);
 var Foreground = smoothcolor(srccolor, 8);
 var Foreground1 = smoothcolor(srccolor, 16);
 
-var FrameSize = 1; //РєРѕР»РёС‡РµСЃС‚РІРѕ РїРёРєСЃРёР»РµР№ РЅР° РѕРґРёРЅ С„СЂРµР№Рј
-//var StartScrFrame = 250; //РєР°РґСЂ РІ РЅР°С‡Р°Р»Рµ СЌРєСЂР°РЅР° 
-//var FinishScrFrame = 850; //РєР°РґСЂ РІ РєРѕРЅС†Рµ СЌРєСЂР°РЅР°
+var FrameSize = 1; //количество пиксилей на один фрейм
+//var StartScrFrame = 250; //кадр в начале экрана 
+//var FinishScrFrame = 850; //кадр в конце экрана
 var LengthNameTL = 200;
 var MyCursor = 100;
-var CountEvents = 5; //РєРѕР»РёС‡РµСЃС‚Рѕ РѕС‚РѕР±СЂР°Р¶Р°РµРјС‹С… СЃРѕР±С‹С‚РёР№
+var CountEvents = 5; //количесто отображаемых событий
 
 var WidthDevice = 80;
 var IntervalDevice = 10;
@@ -53,7 +54,7 @@ var HeightDevice = 55;
 var HOffsetDevice = 5;
 
 var EventOffset = 30;
-var ActiveTL = 0; //РѕС‚РѕР±СЂР°Р¶Р°РµРјР°СЏ С‚Р°Р№Рј-Р»РёРЅРёСЏ
+var ActiveTL = 0; //отображаемая тайм-линия
 var ShowEditor = true;
 var ShowScaler = true;
 var ShowTimelines = true;
@@ -78,9 +79,9 @@ var EventsDev2 = 5;
 var Device1 = 14;
 var Device2 = 2;
 var ArrDev1 = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]; // РЅРѕРјРµСЂР° СЃРѕР±С‹С‚РёР№ СѓСЃС‚СЂРѕР№СЃС‚РІР° 1
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]; // номера событий устройства 1
 var ArrDev2 = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]; // РЅРѕРјРµСЂР° СЃРѕР±С‹С‚РёР№ СѓСЃС‚СЂРѕР№СЃС‚РІР° 2  
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]; // номера событий устройства 2  
 var ScreenFields = [0, 1, 4, -1, -1];
 //evCanvas, dvCanvas, edCanvas, tvCanvas, tmCanvas 
 var UsesCanvas = [false, false, false, false, false];
@@ -101,6 +102,7 @@ var PhraseFactor = 1;
 var StepPhrase = 50;
 var PhraseMode = 2; //0 - text[files], 1 - text, 2 - files 
 var files = [];
+var dirvoice = "Default";
 
 var DoubleSize = 0;
 
@@ -238,19 +240,19 @@ function setViewport() {
 function myKeydown(e) {
     // switch(e.keyCode){
 
-    //     case 37:  // РµСЃР»Рё РЅР°Р¶Р°С‚Р° РєР»Р°РІРёС€Р° РІР»РµРІРѕ
+    //     case 37:  // если нажата клавиша влево
     //         if(left>0)
     //             blueRect.style.marginLeft = left - 10 + "px";
     //         break;
-    //     case 38:   // РµСЃР»Рё РЅР°Р¶Р°С‚Р° РєР»Р°РІРёС€Р° РІРІРµСЂС…
+    //     case 38:   // если нажата клавиша вверх
     //         if(top>0)
     //             blueRect.style.marginTop = top - 10 + "px";
     //         break;
-    //     case 39:   // РµСЃР»Рё РЅР°Р¶Р°С‚Р° РєР»Р°РІРёС€Р° РІРїСЂР°РІРѕ
+    //     case 39:   // если нажата клавиша вправо
     //         if(left < document.documentElement.clientWidth - 100)
     //             blueRect.style.marginLeft = left + 10 + "px";
     //         break;
-    //     case 40:   // РµСЃР»Рё РЅР°Р¶Р°С‚Р° РєР»Р°РІРёС€Р° РІРЅРёР·
+    //     case 40:   // если нажата клавиша вниз
     //         if(top < document.documentElement.clientHeight - 100)
     //             blueRect.style.marginTop = top + 10 + "px";
     //         break;
