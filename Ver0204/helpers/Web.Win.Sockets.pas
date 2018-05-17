@@ -1106,7 +1106,7 @@ begin
   inherited Create(True);
   FreeOnTerminate := True;
   FServerSocket := AServerSocket;
-  FThreadCacheSize := 1000;
+  FThreadCacheSize := 100;
   FThreadPool := TList.Create;
 end;
 
@@ -1145,7 +1145,7 @@ begin
           T := AddClientSocketThread;
         if Assigned(T) then
           T.Resume else absWriteLog('TCP server  ERROR!!! No socket');
-        Sleep(0);
+//        Sleep(0);
       end;
   end;
 end;
@@ -1363,20 +1363,20 @@ var
   ReadReady, ExceptFlag: Boolean;
 begin
   Result := False;
-{$IFDEF LINUX}
-  if BlockMode = bmThreadBlocking then
-  begin
-    // Hack to avoid server thread block forever in linux
-    EnterCriticalSection(FThreadLock);
-    try
-      if Select(@ReadReady, nil, @ExceptFlag, 1000) then
-        Result := ReadReady and not ExceptFlag;
-    finally
-      LeaveCriticalSection(FThreadLock);
-    end;
-  end
-  else
-{$ENDIF}
+//{$IFDEF LINUX}
+//  if BlockMode = bmThreadBlocking then
+//  begin
+//    // Hack to avoid server thread block forever in linux
+//    EnterCriticalSection(FThreadLock);
+//    try
+//      if Select(@ReadReady, nil, @ExceptFlag, 1000) then
+//        Result := ReadReady and not ExceptFlag;
+//    finally
+//      LeaveCriticalSection(FThreadLock);
+//    end;
+//  end
+//  else
+//{$ENDIF}
     if Select(@ReadReady, nil, @ExceptFlag, -1) then
       Result := ReadReady and not ExceptFlag;
 end;

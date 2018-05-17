@@ -429,6 +429,8 @@ begin
         'Date: Tue, 20 Mar 2018 14:04:45 +0300' + #13#10 +
         'Server: Synapse HTTP server demo' + #13#10 + #13#10 + outstr + crlf);
         ClientSocket.Close;
+        closesocket(ClientSocket.Handle);
+
 
 
 end;
@@ -703,6 +705,7 @@ var
  i1,i2,i3 : integer;
  lst : tstringlist;
 begin
+
 if basename = 'TLO' then
    baseind := baseind-1;
 
@@ -710,7 +713,7 @@ if basename = 'TLO' then
   begin
        if basename<> var_array[i1].Name then continue;
        while var_array[i1].values.Count<=baseind do var_array[i1].values.Add('{}');
-       var_array[i1].values[baseind]:=varvalue;
+       var_array[i1].values[baseind]:=AnsiReplaceStr(varValue,'#$%#$%', ' ');
        var_array[i1].changed:=changed;
        exit;
 
@@ -720,7 +723,7 @@ if basename = 'TLO' then
   var_array[array_count-1].changed := changed;
   var_array[array_count-1].values := tstringlist.Create;
   while var_array[array_count-1].values.Count<=baseind do var_array[array_count-1].values.Add('{}');
-  var_array[array_count-1].values[baseind]:=varvalue;
+  var_array[array_count-1].values[baseind]:=AnsiReplaceStr(varValue,'#$%#$%', ' ');
 
 
 
