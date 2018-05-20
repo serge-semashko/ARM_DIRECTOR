@@ -212,7 +212,7 @@ window.onclose = function() {
 };
 
 window.onload = function () {
-    
+
     var dloc = document.location;
     var hostname;
     if (dloc.hostname.length < 3) {
@@ -253,25 +253,6 @@ window.onload = function () {
       }
     }
     optionTable(fs,wdth);
-//        $("tr").css("height",fs + "px");
-//        $("th").css("height",2*fs + "px");
-//        $("td").css("height",fs + "px");
-//        $("table").css("width",wdth + "%");
-//        //$("#main").css("height",(scrH-10)/2 + "px");
-//        $("table").css("height",scrH + "px");
-//        if (fs<14) fs = 14;
-//        $("table,button,input,select").css("font-size", fs + "px");
-//        $("#website").css("font-size", fs/3*2 + "px");
-//        $("#armStatus").css("font-size", 2*fs + "px");
-//        $("#serverStatus").css("font-size", fs/3*2 + "px");
-//        $("#myscreen0").css("font-size", 1.25*fs + "px");
-//        $("#myscreen1").css("font-size", 1.25*fs + "px");
-//        $("#myscreen2").css("font-size", 1.25*fs + "px");  
-//        $("#myinfo").css("font-size", fs-2 + "px");
-//        $("body").css("overflow-y","hidden");
-//        $("body").css("overflow: -moz-scrollbars-none;");
-//        $("body").css("-ms-overflow-style: none;");
-//        $("body").css("::-webkit-scrollbar { width: 0; }");
        
     initControls();
     net_init();
@@ -301,8 +282,8 @@ function initInternalVoice() {
   }
   
   if (!audio.paused) {
-    audio = 0;
-    audio = new Audio();
+    audio.pause();
+    //audio = new Audio();
   } 
 }
 

@@ -346,18 +346,18 @@ begin
     panel17.DoubleBuffered := true;
     panel18.DoubleBuffered := true;
     panel19.DoubleBuffered := true;
-    panel20.DoubleBuffered := true;
-    panel21.DoubleBuffered := true;
-    panel22.DoubleBuffered := true;
+    //panel20.DoubleBuffered := true;
+    //panel21.DoubleBuffered := true;
+    //panel22.DoubleBuffered := true;
     // Label3.Parent.DoubleBuffered:=true;
     // Label6.Parent.DoubleBuffered:=true;
-    lbMediaTotalDur.Parent.DoubleBuffered := true;
+    //lbMediaTotalDur.Parent.DoubleBuffered := true;
     // Label8.Parent.DoubleBuffered:=true;
     // Label9.Parent.DoubleBuffered:=true;
-    lbMediaDuration.Parent.DoubleBuffered := true;
-    lbMediaNTK.Parent.DoubleBuffered := true;
-    lbMediaKTK.Parent.DoubleBuffered := true;
-    lbMediaCurTK.Parent.DoubleBuffered := true;
+    //lbMediaDuration.Parent.DoubleBuffered := true;
+    //lbMediaNTK.Parent.DoubleBuffered := true;
+    //lbMediaKTK.Parent.DoubleBuffered := true;
+    //lbMediaCurTK.Parent.DoubleBuffered := true;
 
     Label1.Parent.DoubleBuffered := true;
     GridGRTemplate.DoubleBuffered := true;
@@ -447,20 +447,20 @@ begin
     panel19.Font.Size := ProgrammFontSize;
     panel19.Font.Color := ProgrammFontColor;
 
-    panel20.Color := ProgrammColor;
-    panel20.Font.Name := ProgrammFontName;
-    panel20.Font.Size := ProgrammFontSize;
-    panel20.Font.Color := ProgrammFontColor;
+    //panel20.Color := ProgrammColor;
+    //panel20.Font.Name := ProgrammFontName;
+    //panel20.Font.Size := ProgrammFontSize;
+    //panel20.Font.Color := ProgrammFontColor;
 
-    panel21.Color := ProgrammColor;
-    panel21.Font.Name := ProgrammFontName;
-    panel21.Font.Size := ProgrammFontSize;
-    panel21.Font.Color := ProgrammFontColor;
+    //panel21.Color := ProgrammColor;
+    //panel21.Font.Name := ProgrammFontName;
+    //panel21.Font.Size := ProgrammFontSize;
+    //panel21.Font.Color := ProgrammFontColor;
 
-    panel22.Color := ProgrammColor;
-    panel22.Font.Name := ProgrammFontName;
-    panel22.Font.Size := ProgrammFontSize;
-    panel22.Font.Color := ProgrammFontColor;
+    //panel22.Color := ProgrammColor;
+    //panel22.Font.Name := ProgrammFontName;
+    //panel22.Font.Size := ProgrammFontSize;
+    //panel22.Font.Color := ProgrammFontColor;
 
     Panel28.Color := ProgrammColor;
     Panel28.Font.Color := ProgrammFontColor;
@@ -481,50 +481,50 @@ begin
     pnImageScreen.Font.Size := ProgrammFontSize;
     pnImageScreen.Font.Color := SmoothColor(ProgrammFontColor, 24);
 
-    Label13.Color := ProgrammColor;
-    Label13.Font.Name := ProgrammFontName;
-    Label13.Font.Size := ProgrammFontSize - 1;
-    Label13.Font.Color := ProgrammFontColor;
+    //Label13.Color := ProgrammColor;
+    //Label13.Font.Name := ProgrammFontName;
+    //Label13.Font.Size := ProgrammFontSize - 1;
+    //Label13.Font.Color := ProgrammFontColor;
 
-    Label16.Color := ProgrammColor;
-    Label16.Font.Name := ProgrammFontName;
-    Label16.Font.Size := ProgrammFontSize - 1;
-    Label16.Font.Color := ProgrammFontColor;
+    //Label16.Color := ProgrammColor;
+    //Label16.Font.Name := ProgrammFontName;
+    //Label16.Font.Size := ProgrammFontSize - 1;
+    //Label16.Font.Color := ProgrammFontColor;
 
-    Label18.Color := ProgrammColor;
-    Label18.Font.Name := ProgrammFontName;
-    Label18.Font.Size := ProgrammFontSize - 1;
-    Label18.Font.Color := ProgrammFontColor;
+    //Label18.Color := ProgrammColor;
+    //Label18.Font.Name := ProgrammFontName;
+    //Label18.Font.Size := ProgrammFontSize - 1;
+    //Label18.Font.Color := ProgrammFontColor;
 
-    Label19.Color := ProgrammColor;
-    Label19.Font.Name := ProgrammFontName;
-    Label19.Font.Size := ProgrammFontSize - 1;
-    Label19.Font.Color := ProgrammFontColor;
+    //Label19.Color := ProgrammColor;
+    //Label19.Font.Name := ProgrammFontName;
+    //Label19.Font.Size := ProgrammFontSize - 1;
+    //Label19.Font.Color := ProgrammFontColor;
 
-    lbMediaTotalDur.Color := ProgrammColor;
-    lbMediaTotalDur.Font.Name := ProgrammFontName;
-    lbMediaTotalDur.Font.Size := ProgrammFontSize - 1;
-    lbMediaTotalDur.Font.Color := ProgrammFontColor;
+    //lbMediaTotalDur.Color := ProgrammColor;
+    //lbMediaTotalDur.Font.Name := ProgrammFontName;
+    //lbMediaTotalDur.Font.Size := ProgrammFontSize - 1;
+    //lbMediaTotalDur.Font.Color := ProgrammFontColor;
 
-    lbMediaDuration.Color := ProgrammColor;
-    lbMediaDuration.Font.Name := ProgrammFontName;
-    lbMediaDuration.Font.Size := ProgrammFontSize - 1;
-    lbMediaDuration.Font.Color := ProgrammFontColor;
+    //lbMediaDuration.Color := ProgrammColor;
+    //lbMediaDuration.Font.Name := ProgrammFontName;
+    //lbMediaDuration.Font.Size := ProgrammFontSize - 1;
+    //lbMediaDuration.Font.Color := ProgrammFontColor;
 
-    lbMediaNTK.Color := ProgrammColor;
-    lbMediaNTK.Font.Name := ProgrammFontName;
-    lbMediaNTK.Font.Size := ProgrammFontSize - 1;
-    lbMediaNTK.Font.Color := ProgrammFontColor;
+    //lbMediaNTK.Color := ProgrammColor;
+    //lbMediaNTK.Font.Name := ProgrammFontName;
+    //lbMediaNTK.Font.Size := ProgrammFontSize - 1;
+    //lbMediaNTK.Font.Color := ProgrammFontColor;
 
-    lbMediaKTK.Color := ProgrammColor;
-    lbMediaKTK.Font.Name := ProgrammFontName;
-    lbMediaKTK.Font.Size := ProgrammFontSize - 1;
-    lbMediaKTK.Font.Color := ProgrammFontColor;
+    //lbMediaKTK.Color := ProgrammColor;
+    //lbMediaKTK.Font.Name := ProgrammFontName;
+    //lbMediaKTK.Font.Size := ProgrammFontSize - 1;
+    //lbMediaKTK.Font.Color := ProgrammFontColor;
 
-    lbMediaCurTK.Color := ProgrammColor;
-    lbMediaCurTK.Font.Name := ProgrammFontName;
-    lbMediaCurTK.Font.Size := ProgrammFontSize + 4;
-    lbMediaCurTK.Font.Color := ProgrammFontColor;
+    //lbMediaCurTK.Color := ProgrammColor;
+    //lbMediaCurTK.Font.Name := ProgrammFontName;
+    //lbMediaCurTK.Font.Size := ProgrammFontSize + 4;
+    //lbMediaCurTK.Font.Color := ProgrammFontColor;
 
     Label1.Color := ProgrammColor;
     Label1.Font.Name := ProgrammFontName;
@@ -1285,6 +1285,7 @@ begin
     // ==============================================================================
     pntlproj.Rows[0].Columns[0].FontSize := MTFontSizeB;
     pntlproj.Rows[0].Columns[1].FontSize := MTFontSizeB;
+    pntlproj.Rows[0].Columns[1].WordWrap := true;
     pntlproj.Rows[1].Columns[0].FontSize := MTFontSize;
     pntlproj.Rows[1].Columns[1].FontSize := MTFontSize - 1;
     pntlproj.Rows[2].Columns[0].FontSize := MTFontSize;
@@ -2443,8 +2444,11 @@ begin
     SpeedButton1.Parent.DoubleBuffered := true;
     SpeedButton2.Parent.DoubleBuffered := true;
     Speedbutton3.Parent.DoubleBuffered := true;
+    Speedbutton3.Parent.DoubleBuffered := true;
+    Shape1.Parent.DoubleBuffered := true;
+    Shape2.Parent.DoubleBuffered := true;
     Panel3.DoubleBuffered := true;
-    Bevel1.Parent.DoubleBuffered := true;
+    //Bevel1.Parent.DoubleBuffered := true;
     // dtpDateEnd.DoubleBuffered:=true;
     edClip.DoubleBuffered := true;
     edSinger.DoubleBuffered := true;
@@ -2523,6 +2527,16 @@ begin
     Speedbutton3.Font.Color := FormsFontColor;
     Speedbutton3.Font.Size := FormsFontSize + 1;
     Speedbutton3.Font.Name := FormsFontName;
+
+    Speedbutton4.Font.Color := FormsFontColor;
+    Speedbutton4.Font.Size := FormsFontSize + 1;
+    Speedbutton4.Font.Name := FormsFontName;
+
+    Shape1.Brush.Color := FormsColor;
+    Shape1.Pen.Color := smoothColor(FormsColor,48);
+
+    Shape2.Brush.Color := FormsColor;
+    Shape2.Pen.Color := smoothColor(FormsColor,48);
 
     Panel3.Color := FormsColor;
     Panel3.Font.Color := FormsFontColor;

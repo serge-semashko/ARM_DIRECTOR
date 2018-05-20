@@ -93,7 +93,7 @@ begin
         exit;
 
     try
-        lfname := paramstr(0) + '.log.txt';
+        lfname := paramstr(0) +'.log.txt';
         if FileExists(lfname) then
             ff := TFileStream.create(lfname, fmOpenWrite or fmShareDenyNone)
         else

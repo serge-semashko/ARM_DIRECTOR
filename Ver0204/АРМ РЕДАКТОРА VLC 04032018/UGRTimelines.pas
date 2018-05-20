@@ -40,6 +40,8 @@ Type
     command : string;
     TLTimeCode : string;
     TimeToStart : string;
+    Reload : Boolean;
+    ClipName : String;
     procedure InitParameters;
     procedure UpdateParameters;
     procedure SetScreenBoanders;
@@ -4269,6 +4271,7 @@ begin
       // bmp.Canvas.Handle, lt, rect2.Top, rt-lt, rect2.Bottom-rect2.Top, SRCCOPY);
       pn := cv.Pen.Mode;
       cl := cv.Pen.Color;
+      cv.Brush.Color := smoothcolor(clblack,64);
       cv.Brush.Style := bsSolid;
       cv.Pen.Mode := pmMerge;
       cv.Pen.Color := TLZoneNamesColor;

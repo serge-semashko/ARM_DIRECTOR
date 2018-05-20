@@ -76,12 +76,11 @@ object FImportFiles: TFImportFiles
     ShowCaption = False
     TabOrder = 1
     StyleElements = []
-    object Bevel1: TBevel
+    object Shape1: TShape
       Left = 626
       Top = 10
-      Width = 95
-      Height = 73
-      Shape = bsFrame
+      Width = 94
+      Height = 36
     end
     object lbClip: TLabel
       Left = 10
@@ -230,7 +229,7 @@ object FImportFiles: TFImportFiles
       Left = 627
       Top = 11
       Width = 93
-      Height = 71
+      Height = 34
       Caption = #1047#1072#1075#1088#1091#1079#1080#1090#1100
       Flat = True
       Font.Charset = DEFAULT_CHARSET
@@ -248,6 +247,27 @@ object FImportFiles: TFImportFiles
       Width = 317
       Height = 22
       AutoSize = False
+    end
+    object Shape2: TShape
+      Left = 626
+      Top = 45
+      Width = 94
+      Height = 36
+    end
+    object SpeedButton4: TSpeedButton
+      Left = 627
+      Top = 45
+      Width = 92
+      Height = 34
+      Caption = #1054#1095#1080#1089#1090#1080#1090#1100
+      Flat = True
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+      OnClick = SpeedButton4Click
     end
     object GroupBox2: TGroupBox
       Left = 8
@@ -525,7 +545,6 @@ object FImportFiles: TFImportFiles
       'v;*.mpeg;*.flv;*.wmv;*.qt;|'#1042#1089#1077' '#1092#1072#1081#1083#1099'|*.*'
     Options = [ofHideReadOnly, ofAllowMultiSelect, ofEnableSizing]
     Title = #1054#1090#1082#1088#1099#1090#1080#1077' '#1084#1091#1083#1100#1090#1080#1084#1077#1076#1080#1072' '#1092#1072#1081#1083#1086#1074
-    Left = 688
-    Top = 8
+    Left = 552
   end
 end

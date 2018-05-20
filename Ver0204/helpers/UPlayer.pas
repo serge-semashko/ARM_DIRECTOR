@@ -246,6 +246,7 @@ begin
   // Проверяем идет ли воспроизведение
   if VLCPlayer.p_mi <> nil then
   begin
+   VLCPlayer.setVolume(VLCPlayer.getVolume div 2);
     // if not fileexists(Form1.lbPlayerFile.Caption) then exit;
     if libvlc_media_player_get_state(VLCPlayer.p_mi) = libvlc_Playing then
     begin

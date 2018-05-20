@@ -98,7 +98,7 @@
         <Icon_MainIcon>webredis_Icon1.ico</Icon_MainIcon>
         <AppEnableHighDPI>true</AppEnableHighDPI>
         <BT_BuildType>Debug</BT_BuildType>
-        <Debugger_RunParams>netlo</Debugger_RunParams>
+        <Debugger_RunParams>netlog</Debugger_RunParams>
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <DCC_MaxStackSize>16048576</DCC_MaxStackSize>
     </PropertyGroup>

@@ -64,6 +64,7 @@ var
     server_port: string = '9085';
     server_addr: string = '127.0.0.1';
     LoadProject_active: boolean = true;
+    Need_Update_TimeLines: boolean = false;
     webredis_errlasttime: double = -1;
     webredis_connect_lasttime: double = -1;
     local_vlcMode: integer = -1;
@@ -264,6 +265,9 @@ var
     putcommand: ansistring;
     st: int64;
 begin
+ {$IFDEF ARM_DIRECTOR}
+    if Need_Update_TimeLines then PutTimeLinesToServer(0);
+{$ENDIF}
     webWriteLog('SETVAR>' + varName + ' = ' + system.copy(varvalue, 1, 60));
 //    if not DevicesOn then
 //        exit;

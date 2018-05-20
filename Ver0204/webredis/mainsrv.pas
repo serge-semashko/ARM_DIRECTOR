@@ -39,6 +39,7 @@ type
         procedure TcpserverAccept(Sender: TObject; ClientSocket: TCustomIpClient);
         procedure webSocketserverAccept(Sender: TObject; ClientSocket: TCustomIpClient);
         procedure TcphttpserverAccept(Sender: TObject; ClientSocket: TCustomIpClient);
+        procedure httpError(Sender: TObject; Error : Integer);
         procedure Timer1Timer(Sender: TObject);
     private
     protected
@@ -76,6 +77,7 @@ type
         Name: ansistring;
         changed: int64;
         values : tstringlist;
+        zip_value: ansistring;
     end;
 
 function compress2send(instr:ansistring):ansistring;
@@ -367,7 +369,7 @@ procedure THTTPSRVForm.TcpHTTPserverAccept(Sender: TObject;       //пришло
     ClientSocket: TCustomIpClient);
 var
     txt: string;
-    buffer: array[0..10000000] of ansichar;
+    buffer: array[0..1000000] of ansichar;
     tmpBuffer: integer;
     rcstr, hstr: string;
     rc: Integer;
@@ -386,23 +388,25 @@ var
 
 begin
 
-    hstr := 'H=' + IntToStr(ClientSocket.Handle) + ' ';
-    TCPHTTPsrv.FreeOnRelease;
+    hstr := IntToStr(ClientSocket.Handle) + '-';
+//    TCPHTTPsrv.FreeOnRelease;
 //    mmo1.Lines.add(FormatDateTime('HH:NN:SS ', now) + 'accept' + hstr);
-        webWriteLog('HTTPaccept>', ' connect from ' + ClientSocket.RemoteHost);
+        webWriteLog(hstr, ' connect from ' + ClientSocket.RemoteHost);
         FillChar(buffer, 0, High(buffer));
+        sleep(10);
         rc := ClientSocket.ReceiveBuf(buffer, 10000);  //берем буфер
         rcstr := ' ' + IntToStr(rc) + ' ';
-        if rc <= 0 then begin
-            mmo1.Lines.Add(IntToStr(rc) + ' err:' + hstr + syserrormessage(wsagetlasterror));
-            exit;
+        if rc < 0 then begin
+           webWriteLog(hstr,IntToStr(rc) + ' err:' + syserrormessage(wsagetlasterror));
+           exit;
         end;
         if Length(buffer) <> 0 then
-        webWriteLog('HTTPaccept>', ' <Request> ');
-        webWriteLog('HTTPaccept>', buffer);
-        webWriteLog('HTTPaccept>', ' </Request> ');
+//        webWriteLog('HTTPaccept>', ' <Request> ');
+//        webWriteLog('HTTPaccept>', buffer);
+//        webWriteLog('HTTPaccept>', ' </Request> ');
 //           system.Copy(buffer,0,300));
             instr := buffer;
+        webWriteLog(hstr, ' instr= ' + AnsiReplaceStr(instr,crlf, ' '));
 //        for i1 := 1 to length(instr) do uri := u
         i1 := pos(#13, instr) - 1;
         if i1 < 1 then
@@ -419,7 +423,6 @@ begin
         outstr := myHTTPProcessRequest(uri);
         if pos('GET_', uri) > 0 then begin
 
-//            webWriteLog('GET_', uri + ' =  ' + outstr);
         end;
         ClientSocket.Sendln('HTTP/1.0 ' + '200' + CRLF +
         'Access-Control-Allow-Origin: *'+ CRLF +
@@ -428,11 +431,7 @@ begin
         'Connection: close' + #13#10 +
         'Date: Tue, 20 Mar 2018 14:04:45 +0300' + #13#10 +
         'Server: Synapse HTTP server demo' + #13#10 + #13#10 + outstr + crlf);
-        ClientSocket.Close;
-        closesocket(ClientSocket.Handle);
-
-
-
+        webWriteLog(hstr,'fin');
 end;
 
 procedure THTTPSRVForm.IconMouse(var Msg: TMessage);
@@ -571,6 +570,12 @@ end;
 
 
 
+procedure THTTPSRVForm.httpError(Sender: TObject; Error: Integer);
+begin
+  absWriteLog('HTTP server> onerror ' + syserrormessage(error));
+
+end;
+
 { TTCPHttpThrd }
 
 //constructor TTCPHttpThrd.Create(hsock: tSocket);
@@ -699,7 +704,30 @@ end;
 //    doExecute;
 ////  WriteLog('Request process time = '+IntToStr(timeGetTime-st));
 //end;
+procedure ziparray(ind:integer);
+var
+   i2 : integer;
+   arr : ansistring;
+begin
+     arr := '[';
+        for i2 := 0 to var_array[ind].values.Count-1 do
+        begin
+          if length(var_array[ind].values[i2])<5 then
+          begin
+             var_array[ind].zip_value := '';
+             var_array[ind].changed := -1;
+             exit;
+          end;
 
+          if i2  = (var_array[ind].values.Count-1)
+          then
+              arr:=arr+ansistring(var_array[ind].values[i2])
+          else
+              arr:=arr + ansistring(var_array[ind].values[i2])+',';
+
+        end;
+       var_array[ind].zip_value :='"'+compress2send( arr+']')+'"';
+end;
 Procedure Update_Array(basename:string;baseind, changed: integer; varvalue:ansistring);
 var
  i1,i2,i3 : integer;
@@ -715,8 +743,8 @@ if basename = 'TLO' then
        while var_array[i1].values.Count<=baseind do var_array[i1].values.Add('{}');
        var_array[i1].values[baseind]:=AnsiReplaceStr(varValue,'#$%#$%', ' ');
        var_array[i1].changed:=changed;
+       ziparray(i1);
        exit;
-
   end;
   inc(array_count);
   var_array[array_count-1].Name := basename;
@@ -724,13 +752,9 @@ if basename = 'TLO' then
   var_array[array_count-1].values := tstringlist.Create;
   while var_array[array_count-1].values.Count<=baseind do var_array[array_count-1].values.Add('{}');
   var_array[array_count-1].values[baseind]:=AnsiReplaceStr(varValue,'#$%#$%', ' ');
-
-
-
-
-
-
+  ziparray(array_count-1);
 end;
+
 procedure AddWebVar(keyname: ansistring; KeyValue: ansistring{; json: tjsonvalue});
 var
     i1, i2, i3: integer;
@@ -932,30 +956,19 @@ var
 begin
     result := EmptyWebVar;
     for i1 := 0 to array_count - 1 do begin
-        if var_array[i1].Name <> keyName then
-            continue;
-        if var_array[i1].changed < 0 then continue;
-        result.jsonStr:='[';
+        if var_array[i1].Name <> keyName then continue;
+        if var_array[i1].changed < 0 then exit;
+
         for i2 := 0 to var_array[i1].values.Count-1 do
         begin
           if length(var_array[i1].values[i2])<5 then
           begin
-             result.jsonStr := '';
-             result.changed := -1;
              exit;
           end;
-
-          if i2  = (var_array[i1].values.Count-1)
-          then
-              result.jsonStr:=result.jsonStr+ansistring(var_array[i1].values[i2])
-          else
-              result.jsonStr:=result.jsonStr+ansistring(var_array[i1].values[i2])+',';
-
         end;
-
-       result.jsonStr:=result.jsonStr+']';
+       result.jsonStr:=var_array[i1].zip_value;
        result.changed := var_array[i1].changed;
-
+       exit;
     end;
 end;
 
@@ -1087,8 +1100,12 @@ var
     varTime : string;
     compress : boolean;
     ans_var :twebvar;
+    stime : string;
+    syst :TSystemTime;
 
 begin
+//    webWriteLog('HTTP request='+uri);
+
      compress := false;
      varTime := '';
     if (pos('callback=', URI) <> 0) then begin
@@ -1161,10 +1178,12 @@ begin
     if resp='' then resp := '{}';
     if compress then  compressed_resp := '"'+compress2send(resp)+'"'
                 else compressed_resp := resp;
+    compressed_resp := resp;
     if varTime=''  then vartime := '-1';
-
-    webWriteLog('HTTP request='+keyname+' Len orig='+inttostr(length(resp))+' len compressed='+inttostr(length(compressed_resp))+' compress='+floattostr(length(resp)/length(compressed_resp)));
-    resp := jreq + '({"time":'+vartime+', "varValue": ' + compressed_resp + '});';
+    GetSystemTime(syst);
+    stime := IntToStr((syst.wHour+3)*3600*1000+syst.wMinute*60*1000+syst.wSecond*1000+syst.wMilliseconds);
+//    webWriteLog('HTTP request='+keyname+' Len orig='+inttostr(length(resp))+' len compressed='+inttostr(length(compressed_resp))+' compress='+floattostr(length(resp)/length(compressed_resp)));
+    resp := jreq + '({"sent":'+stime+',"time":'+vartime+', "varValue": ' + compressed_resp + '});';
     result := resp;
 end;
 
@@ -1199,6 +1218,8 @@ begin
     tcphttpsrv := ttcpserver.Create(nil);
     tcphttpsrv.LocalPort := IntToStr(StrToInt(LocalTCPPort) + 5);
     tcphttpsrv.OnAccept := TcpHTTPserverAccept;
+    tcphttpsrv.OnError := HTTPError;
+    tcphttpsrv.ServerSocketThread.ThreadCacheSize := 100;
     tcphttpsrv.Active := true;
     rc := WSAGetlastError;
 

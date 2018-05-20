@@ -425,7 +425,7 @@ uses umain, uproject, uinitforms, umyfiles, utimeline, udrawtimelines,
   ushifttl, UShortNum, UEvSwapBuffer, UMyMessage, uairdraw, UMyMediaSwitcher,
   UGridSort, UImageTemplate, UTextTemplate, umyprint, umediacopy,
   UMyTextTemplate, uwebget,
-  umymenu, ufrlisterrors, umytexttable;
+  umymenu, ufrlisterrors, umytexttable, UTCDraw;
 
 // ===========SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSs=============================
 // ========================  Helpers для классов. Сохранения в JSON и загрузка ==
@@ -534,7 +534,12 @@ var
   jsarr : tjsonarray;
   jssave : tstringlist;
 begin
+  WriteLog('updateTLOTLT','request update TLO TLT');
+  Need_Update_TimeLines := true;
   if LoadProject_active then exit;
+  WriteLog('updateTLOTLT','execute update TLO TLT');
+
+  Need_Update_TimeLines := false;
 
      str1:=TLParameters.SaveToJSONStr;
      PutJsonStrToServer('TLP',str1);
@@ -571,7 +576,10 @@ var
   jsarr : tjsonarray;
   jssave : tstringlist;
 begin
+  WriteLog('updateTLOTLT','PUT TLT'+IntToStr(ind));
+
   i := ind;
+
   TlTimeline := TTlTimeline(tlzone.timelines[i]);
   if TlTimeline = nil  then exit;
   //if LoadProject_active then exit;
@@ -591,6 +599,7 @@ var
   jsarr : tjsonarray;
   jssave : tstringlist;
 begin
+  WriteLog('updateTLOTLT','PUT TLO'+IntToStr(ind));
   //if LoadProject_active then exit;
   i := ind;
   tlo := TTimelineOptions(Form1.GridTimeLines.Objects[0,i]);
@@ -1730,7 +1739,7 @@ end;
 Procedure CheckedClipsInList;
 var
   I: integer;
-  pth, txt: string;
+  pth, txt, clp: string;
 begin
   try
     with form1 do
@@ -1740,21 +1749,27 @@ begin
       begin
         if GridClips.Objects[0, I] is TGridRows then
         begin
-          txt := (GridClips.Objects[0, I] as TGridRows).MyCells[3]
-            .ReadPhrase('File');
-
+          txt := (GridClips.Objects[0, I] as TGridRows).MyCells[3].ReadPhrase('File');
+          clp := (GridClips.Objects[0, I] as TGridRows).MyCells[3].ReadPhrase('ClipId');
           if trim(txt) <> '' then
           begin
-            if not fileexists(txt) then
-            begin
+            if not fileexists(txt) then begin
               (GridClips.Objects[0, I] as TGridRows).MyCells[3].SetPhraseColor
                 ('Clip', PhraseErrorColor);
               WriteLog('MAIN', 'UCommon.CheckedClipsInList-1 GridClips File=' +
                 txt + 'Не существует');
-            end
-            else
+            end else begin
+              if clp = trim(form1.lbActiveClipID.Caption) then begin
+                (GridClips.Objects[0, I] as TGridRows).MyCells[3].SetPhraseColor
+                  ('Clip', PhrasePlayColor);
+              end else begin
+                (GridClips.Objects[0, I] as TGridRows).MyCells[3].SetPhraseColor
+                  ('Clip', GridFontColor);
+              end;
               WriteLog('MAIN', 'UCommon.CheckedClipsInList GridClips File=' +
                 txt + 'Найден');
+            end;
+
           end
           else
           begin
@@ -1766,7 +1781,9 @@ begin
         end;
       end;
       WriteLog('MAIN', 'UCommon.CheckedClipsInList Finish GridClips');
+      GridClips.Repaint;
     end;
+
   except
     on E: Exception do
       WriteLog('MAIN', 'UCommon.CheckedClipsInList GridLists  | ' + E.Message);
@@ -1783,6 +1800,7 @@ begin
   try
     WriteLog('MAIN', 'UCommon.ReloadClipInList Grid=' + Grid.Name + ' ARow' +
       inttostr(ARow));
+
     if Grid.Objects[0, ARow] is TGridRows then
     begin
       // txt := (Grid.Objects[0,ARow] as TGridRows).MyCells[3].ReadPhrase('File');
@@ -1799,10 +1817,10 @@ begin
             (Grid.Objects[0, ARow] as TGridRows).MyCells[3].SetPhraseColor
               ('Clip', clRed);
             (Grid.Objects[0, ARow] as TGridRows).MyCells[3].UpdatePhrase('File',
-              'Медиа-данные отсутствуют');
+              'Медиа-данные отсутствуют.');
             WriteLog('MAIN', 'UCommon.ReloadClipInList Grid=' + Grid.Name +
               ' ARow' + inttostr(ARow) + ' File=' +
-              trim(form1.OpenDialog1.FileName) + ' Медиа-данные отсутствуют');
+              trim(form1.OpenDialog1.FileName) + ' Медиа-данные отсутствуют.');
             exit;
           end;
           (Grid.Objects[0, ARow] as TGridRows).MyCells[3].SetPhraseColor('Clip',
@@ -1832,20 +1850,26 @@ end;
 procedure SetClipTimeParameters;
 begin
   try
-    form1.lbMediaKTK.Caption :=
-      FramesToStr(TLParameters.Finish - TLParameters.ZeroPoint);
-    form1.lbMediaNTK.Caption :=
-      FramesToStr(TLParameters.Start - TLParameters.ZeroPoint);
-    form1.lbMediaDuration.Caption := FramesToStr(TLParameters.Duration);
-    form1.lbMediaCurTK.Caption :=
-      FramesToStr(TLParameters.Position - TLParameters.ZeroPoint);
-    form1.lbMediaTotalDur.Caption :=
-      FramesToStr(TLParameters.Finish - TLParameters.Start);
-    form1.lbMediaKTK.Repaint;
-    form1.lbMediaNTK.Repaint;
-    form1.lbMediaDuration.Repaint;
-    form1.lbMediaCurTK.Repaint;
-    form1.lbMediaTotalDur.Repaint;
+  Form1.imgPnTimeCode.Picture.Bitmap.Width := Form1.imgPnTimeCode.Width;
+  Form1.imgPnTimeCode.Picture.Bitmap.Height := Form1.imgPnTimeCode.Height;
+  if MyTCData = nil then MyTCData := TMyTCData.create;
+
+  MyTCData.Draw(Form1.imgPnTimeCode.Canvas);
+  Form1.imgPnTimeCode.Repaint;
+  //  form1.lbMediaKTK.Caption :=
+  //    FramesToStr(TLParameters.Finish - TLParameters.ZeroPoint);
+  //  form1.lbMediaNTK.Caption :=
+  //    FramesToStr(TLParameters.Start - TLParameters.ZeroPoint);
+  //  form1.lbMediaDuration.Caption := FramesToStr(TLParameters.Duration);
+  //  form1.lbMediaCurTK.Caption :=
+  //    FramesToStr(TLParameters.Position - TLParameters.ZeroPoint);
+  //  form1.lbMediaTotalDur.Caption :=
+  //    FramesToStr(TLParameters.Finish - TLParameters.Start);
+  //  form1.lbMediaKTK.Repaint;
+  //  form1.lbMediaNTK.Repaint;
+  //  form1.lbMediaDuration.Repaint;
+  //  form1.lbMediaCurTK.Repaint;
+  //  form1.lbMediaTotalDur.Repaint;
   except
     on E: Exception do
       WriteLog('MAIN', 'UCommon.ReloadClipInList SetClipTimeParameters | ' +
@@ -1996,15 +2020,15 @@ begin
       TLParameters.Position := TLParameters.Start;
       PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
       TLParameters.EndPoint := TLParameters.Start + TLParameters.Duration;
-      form1.lbMediaNTK.Caption :=
-        FramesToStr(TLParameters.Start - TLParameters.Preroll);
-      form1.lbMediaDuration.Caption :=
-        FramesToStr(TLParameters.Finish - TLParameters.Start);
-      form1.lbMediaKTK.Caption :=
-        FramesToStr(TLParameters.Finish - TLParameters.Preroll);
-      form1.lbMediaTotalDur.Caption := FramesToStr(TLParameters.Duration);
-      form1.lbMediaCurTK.Caption :=
-        FramesToStr(TLParameters.Start - TLParameters.Preroll);
+      //form1.lbMediaNTK.Caption :=
+      //  FramesToStr(TLParameters.Start - TLParameters.Preroll);
+      //form1.lbMediaDuration.Caption :=
+      //  FramesToStr(TLParameters.Finish - TLParameters.Start);
+      //form1.lbMediaKTK.Caption :=
+      //  FramesToStr(TLParameters.Finish - TLParameters.Preroll);
+      //form1.lbMediaTotalDur.Caption := FramesToStr(TLParameters.Duration);
+      //form1.lbMediaCurTK.Caption :=
+      //  FramesToStr(TLParameters.Start - TLParameters.Preroll);
       pntlprep.SetText('Nom', '');
       pntlprep.SetText('ClipName', '');
       pntlprep.SetText('SongName', '');

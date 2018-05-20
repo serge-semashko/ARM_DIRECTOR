@@ -528,7 +528,10 @@ begin
       'UActPlayList.LoadDefaultClipToPlayer Пустой клип загружен.');
 
 //    PutJsonStrToServer('TLEDITOR', TLZone.TLEditor.SaveToJSONstr);
+    TLParameters.ClipName:=Form1.Label2.Caption;
+    TLParameters.Reload:=true;
     PutTimeLinesToServer(1);
+    TLParameters.Reload:=false;
     SetMediaButtons;
   except
     on E: Exception do
@@ -896,7 +899,10 @@ begin
     WriteLog('MAIN', 'UActPlayList.LoadClipsToPlayer Клип загружен');
     // MediaPause;
     //PutJsonStrToServer('TLEDITOR', TLZone.TLEditor.SaveToJSONstr);
+    TLParameters.ClipName:=Form1.Label2.Caption;
+    TLParameters.Reload:=true;
     PutTimeLinesToServer(1);
+    TLParameters.Reload:=false;
     SetMediaButtons;
   except
     on E: Exception do

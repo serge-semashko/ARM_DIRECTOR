@@ -276,7 +276,7 @@ type
     destructor Destroy; override;
     procedure Execute; override;
     procedure ExecuteSyncProc;
-    property ClientSocket: TCustomIpClient read FClientSocket write FClientSocket;
+    property ClientSocket: TCustomIpClient read FClientSocket;
     property ServerSocketThread: TServerSocketThread read FServerSocketThread;
   end;
 
@@ -337,7 +337,6 @@ type
     function Listen(backlog: Integer = SOMAXCONN): Boolean;
 
   public
-    Function getClientSocket: TCustomIpClient;
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure Open; override;
@@ -992,9 +991,7 @@ begin
   if FConnected then
   begin
 {$IFDEF MSWINDOWS}
-//    ErrorCheck(shutdown(FSocket, SD_BOTH));
-
-    ErrorCheck(closesocket(FSocket));
+    ErrorCheck(shutdown(FSocket, SD_BOTH));
 {$ENDIF}
 {$IFDEF LINUX}
     ErrorCheck(shutdown(FSocket, SHUT_RDWR));
@@ -1070,8 +1067,6 @@ begin
 end;
 
 procedure TClientSocketThread.Execute;
-var
- rc : integer;
 begin
   ThreadObject := Self;
   while not Terminated do
@@ -1079,19 +1074,11 @@ begin
     if Assigned(FServerSocketThread) and not FServerSocketThread.Terminated and
        Assigned(FServerSocketThread.ServerSocket) then
     begin
-//      FClientSocket := TCustomIpClient.Create(nil);
+      FClientSocket := TCustomIpClient.Create(nil);
       try
-        FServerSocketThread.ServerSocket.doAccept(FClientSocket);
+        FServerSocketThread.ServerSocket.Accept(FClientSocket);
       finally
-        FClientSocket.close;
-//        rc := closesocket(FClientSocket.fsocket);
-//        if rc = SOCKET_ERROR then begin
-//            rc := WSAGetlastError;
-//            if rc <> 0 then begin
-//                absWriteLog(IntToStr(rc) + ' Close HTTP client  ' + syserrormessage(rc) + ' ');
-//            end;
-//        end;
-        FClientSocket.free;
+        FClientSocket.Free;
         FClientSocket := nil;
       end;
     end;
@@ -1153,23 +1140,12 @@ begin
     if FServerSocket.WaitForConnection then
       if not Terminated then
       begin
-        if (FThreadCacheSize = 0) then begin
-            try
-               self.serversocket.accept;
-            Except
-                  On E : Exception do
-                     abswritelog('FThreadCacheSize = 0 accept error Error: '+E.Message);
-            end;
-        end else begin
-            T := FetchClientSocketThread;
-            if not Assigned(T) then
-              T := AddClientSocketThread;
-            if Assigned(T) then begin
-              t.clientsocket := serversocket.getClientSocket;
-              T.Resume;
-            end  else absWriteLog('TCP server  ERROR!!! No socket');
-    //        Sleep(0);
-            end;
+        T := FetchClientSocketThread;
+        if not Assigned(T) then
+          T := AddClientSocketThread;
+        if Assigned(T) then
+          T.Resume else absWriteLog('TCP server  ERROR!!! No socket');
+//        Sleep(0);
       end;
   end;
 end;
@@ -1323,43 +1299,6 @@ begin
   end else   absWriteLog('HTTP SERVER Error on ACCEPT @@@@@@ ');
 ;
 end;
-
-function TCustomTcpServer.getClientSocket: TCustomIpClient;
-var
-  sock: TSocket;
-  addr: TSockAddr;
-  len: Integer;
-  ClientSocket: TCustomIpClient;
-begin
-    Result := nil;;
-  len := sizeof(addr);
-  Fillchar(addr, sizeof(addr), 0);
-  try
-{$IFDEF MSWINDOWS}
-    Sock := ErrorCheck(Winapi.WinSock.accept(FSocket, @addr, @len));
-{$ENDIF}
-{$IFDEF LINUX}
-    Sock := ErrorCheck(Libc.accept(FSocket, @addr, @len));
-{$ENDIF}
-  except
-    Sock := INVALID_SOCKET;
-  end;
-  if Sock <> INVALID_SOCKET then
-  begin
-    ClientSocket := TCustomIpClient.Create(nil);
-    ClientSocket.FActive := True;
-    ClientSocket.FConnected := True;
-    ClientSocket.FSocket := Sock;
-    ClientSocket.FDomain := FDomain;
-    ClientSocket.SockType := FSockType;
-    ClientSocket.FProtocol := FProtocol;
-    ClientSocket.FBlockMode := FBlockMode;
-    ClientSocket.FRemoteHost := (inet_ntoa(addr.sin_addr));
-    ClientSocket.FRemotePort := AnsiString(IntToStr(ntohs(addr.sin_port)));
-    Result := ClientSocket;
-  end else   absWriteLog('HTTP SERVER Error on ACCEPT @@@@@@ ');
-end;
-
 
 procedure TCustomTcpServer.GetThread(Sender: TObject; var ClientSocketThread: TClientSocketThread);
 begin

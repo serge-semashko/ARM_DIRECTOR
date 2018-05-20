@@ -1,19 +1,19 @@
 # Заголовок Cache-Control
-#<IfModule mod_headers.c>
-#        Header append Cache-Control "no-store, no-cache, must-revalidate"
-#</IfModule>
+<IfModule mod_headers.c>
+        Header append Cache-Control "no-store, no-cache, must-revalidate"
+</IfModule>
  
 # Заголовок Expires
 <IfModule mod_expires.c>
         ExpiresActive On ExpiresDefault "now"
 </IfModule>
 ## Заголовок Cache-Control
-<IfModule mod_headers.c>
-#отключить кэширование
-    <FilesMatch "\.(|flv|swf|ico|gif|jpg|jpeg|png|css|txt|js|htm|html|php|cgi|spl|scgi|fcgi)$">
-        Header unset Cache-Control
-    </FilesMatch>
-</IfModule>
+#<IfModule mod_headers.c>
+# #отключить кэширование
+#    <FilesMatch "\.(|flv|swf|ico|gif|jpg|jpeg|png|css|txt|js|htm|html|php|cgi|spl|scgi|fcgi)$">
+#        Header unset Cache-Control
+#    </FilesMatch>
+#</IfModule>
  
 # Заголовок Expires
 #<IfModule mod_expires.c>

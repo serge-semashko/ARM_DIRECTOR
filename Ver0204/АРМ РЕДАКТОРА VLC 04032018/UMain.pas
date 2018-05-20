@@ -119,18 +119,6 @@ type
     Panel17: TPanel;
     Panel18: TPanel;
     Panel19: TPanel;
-    Label13: TLabel;
-    Label16: TLabel;
-    lbMediaNTK: TLabel;
-    lbMediaDuration: TLabel;
-    lbMediaKTK: TLabel;
-    lbMediaTotalDur: TLabel;
-    Panel20: TPanel;
-    Panel21: TPanel;
-    Panel22: TPanel;
-    Label18: TLabel;
-    Label19: TLabel;
-    lbMediaCurTK: TLabel;
     spDeleteTemplate: TSpeedButton;
     Timer2: TTimer;
     Label7: TLabel;
@@ -201,6 +189,7 @@ type
     Shape5: TShape;
     imgeyeop: TImage;
     imgeyecl: TImage;
+    imgPnTimeCode: TImage;
     procedure GridListsMouseUpPlaylists(X, Y: Integer);
     // procedure GridListsMouseUpTextTemplates(X, Y: Integer);
     // procedure GridListsMouseUpGRTemplates(X, Y: Integer);
@@ -413,6 +402,12 @@ type
     procedure Timer2Timer(Sender: TObject);
     procedure GridListsMouseMove(Sender: TObject; Shift: TShiftState;
       X, Y: Integer);
+    procedure imgPnTimeCodeMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure imgPnTimeCodeMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure imgPnTimeCodeMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
 
   private
     { Private declarations }
@@ -470,7 +465,7 @@ uses UInitForms, UGrid, UProject, UIMGButtons, UDelGridRow, UTimeline,
   ushifttl, ushortnum, umyinifile, uevswapbuffer, uLock, umyundo, UlistUsers,
   umyltc, usettc, UMyTextTemplate, umymenu, UStartWindow, ufrhotkeys,
   UMyOptions, udevmanagers,
-  UMyTextTable, ufrsaveproject;
+  UMyTextTable, ufrsaveproject, utcdraw;
 
 {$R *.dfm}
 {$R bmpres2.res}
@@ -748,22 +743,6 @@ begin
 
       MyShiftOld := MyShift;
 
-     // if (MyShiftDelta <> 0) and MakeLogging then
-     // begin
-     //   // WriteLog('Synchro', '7) (MyShiftDelta<>0) and MakeLogging = TRUE');
-     //   if MySinhro = chltc then
-     //   begin
-     //     // WriteLog('MAIN', 'TMyThread.DoWork Изменение Тайм-код LTC | Системное время =' +
-     //     // TimeToTimeCodeStr(now) + ' Смещение=' + TimeToTimeCodeStr(MyShift));
-     //     // WriteLog('Synchro', '7) MySinhro=chltc - TRUE');
-     //   end
-     //   else
-     //   begin
-     //     // WriteLog('MAIN', 'TMyThread.DoWork Изменение системного времени | Системное время =' +
-     //     // TimeToTimeCodeStr(now));
-     //     // WriteLog('Synchro', '7) MySinhro=chltc - FALSE');
-     //   end;
-     // end;
       if (TimeToFrames(msd) >= SynchDelay) and (TLParameters.vlcmode = play) then
       begin
         // if (MyShiftDelta<>0) and (mode=play) then begin
@@ -842,6 +821,7 @@ begin
       else
       begin
         db2 := VLCPlayer.Duration;
+        Rate := libvlc_media_player_get_rate(VLCPlayer.p_mi);
         if libvlc_media_player_get_state(VLCPlayer.p_mi) <> libvlc_Ended then
           db1 := VLCPlayer.Time
         else
@@ -853,7 +833,7 @@ begin
         // end;
         if MyDoubleToFrame(pStart1) * 40 > db2 then
         begin
-          Rate := libvlc_media_player_get_rate(VLCPlayer.p_mi);
+          //Rate := libvlc_media_player_get_rate(VLCPlayer.p_mi);
           // WriteLog('TCPlayer', '.++++++++++++1) Rate=' + floattostr(Rate));
           db0 := MyDoubleToFrame(pStart1 + CurrDt * Rate) * 40;
           // WriteLog('Synchro', '.      102) DBO=' + floattostr(db0)+ ' 1) Rate=' + floattostr(Rate));
@@ -868,16 +848,15 @@ begin
           end
           else
           begin
-            Rate := libvlc_media_player_get_rate(VLCPlayer.p_mi);
+            //Rate := libvlc_media_player_get_rate(VLCPlayer.p_mi);
             db0 := db2 + MyDoubleToFrame((MyTimer.ReadTimer - PredDt) * Rate) *
               40; // SpeedMultiple;
             // WriteLog('TCPlayer', '.++++++++++++2) Rate=' + floattostr(Rate));
             // WriteLog('Synchro', '.      104) DBO=' + floattostr(db0)+ ' 2) Rate=' + floattostr(Rate));
           end;
         end;
-        if db0 > db3 then
-          db0 := db3;
-        Rate := libvlc_media_player_get_rate(VLCPlayer.p_mi);
+        if db0 > db3 then db0 := db3;
+        //Rate := libvlc_media_player_get_rate(VLCPlayer.p_mi);
         // WriteLog('Synchro', '      105) DBO=' + floattostr(db0)+ ' 3) Rate=' + floattostr(Rate));
         mycpos2 := TLParameters.Preroll + (db0 div 40);
         if TLParameters.vlcmode = play then
@@ -1460,6 +1439,7 @@ begin
       MessageDlg(VLCPlayer.error, mtError, [mbOK], 0);
       // exit;
     end;
+    //VLCPlayer
     // VLCPlayer.Init(Form1.pnMovie.Handle);
     ClearGridTimeLinesToServer(GridTimeLines);
   except
@@ -1941,6 +1921,28 @@ begin
     on E: Exception do
       WriteLog('MAIN', 'UMain.imgpnlbtnsplMouseUp | ' + E.Message);
   end;
+end;
+
+procedure TForm1.imgPnTimeCodeMouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  MyTCData.MouseDown(imgPnTimeCode.Canvas, X, Y);
+end;
+
+procedure TForm1.imgPnTimeCodeMouseMove(Sender: TObject; Shift: TShiftState; X,
+  Y: Integer);
+begin
+  MyTCData.MouseMove(imgPnTimeCode.Canvas, X, Y);
+  MyTCData.Draw(imgPnTimeCode.Canvas);
+  imgPnTimeCode.Repaint;
+end;
+
+procedure TForm1.imgPnTimeCodeMouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  MyTCData.MouseClick(imgPnTimeCode.Canvas, X, Y);
+  MyTCData.Draw(imgPnTimeCode.Canvas);
+  imgPnTimeCode.Repaint;
 end;
 
 procedure TForm1.imgpntlprojMouseMove(Sender: TObject; Shift: TShiftState;
@@ -2918,7 +2920,10 @@ begin
           Form1.imgTimelines.Width);
         TLParameters.Position := TLParameters.Position +
           trunc((X - TLZone.XViewer) * Step);
-              PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
+        //TLParameters.Position := trunc((X - TLParameters.Preroll) * Step);
+
+        PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
+
         TLZone.DrawTimelines(Form1.imgTimelines.Canvas, bmptimeline);
         TLZone.XViewer := X;
         SetClipTimeParameters;
@@ -2927,16 +2932,14 @@ begin
           MarkRowPhraseInGrid(Form1.GridGRTemplate, 0, 2, 'File', crpos.Image,
             'imgLayer2MouseMove');
         TemplateToScreen(crpos);
-        if Form1.pnImageScreen.Visible then
-          Form1.Image3.Repaint;
+        if Form1.pnImageScreen.Visible then Form1.Image3.Repaint;
         MediaSetPosition(TLParameters.Position, FALSE,
           'TForm1.imgLayer2MouseMove-1'); // 1
         TLZone.DrawTimelines(Form1.imgTimelines.Canvas, bmptimeline);
         MediaPause;
         SetClipTimeParameters;
         MyPanelAir.SetValues;
-        if Form1.PanelAir.Visible then
-        begin
+        if Form1.PanelAir.Visible then begin
           MyPanelAir.Draw(Form1.ImgDevices.Canvas, Form1.imgEvents.Canvas,
             TLZone.TLEditor.Index);
           Form1.ImgDevices.Repaint;
@@ -3036,12 +3039,12 @@ begin
     pnMainMenu.Visible := FALSE;
     exit;
   end;
-  if X <= 5 then
+  if X <= 0 then
   begin
     pnMainMenu.Visible := FALSE;
     exit;
   end;
-  if Y >= ImgMainMenu.Height - 10 then
+  if Y >= ImgMainMenu.Height - 5 then
   begin
     pnMainMenu.Visible := FALSE;
     exit;

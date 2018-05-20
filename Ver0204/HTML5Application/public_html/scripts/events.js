@@ -485,8 +485,10 @@ function MyDrawEvents(cv, Width, Height, menu) {
             evmix = TLT[ActiveTL].Events[CurrEvent].Rows[1].Phrases[0].Text;
             evmixdur = TLT[ActiveTL].Events[CurrEvent].Rows[1].Phrases[1].Data;
             evtext = TLT[ActiveTL].Events[CurrEvent].Rows[0].Phrases[1].Text;
+            //var evtext0 = evtext.replace(new RegExp(MySpace, 'g')," ");
             evdevice = TLT[ActiveTL].Events[CurrEvent].Rows[0].Phrases[0].Data;
             evcomment = TLT[ActiveTL].Events[CurrEvent].Rows[3].Phrases[0].Text;
+            //evcomment = evcomment.replace(new RegExp(MySpace, 'g')," ");
             if (evcomment.charAt(0) == "#") {
                 evtext = evcomment;
             }
@@ -768,8 +770,10 @@ function MyDrawEvents(cv, Width, Height, menu) {
                 evmix = TLT[ActiveTL].Events[i].Rows[1].Phrases[0].Text;
                 evmixdur = TLT[ActiveTL].Events[i].Rows[1].Phrases[1].Data;
                 evtext = TLT[ActiveTL].Events[i].Rows[0].Phrases[1].Text;
+                //evtext = evtext.replace(new RegExp("#$%#$%", 'g')," ");
                 evdevice = TLT[ActiveTL].Events[i].Rows[0].Phrases[0].Data;
                 evcomment = TLT[ActiveTL].Events[i].Rows[3].Phrases[0].Text;
+                //evcomment = evcomment.replace(new RegExp("#$%#$%", 'g')," ");
                 if (evcomment.charAt(0) == "#") {
                     evtext = evcomment;
                 }
@@ -935,8 +939,10 @@ function MyDrawEvents(cv, Width, Height, menu) {
             ;
 
             evtext = TLT[ActiveTL].Events[sev].Rows[0].Phrases[0].Text;
+            //evtext = evtext.replace(new RegExp("#$%#$%", 'g')," ");
             evdevice = TLT[ActiveTL].Events[sev].Rows[0].Phrases[0].Data;
             evcomment = TLT[ActiveTL].Events[sev].Rows[2].Phrases[0].Text;
+            //evcomment = evcomment.replace(new RegExp("#$%#$%", 'g')," ");
             if (evcomment.charAt(0) == "#") {
                 evtext = evcomment;
             }
@@ -1107,8 +1113,10 @@ function MyDrawEvents(cv, Width, Height, menu) {
                 ;
 
                 evtext = TLT[ActiveTL].Events[i].Rows[0].Phrases[0].Text;
+                //evtext = evtext.replace(new RegExp("#$%#$%", 'g')," ");
                 evdevice = TLT[ActiveTL].Events[i].Rows[0].Phrases[0].Data;
                 evcomment = TLT[ActiveTL].Events[i].Rows[2].Phrases[0].Text;
+                //evcomment = evcomment.replace(new RegExp("#$%#$%", 'g')," ");
                 if (evcomment.charAt(0) == "#") {
                     evtext = evcomment;
                 }
@@ -1297,8 +1305,10 @@ function MyDrawDevEvents(cv, Width, Height, device, menu) {
             evmix = TLT[ActiveTL].Events[FirstEvent].Rows[1].Phrases[0].Text;
             evmixdur = TLT[ActiveTL].Events[FirstEvent].Rows[1].Phrases[1].Data;
             evtext = TLT[ActiveTL].Events[FirstEvent].Rows[0].Phrases[1].Text;
+            //var evtext0 = evtext.replace(new RegExp("#$%#$%", 'g')," ");
             evdevice = TLT[ActiveTL].Events[FirstEvent].Rows[0].Phrases[0].Data;
             evcomment = TLT[ActiveTL].Events[FirstEvent].Rows[3].Phrases[0].Text;
+            //evcomment = evcomment.replace(new RegExp("#$%#$%", 'g')," ");
             Start = TLT[ActiveTL].Events[FirstEvent].Start;
             Finish = TLT[ActiveTL].Events[FirstEvent].Finish;
             if (evcomment.charAt(0) == "#") {
@@ -1513,8 +1523,10 @@ function MyDrawDevEvents(cv, Width, Height, device, menu) {
                     evmix = TLT[ActiveTL].Events[IndexEvent].Rows[1].Phrases[0].Text;
                     evmixdur = TLT[ActiveTL].Events[IndexEvent].Rows[1].Phrases[1].Data;
                     evtext = TLT[ActiveTL].Events[IndexEvent].Rows[0].Phrases[1].Text;
+                    //evtext = evtext.replace(new RegExp("#$%#$%", 'g')," ");
                     evdevice = TLT[ActiveTL].Events[IndexEvent].Rows[0].Phrases[0].Data;
                     evcomment = TLT[ActiveTL].Events[IndexEvent].Rows[3].Phrases[0].Text;
+                    //evcomment = evcomment.replace(new RegExp("#$%#$%", 'g')," ");
                     Start = TLT[ActiveTL].Events[IndexEvent].Start;
                     Finish = TLT[ActiveTL].Events[IndexEvent].Finish;
                     Position = TLP.Position;
@@ -1692,8 +1704,10 @@ function MyDrawDevEvents(cv, Width, Height, device, menu) {
             ;
 
             evtext = TLT[ActiveTL].Events[sev].Rows[0].Phrases[0].Text;
+            //var evtext2 = evtext.replace(new RegExp("#$%#$%", 'g')," ");
             evdevice = TLT[ActiveTL].Events[sev].Rows[0].Phrases[0].Data;
             evcomment = TLT[ActiveTL].Events[sev].Rows[2].Phrases[0].Text;
+            //evcomment = evcomment.replace(new RegExp("#$%#$%", 'g')," ");
             if (evcomment.charAt(0) == "#") {
                 evtext = evcomment;
             }
@@ -1862,11 +1876,12 @@ function MyDrawDevEvents(cv, Width, Height, device, menu) {
                 evColor = rgbFromNum(TLT[ActiveTL].Events[i].Color);
                 evFontName = TLT[ActiveTL].Events[i].FontName;
                 evSafeZone = TLT[ActiveTL].Events[i].SafeZone;
-                ;
 
                 evtext = TLT[ActiveTL].Events[i].Rows[0].Phrases[0].Text;
+                //var evtext1 = evtext.replace(new RegExp("#$%#$%", 'g')," ");
                 evdevice = TLT[ActiveTL].Events[i].Rows[0].Phrases[0].Data;
                 evcomment = TLT[ActiveTL].Events[i].Rows[2].Phrases[0].Text;
+                //evcomment = evcomment.replace(new RegExp("#$%#$%", 'g')," ");
                 if (evcomment.charAt(0) == "#") {
                     evtext = evcomment;
                 }

@@ -37,10 +37,12 @@ type
     lbStartTimeTxt: TLabel;
     EdStartTime: TEdit;
     CheckBox1: TCheckBox;
-    Bevel1: TBevel;
     GroupBox1: TGroupBox;
     GroupBox2: TGroupBox;
     LbTypeMedia: TLabel;
+    Shape1: TShape;
+    Shape2: TShape;
+    SpeedButton4: TSpeedButton;
     procedure SpeedButton1Click(Sender: TObject);
     procedure SpeedButton2Click(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -66,6 +68,7 @@ type
     procedure edTotalDurChange(Sender: TObject);
     procedure EdDurChange(Sender: TObject);
     procedure EdStartTimeChange(Sender: TObject);
+    procedure SpeedButton4Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -85,53 +88,82 @@ procedure ClearClipsPanel;
 implementation
 
 uses umain, ucommon, ugrid, uplayer, uactplaylist, uwaiting, UHRTimer, umyfiles,
-  umymessage, uinitforms, umediacopy, umytexttable;
+  umymessage, uinitforms, umediacopy, umytexttable, ugrtimelines;
 
 {$R *.dfm}
 
 procedure EditClip(ARow: integer);
 var
   err, rw: integer;
-  Duration: Int64;
-  txt, fn, snch, clpid: string;
+  Duration : Int64;
+  mposition : longint;
+  oldfn, txt, fn, snch, clpid: string;
   mediadata: string;
+  fnprep, smedia, currclp : string;
+
 begin
   if WorkDirClips <> '' then
     FImportFiles.OpenDialog1.InitialDir := WorkDirClips;
+  fnprep := '';
+  currclp := trim(Form1.lbActiveClipID.Caption);
+  if currclp<>'' then begin
+    fnprep := Form1.lbPlayerFile.Caption;
+    mposition := TLParameters.Position;
+    //if VLCPlayer.p_mi <> nil then begin
+    //   mposition := VLCPlayer.Time_position div 40;
+    //end;
+  end;
+  // раставить в нужных местах if fnprep<>'' then LoadVLCPlayer(fnprep, smedia);
   with FImportFiles do
   begin
     // Устанваливаем первоначальные значения
-    If ARow < 0 then
-    begin
+    If ARow < 0 then begin
+      oldfn := '';
       CheckBox1.Checked := false;
-      if ARow = -1 then
-      begin
-        if not OpenDialog1.Execute then
-          exit;
-        WorkDirClips := IncludeTrailingBackslash
-          (extractfilepath(OpenDialog1.FileName));
-        if OpenDialog1.Files.Count > 1 then
-        begin
+//Импорт файла/файлов
+      if ARow = -1 then begin
+        if not OpenDialog1.Execute then exit;
+        WorkDirClips := IncludeTrailingBackslash(extractfilepath(OpenDialog1.FileName));
+//Импорт группы файлов
+        if OpenDialog1.Files.Count > 1 then begin
           NeedCopy := false;
           // If MyTextMessage('Вопрос', 'Копировать импортируемые медиа файлы на компьютер', 2) then NeedCopy:=true;
-          if CopyMediaFiles(OpenDialog1.Files, pathfiles, mmMistakes) then
-          begin
+          if CopyMediaFiles(OpenDialog1.Files, pathfiles, mmMistakes) then begin
             FImportFiles.Panel3.Visible := false;
             FImportFiles.Panel1.Visible := true;
             FImportFiles.SpeedButton2.Visible := false;
             FImportFiles.SpeedButton1.Caption := 'Закрыть';
             FImportFiles.ShowModal;
-            If FImportFiles.ModalResult = mrOk then
-            begin
+            If FImportFiles.ModalResult = mrOk then begin
+              if fnprep<>'' then begin
+                LoadVLCPlayer(fnprep, smedia);
+                if VLCPlayer.p_mi <> nil then begin
+                  VLCPlayer.Pause;
+                  TLParameters.Position := mposition;
+                  //MediaSetPosition(mposition * 40, false, 'EditClip-1');
+                  VLCPlayer.SetTime((mposition -TLParameters.Preroll) * 40);
+                  //VLCPlayer.Pause;
+                end;
+              end;
             end;
           end;
           exit;
         end;
+//Импорт 1 файла
         err := LoadVLCPlayer(OpenDialog1.FileName, mediadata);
         LbTypeMedia.Caption := mediadata;
-        if err <> 0 then
-        begin
+        if err <> 0 then begin
           ShowMessage('Невозможно прочитать параметры выбранного медиафайла.');
+          if fnprep<>'' then begin
+            LoadVLCPlayer(fnprep, smedia);
+            if VLCPlayer.p_mi <> nil then begin
+              VLCPlayer.Pause;
+              TLParameters.Position := mposition;
+              //MediaSetPosition(mposition * 40, false, 'EditClip-2');
+              VLCPlayer.SetTime((mposition -TLParameters.Preroll) * 40);
+              //VLCPlayer.Pause;
+            end;
+          end;
           exit;
         end;
         // Panel3.Visible:=true;
@@ -143,6 +175,7 @@ begin
         // pMediaPosition.get_Duration(Duration);
         Duration := vlcplayer.Duration div 40;
       end;
+// Создание клипа
       if ARow = -100 then
       begin
         txt := '';
@@ -169,9 +202,8 @@ begin
       end;
       EdStartTime.Text := '00:00:00:00';
       lbType1.Caption := '';
-    end
-    else
-    begin
+    end else begin
+//Редактирования данных клипа
       if Form1.GridClips.Objects[0, ARow] is TGridRows then
       begin
         with (Form1.GridClips.Objects[0, ARow] as TGridRows).MyCells[3] do
@@ -187,6 +219,8 @@ begin
             lbFile.Caption := 'Медиа-данные не заданы.'
           else
             lbFile.Caption := Trim(ReadPhrase('File'));
+
+          oldfn := lbFile.Caption;
 
           edClip.Text := Trim(ReadPhrase('Clip'));
           edSong.Text := Trim(ReadPhrase('Song'));
@@ -231,31 +265,43 @@ begin
     begin
       AllClipsReset;
       rw := ARow;
-      if ARow < 0 then
-      begin
+      if ARow < 0 then begin
+        //if fnprep<>'' then LoadVLCPlayer(fnprep, smedia);
         rw := GridAddRow(Form1.GridClips, RowGridClips);
         IDCLIPS := IDCLIPS + 1;
         (Form1.GridClips.Objects[0, rw] as TGridRows).ID := IDCLIPS;
         clpid := createunicumname;
         (Form1.GridClips.Objects[0, rw] as TGridRows).MyCells[3].UpdatePhrase
           ('ClipID', clpid);
-        if ARow <> -100 then
-        begin
-          fn := extractfilename(OpenDialog1.FileName);
-          fn := pathfiles + '\' + fn;
-          lbFile.Caption := CopyMediaFile(OpenDialog1.FileName, pathfiles);
-        end;
+        //if (lbFile.Caption <> 'Медиа-данные не заданы.') then begin
+        //  fn := extractfilename(lbFile.Caption);
+        //  fn := pathfiles + '\' + fn;
+        //  lbFile.Caption := CopyMediaFile(OpenDialog1.FileName, pathfiles);
+        //end;
+
+        //if ARow <> -100 then begin
+        //  fn := extractfilename(OpenDialog1.FileName);
+        //  fn := pathfiles + '\' + fn;
+        //  lbFile.Caption := CopyMediaFile(OpenDialog1.FileName, pathfiles);
+        //end;
+
       end;
       (Form1.GridClips.Objects[0, rw] as TGridRows).MyCells[1].Mark := true;
-      with (Form1.GridClips.Objects[0, rw] as TGridRows).MyCells[3] do
-      begin
-        if ARow <> -100 then
-          UpdatePhrase('File', lbFile.Caption)
-        else
-        begin
+      with (Form1.GridClips.Objects[0, rw] as TGridRows).MyCells[3] do begin
+        //if ARow <> -100 then
+        //  UpdatePhrase('File', lbFile.Caption)
+        //else begin
+        //  UpdatePhrase('File', '');
+        //  (Form1.GridClips.Objects[0, Form1.GridClips.RowCount - 1]
+        //    as TGridRows).MyCells[3].SetPhraseColor('Clip', PhraseErrorColor);
+        //end;
+        clpid := Trim(ReadPhrase('ClipId'));
+        if (lbFile.Caption = 'Медиа-данные не заданы.') then begin
           UpdatePhrase('File', '');
           (Form1.GridClips.Objects[0, Form1.GridClips.RowCount - 1]
             as TGridRows).MyCells[3].SetPhraseColor('Clip', PhraseErrorColor);
+        end else begin
+          UpdatePhrase('File', lbFile.Caption);
         end;
         UpdatePhrase('Clip', edClip.Text);
         UpdatePhrase('Song', edSong.Text);
@@ -272,10 +318,40 @@ begin
           UpdatePhrase('StartTime', '');
         // UpdatePhrase('StartTime',lbType.Caption);
       end;
+
+
+      if trim(ansilowercase(oldfn))<>trim(ansilowercase(lbFile.Caption))
+      then begin
+        if (lbFile.Caption <> 'Медиа-данные не заданы.') then begin
+          fn := extractfilename(lbFile.Caption);
+          fn := pathfiles + '\' + fn;
+          lbFile.Caption := CopyMediaFile(lbFile.Caption, pathfiles);
+        end;
+      end;
+
+      //if ARow>=0 then begin
+      //  if clpid <> currclp then begin
+      //    if fnprep<>'' then LoadVLCPlayer(fnprep, smedia);
+      //  end;
+      //end;
+
       Form1.GridClips.Row := rw;
       GridClipsToPanel(rw);
-      if clpid = Trim(Form1.lbActiveClipID.Caption) then
-        PlayClipFromClipsList;;
+      if clpid = Trim(Form1.lbActiveClipID.Caption) then begin
+        PlayClipFromClipsList;
+      end else begin
+        if fnprep<>'' then begin
+           LoadVLCPlayer(fnprep, smedia);
+           if VLCPlayer.p_mi <> nil then begin
+             VLCPlayer.Pause;
+             TLParameters.Position := mposition;
+             //MediaSetPosition(mposition * 40, false, 'EditClip-3');
+             VLCPlayer.SetTime((mposition -TLParameters.Preroll) * 40);
+             //VLCPlayer.Pause;
+           end;
+         end;
+      end;
+      CheckedClipsInList;
     end;
   end;
 end;
@@ -875,13 +951,40 @@ begin
 end;
 
 procedure TFImportFiles.SpeedButton3Click(Sender: TObject);
+var err : integer;
+    mediadata : string;
 begin
   // txt := (GridClips.Objects[0,GridClips.Row] as TGridRows).MyCells[3].ReadPhrase('File');
-  ReloadClipInList(Form1.GridClips, Form1.GridClips.Row);
-  lbFile.Caption := (Form1.GridClips.Objects[0, Form1.GridClips.Row]
-    as TGridRows).MyCells[3].ReadPhrase('File');
-  edTotalDur.Text := (Form1.GridClips.Objects[0, Form1.GridClips.Row]
-    as TGridRows).MyCells[3].ReadPhrase('Duration');
+  //fn := '';
+  //if trim(Form1.lbActiveClipID.Caption)<>'' then fn := Form1.lbPlayerFile.Caption;
+  if form1.OpenDialog1.Execute then begin
+    if trim(form1.OpenDialog1.FileName) <> '' then begin
+      err := LoadVLCPlayer(form1.OpenDialog1.FileName, mediadata);
+      if err = 0 then begin
+        LbTypeMedia.Caption := mediadata;
+        lbFile.Caption := trim(form1.OpenDialog1.FileName);//(Form1.GridClips.Objects[0, Form1.GridClips.Row]
+                           //as TGridRows).MyCells[3].ReadPhrase('File');
+        edTotalDur.Text := FramesToStr(vlcplayer.Duration div 40);//(Form1.GridClips.Objects[0, Form1.GridClips.Row]
+                           //as TGridRows).MyCells[3].ReadPhrase('Duration');
+        //VLCPlayer.Duration;
+      end;
+    end;
+  end;
+
+  //ReloadClipInList(Form1.GridClips, Form1.GridClips.Row);
+  //lbFile.Caption := (Form1.GridClips.Objects[0, Form1.GridClips.Row]
+  //  as TGridRows).MyCells[3].ReadPhrase('File');
+  //edTotalDur.Text := (Form1.GridClips.Objects[0, Form1.GridClips.Row]
+  //  as TGridRows).MyCells[3].ReadPhrase('Duration');
+  //clp := (Form1.GridClips.Objects[0, Form1.GridClips.Row]
+  //  as TGridRows).MyCells[3].ReadPhrase('ClipId');
+  //if clp <> trim(Form1.lbActiveClipID.Caption)
+  //  then if fn<>'' then LoadVLCPlayer(fn, ss);
+end;
+
+procedure TFImportFiles.SpeedButton4Click(Sender: TObject);
+begin
+  lbFile.Caption := 'Медиа-данные не заданы.';
 end;
 
 procedure TFImportFiles.CheckBox1Click(Sender: TObject);

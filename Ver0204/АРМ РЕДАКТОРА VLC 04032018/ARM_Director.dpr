@@ -1,5 +1,7 @@
 program ARM_Director;
 {$M 163840,16000000}
+{$DEFINE ARM_DIRECTOR}
+
 uses
   Forms,
   UMain in 'UMain.pas' {Form1},

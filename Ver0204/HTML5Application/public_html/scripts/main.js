@@ -1,8 +1,6 @@
-"use strict";
+п»ї"use strict";
 var tm, atm;
 var timeStamp = 0;
-var url // = "http://127.0.0.1:9090/get_data&callback=?";
-var urlTail;
 var LST;
 var dt;
 var mainFont = '28pt Arial';
@@ -23,16 +21,16 @@ var ProgrammFontColor = "#FFFFFF";
 var lastPhrase = "";
 var lastTimeToStart = "";
 var myInterval;
-//Переменные для отображения тайм-линий и событий
-var typesrc = "4"; //Вид экрана 0 - All, 1- ev+dv, 2
-var currtlo; //текущая опция тайм линий
-var currtlt; //события текущей тайм линии
+//РџРµСЂРµРјРµРЅРЅС‹Рµ РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ С‚Р°Р№Рј-Р»РёРЅРёР№ Рё СЃРѕР±С‹С‚РёР№
+var typesrc = "4"; //Р’РёРґ СЌРєСЂР°РЅР° 0 - All, 1- ev+dv, 2
+var currtlo; //С‚РµРєСѓС‰Р°СЏ РѕРїС†РёСЏ С‚Р°Р№Рј Р»РёРЅРёР№
+var currtlt; //СЃРѕР±С‹С‚РёСЏ С‚РµРєСѓС‰РµР№ С‚Р°Р№Рј Р»РёРЅРёРё
 var cfont = ProgrammFontColor;
 var DevValue = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]; // секунды до следующего события          
-var CurrEvent = 0; //текущее событие;
-var CurrDevice = 4; // текущее устройство 
-var NextDevice = 9; // следующее устройство
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]; // СЃРµРєСѓРЅРґС‹ РґРѕ СЃР»РµРґСѓСЋС‰РµРіРѕ СЃРѕР±С‹С‚РёСЏ          
+var CurrEvent = 0; //С‚РµРєСѓС‰РµРµ СЃРѕР±С‹С‚РёРµ;
+var CurrDevice = 4; // С‚РµРєСѓС‰РµРµ СѓСЃС‚СЂРѕР№СЃС‚РІРѕ 
+var NextDevice = 9; // СЃР»РµРґСѓСЋС‰РµРµ СѓСЃС‚СЂРѕР№СЃС‚РІРѕ
 
 //var EventsBKGN = "black";
 //var DevicesBKGN = "black";
@@ -41,12 +39,12 @@ var Background = rgbFromNum(srccolor);
 var Foreground = smoothcolor(srccolor, 8);
 var Foreground1 = smoothcolor(srccolor, 16);
 
-var FrameSize = 1; //количество пиксилей на один фрейм
-//var StartScrFrame = 250; //кадр в начале экрана 
-//var FinishScrFrame = 850; //кадр в конце экрана
+var FrameSize = 1; //РєРѕР»РёС‡РµСЃС‚РІРѕ РїРёРєСЃРёР»РµР№ РЅР° РѕРґРёРЅ С„СЂРµР№Рј
+//var StartScrFrame = 250; //РєР°РґСЂ РІ РЅР°С‡Р°Р»Рµ СЌРєСЂР°РЅР° 
+//var FinishScrFrame = 850; //РєР°РґСЂ РІ РєРѕРЅС†Рµ СЌРєСЂР°РЅР°
 var LengthNameTL = 200;
 var MyCursor = 100;
-var CountEvents = 5; //количесто отображаемых событий
+var CountEvents = 5; //РєРѕР»РёС‡РµСЃС‚Рѕ РѕС‚РѕР±СЂР°Р¶Р°РµРјС‹С… СЃРѕР±С‹С‚РёР№
 
 var WidthDevice = 80;
 var IntervalDevice = 10;
@@ -54,7 +52,7 @@ var HeightDevice = 55;
 var HOffsetDevice = 5;
 
 var EventOffset = 30;
-var ActiveTL = 0; //отображаемая тайм-линия
+var ActiveTL = 0; //РѕС‚РѕР±СЂР°Р¶Р°РµРјР°СЏ С‚Р°Р№Рј-Р»РёРЅРёСЏ
 var ShowEditor = true;
 var ShowScaler = true;
 var ShowTimelines = true;
@@ -79,9 +77,9 @@ var EventsDev2 = 5;
 var Device1 = 14;
 var Device2 = 2;
 var ArrDev1 = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]; // номера событий устройства 1
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]; // РЅРѕРјРµСЂР° СЃРѕР±С‹С‚РёР№ СѓСЃС‚СЂРѕР№СЃС‚РІР° 1
 var ArrDev2 = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]; // номера событий устройства 2  
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]; // РЅРѕРјРµСЂР° СЃРѕР±С‹С‚РёР№ СѓСЃС‚СЂРѕР№СЃС‚РІР° 2  
 var ScreenFields = [0, 1, 4, -1, -1];
 //evCanvas, dvCanvas, edCanvas, tvCanvas, tmCanvas 
 var UsesCanvas = [false, false, false, false, false];
@@ -91,6 +89,7 @@ var MenuProcent = 5;
 var MenuDown = false;
 var DownPosition = -1;
 var MousePosition = -1;
+var DownTouch = -1;
 
 var ClipName = "";
 var SongName = "";
@@ -124,6 +123,9 @@ var audio = new Audio();
 audio.playbackRate = 1.25;
 var typeSpeeker = 0; //0 internal, 1 external
 var FirstPhrase = false;
+
+var MySpace = "#$%#$%";
+var isTouch = false;
 
 function toChart(txtval) {
     txtval = txtval.toString();
@@ -240,19 +242,19 @@ function setViewport() {
 function myKeydown(e) {
     // switch(e.keyCode){
 
-    //     case 37:  // если нажата клавиша влево
+    //     case 37:  // РµСЃР»Рё РЅР°Р¶Р°С‚Р° РєР»Р°РІРёС€Р° РІР»РµРІРѕ
     //         if(left>0)
     //             blueRect.style.marginLeft = left - 10 + "px";
     //         break;
-    //     case 38:   // если нажата клавиша вверх
+    //     case 38:   // РµСЃР»Рё РЅР°Р¶Р°С‚Р° РєР»Р°РІРёС€Р° РІРІРµСЂС…
     //         if(top>0)
     //             blueRect.style.marginTop = top - 10 + "px";
     //         break;
-    //     case 39:   // если нажата клавиша вправо
+    //     case 39:   // РµСЃР»Рё РЅР°Р¶Р°С‚Р° РєР»Р°РІРёС€Р° РІРїСЂР°РІРѕ
     //         if(left < document.documentElement.clientWidth - 100)
     //             blueRect.style.marginLeft = left + 10 + "px";
     //         break;
-    //     case 40:   // если нажата клавиша вниз
+    //     case 40:   // РµСЃР»Рё РЅР°Р¶Р°С‚Р° РєР»Р°РІРёС€Р° РІРЅРёР·
     //         if(top < document.documentElement.clientHeight - 100)
     //             blueRect.style.marginTop = top + 10 + "px";
     //         break;
@@ -295,11 +297,11 @@ var mouseY = 0;
 function MyMouseDown(e) {
     mouseX = e.clientX - canvasPos.x;
     mouseY = e.clientY - canvasPos.y;
-    DownPosition = mouseY;
-    MousePosition = mouseY;
-    MenuDown = true;
+    DownPosition = mouseX;
+    //MousePosition = mouseY;
+    //if (mouseY < mnCanvas.height) MenuDown = true;
     if (mouseY < mnCanvas.height) {
-        //MenuDown = true;
+        MenuDown = true;
         //DownPosition = mouseY;  
         if (mouseX > RectSound[0] && mouseX < RectSound[2]) {
             mnSoundSelect = true;
@@ -322,28 +324,48 @@ function MyMouseDown(e) {
     }
 }
 
+var txtInfoEvent = "";
+
 function MyMouseUp(e) {
+    txtInfoEvent = "MyMouseUp";
+    
     mouseX = e.clientX - canvasPos.x;
     mouseY = e.clientY - canvasPos.y;
     //var lf = RectSound[0];
     //var rt = RectSound[2];
-    if (MenuDown) {
+    var visible = $("#main").css("display");
+     
+    if (!MenuDown) {
         
-        var respos = mouseY - DownPosition;
-        if (respos > ((window.innerHeight - 10) / 100) * 5) {
-            MenuProcent = 100;
-            //function sh() {
-              // $("#mymenu").slideToggle("slow");
-            //}
-        } else {
-            MenuProcent = 5;
+        var respos = mouseX - DownPosition;
+
+        if (visible == "block") {
+          if (respos > 0.025*window.innerWidth) {
+          //  $('#select_scr').show(200);
+          //  $('#main').hide(1000);
+            
+            $('#select_scr').slideUp(200);
+            $('#main').slideDown(1000);
+            initControls();
+          }   
+        } else  {
+          if (-1*respos > 0.05*window.innerWidth) {
+
+          //  $('#main').show(200);
+          //  $('#select_scr').hide(1000);
+
+            $('#main').slideUp(200);
+            $('#select_scr').slideDown(1000);
+
+            execMain();
+          }   
         }
-        ;
-    }
-    ;
+    };
     MenuDown = false;
 
     if (mouseY < mnCanvas.height) {
+		isTouch = true;
+		
         if (mouseX > RectSound[0] && mouseX < RectSound[2]) {
             AudioOn = !AudioOn;
             mnSoundSelect = false;
@@ -394,18 +416,17 @@ function MyMouseUp(e) {
             mnHomeSelect = false;
         }
     } else {
-
-        var dv = ChoiceDevRect(mouseX, mouseY);
-        if (dv !== -1) {
-            Device1 = +dv + 1
-            setDeviceNumber(Device1)
+        if (visible == "block") {
+            var dv = ChoiceDevRect(mouseX, mouseY);
+            if (dv !== -1) {
+                Device1 = +dv + 1
+                setDeviceNumber(Device1)
+            };
+            var tl = ChoiceTimelines(mouseY);
+            if (tl !== -1) {
+                ActiveTL = tl
+            };
         }
-        ;
-        var tl = ChoiceTimelines(mouseY);
-        if (tl !== -1) {
-            ActiveTL = tl
-        }
-        ;
     }
 
 }
@@ -413,22 +434,6 @@ function MyMouseUp(e) {
 function setMousePosition(e) {
     mouseX = e.clientX - canvasPos.x;
     mouseY = e.clientY - canvasPos.y;
-
-    if (MenuDown) {
-        var respos = mouseY - MousePosition;
-        //var resstep = respos / 100;
-        var dltproc = (respos * 100) / (window.innerHeight - 10);
-        MenuProcent = MenuProcent + dltproc;
-        if (MenuProcent > 50) {
-            MenuProcent = 100;
-        }
-        ;
-        if (MenuProcent < 5) {
-            MenuProcent = 5;
-        }
-        ;
-    }
-    MousePosition = mouseY;
 
     if (mouseY < mnCanvas.height) {
         if (mouseX > RectSound[0] && mouseX < RectSound[2]) {
@@ -488,13 +493,223 @@ function getPosition(el) {
     };
 }
 
+function MyTouchStart(X,Y) {
+    //mouseX = e.clientX - canvasPos.x;
+    //mouseY = e.clientY - canvasPos.y;
+    DownTouch = +X;
+    //InfoTouch = "TS: " + X;
+     //MousePosition = mouseY;
+    //if (mouseY < mnCanvas.height) MenuDown = true;
+    if (+Y < mnCanvas.height) {
+        MenuDown = true;
+        //DownPosition = mouseY;  
+        if (+X > +RectSound[0] && +X < +RectSound[2]) {
+            mnSoundSelect = true;
+            //InfoTouch = "TS: sound";
+        }
+        if (+X > +RectMinus[0] && +X < +RectMinus[2]) {
+            mnMinusSelect = true;
+           //InfoTouch = "TS: minus";
+        }
+        if (+X > +RectPlus[0] && +X < +RectPlus[2]) {
+            mnPlusSelect = true;
+            //InfoTouch = "TS: plus";
+        }
+        if (+X > +RectDown[0] && +X < +RectDown[2]) {
+            mnDownSelect = true;
+            //InfoTouch = "TS: down";
+        }
+        if (+X > +RectUp[0] && +X < +RectUp[2]) {
+            mnUpSelect = true;
+            //InfoTouch = "TS: up";
+        }
+        if (+X > +RectHome[0] && +X < +RectHome[2]) {
+            mnHomeSelect = true;
+            //InfoTouch = "TS: РЅРѕРјРµ";
+        }
+    }
+}
+
+//function MyTouchMove(e) {
+//    e.preventDefault();
+//    e.stopPropagation();
+//}
+
+function MyTouchEnd(X,Y) {
+	//txtInfoEvent = txtInfoEvent +" MyTouchEnd";
+    //alert(txtInfoEvent);
+    //isTouch = true;
+    //mouseX = e.clientX - canvasPos.x;
+    //mouseY = e.clientY - canvasPos.y;
+    //var lf = RectSound[0];
+    //var rt = RectSound[2];
+    var visible = $("#main").css("display");
+    //InfoTouch = "TE: " + X + "x" + Y; 
+    if (!MenuDown) {
+        //InfoTouch = "TE: menudown";
+        var respos = X - DownTouch;
+
+        if (visible == "block") {
+          if (respos > 0.025*window.innerWidth) {
+          //  $('#select_scr').show(200);
+          //  $('#main').hide(1000);
+            
+            $('#select_scr').slideUp(200);
+            $('#main').slideDown(1000);
+            initControls();
+            //InfoTouch = "TE: init";
+          }   
+        } else  {
+          if (-1*respos > 0.05*window.innerWidth) {
+
+          //  $('#main').show(200);
+          //  $('#select_scr').hide(1000);
+
+            $('#main').slideUp(200);
+            $('#select_scr').slideDown(1000);
+
+            execMain();
+            //InfoTouch = "TE: exec";
+          }   
+        }
+    };
+    MenuDown = false;
+
+    if (Y < mnCanvas.height) {
+		if (isTouch) {
+          isTouch = false;
+          return;
+        }
+        if (X > RectSound[0] && X < RectSound[2]) {
+            AudioOn = !AudioOn;
+            mnSoundSelect = false;
+            //if (AudioOn) {
+            //  if (!audio.paused) {
+            //    audio = 0;
+            //    audio = new Audio();
+            //    audio.playbackRate = 1.25;
+            //  }  
+            //}
+        }
+        if (X > RectMinus[0] && X < RectMinus[2]) {
+            if (FrameSize > 1) {
+                FrameSize = FrameSize - 1;
+            } else {
+                FrameSize = 1;
+            }
+            mnMinusSelect = false;
+        }
+        if (X > RectPlus[0] && X < RectPlus[2]) {
+            if (FrameSize < 15) {
+                FrameSize = FrameSize + 1;
+            } else {
+                FrameSize = 15;
+            }
+            mnPlusSelect = false;
+        }
+        if (X > RectDown[0] && X < RectDown[2]) {
+            if (TimeLineHeight > 8) {
+                TimeLineHeight = TimeLineHeight - 1;
+            } else {
+                TimeLineHeight = 8;
+            }
+            mnDownSelect = false;
+        }
+        if (X > RectUp[0] && X < RectUp[2]) {
+            if (TimeLineHeight < 35) {
+                TimeLineHeight = TimeLineHeight + 1;
+            } else {
+                TimeLineHeight = 35;
+            }
+            mnUpSelect = false;
+        }
+        //InfoTouch = "TE: home " + X + " l=" + RectHome[0] + " r=" + RectHome[2];
+        if (X > RectHome[0] && X < RectHome[2]) {
+            initControls();
+            
+//            clearInterval(myInterval)
+            mnHomeSelect = false;
+        }
+    } else {
+        if (visible == "block") {
+            var dv = ChoiceDevRect(X, Y);
+            if (dv !== -1) {
+                Device1 = +dv + 1
+                setDeviceNumber(Device1)
+            };
+            var tl = ChoiceTimelines(Y);
+            if (tl !== -1) {
+                ActiveTL = tl
+            };
+        }
+    }
+    mnSoundSelect = false;
+    mnUpSelect = false;
+    mnDownSelect = false;
+    mnPlusSelect = false;
+    mnMinusSelect = false;
+    mnHomeSelect = false;
+}
+
+var touchstartX = 0;
+var touchstartY = 0;
+var touchendX = 0;
+var touchendY = 0;
+
+//var gesuredZone = document.getElementById('select_scr');
+
+ 
+
+function handleGesure() {
+    var swiped = 'swiped: ';
+    if (touchendX < touchstartX) {
+        alert(swiped + 'left!');
+    }
+    if (touchendX > touchstartX) {
+        alert(swiped + 'right!');
+    }
+    if (touchendY < touchstartY) {
+        alert(swiped + 'down!');
+    }
+    if (touchendY > touchstartY) {
+        alert(swiped + 'left!');
+    }
+    if (touchendY == touchstartY) {
+        alert('tap!');
+    }
+}
 
 function window_onload() {
     addEventListener("keydown", myKeydown);
+    
+    addEventListener('touchstart', function(event) {
+      //event.preventDefault();
+      //event.stopPropagation();  
+      var touchobj = event.changedTouches[0];
 
+      touchstartX = touchobj.clientX - canvasPos.x;
+      touchstartY = touchobj.clientY - canvasPos.y;
+      //document.all.myinfo.innerHTML="touchstart " + touchstartX;
+      MyTouchStart(+touchstartX,+touchstartY);
+    }, false);
+
+    addEventListener('touchend', function(event) {
+      //event.preventDefault();
+      //event.stopPropagation(); 
+      var touchobj = event.changedTouches[0];
+      touchendX = touchobj.clientX - canvasPos.x;
+      touchendY = touchobj.clientY - canvasPos.y;
+      //document.all.myinfo.innerHTML="touchend " + touchendX;
+      MyTouchEnd(+touchendX,+touchendY);
+      //handleGesure();
+    }, false);
+    
     addEventListener('mousedown', MyMouseDown, false);
     addEventListener("mousemove", setMousePosition, false);
     addEventListener('mouseup', MyMouseUp, false);
+//    addEventListener('touchstart', MyTouchStart, false);
+//    addEventListener("touchmove", MyTouchMove, false);
+//    addEventListener('touchend', MyTouchEnd, false);
 
     tm = document.getElementById("time");
     var dloc = document.location;

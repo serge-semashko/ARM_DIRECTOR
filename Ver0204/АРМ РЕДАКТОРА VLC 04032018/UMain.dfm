@@ -1751,135 +1751,19 @@ object Form1: TForm1
           ShowCaption = False
           TabOrder = 2
           StyleElements = []
-          object Panel20: TPanel
+          object imgPnTimeCode: TImage
             Left = 0
             Top = 0
-            Width = 138
-            Height = 50
-            Align = alLeft
-            BevelOuter = bvNone
-            ShowCaption = False
-            TabOrder = 0
-            StyleElements = []
-            object lbMediaNTK: TLabel
-              Left = 61
-              Top = 4
-              Width = 73
-              Height = 20
-              AutoSize = False
-              Caption = '00:00:00:00'
-              Layout = tlCenter
-              StyleElements = []
-            end
-            object Label13: TLabel
-              Left = 4
-              Top = 4
-              Width = 55
-              Height = 20
-              AutoSize = False
-              Caption = #1053'.'#1058'.'#1050'.'
-              Layout = tlCenter
-              StyleElements = []
-            end
-            object lbMediaDuration: TLabel
-              Left = 61
-              Top = 24
-              Width = 73
-              Height = 21
-              AutoSize = False
-              Caption = '00:00:00:00'
-              Layout = tlCenter
-              StyleElements = []
-            end
-            object Label16: TLabel
-              Left = 4
-              Top = 24
-              Width = 55
-              Height = 21
-              AutoSize = False
-              Caption = #1061#1088'-'#1078' '#1084#1077#1076'.'
-              Layout = tlCenter
-              StyleElements = []
-            end
-          end
-          object Panel21: TPanel
-            Left = 112
-            Top = 0
-            Width = 148
-            Height = 50
-            Align = alRight
-            BevelOuter = bvNone
-            ShowCaption = False
-            TabOrder = 1
-            StyleElements = []
-            object lbMediaTotalDur: TLabel
-              Left = 80
-              Top = 24
-              Width = 64
-              Height = 21
-              Alignment = taRightJustify
-              AutoSize = False
-              Caption = '00:00:00:00'
-              Layout = tlCenter
-              StyleElements = []
-            end
-            object lbMediaKTK: TLabel
-              Left = 80
-              Top = 4
-              Width = 64
-              Height = 20
-              Alignment = taRightJustify
-              AutoSize = False
-              Caption = '00:00:00:00'
-              Layout = tlCenter
-              StyleElements = []
-            end
-            object Label18: TLabel
-              Left = -2
-              Top = 4
-              Width = 79
-              Height = 20
-              Alignment = taRightJustify
-              AutoSize = False
-              Caption = #1050'.'#1058'.'#1050'.'
-              Layout = tlCenter
-              StyleElements = []
-            end
-            object Label19: TLabel
-              Left = -2
-              Top = 24
-              Width = 79
-              Height = 21
-              Alignment = taRightJustify
-              AutoSize = False
-              Caption = #1061#1088'-'#1078' '#1074#1089#1087#1088'.'
-              Layout = tlCenter
-              StyleElements = []
-            end
-          end
-          object Panel22: TPanel
-            Left = 138
-            Top = 0
-            Width = 39
+            Width = 260
             Height = 50
             Align = alClient
-            BevelOuter = bvNone
-            ShowCaption = False
-            TabOrder = 2
-            StyleElements = []
-            object lbMediaCurTK: TLabel
-              Left = 0
-              Top = 0
-              Width = 39
-              Height = 50
-              Align = alClient
-              Alignment = taCenter
-              Caption = '00:00:00:00'
-              Layout = tlCenter
-              StyleElements = []
-              ExplicitWidth = 65
-              ExplicitHeight = 16
-            end
+            OnMouseDown = imgPnTimeCodeMouseDown
+            OnMouseMove = imgPnTimeCodeMouseMove
+            OnMouseUp = imgPnTimeCodeMouseUp
+            ExplicitLeft = 112
+            ExplicitTop = 16
+            ExplicitWidth = 105
+            ExplicitHeight = 105
           end
         end
         object pnImageScreen: TPanel

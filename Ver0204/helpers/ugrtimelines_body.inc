@@ -64,6 +64,8 @@ begin
   Scaler := getVariableFromJson(json, 'Scaler', Scaler);
   TimeToStart := getVariableFromJson(json, 'TimeToStart', TimeToStart);
 
+  Reload := getVariableFromJson(json, 'Reload', Reload);
+  ClipName := getVariableFromJson(json, 'ClipName', ClipName);
 
 end;
 
@@ -148,6 +150,9 @@ begin
 
     addVariableToJson(json, 'Scaler', Scaler);
     addVariableToJson(json, 'TimeToStart', TimeToStart);
+    addVariableToJson(json, 'Reload', Reload);
+    addVariableToJson(json, 'ClipName', ClipName);
+
   except
     on E: Exception do
   end;

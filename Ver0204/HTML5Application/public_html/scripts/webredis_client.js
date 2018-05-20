@@ -4,13 +4,23 @@
  * and open the template in the editor.
  */
 var socket;
-var max_request = 20;
+var max_request = 30;
 var LST_time = new Date().getTime();
 var LST_count = 0;
-
-var LST_req = 0;
-var LST_fired = 0;
-var LST_ans = 0;
+var go_time = "";
+var url;
+// = "http://127.0.0.1:9090/get_data&callback=?";
+var urlTail = "";
+var lst_active = 0;
+var lst_fired = 0;
+var lst_succ = 0;
+var lst_completed = 0;
+var lst_error = 0;
+var lst_done = 0;
+var send_first = 0;
+var send_last = 0;
+var rec_first = 0;
+var rec_last = 0;
 
 var async_time = new Date().getTime();
 var async_req = 0;
@@ -50,7 +60,31 @@ var lastLSTtime = 0;
 var lastCTCtime = 0;
 function net_init() {
 //    setInterval(serial_net_process, 1);
-    setInterval(async_net_process, 50);
+                $(document).ajaxComplete(function () {
+                    alert("ajaxComplete");////
+                });
+
+                $('#gets2').ajaxStart(function () {
+                    alert("ajaxStart");
+                });
+
+                $('#gets2').ajaxStop(function () {
+                    alert("ajaxStop");
+                });
+
+                $('#gets2').ajaxSend(function () {
+                    alert("ajaxSend");
+                });
+
+                $('#gets2').ajaxError(function () {
+                    alert("ajaxError");
+                });
+
+                $('#gets2').ajaxSuccess(function () {
+                    alert("ajaxSuccess");
+                });
+
+    setInterval(async_net_process, 60);
 
 }
 var options = {
@@ -60,7 +94,7 @@ var options = {
 };
 
 function myLog(msg) {
-    console.log(new Date().toLocaleString("ru", options) + ' ' + new Date().getMilliseconds() +" "+ msg);
+    console.log(new Date().toLocaleString("ru", options) + ' ' + new Date().getMilliseconds() + " " + msg);
 
 }
 function pureAjax() {
@@ -98,9 +132,13 @@ function myAjax(url) {
         xhr.send();
         if (xhr.status == 200) {
             result = "#ans:" + xhr.responseText;
-            var resp = xhr.responseText;
-            resp = resp.substr(1, resp.length - 3);
-//            console.log("ajax pure load " + xhr.responseText);
+            resp = "";
+            resp = xhr.responseText.trim();
+            var finpos = resp.indexOf(");");
+            resp = resp.substr(1, finpos-1);
+            console.log("ajax pure load start " + resp.substr(0,80));
+            console.log("ajax pure final  " + resp.substr(resp.length-80,resp.length+10));
+            
             var retobj = JSON.parse(resp);
             return  retobj;
         } else
@@ -285,51 +323,80 @@ function serial_net_process() {
 function async_net_process() {
     if ((new Date().getTime() - LST_time) > 1000) {
         LST_time = new Date().getTime();
-        myLog("За секунду: ответов webredis= " + LST_count + ", завершено запросов=" + LST_req + " активных запросов=" + LST_req);
-        LST_count = 0;
-        LST_ans = 0;
+//        myLog("За секунду: webredis= " + lst_succ + ", завершено=" + lst_completed + " активных=" + lst_active + " done=" + lst_done );
+        var mess = "За секунду: ok=" + lst_succ + " start=" + lst_fired + " завершено=" + lst_completed + " активных=" + lst_active + " err=" + lst_error;
+        mess += " От посылки до приема (мс)=" + go_time;
+        $("#stat").html(mess);
+        lst_completed = 0;
+        lst_fired = 0;
+//        lst_error = 0;
+        lst_succ = 0;
+        lst_done = 0;
+
 
     }
-    if (LST_req > max_request) {
+    if (lst_active > max_request) {
         return;
     }
-    LST_req++;
-        $.ajax({
-            type: "POST",
-            global: false,
-            dataType: "json",
-            url: url + "LST_" + urlTail,
-            data: {
-                "get_member": "id"
-            },
-            success: function (t) {
-                LST_count++;
-                if (checkObjectOk(t, lastLSTtime)) {
-                    $("#serverStatus").css("color", "blue");
-                    proc_LST(t);
-                    $("#serverStatus").css("color", serverReady);
-                    if (TLT_OK && TLO_OK && TLP_OK) {
-                        $("#armStatus").css("color", "aquamarine");
-                        if (firstEnter) {
-                            firstEnter = false;
-                            hidePage();
-                        }
+    if (lst_active == 0) {
+        send_first = new Date().getTime();
+    }
+    if (lst_active == max_request) {
+        send_last = new Date().getTime();
+    }
+    lst_active++;
+    lst_fired++;
+    $.ajax({
+        type: "POST",
+        global: false,
+        dataType: "json",
+        url: url + "LST_" + urlTail,
+        data: {
+            "get_member": "id"
+        },
+        success: function (t) {
+            lst_succ++;
+            var now = new Date();
+            var rtime = now.getHours() * 3600 * 1000 + now.getMinutes() * 60 * 1000 + now.getSeconds() * 1000 + now.getMilliseconds();
+            var stime = t.sent;
+            go_time = (go_time + " " + (rtime - stime)).trim();
+            if (go_time.length > 30) {
+                go_time = go_time.substr(go_time.indexOf(" "), go_time.length);
+            }
 
+            if (checkObjectOk(t, lastLSTtime)) {
+                $("#serverStatus").css("color", "blue");
+                proc_LST(t);
+                $("#serverStatus").css("color", serverReady);
+                if (TLT_OK && TLO_OK && TLP_OK) {
+                    $("#armStatus").css("color", "aquamarine");
+                    if (firstEnter) {
+                        firstEnter = false;
+                        hidePage();
                     }
 
                 }
 
-                processLST = false;
-            },
-            complete: function (t) {
-                LST_ans++;
-                LST_req--;
-            },
-            error: function (t) {
-                myLog("ajax error")
             }
 
-        });
+            processLST = false;
+        },
+        complete: function (t) {
+            if (rec_first == 0) {
+                rec_first = new Date().getTime();
+            }
+            rec_last = new Date().getTime();
+            lst_completed++;
+            lst_active--;
+        },
+        error: function (t) {
+            lst_error++;
+        },
+        done: function (t) {
+            lst_done++;
+        }
+
+    });
 }
 
 function net_sock() {
