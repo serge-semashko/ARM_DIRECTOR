@@ -1834,7 +1834,7 @@ object Form1: TForm1
       end
       object imgLayer2: TImage
         Left = 264
-        Top = 7
+        Top = 6
         Width = 481
         Height = 145
         Transparent = True

@@ -130,6 +130,7 @@ Var
     TLMaxText: integer = 5;
     TLMaxMedia: integer = 1;
     TLMaxCount: integer = 16;
+    Need_Update_TimeLines: boolean = false;
     DefaultMediaColor: tcolor = $00D8A520;
     DefaultTextColor: tcolor = $00ACEAE1;
     // Layer2FontColor : tcolor = $202020;

@@ -53,7 +53,7 @@ procedure MediaFast(mng: integer);
 
 implementation
 
-uses umain, ucommon, ugrtimelines, umyfiles;
+uses umain, ucommon, ugrtimelines, umyfiles, utcdraw;
 
 procedure ClearVLCPlayer;
 begin
@@ -189,6 +189,12 @@ begin
       TLParameters.vlcmode := Play;
       VLCPlayer.Play;
       StartMyTimer;
+      if MyTCData <> nil then begin
+        //MyTCData.value := VLCPlayer.getVolume;
+        if (MyTCData.AChecked)
+          then VLCPlayer.setVolume(MyTCData.value)
+          else VLCPlayer.setVolume(0);
+        end else VLCPlayer.setVolume(70);
       exit;
     end;
   end;
@@ -238,6 +244,13 @@ begin
     FramesToStr(tc) + '  Время старта=' + FramesToStr(MyStartPlay) +
     '  Время окончания=' + FramesToStr(fen));
   StartMyTimer; // ###### Warming
+  if VLCPlayer.p_mi <> nil  then begin
+    if MyTCData <> nil then begin
+      if (MyTCData.AChecked)
+        then VLCPlayer.setVolume(MyTCData.value)
+        else VLCPlayer.setVolume(0);
+    end else VLCPlayer.setVolume(70);
+  end;
 end;
 
 // процедура паузы

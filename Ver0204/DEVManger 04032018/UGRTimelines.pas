@@ -1677,7 +1677,8 @@ var
     JSONstr: string;
 begin
     jsontmp := SaveToJSONObject;
-    JSONstr := jsontmp.ToJSON;
+   JSONstr := jsontmp.tostring;
+
     Result := JSONstr;
 end;
 
@@ -1752,7 +1753,7 @@ var
     JSONstr: string;
 begin
     jsontmp := SaveToJSONObject;
-    JSONstr := jsontmp.ToJSON;
+  JSONstr := jsontmp.tostring;
     Result := JSONstr;
 end;
 
@@ -1849,7 +1850,7 @@ var
     JSONstr: string;
 begin
     jsontmp := SaveToJSONObject;
-    JSONstr := jsontmp.ToJSON;
+    JSONstr := jsontmp.tostring;
     Result := JSONstr;
 end;
 
@@ -1962,7 +1963,7 @@ var
     JSONstr: string;
 begin
     jsontmp := SaveToJSONObject;
-    JSONstr := jsontmp.ToJSON;
+  JSONstr := jsontmp.tostring;
     Result := JSONstr;
 end;
 
@@ -2071,7 +2072,7 @@ var
     JSONstr: string;
 begin
     jsontmp := SaveToJSONObject;
-    JSONstr := jsontmp.ToJSON;
+  JSONstr := jsontmp.tostring;
     Result := JSONstr;
 end;
 // SSSS JSON HELPERS

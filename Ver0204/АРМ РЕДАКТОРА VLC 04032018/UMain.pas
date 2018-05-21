@@ -2887,7 +2887,7 @@ begin
         // TLZone.DrawTimelines(imgtimelines.Canvas,bmptimeline);
         exit;
       end;
-      rightlimit := TLParameters.Preroll + TLParameters.Duration +
+      rightlimit := TLParameters.Preroll + TLDuration +
         TLParameters.Postroll - (TLParameters.ScreenEndFrame -
         TLParameters.ScreenStartFrame) +
         TLParameters.MyCursor div TLParameters.FrameSize;
@@ -2916,11 +2916,25 @@ begin
 
       if (TLZone.DownViewer) and (TLParameters.vlcmode <> play) then
       begin
-        Step := trunc((TLParameters.Finish - TLParameters.Start) /
-          Form1.imgTimelines.Width);
-        TLParameters.Position := TLParameters.Position +
-          trunc((X - TLZone.XViewer) * Step);
-        //TLParameters.Position := trunc((X - TLParameters.Preroll) * Step);
+        //Step := trunc((TLParameters.Finish - TLParameters.Start) /
+        //  Form1.imgTimelines.Width);
+        Step := (TLParameters.Finish - TLParameters.Start) /
+          Form1.imgTimelines.Width;
+        if Step < 1 then begin
+          //Step := 1;
+          TLParameters.Position := TLParameters.Position +
+               trunc((X - TLZone.XViewer) * Step);
+        end else begin
+          TLParameters.Position := TLParameters.Position +
+               (X - TLZone.XViewer) * trunc(Step);
+        end;
+        if TLParameters.Position < TLParameters.Preroll
+          then TLParameters.Position := TLParameters.Preroll;
+
+          //then
+        //TLParameters.Position := TLParameters.Position +
+        //       trunc((X - TLZone.XViewer) * trunc(Step));
+          //else TLParameters.Position :=TLParameters.Position + (X - TLZone.XViewer);
 
         PutJsonStrToServer('TLP',TLParameters.SaveToJSONStr);
 

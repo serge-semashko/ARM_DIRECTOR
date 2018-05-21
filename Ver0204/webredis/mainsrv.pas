@@ -848,6 +848,14 @@ var
     tnow: int64;
 begin
     result := '{"RC":0,"status":"Not exist"}';
+    if ((keyName = 'TLO') or (keyName = 'TLT')) then begin
+        for i1 := 0 to VarCount - 1 do begin
+            if ansiuppercase(webvars[i1].baseName) <> ansiuppercase(keyname) then
+                continue;
+            webvars[i1].changed := -1;
+            webvars[i1].jsonStr := '';
+        end;
+    end;
 
     for i1 := 0 to VarCount - 1 do begin
         if ansiuppercase(webvars[i1].Name) <> ansiuppercase(keyname) then
@@ -1026,6 +1034,7 @@ var
 //    jsval : tjsonvalue;
     varTime : string;
 begin
+   webWriteLog('tcp request='+uri);
      varTime := '';
     if (pos('callback=', URI) <> 0) then begin
         stmp := copy(URI, pos('callback=', URI) + 9, length(URI));
@@ -1104,7 +1113,7 @@ var
     syst :TSystemTime;
 
 begin
-//    webWriteLog('HTTP request='+uri);
+   webWriteLog('HTTP request='+uri);
 
      compress := false;
      varTime := '';

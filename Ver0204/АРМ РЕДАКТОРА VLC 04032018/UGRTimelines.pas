@@ -667,7 +667,7 @@ begin
     // Preroll := TLPreroll;
     // Postroll := TLPostroll;
     ZeroPoint := Preroll;
-    EndPoint := Preroll + Duration;
+    EndPoint := Preroll + TLDuration;
     if Start = 0 then
       Start := ZeroPoint;
     if Finish = 0 then
@@ -691,7 +691,7 @@ begin
     MaxFrameSize := TLMaxFrameSize;
     // Preroll := TLPreroll;
     // Postroll := TLPostroll;
-    EndPoint := Preroll + Duration;
+    EndPoint := Preroll + TLDuration;
     if Start < Preroll then
       Start := Preroll;
     if ZeroPoint < Preroll then
@@ -3079,7 +3079,7 @@ begin
 
     with TLParameters do
     begin
-      dur := (Preroll + Duration + Postroll) * FrameSize;
+      dur := (Preroll + TLDuration + Postroll) * FrameSize;
       zero := ZeroPoint * FrameSize;
       post := dur - zero;
       step := 25 * FrameSize;
@@ -4127,17 +4127,25 @@ begin
   end;
 end;
 
+
+
 procedure TTLZone.DrawBitmap(bmp: tbitmap);
 var
   i: integer;
+  //dur, tmpdur : longint;
 begin
   try
     bmp.Canvas.Lock;
     try
       bmp.Height := TLHeights.Height - TLHeights.Review - 2 *
         TLHeights.Interval;
-      bmp.Width := (TLParameters.Preroll + TLParameters.Duration +
+      //bmp.Width := (TLParameters.Preroll + TLParameters.Duration +
+      //  TLParameters.Postroll) * TLParameters.FrameSize;
+
+      //dur := TLDuration;
+      bmp.Width := (TLParameters.Preroll + TLDuration +
         TLParameters.Postroll) * TLParameters.FrameSize;
+
       bmp.Canvas.Brush.Color := TLParameters.BackGround;
       bmp.Canvas.FillRect(bmp.Canvas.ClipRect);
       InitTimelines(bmp);

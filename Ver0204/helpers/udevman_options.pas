@@ -165,7 +165,7 @@ var
     JSONstr: string;
 begin
     jsontmp := SaveToJSONObject;
-    JSONstr := jsontmp.ToJSON;
+  JSONstr := jsontmp.tostring;
     result := JSONstr;jsontmp.Free;
 end;
 
@@ -248,7 +248,7 @@ var
     JSONstr: string;
 begin
     jsontmp := SaveToJSONObject;
-    JSONstr := jsontmp.ToJSON;
+  JSONstr := jsontmp.tostring;
     result := JSONstr;jsontmp.Free;
 end;
 Procedure UpdateManagerList;

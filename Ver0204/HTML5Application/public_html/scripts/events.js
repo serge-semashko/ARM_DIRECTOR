@@ -525,6 +525,9 @@ function MyDrawEvents(cv, Width, Height, menu) {
                 cv.fill();
                 cv.globalAlpha = 1;
             }
+            
+            
+            
 
             //  var fs = Math.floor(tmph / 2);
             //  if (fs>MaxFontSize) {
@@ -557,6 +560,8 @@ function MyDrawEvents(cv, Width, Height, menu) {
             } else {
                 myTextDraw(cv, evtext, LeftSec, 5, LeftTxt - LeftSec - 10, top, tmph);
             }
+            
+            
 //==============================================================================      
             var phrfrms = (TLT[ActiveTL].Events[CurrEvent].Finish - TLT[ActiveTL].Events[CurrEvent].Start); 
             var phrdur = Math.floor(phrfrms / 25);
@@ -664,12 +669,12 @@ function MyDrawEvents(cv, Width, Height, menu) {
                 } // if (AudioOn)
             }
             
-            if (menu) {
-
-                cv.textAlign = "left";
-                cv.fillText(Phrase, 50, HeightMenu / 6);
-                //cv.fillText(Phrase + "  :" + pss + " == " + psstr, 50, HeightMenu / 2);  
-            }
+//            if (menu) {
+//
+//                cv.textAlign = "left";
+//                cv.fillText(Phrase, 50, HeightMenu / 6);
+//                //cv.fillText(Phrase + "  :" + pss + " == " + psstr, 50, HeightMenu / 2);  
+//            }
             // }
 //==============================================================================      
             cv.fillStyle = evColor;
@@ -727,6 +732,7 @@ function MyDrawEvents(cv, Width, Height, menu) {
                 cv.fill();
                 cv.globalAlpha = 1;
             }
+            
 
             cv.fillStyle = Foreground;
             for (var ic = 0; ic <= ScreenSec; ic++) {
@@ -759,6 +765,25 @@ function MyDrawEvents(cv, Width, Height, menu) {
             } else {
                 myTextDraw(cv, evtext, 0, 10, LeftTxt - 20, top, tmph);
             }
+            
+            if (typeof TLP.ClipName == "undefined") {
+              evtext = "";  
+            } else {  
+              evtext = TLP.ClipName;  
+            }
+            cv.textAlign = "center";
+            cv.fillStyle = "lightgray";
+            cv.globalAlpha = 0.5;
+            lentxt = cv.measureText(evtext).width;
+            if (+lentxt < Width - LeftTxt - 20) {
+              cv.fillText(evtext, Width / 2, +top + +tmph / 2);
+            } else {
+              cv.textAlign = "left";  
+              myTextDraw(cv, evtext, +LeftTxt, 10, Width - LeftTxt - 20, top, tmph);  
+            }
+            cv.globalAlpha = 1;
+            cv.fillStyle = cfont;
+            
             top = top + tmph + interval;
 
             for (var i = CurrEvent + 1; i <= LastEvent; i++) {
@@ -835,7 +860,8 @@ function MyDrawEvents(cv, Width, Height, menu) {
                 cv.fillStyle = cfont;
                 //evtext = GetSeconds(TLP.Position, TLT[ActiveTL].Events[i].Start);
                 //evtext = SecondsToString(evtext);
-                phrsec = GetSeconds(TLP.Position, TLT[ActiveTL].Events[i].Start);
+                //phrsec = GetSeconds(TLP.Position, TLT[ActiveTL].Events[i].Start);
+                phrsec = GetSeconds(TLT[ActiveTL].Events[i].Start, TLT[ActiveTL].Events[i].Finish);
                 evtext = SecondsToString(phrsec);
                 //cv.fillText(evtext, +LeftSec + 5, +top + +tmph / 2);
                 lentxt = cv.measureText(evtext).width;
@@ -1156,23 +1182,26 @@ function MyDrawEvents(cv, Width, Height, menu) {
                 cv.fillStyle = Foreground1;
                 cv.fillRect(0, +top, +LeftTxt, +tmph);
                 cv.fillStyle = cfont;
-                if ((TLT[ActiveTL].Events[i].Start <= TLP.Position &&
-                        +TLT[ActiveTL].Events[i].Finish >= TLP.Position)) {
-                    evtext = GetSeconds(TLP.Position, TLT[ActiveTL].Events[i].Finish);
-                    evtext = SecondsToString(evtext);
-                } else {
-                    if (i < TLT[ActiveTL].Count) {
-                        if (i == TLT[ActiveTL].Count1) {
-                            evtext = GetSeconds(TLP.Position, TLT[ActiveTL].Events[i].Start);
-                            evtext = SecondsToString(evtext);
-                        } else {
-                            evtext = GetSeconds(TLP.Position, TLT[ActiveTL].Events[i].Start);//FramesToShortString(evdur);
-                            evtext = SecondsToString(evtext);
-                        }
-                    } else {
-                        evtext = "";
-                    }
-                }
+                
+                evtext = GetSeconds(TLT[ActiveTL].Events[i].Start, TLT[ActiveTL].Events[i].Finish);
+                evtext = SecondsToString(evtext);
+                //if ((TLT[ActiveTL].Events[i].Start <= TLP.Position &&
+                //        +TLT[ActiveTL].Events[i].Finish >= TLP.Position)) {
+                //    evtext = GetSeconds(TLP.Position, TLT[ActiveTL].Events[i].Finish);
+                //    evtext = SecondsToString(evtext);
+                //} else {
+                //    if (i < TLT[ActiveTL].Count) {
+                //        if (i == TLT[ActiveTL].Count1) {
+                //            evtext = GetSeconds(TLP.Position, TLT[ActiveTL].Events[i].Start);
+                //            evtext = SecondsToString(evtext);
+                //        } else {
+                //            evtext = GetSeconds(TLP.Position, TLT[ActiveTL].Events[i].Start);//FramesToShortString(evdur);
+                //            evtext = SecondsToString(evtext);
+                //        }
+                //    } else {
+                //        evtext = "";
+                //    }
+                //}
 
                 lentxt = cv.measureText(evtext).width;
                 if (lentxt < LeftTxt - LeftSec - 10) {
@@ -1591,7 +1620,8 @@ function MyDrawDevEvents(cv, Width, Height, device, menu) {
                     cv.fillStyle = Foreground1;
                     cv.fillRect(0, +top, +LeftTxt, +tmph);
                     cv.fillStyle = cfont;
-                    evtext = GetSeconds(TLP.Position, TLT[ActiveTL].Events[IndexEvent].Start);
+                    evtext = GetSeconds(TLT[ActiveTL].Events[IndexEvent].Start, TLT[ActiveTL].Events[IndexEvent].Finish);
+                    //evtext = GetSeconds(TLP.Position, TLT[ActiveTL].Events[IndexEvent].Start);
                     evtext = SecondsToString(evtext);
                     //cv.fillText(evtext, +LeftSec + 5, +top + +tmph / 2);
                     lentxt = cv.measureText(evtext).width;
@@ -1744,6 +1774,7 @@ function MyDrawDevEvents(cv, Width, Height, device, menu) {
             cv.fillStyle = Foreground1;
             cv.fillRect(0, +top, +LeftTxt, +tmph);
             cv.fillStyle = cfont;
+            
             if ((TLT[ActiveTL].Events[sev].Start <= TLP.Position &&
                     +TLT[ActiveTL].Events[sev].Finish >= TLP.Position)) {
                 cv.fillStyle = "red";
@@ -1921,23 +1952,26 @@ function MyDrawDevEvents(cv, Width, Height, device, menu) {
                 cv.fillStyle = Foreground1;
                 cv.fillRect(0, +top, +LeftTxt, +tmph);
                 cv.fillStyle = cfont;
-                if ((TLT[ActiveTL].Events[i].Start <= TLP.Position &&
-                        +TLT[ActiveTL].Events[i].Finish >= TLP.Position)) {
-                    evtext = GetSeconds(TLP.Position, TLT[ActiveTL].Events[i].Finish);
-                    evtext = SecondsToString(evtext);
-                } else {
-                    if (i < TLT[ActiveTL].Count) {
-                        if (i == TLT[ActiveTL].Count1) {
-                            evtext = GetSeconds(TLP.Position, TLT[ActiveTL].Events[i].Start);
-                            evtext = SecondsToString(evtext);
-                        } else {
-                            evtext = GetSeconds(TLP.Position, TLT[ActiveTL].Events[i].Start);//FramesToShortString(evdur);
-                            evtext = SecondsToString(evtext);
-                        }
-                    } else {
-                        evtext = "";
-                    }
-                }
+                evtext = GetSeconds(TLT[ActiveTL].Events[i].Start, TLT[ActiveTL].Events[i].Finish);
+                evtext = SecondsToString(evtext);
+                
+                //if ((TLT[ActiveTL].Events[i].Start <= TLP.Position &&
+                //        +TLT[ActiveTL].Events[i].Finish >= TLP.Position)) {
+                //    evtext = GetSeconds(TLP.Position, TLT[ActiveTL].Events[i].Finish);
+                //    evtext = SecondsToString(evtext);
+                //} else {
+                //    if (i < TLT[ActiveTL].Count) {
+                //        if (i == TLT[ActiveTL].Count1) {
+                //            evtext = GetSeconds(TLP.Position, TLT[ActiveTL].Events[i].Start);
+                //            evtext = SecondsToString(evtext);
+                //        } else {
+                //            evtext = GetSeconds(TLP.Position, TLT[ActiveTL].Events[i].Start);//FramesToShortString(evdur);
+                //            evtext = SecondsToString(evtext);
+                //        }
+                //    } else {
+                //        evtext = "";
+                //    }
+                //}
 
                 lentxt = cv.measureText(evtext).width;
                 if (lentxt < LeftTxt - LeftSec - 10) {

@@ -1,3 +1,4 @@
+
 unit uwebget;
 
 interface
@@ -39,6 +40,7 @@ type
         LastUpdate: int64;
         Refresh: int64;
     end;
+procedure WriteLog(FileName: string; log: widestring);
 
 procedure addVariableToJson(var json: tjsonobject; varName: string; varvalue: variant);
 
@@ -64,7 +66,6 @@ var
     server_port: string = '9085';
     server_addr: string = '127.0.0.1';
     LoadProject_active: boolean = true;
-    Need_Update_TimeLines: boolean = false;
     webredis_errlasttime: double = -1;
     webredis_connect_lasttime: double = -1;
     local_vlcMode: integer = -1;
@@ -232,6 +233,36 @@ begin
 
 end;
 
+procedure WriteLog(FileName: string; log: widestring);
+var
+  F: TextFile;
+  txt, FN: string;
+  Day, Month, Year: Word;
+begin
+  if not MakeLogging then
+    Exit;
+  try
+    DecodeDate(now, Year, Month, Day);
+    PathLog := extractfilepath(application.ExeName) + 'Log';
+    if not DirectoryExists(PathLog) then
+      ForceDirectories(PathLog);
+    FN := PathLog + '\' + trim(FileName) + TwoDigit(Day) + TwoDigit(Month) +
+      inttostr(Year) + '.log';
+    AssignFile(F, FN);
+    try
+      if FileExists(FN) then
+        Append(F)
+      else
+        Rewrite(F);
+      DateTimeToString(txt, 'dd.mm.yyyy hh:mm:ss:ms', now);
+      Writeln(F, txt + ' |' +  log);
+    except
+    end;
+  finally
+    CloseFile(F);
+  end
+end;
+
 function GetJsonStrFromServer(varName: ansistring): ansistring;
 var
     i, i1: integer;
@@ -266,9 +297,12 @@ var
     st: int64;
 begin
  {$IFDEF ARM_DIRECTOR}
+    WriteLog('updateTLOTLT','PutJsonStrToServer: Need_Update_TimeLines='+IntToStr(integer(Need_Update_TimeLines)));
     if Need_Update_TimeLines then PutTimeLinesToServer(0);
+
 {$ENDIF}
     webWriteLog('SETVAR>' + varName + ' = ' + system.copy(varvalue, 1, 60));
+    WriteLog('updateTLOTLT',' Execute set var '+varName );
 //    if not DevicesOn then
 //        exit;
 

@@ -62,7 +62,7 @@ Var
   dbld1, dbld2: Double; // Измерение времени выполнения модулей
   DrawTimeineInProgress: boolean = false; // Процесс рисования тайм линий
   LoadImageInProgress: boolean = false;
-
+  Need_Update_TimeLines: boolean = false;
   FWait: TFWaiting;
   FStart: TFrStartWindow;
   // Параметры синхронизации
@@ -403,6 +403,7 @@ function GetProtocolsParamEx(SrcStr: string; Number: integer): TListParam;
 procedure GetListParam(SrcStr: string; lst: tstrings);
 function WideIPAdress(stri : string) : string;
 function ShortIPAdress(stri : string) : string;
+function TLDuration : longint;
 
 // ===========SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSs=============================
 // ========================  Helpers для классов. Сохранения в JSON и загрузка ==
@@ -480,6 +481,8 @@ var
   jsarr : tjsonarray;
   jssave : tstringlist;
 begin
+  WriteLog('updateTLOTLT','PutGridTimeLinesToServer:request update TLO TLT');
+  Need_Update_TimeLines := true;
   if LoadProject_active then exit;
   jsarr := tjsonarray.create;
   jsSave := tstringlist.Create;
@@ -534,9 +537,11 @@ var
   jsarr : tjsonarray;
   jssave : tstringlist;
 begin
-  WriteLog('updateTLOTLT','request update TLO TLT');
+  WriteLog('updateTLOTLT', 'PutTimeLinesToServer: request update TLT');
   Need_Update_TimeLines := true;
   if LoadProject_active then exit;
+  Need_Update_TimeLines := false;
+
   WriteLog('updateTLOTLT','execute update TLO TLT');
 
   Need_Update_TimeLines := false;
@@ -576,8 +581,8 @@ var
   jsarr : tjsonarray;
   jssave : tstringlist;
 begin
-  WriteLog('updateTLOTLT','PUT TLT'+IntToStr(ind));
-
+  WriteLog('updateTLOTLT','Put_TLT_ToServer: request update TLT');
+  Need_Update_TimeLines := true;
   i := ind;
 
   TlTimeline := TTlTimeline(tlzone.timelines[i]);
@@ -599,7 +604,8 @@ var
   jsarr : tjsonarray;
   jssave : tstringlist;
 begin
-  WriteLog('updateTLOTLT','PUT TLO'+IntToStr(ind));
+  WriteLog('updateTLOTLT','Put_TLO_ToServer: request update TLO');
+  Need_Update_TimeLines := true;
   //if LoadProject_active then exit;
   i := ind;
   tlo := TTimelineOptions(Form1.GridTimeLines.Objects[0,i]);
@@ -635,6 +641,26 @@ end;
 // pse := pos(estr,stmp);
 // end;
 // end;
+
+function TLDuration : longint;
+var
+  i: integer;
+  dur, tmpdur : longint;
+begin
+  dur := 0;
+  for i := 0 to TLZone.Count-1 do begin
+    //dur := 0;
+    if TLZone.Timelines[i].Count>0 then begin
+      tmpdur :=TLZone.Timelines[i].Events[TLZone.Timelines[i].Count-1].Start
+              - TLParameters.Preroll;
+                   //+ Timelines[i].Events[Timelines[i].Count-1].SafeZone;
+      if tmpdur>dur then dur := tmpdur;
+    end;
+    if dur < TLParameters.Duration
+      then dur := TLParameters.Duration;
+  end;
+  result := dur;
+end;
 
 function set3chars(s : string) : string;
 begin
@@ -4905,7 +4931,7 @@ begin
           end
           else
           begin
-            rightlimit := TLParameters.Preroll + TLParameters.Duration +
+            rightlimit := TLParameters.Preroll + TLDuration +
               TLParameters.Postroll -
               (TLParameters.ScreenEndFrame - TLParameters.ScreenStartFrame) +
               TLParameters.MyCursor div TLParameters.FrameSize;
@@ -4950,7 +4976,7 @@ begin
           end
           else
           begin
-            rightlimit := TLParameters.Preroll + TLParameters.Duration +
+            rightlimit := TLParameters.Preroll + TLDuration +
               TLParameters.Postroll -
               (TLParameters.ScreenEndFrame - TLParameters.ScreenStartFrame) +
               TLParameters.MyCursor div TLParameters.FrameSize;

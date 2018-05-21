@@ -169,7 +169,7 @@ var
   JSONstr: string;
 begin
   jsontmp := SaveToJSONObject;
-  JSONstr := jsontmp.ToJSON;
+  JSONstr := jsontmp.Tostring;
   result := JSONstr;jsontmp.free;
 
 end;
@@ -245,7 +245,7 @@ var
   JSONstr: string;
 begin
   jsontmp := SaveToJSONObject;
-  JSONstr := jsontmp.ToJSON;
+  JSONstr := jsontmp.ToString;
   result := JSONstr;jsontmp.free;
 end;
 
@@ -461,8 +461,8 @@ var
   JSONstr: string;
 begin
   jsontmp := SaveToJSONObject;
-  JSONstr := jsontmp.ToJSON;
-  result := JSONstr;jsontmp.free;
+  JSONstr := jsontmp.tostring;
+  result := JSONstr;
 end;
 
 { TTLZoneJSON }

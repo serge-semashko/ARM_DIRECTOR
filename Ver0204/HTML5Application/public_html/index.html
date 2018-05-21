@@ -31,6 +31,33 @@ and open the template in the editor.
         <script src="scripts/webredis_client.js"></script>
         <meta http-equiv="Cache-Control" content="no-cache">
         <meta http-equiv="Pragma" content="no-cache">
+        <script>
+
+            $(document).ajaxComplete(function () {
+                alert("ajaxComplete");////
+            });
+
+            $('#gets2').ajaxStart(function () {
+                alert("ajaxStart");
+            });
+
+            $('#gets2').ajaxStop(function () {
+                alert("ajaxStop");
+            });
+
+            $('#gets2').ajaxSend(function () {
+                alert("ajaxSend");
+            });
+
+            $('#gets2').ajaxError(function () {
+                alert("ajaxError");
+            });
+
+            $('#gets2').ajaxSuccess(function () {
+                alert("ajaxSuccess");
+            });
+        </script>
+
     </head>
     <body>
         <div id="debuginfo" style="display:none">

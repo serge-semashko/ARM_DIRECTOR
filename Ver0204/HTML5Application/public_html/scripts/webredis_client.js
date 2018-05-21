@@ -60,29 +60,6 @@ var lastLSTtime = 0;
 var lastCTCtime = 0;
 function net_init() {
 //    setInterval(serial_net_process, 1);
-                $(document).ajaxComplete(function () {
-                    alert("ajaxComplete");////
-                });
-
-                $('#gets2').ajaxStart(function () {
-                    alert("ajaxStart");
-                });
-
-                $('#gets2').ajaxStop(function () {
-                    alert("ajaxStop");
-                });
-
-                $('#gets2').ajaxSend(function () {
-                    alert("ajaxSend");
-                });
-
-                $('#gets2').ajaxError(function () {
-                    alert("ajaxError");
-                });
-
-                $('#gets2').ajaxSuccess(function () {
-                    alert("ajaxSuccess");
-                });
 
     setInterval(async_net_process, 60);
 
@@ -135,10 +112,10 @@ function myAjax(url) {
             resp = "";
             resp = xhr.responseText.trim();
             var finpos = resp.indexOf(");");
-            resp = resp.substr(1, finpos-1);
-            console.log("ajax pure load start " + resp.substr(0,80));
-            console.log("ajax pure final  " + resp.substr(resp.length-80,resp.length+10));
-            
+            resp = resp.substr(1, finpos - 1);
+            console.log("ajax pure load start " + resp.substr(0, 80));
+            console.log("ajax pure final  " + resp.substr(resp.length - 80, resp.length + 10));
+
             var retobj = JSON.parse(resp);
             return  retobj;
         } else
@@ -222,9 +199,14 @@ function getTLO() {
             lastTLOtime = +t.time;
             processTLO = false;
             var select = document.getElementById("ActiveTL");
+            select.options.length = 0;
             for (var i = 0; i <= newTLO.length - 1; i++) {
                 addDropdownList("ActiveTL", i, newTLO[i].Name);
             }
+            if (select.options.length < ActiveTL - 1) {
+                ActiveTL = 0;
+            }
+            select.options.selectedIndex = ActiveTL;
         }
     } finally {
 

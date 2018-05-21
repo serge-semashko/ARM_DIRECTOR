@@ -785,7 +785,7 @@ begin
 
     if TLParameters.Finish = 0 then
       TLParameters.Finish := TLParameters.Preroll + TLParameters.Duration;
-    if TLParameters.Finish > (TLParameters.Preroll + TLParameters.Duration +
+    if TLParameters.Finish > (TLParameters.Preroll + TLDuration +
       TLParameters.Postroll) then
       TLParameters.Finish := TLParameters.Preroll + TLParameters.Duration;
     // Form1.lbMediaDuration.Caption:=framestostr(TLParameters.Finish - TLParameters.Start);
