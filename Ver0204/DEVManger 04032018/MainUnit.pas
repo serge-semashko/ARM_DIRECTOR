@@ -1207,7 +1207,8 @@ begin
         str2 := GetJsonStrFromServer('TLT[' + inttostr(i) + ']');
         if TLT_server_old[i] <> str2 then
         begin
-            TLT_server_changed[i] := true;;
+            TLT_server_changed[i] := true;
+            WriteLog('TLT','TLT'+IntToStr(i)+'='+str2);
             if TLT_server[i] = nil then
                 TLT_server[i] := TTlTimeline.Create;
             if not TLT_server[i].LoadFromJSONstr(str2) then

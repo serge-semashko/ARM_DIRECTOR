@@ -152,13 +152,17 @@ begin
         else
           SaveProject;
       end;
+      //ClearGridTimeLinesToServer(Form1.GridTimeLines);
     end;
+
     FNewProject.Edit1.Text := '';
     FNewProject.Memo1.Text := '';
     FNewProject.DateTimePicker1.DateTime := now + DeltaDateDelete;
   end
   else
   begin
+
+    //ClearGridTimeLinesToServer(Form1.GridTimeLines);
     FNewProject.Edit1.Text := pntlproj.GetText('ProjectName');
     // Form1.lbProjectName.Caption;
     FNewProject.Memo1.Text := pntlproj.GetText('CommentText');
@@ -186,7 +190,9 @@ begin
       GridClear(Form1.GridActPlayList, RowGridClips);
       GridClear(Form1.GridClips, RowGridClips);
       Form1.Label2.Caption := '';
+      ClearTLT_ToServer;
       LoadDefaultClipToPlayer;
+      Form1.GridLists.Repaint;
       TLZone.ClearZone;
     end;
     pntlproj.SetText('ProjectName', trim(FNewProject.Edit1.Text));

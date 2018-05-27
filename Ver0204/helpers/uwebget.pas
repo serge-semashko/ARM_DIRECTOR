@@ -103,6 +103,8 @@ begin
     if (tmpjSon <> nil) then begin
         tmpstr := tmpjSon.Value;
         tmpstr := AnsiReplaceStr(tmpstr, '#$%#$%', ' ');
+        tmpstr := AnsiReplaceStr(tmpstr, '\\', '\');
+        tmpstr := AnsiReplaceStr(tmpstr, '\"', '"');
 
         result := UTF8decode(tmpstr) ;
     end;
@@ -123,7 +125,15 @@ begin
     FormatSettings.DecimalSeparator := '.';
     vType := varType(varvalue);
     strValue := varvalue;
+     if (POS('\',STRVALUE)>0) then
+    begin
+      strValue := varvalue;
+
+    End;
+
     strValue := AnsiReplaceStr(strValue, ' ', '#$%#$%');
+    strValue := AnsiReplaceStr(strValue, '\', '\\');
+//    strValue := AnsiReplaceStr(strValue, '"', '\"');
     utf8val := stringOf(tencoding.UTF8.GetBytes(strValue));
     json.AddPair(varName, utf8val);
 end;
@@ -297,12 +307,15 @@ var
     st: int64;
 begin
  {$IFDEF ARM_DIRECTOR}
-    WriteLog('updateTLOTLT','PutJsonStrToServer: Need_Update_TimeLines='+IntToStr(integer(Need_Update_TimeLines)));
-    if Need_Update_TimeLines then PutTimeLinesToServer(0);
+
+    if Need_Update_TimeLines then
+    begin
+       WriteLog('updateTLOTLT','PutJsonStrToServer: Need_Update_TimeLines='+IntToStr(integer(Need_Update_TimeLines)));
+       PutTimeLinesToServer(0);
+    end;
 
 {$ENDIF}
     webWriteLog('SETVAR>' + varName + ' = ' + system.copy(varvalue, 1, 60));
-    WriteLog('updateTLOTLT',' Execute set var '+varName );
 //    if not DevicesOn then
 //        exit;
 

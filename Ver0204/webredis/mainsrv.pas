@@ -7,7 +7,8 @@ uses
     Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
     Dialogs, StdCtrls, Buttons, ExtCtrls, HTTPSend, blcksock, winsock, Synautil,
     strutils,
-//     system.json,
+
+     system.json,
      AppEvnts, Menus, inifiles, das_const,
     TeEngine, Series, TeeProcs, Chart, VclTee.TeeGDIPlus, System.Generics.Collections,
     mmsystem,web.win.sockets, zlibexapi,ZLIBEX;
@@ -1099,6 +1100,33 @@ begin
     resp := jreq + '(' + resp + ');';
     result := resp;
 end;
+procedure addVariableToJson(var json: tjsonobject; varName: string; varvalue: variant);
+var
+    teststr: ansistring;
+    List: TStringList;
+    numElement: integer;
+    utf8val: string;
+    tmpjSon: tjsonvalue;
+    retval: string;
+    strValue, s1: string;
+    vType: tvarType;
+    tmpInt: integer;
+begin
+    FormatSettings.DecimalSeparator := '.';
+    vType := varType(varvalue);
+    strValue := varvalue;
+     if (POS('\',STRVALUE)>0) then
+    begin
+      strValue := varvalue;
+
+    End;
+
+    strValue := AnsiReplaceStr(strValue, ' ', '#$%#$%');
+    strValue := AnsiReplaceStr(strValue, '\', '\\');
+//    strValue := AnsiReplaceStr(strValue, '"', '\"');
+    utf8val := stringOf(tencoding.UTF8.GetBytes(strValue));
+    json.AddPair(varName, utf8val);
+end;
 
 
 function MyHTTPProcessRequest(URI: string): AnsiString;
@@ -1111,6 +1139,9 @@ var
     ans_var :twebvar;
     stime : string;
     syst :TSystemTime;
+    testvar  : ansistring;
+    strvar, jsonvar  : ansistring;
+    tstjson : tjsonObject;
 
 begin
    webWriteLog('HTTP request='+uri);
@@ -1192,7 +1223,19 @@ begin
     GetSystemTime(syst);
     stime := IntToStr((syst.wHour+3)*3600*1000+syst.wMinute*60*1000+syst.wSecond*1000+syst.wMilliseconds);
 //    webWriteLog('HTTP request='+keyname+' Len orig='+inttostr(length(resp))+' len compressed='+inttostr(length(compressed_resp))+' compress='+floattostr(length(resp)/length(compressed_resp)));
-    resp := jreq + '({"sent":'+stime+',"time":'+vartime+', "varValue": ' + compressed_resp + '});';
+//    testvar := '';
+//    for i1 := 32 to 254 do testvar := testvar+chr(i1);
+//    tstjson := TJSONobject.Create;
+//    addVariableToJson(tstjson,'tst',testvar);
+//    tstjson.free;
+    strvar := tstjson.ToString;
+    resp := jreq
+         + '({"sent":'+ stime
+//         +',"test":'+strvar
+         +',"time":'+vartime
+         +', "varValue": ' + compressed_resp
+         + '});';
+
     result := resp;
 end;
 

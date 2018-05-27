@@ -410,6 +410,7 @@ function TLDuration : longint;
 // ==============================================================================
 Procedure LoadProject(mode : boolean; vs : integer);
 Procedure ClearGridTimeLinesToServer(GridTimeLines: tstringgrid);
+Procedure ClearTLT_ToServer;
 Procedure PutGridTimeLinesToServer(GridTimeLines: tstringgrid);
 Procedure PutTimeLinesToServer( vs : integer);
 Procedure Put_TLT_ToServer( ind : integer);
@@ -470,6 +471,30 @@ begin
   sleep(300);
 end;
 
+Procedure ClearTLT_ToServer;
+var
+  i: integer;
+  str1: ansistring;
+  str2: ansistring;
+  TLO: TTimeLineOptions;
+  TlTimeline :TTlTimeline;
+  sl : tstringlist;
+  tle : ansistring;
+  OLDdEVICEoN : BOOLEAN;
+begin
+  OLDdEVICEoN := DevicesOn;
+  DevicesOn := true;
+  PutJsonStrToServer('TLP','');
+  for I := 0 to 15 do
+  begin
+     PutJsonStrToServer('TLT['+IntToStr(i)+']','');
+  end;
+  PutJsonStrToServer('TLT', '');
+  DevicesOn := OLDdEVICEoN;
+  sleep(50);
+end;
+
+
 Procedure PutGridTimeLinesToServer(GridTimeLines: tstringgrid);
 var
   i: integer;
@@ -484,27 +509,28 @@ begin
   WriteLog('updateTLOTLT','PutGridTimeLinesToServer:request update TLO TLT');
   Need_Update_TimeLines := true;
   if LoadProject_active then exit;
-  jsarr := tjsonarray.create;
-  jsSave := tstringlist.Create;
+  WriteLog('updateTLOTLT','PutGridTimeLinesToServer:EXECUTE update TLO TLT');
+//  jsarr := tjsonarray.create;
+//  jsSave := tstringlist.Create;
   for I := 1 to GridTimeLines.RowCount - 1 do
   begin
      tlo := TTimelineOptions(GridTimeLines.Objects[0,i]);
      if tlo = nil  then continue;
-     jsarr.add(tlo.SaveToJSONObject);
+//     jsarr.add(tlo.SaveToJSONObject);
      str1:=TLO.SaveToJSONStr;
      PutJsonStrToServer('TLO['+IntToStr(i)+']',str1);
   end;
 //  jsSave.Clear;
 //  jsSave.add(jsarr.ToString);
 //  jsSave.SaveToFile('g:\home\tlo.js');
-  str1:=jsarr.ToString;
-  PutJsonStrToServer('TLO',str1);
+//  str1:=jsarr.ToString;
+//  PutJsonStrToServer('TLO',str1);
      str1:=TLParameters.SaveToJSONStr;
      PutJsonStrToServer('TLP',str1);
     //PutJsonStrToServer('TLEDITOR', TLZone.TLEditor.SaveToJSONstr);
 
-  jsarr.free;
-  jsarr := tjsonarray.create;
+//  jsarr.free;
+//  jsarr := tjsonarray.create;
 
   for I := 0 to tlzone.count-1 do
   begin
@@ -512,16 +538,16 @@ begin
      if TlTimeline = nil  then continue;
      str1:=TlTimeline.SaveToJSONStr;
      PutJsonStrToServer('TLT['+IntToStr(i)+']',str1);
-     jsarr.add(TlTimeline.SaveToJSONObject);
+//     jsarr.add(TlTimeline.SaveToJSONObject);
   end;
 //  jsSave.Clear;
 //  jsSave.add(jsarr.ToString);
 //  jsSave.SaveToFile('g:\home\tlt.js');
-  str1 := jsarr.ToString;
-  PutJsonStrToServer('TLT',str1);
-
-  jsarr.Free;
-  jssave.free;
+//  str1 := jsarr.ToString;
+//  PutJsonStrToServer('TLT',str1);
+//
+//  jsarr.Free;
+//  jssave.free;
 
 end;
 
@@ -549,21 +575,21 @@ begin
      str1:=TLParameters.SaveToJSONStr;
      PutJsonStrToServer('TLP',str1);
     //PutJsonStrToServer('TLEDITOR', TLZone.TLEditor.SaveToJSONstr);
-  jsarr := tjsonarray.create;
-  jsSave := tstringlist.Create;
+//  jsarr := tjsonarray.create;
+//  jsSave := tstringlist.Create;
   for I := 0 to tlzone.count-1 do
   begin
      TlTimeline := TTlTimeline(tlzone.timelines[i]);
      if TlTimeline = nil  then continue;
      str1:=TlTimeline.SaveToJSONStr;
      PutJsonStrToServer('TLT['+IntToStr(i)+']',str1);
-     jsarr.add(TlTimeline.SaveToJSONObject);
+//     jsarr.add(TlTimeline.SaveToJSONObject);
   end;
-   str1 := jsarr.ToString;
-  PutJsonStrToServer('TLT',str1);
+//   str1 := jsarr.ToString;
+//  PutJsonStrToServer('TLT',str1);
 
-  jsarr.Free;
-  jssave.free;
+////  jsarr.Free;
+//  jssave.free;
 
 end;
 
@@ -3529,6 +3555,8 @@ begin
               MyPanelAir.AirDevices.Init(form1.ImgDevices.Canvas, 1);
               MyPanelAir.SetValues;
             end;
+            ClearGridTimeLinesToServer(Form1.GridTimeLines);
+            PutGridTimeLinesToServer(Form1.GridTimeLines);
           end;
         2:
           begin

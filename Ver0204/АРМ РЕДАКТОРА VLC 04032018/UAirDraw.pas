@@ -131,7 +131,7 @@ var
 
 implementation
 
-uses umain, ucommon, ugrtimelines, utimeline, udrawtimelines, uwebserv,uwebget,
+uses umain, ucommon, ugrtimelines, utimeline, udrawtimelines, uwebget,
   umyfiles, system.json;
 
 Function GetDeviceValueS(nom: integer): longint;
@@ -1514,7 +1514,7 @@ begin
           end;
           pred := TLEditor.Events[i].Finish;
         end;
-        SendHTTPEvents;
+        //SendHTTPEvents;
         exit;
       end;
 
@@ -1531,8 +1531,8 @@ begin
         end;
         if TLEditor.Count <= 0 then
         begin
-          SendHTTPDevice;
-          SendHTTPEvents;
+          //SendHTTPDevice;
+          //SendHTTPEvents;
           exit;
         end;
         if TLParameters.Position < TLEditor.Events[0].Start then
@@ -1562,8 +1562,8 @@ begin
               j := j + 1;
             end;
           end;
-          SendHTTPDevice;
-          SendHTTPEvents;
+          //SendHTTPDevice;
+          //SendHTTPEvents;
           exit;
         end;
         For i := 0 to TLEditor.Count - 1 do
@@ -1626,8 +1626,8 @@ begin
             AirDevices.Devices[ps].Value := GetDeviceValueS(i);
           end;
         end;
-        SendHTTPDevice;
-        SendHTTPEvents;
+        //SendHTTPDevice;
+        //SendHTTPEvents;
       end;
     end;
   except

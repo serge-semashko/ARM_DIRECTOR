@@ -1,4 +1,4 @@
-﻿/* 
+/* 
   * Created by Zavialov on 14.01.2018.
  */
 
@@ -485,6 +485,9 @@ function MyDrawEditor(cv, Width, Height, Top, Intrvl, Hght) {
     if (TLT[ActiveTL].Count > 0) {
       fev = -1;
       sev = 0;
+      if (TLT[ActiveTL].Count == 1) {
+        fev = sev;
+      };
       for (var i=0; i<TLT[ActiveTL].Count-1; i++) {
         if (TLT[ActiveTL].Events[i].Finish > StartFrm){
           sev = i;
@@ -500,8 +503,8 @@ function MyDrawEditor(cv, Width, Height, Top, Intrvl, Hght) {
       } 
       
       for (var i=sev; i<=fev; i++) {
-        evColor = rgbFromNum(TLT[ActiveTL].Events[i].Color);
-        evsmoothcolor = smoothcolor(TLT[ActiveTL].Events[i].Color, 32);
+        evColor = rgbFromNum(TLO[ActiveTL].TextColor);
+        evsmoothcolor = smoothcolor(TLO[ActiveTL].TextColor, 32);
         evFontColor = rgbFromNum(TLT[ActiveTL].Events[i].FontColor);
         evFontSize = TLT[ActiveTL].Events[i].FontSize;
         evFontSizeSub = TLT[ActiveTL].Events[i].FontSizeSub;
@@ -960,7 +963,10 @@ function MyDrawTimeline(cv, Width, Height, PosTL, Top, Hght) {
   } else if (tptl == 1) {
     if (TLT[PosTL].Count > 0) {
       fev = -1;
-      sev = 0;
+      sev = 0; 
+      if (TLT[PosTL].Count == 1) {
+        fev = sev;
+      };
       for (var i=0; i<TLT[PosTL].Count-1; i++) {
         if (TLT[PosTL].Events[i].Finish > StartFrm){
           sev = i;
@@ -976,8 +982,8 @@ function MyDrawTimeline(cv, Width, Height, PosTL, Top, Hght) {
       } 
       
       for (var i=sev; i<=fev; i++) {
-        evColor = rgbFromNum(TLT[PosTL].Events[i].Color);
-        evsmoothcolor = smoothcolor(TLT[PosTL].Events[i].Color, 32);
+        evColor = rgbFromNum(TLO[PosTL].TextColor);
+        evsmoothcolor = smoothcolor(TLO[PosTL].TextColor, 32);
         evFontColor = rgbFromNum(TLT[PosTL].Events[i].FontColor);
         evFontSize = TLT[PosTL].Events[i].FontSize;
         evFontSizeSub = TLT[PosTL].Events[i].FontSizeSub;

@@ -169,7 +169,7 @@ var
   JSONstr: string;
 begin
   jsontmp := SaveToJSONObject;
-  JSONstr := jsontmp.Tostring;
+  JSONstr := jsontmp.ToString;
   result := JSONstr;jsontmp.free;
 
 end;
@@ -245,7 +245,7 @@ var
   JSONstr: string;
 begin
   jsontmp := SaveToJSONObject;
-  JSONstr := jsontmp.ToString;
+  JSONstr := jsontmp.toString;
   result := JSONstr;jsontmp.free;
 end;
 
@@ -348,7 +348,7 @@ var
   JSONstr: string;
 begin
   jsontmp := SaveToJSONObject;
-  JSONstr := jsontmp.tostring;
+  JSONstr := jsontmp.toString;
   result := JSONstr;jsontmp.free;
 end;
 
@@ -461,7 +461,7 @@ var
   JSONstr: string;
 begin
   jsontmp := SaveToJSONObject;
-  JSONstr := jsontmp.tostring;
+  JSONstr := jsontmp.toString;
   result := JSONstr;
 end;
 
@@ -569,6 +569,6 @@ var
   JSONstr: string;
 begin
   jsontmp := SaveToJSONObject;
-  JSONstr := jsontmp.tostring;
+  JSONstr := jsontmp.toString;
   result := JSONstr;jsontmp.free;
 end;

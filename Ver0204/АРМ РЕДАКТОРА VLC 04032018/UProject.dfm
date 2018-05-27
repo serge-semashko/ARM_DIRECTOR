@@ -99,7 +99,7 @@ object FNewProject: TFNewProject
     Left = 145
     Top = 16
     Width = 315
-    Height = 24
+    Height = 21
     Ctl3D = True
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText

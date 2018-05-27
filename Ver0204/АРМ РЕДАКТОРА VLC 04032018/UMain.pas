@@ -190,6 +190,7 @@ type
     imgeyeop: TImage;
     imgeyecl: TImage;
     imgPnTimeCode: TImage;
+    lbMVSGroup: TLabel;
     procedure GridListsMouseUpPlaylists(X, Y: Integer);
     // procedure GridListsMouseUpTextTemplates(X, Y: Integer);
     // procedure GridListsMouseUpGRTemplates(X, Y: Integer);
@@ -461,7 +462,7 @@ implementation
 uses UInitForms, UGrid, UProject, UIMGButtons, UDelGridRow, UTimeline,
   UDrawTimelines, uimportfiles, uactplaylist, ugrtimelines, uwaiting, umyevents,
   uplaylists, UMyFiles, UTextTemplate, UMyMessage, UImageTemplate, uAirDraw,
-  USubtitrs, USetTemplate, ugridsort, uwebserv, ulkjson, uMyMediaSwitcher,
+  USubtitrs, USetTemplate, ugridsort, ulkjson, uMyMediaSwitcher,
   ushifttl, ushortnum, umyinifile, uevswapbuffer, uLock, umyundo, UlistUsers,
   umyltc, usettc, UMyTextTemplate, umymenu, UStartWindow, ufrhotkeys,
   UMyOptions, udevmanagers,

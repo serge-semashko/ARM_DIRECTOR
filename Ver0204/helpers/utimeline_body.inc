@@ -104,7 +104,7 @@ var
   JSONstr: string;
 begin
   jsontmp := SaveToJSONObject;
-  JSONstr := jsontmp.tostring;
+  JSONstr := jsontmp.toString;
   result := JSONstr;
 end;
 

@@ -469,7 +469,7 @@ function MyDrawEvents(cv, Width, Height, menu) {
     var evcomment, wdthev, evdur, tmpdur, phrsec;
 
     if (+tptl == 0) {
-        if (TLT[ActiveTL].Count > 0) {
+        if (+TLT[ActiveTL].Count > 0) {
             LastEvent = CurrEvent + CountEvents;
             if (LastEvent > TLT[ActiveTL].Count - 1) {
                 LastEvent = TLT[ActiveTL].Count - 1;
@@ -591,9 +591,9 @@ function MyDrawEvents(cv, Width, Height, menu) {
                 lastTimeToStart = TLP.TimeToStart;
             } else {
                 if (phrfrms>=35) {
-                    if (CurrEvent < TLT[ActiveTL].Count - 1) {
+                    if (+CurrEvent < +TLT[ActiveTL].Count - 1) {
                         var kamera = TLT[ActiveTL].Events[CurrEvent + 1].Rows[0].Phrases[0].Data;
-                        if (CurrEvent !== OldEvent) {
+                        if (+CurrEvent !== +OldEvent) {
                             //files = [];
                             if (+phrdur >= 10) {
                               PhraseFactor = 1.25;  
@@ -702,8 +702,8 @@ function MyDrawEvents(cv, Width, Height, menu) {
                 myTextDraw(cv, evps, 0, 10, LeftDev - 10, top, tmph);
             }
 
-            if (TLT[ActiveTL].Events[CurrEvent].Start <= TLP.Position &&
-                    +TLT[ActiveTL].Events[CurrEvent].Start + +evSafeZone >= TLP.Position) {
+            if (+TLT[ActiveTL].Events[CurrEvent].Start <= +TLP.Position &&
+                    +TLT[ActiveTL].Events[CurrEvent].Start + +evSafeZone >= +TLP.Position) {
                 cv.fillStyle = "rgba(255,255,255,.65)";
                 tmpdur = +fnshev - strtev - 1;//LeftTxt + +TLP.Start;
                 if (tmpdur < 0) {
@@ -946,18 +946,24 @@ function MyDrawEvents(cv, Width, Height, menu) {
         if (TLT[ActiveTL].Count > 0) {
             fev = -1;
             sev = 0;
-            for (var i = 0; i < TLT[ActiveTL].Count - 1; i++) {
+            
+            for (var i = 0; i < +TLT[ActiveTL].Count; i++) {
                 if (+TLT[ActiveTL].Events[i].Finish > +TLP.Position) {
                     sev = i;
                     break;
                 }
             }
             fev = sev + CountEvents;
-            if (fev > TLT[ActiveTL].Count - 1) {
+            if (+fev > +TLT[ActiveTL].Count - 1) {
                 fev = TLT[ActiveTL].Count - 1
             }
+            
+            if (+TLP.Position > +TLT[ActiveTL].Events[fev].Finish) return;
 
             top = interval;
+            if (menu) {
+                top = top + HeightMenu / 3;
+            }
 //=============================================================================      
             evColor = rgbFromNum(TLT[ActiveTL].Events[sev].Color);
             evFontName = TLT[ActiveTL].Events[sev].FontName;
@@ -1005,8 +1011,8 @@ function MyDrawEvents(cv, Width, Height, menu) {
             cv.fillStyle = Foreground1;
             cv.fillRect(0, +top, +LeftTxt, +tmph);
             cv.fillStyle = cfont;
-            if ((TLT[ActiveTL].Events[sev].Start <= TLP.Position &&
-                    +TLT[ActiveTL].Events[sev].Finish >= TLP.Position)) {
+            if ((TLT[ActiveTL].Events[sev].Start <= +TLP.Position &&
+                    +TLT[ActiveTL].Events[sev].Finish >= +TLP.Position)) {
                 cv.fillStyle = "red";
                 evtext = GetSeconds(TLP.Position, TLT[ActiveTL].Events[sev].Finish);
                 evtext = SecondsToString(evtext);
@@ -1087,8 +1093,8 @@ function MyDrawEvents(cv, Width, Height, menu) {
 
 
 
-            if (TLT[ActiveTL].Events[sev].Start <= TLP.Position &&
-                    +TLT[ActiveTL].Events[sev].Start + +evSafeZone >= TLP.Position) {
+            if (+TLT[ActiveTL].Events[sev].Start <= +TLP.Position &&
+                    +TLT[ActiveTL].Events[sev].Start + +evSafeZone >= +TLP.Position) {
                 cv.fillStyle = "rgba(255,255,255,.65)";
                 tmpdur = +fnshev - strtev - 1;//LeftTxt + +TLP.Start;
                 if (tmpdur < 0) {
@@ -1710,23 +1716,29 @@ function MyDrawDevEvents(cv, Width, Height, device, menu) {
             }
         }
     } else if (+tptl == 1) {
-        var FinishFrm = TLP.Position + ScreenFrm;
+        var FinishFrm = +TLP.Position + +ScreenFrm;
         var fev, sev;
-        if (TLT[ActiveTL].Count > 0) {
+        if (+TLT[ActiveTL].Count > 0) {
             fev = -1;
             sev = 0;
-            for (var i = 0; i < TLT[ActiveTL].Count - 1; i++) {
+            for (var i = 0; i <= +TLT[ActiveTL].Count - 1; i++) {
                 if (+TLT[ActiveTL].Events[i].Finish > +TLP.Position) {
                     sev = i;
                     break;
                 }
             }
-            fev = sev + CountEvents;
-            if (fev > TLT[ActiveTL].Count - 1) {
+            fev = +sev + +CountEvents;
+            if (+fev > +TLT[ActiveTL].Count - 1) {
                 fev = TLT[ActiveTL].Count - 1
             }
+            
+            if (+TLP.Position > +TLT[ActiveTL].Events[fev].Finish) return;
 
+            //top = interval;
             top = interval;
+            if (menu) {
+                top = top + HeightMenu / 3;
+            }
 //=============================================================================      
             evColor = rgbFromNum(TLT[ActiveTL].Events[sev].Color);
             evFontName = TLT[ActiveTL].Events[sev].FontName;
@@ -1775,13 +1787,13 @@ function MyDrawDevEvents(cv, Width, Height, device, menu) {
             cv.fillRect(0, +top, +LeftTxt, +tmph);
             cv.fillStyle = cfont;
             
-            if ((TLT[ActiveTL].Events[sev].Start <= TLP.Position &&
-                    +TLT[ActiveTL].Events[sev].Finish >= TLP.Position)) {
+            if ((+TLT[ActiveTL].Events[sev].Start <= +TLP.Position &&
+                    +TLT[ActiveTL].Events[sev].Finish >= +TLP.Position)) {
                 cv.fillStyle = "red";
                 evtext = GetSeconds(TLP.Position, TLT[ActiveTL].Events[sev].Finish);
                 evtext = SecondsToString(evtext);
             } else {
-                if (sev < TLT[ActiveTL].Count) {
+                if (+sev < +TLT[ActiveTL].Count) {
                     //if (sev == TLT[ActiveTL].Count) {
                     evtext = GetSeconds(TLP.Position, TLT[ActiveTL].Events[sev].Start);
                     evtext = SecondsToString(evtext);

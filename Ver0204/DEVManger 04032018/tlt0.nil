@@ -1,0 +1,588 @@
+{"IDTimeline": "1", "TypeTL": "0", "Block": "False",
+    "Status": "4",
+    "Rect": {
+        "Top": "162",
+        "Bottom": "197",
+        "Left": "0",
+        "Right": "36952"
+    },
+    "Count": "49",
+    "Events": 
+            [{
+            "IDEvent": "-1",
+            "Color": "53083",
+            "FontColor": "16777215",
+            "FontSize": "14",
+            "FontSizeSub": "10",
+            "FontName": "Arial",
+            "SafeZone": "10",
+            "Editing": "False",
+            "Select": "False",
+            "Start": "338",
+            "Finish": "855",
+            "Count": "4",
+            "Rows0": {
+                "Top": "5",
+                "Bottom": "32",
+                "Count": "2",
+                "Phrases0": {
+                    "Name": "Device",
+                    "Text": "1",
+                    "Data": "1",
+                    "Data": "1",
+                    "Command": "",
+                    "Tag": "0",
+                    "Rect": {
+                        "Top": "5",
+                        "Bottom": "32",
+                        "Left": "15",
+                        "Right": "28"
+                    },
+                    "Select": "False",
+                    "WorkData": "Device",
+                    "ListName": "",
+                    "Maxlength": "8",
+                    "Visible": "True"
+                },
+                "Phrases1": {
+                    "Name": "Text",
+                    "Text": "1.5#$%#$%роста\#$%#$%облет#$%#$%справа#$%#$%налево#$%#$%до#$%#$%профиля,#$%#$%наезд",
+                    "Data": "0",
+                    "Data": "0",
+                    "Command": "",
+                    "Tag": "0",
+                    "Rect": {
+                        "Top": "5",
+                        "Bottom": "32",
+                        "Left": "40",
+                        "Right": "582"
+                    },
+                    "Select": "False",
+                    "WorkData": "Template",
+                    "ListName": "",
+                    "Maxlength": "255",
+                    "Visible": "True"
+                },
+                "Phrases": [{
+                        "Name": "Device",
+                        "Text": "1",
+                        "Data": "1",
+                        "Data": "1",
+                        "Command": "",
+                        "Tag": "0",
+                        "Rect": {
+                            "Top": "5",
+                            "Bottom": "32",
+                            "Left": "15",
+                            "Right": "28"
+                        },
+                        "Select": "False",
+                        "WorkData": "Device",
+                        "ListName": "",
+                        "Maxlength": "8",
+                        "Visible": "True"
+                    }, {
+                        "Name": "Text",
+                        "Text": "1.5#$%#$%роста\#$%#$%облет#$%#$%справа#$%#$%налево#$%#$%до#$%#$%профиля,#$%#$%наезд",
+                        "Data": "0",
+                        "Data": "0",
+                        "Command": "",
+                        "Tag": "0",
+                        "Rect": {
+                            "Top": "5",
+                            "Bottom": "32",
+                            "Left": "40",
+                            "Right": "582"
+                        },
+                        "Select": "False",
+                        "WorkData": "Template",
+                        "ListName": "",
+                        "Maxlength": "255",
+                        "Visible": "True"
+                    }]
+            },
+            "Rows1": {
+                "Top": "34",
+                "Bottom": "55",
+                "Count": "3",
+                "Phrases0": {
+                    "Name": "Command",
+                    "Text": "Cut",
+                    "Data": "0",
+                    "Data": "0",
+                    "Command": "",
+                    "Tag": "0",
+                    "Rect": {
+                        "Top": "34",
+                        "Bottom": "55",
+                        "Left": "15",
+                        "Right": "40"
+                    },
+                    "Select": "False",
+                    "WorkData": "Text",
+                    "ListName": "GVG100Command",
+                    "Maxlength": "10",
+                    "Visible": "True"
+                },
+                "Phrases1": {
+                    "Name": "Duration",
+                    "Text": "",
+                    "Data": "0",
+                    "Data": "0",
+                    "Command": "",
+                    "Tag": "0",
+                    "Rect": {
+                        "Top": "34",
+                        "Bottom": "55",
+                        "Left": "52",
+                        "Right": "97"
+                    },
+                    "Select": "False",
+                    "WorkData": "ShortTimeCode",
+                    "ListName": "",
+                    "Maxlength": "5",
+                    "Visible": "False"
+                },
+                "Phrases2": {
+                    "Name": "Set",
+                    "Text": "",
+                    "Data": "0",
+                    "Data": "0",
+                    "Command": "",
+                    "Tag": "0",
+                    "Rect": {
+                        "Top": "34",
+                        "Bottom": "55",
+                        "Left": "109",
+                        "Right": "154"
+                    },
+                    "Select": "False",
+                    "WorkData": "Data",
+                    "ListName": "",
+                    "Maxlength": "5",
+                    "Visible": "False"
+                },
+                "Phrases": [{
+                        "Name": "Command",
+                        "Text": "Cut",
+                        "Data": "0",
+                        "Data": "0",
+                        "Command": "",
+                        "Tag": "0",
+                        "Rect": {
+                            "Top": "34",
+                            "Bottom": "55",
+                            "Left": "15",
+                            "Right": "40"
+                        },
+                        "Select": "False",
+                        "WorkData": "Text",
+                        "ListName": "GVG100Command",
+                        "Maxlength": "10",
+                        "Visible": "True"
+                    }, {
+                        "Name": "Duration",
+                        "Text": "",
+                        "Data": "0",
+                        "Data": "0",
+                        "Command": "",
+                        "Tag": "0",
+                        "Rect": {
+                            "Top": "34",
+                            "Bottom": "55",
+                            "Left": "52",
+                            "Right": "97"
+                        },
+                        "Select": "False",
+                        "WorkData": "ShortTimeCode",
+                        "ListName": "",
+                        "Maxlength": "5",
+                        "Visible": "False"
+                    }, {
+                        "Name": "Set",
+                        "Text": "",
+                        "Data": "0",
+                        "Data": "0",
+                        "Command": "",
+                        "Tag": "0",
+                        "Rect": {
+                            "Top": "34",
+                            "Bottom": "55",
+                            "Left": "109",
+                            "Right": "154"
+                        },
+                        "Select": "False",
+                        "WorkData": "Data",
+                        "ListName": "",
+                        "Maxlength": "5",
+                        "Visible": "False"
+                    }]
+            },
+            "Rows2": {
+                "Top": "56",
+                "Bottom": "77",
+                "Count": "1",
+                "Phrases0": {
+                    "Name": "ShortNum",
+                    "Text": "",
+                    "Data": "0",
+                    "Data": "0",
+                    "Command": "",
+                    "Tag": "0",
+                    "Rect": {
+                        "Top": "56",
+                        "Bottom": "77",
+                        "Left": "15",
+                        "Right": "105"
+                    },
+                    "Select": "False",
+                    "WorkData": "Text",
+                    "ListName": "",
+                    "Maxlength": "10",
+                    "Visible": "True"
+                },
+                "Phrases": [{
+                        "Name": "ShortNum",
+                        "Text": "",
+                        "Data": "0",
+                        "Data": "0",
+                        "Command": "",
+                        "Tag": "0",
+                        "Rect": {
+                            "Top": "56",
+                            "Bottom": "77",
+                            "Left": "15",
+                            "Right": "105"
+                        },
+                        "Select": "False",
+                        "WorkData": "Text",
+                        "ListName": "",
+                        "Maxlength": "10",
+                        "Visible": "True"
+                    }]
+            },
+            "Rows3": {
+                "Top": "78",
+                "Bottom": "99",
+                "Count": "1",
+                "Phrases0": {
+                    "Name": "Comment",
+                    "Text": "",
+                    "Data": "0",
+                    "Data": "0",
+                    "Command": "",
+                    "Tag": "0",
+                    "Rect": {
+                        "Top": "78",
+                        "Bottom": "99",
+                        "Left": "15",
+                        "Right": "9015"
+                    },
+                    "Select": "False",
+                    "WorkData": "Template",
+                    "ListName": "",
+                    "Maxlength": "1000",
+                    "Visible": "True"
+                },
+                "Phrases": [{
+                        "Name": "Comment",
+                        "Text": "",
+                        "Data": "0",
+                        "Data": "0",
+                        "Command": "",
+                        "Tag": "0",
+                        "Rect": {
+                            "Top": "78",
+                            "Bottom": "99",
+                            "Left": "15",
+                            "Right": "9015"
+                        },
+                        "Select": "False",
+                        "WorkData": "Template",
+                        "ListName": "",
+                        "Maxlength": "1000",
+                        "Visible": "True"
+                    }]
+            },
+            "Rows": [{
+                    "Top": "5",
+                    "Bottom": "32",
+                    "Count": "2",
+                    "Phrases0": {
+                        "Name": "Device",
+                        "Text": "1",
+                        "Data": "1",
+                        "Data": "1",
+                        "Command": "",
+                        "Tag": "0",
+                        "Rect": {
+                            "Top": "5",
+                            "Bottom": "32",
+                            "Left": "15",
+                            "Right": "28"
+                        },
+                        "Select": "False",
+                        "WorkData": "Device",
+                        "ListName": "",
+                        "Maxlength": "8",
+                        "Visible": "True"
+                    },
+                    "Phrases1": {
+                        "Name": "Text",
+                        "Text": "1.5#$%#$%роста\#$%#$%облет#$%#$%справа#$%#$%налево#$%#$%до#$%#$%профиля,#$%#$%наезд",
+                        "Data": "0",
+                        "Data": "0",
+                        "Command": "",
+                        "Tag": "0",
+                        "Rect": {
+                            "Top": "5",
+                            "Bottom": "32",
+                            "Left": "40",
+                            "Right": "582"
+                        },
+                        "Select": "False",
+                        "WorkData": "Template",
+                        "ListName": "",
+                        "Maxlength": "255",
+                        "Visible": "True"
+                    },
+                    "Phrases": [{
+                            "Name": "Device",
+                            "Text": "1",
+                            "Data": "1",
+                            "Data": "1",
+                            "Command": "",
+                            "Tag": "0",
+                            "Rect": {
+                                "Top": "5",
+                                "Bottom": "32",
+                                "Left": "15",
+                                "Right": "28"
+                            },
+                            "Select": "False",
+                            "WorkData": "Device",
+                            "ListName": "",
+                            "Maxlength": "8",
+                            "Visible": "True"
+                        }, {
+                            "Name": "Text",
+                            "Text": "1.5#$%#$%роста\#$%#$%облет#$%#$%справа#$%#$%налево#$%#$%до#$%#$%профиля,#$%#$%наезд",
+                            "Data": "0",
+                            "Data": "0",
+                            "Command": "",
+                            "Tag": "0",
+                            "Rect": {
+                                "Top": "5",
+                                "Bottom": "32",
+                                "Left": "40",
+                                "Right": "582"
+                            },
+                            "Select": "False",
+                            "WorkData": "Template",
+                            "ListName": "",
+                            "Maxlength": "255",
+                            "Visible": "True"
+                        }]
+                }, {
+                    "Top": "34",
+                    "Bottom": "55",
+                    "Count": "3",
+                    "Phrases0": {
+                        "Name": "Command",
+                        "Text": "Cut",
+                        "Data": "0",
+                        "Data": "0",
+                        "Command": "",
+                        "Tag": "0",
+                        "Rect": {
+                            "Top": "34",
+                            "Bottom": "55",
+                            "Left": "15",
+                            "Right": "40"
+                        },
+                        "Select": "False",
+                        "WorkData": "Text",
+                        "ListName": "GVG100Command",
+                        "Maxlength": "10",
+                        "Visible": "True"
+                    },
+                    "Phrases1": {
+                        "Name": "Duration",
+                        "Text": "",
+                        "Data": "0",
+                        "Data": "0",
+                        "Command": "",
+                        "Tag": "0",
+                        "Rect": {
+                            "Top": "34",
+                            "Bottom": "55",
+                            "Left": "52",
+                            "Right": "97"
+                        },
+                        "Select": "False",
+                        "WorkData": "ShortTimeCode",
+                        "ListName": "",
+                        "Maxlength": "5",
+                        "Visible": "False"
+                    },
+                    "Phrases2": {
+                        "Name": "Set",
+                        "Text": "",
+                        "Data": "0",
+                        "Data": "0",
+                        "Command": "",
+                        "Tag": "0",
+                        "Rect": {
+                            "Top": "34",
+                            "Bottom": "55",
+                            "Left": "109",
+                            "Right": "154"
+                        },
+                        "Select": "False",
+                        "WorkData": "Data",
+                        "ListName": "",
+                        "Maxlength": "5",
+                        "Visible": "False"
+                    },
+                    "Phrases": [{
+                            "Name": "Command",
+                            "Text": "Cut",
+                            "Data": "0",
+                            "Data": "0",
+                            "Command": "",
+                            "Tag": "0",
+                            "Rect": {
+                                "Top": "34",
+                                "Bottom": "55",
+                                "Left": "15",
+                                "Right": "40"
+                            },
+                            "Select": "False",
+                            "WorkData": "Text",
+                            "ListName": "GVG100Command",
+                            "Maxlength": "10",
+                            "Visible": "True"
+                        }, {
+                            "Name": "Duration",
+                            "Text": "",
+                            "Data": "0",
+                            "Data": "0",
+                            "Command": "",
+                            "Tag": "0",
+                            "Rect": {
+                                "Top": "34",
+                                "Bottom": "55",
+                                "Left": "52",
+                                "Right": "97"
+                            },
+                            "Select": "False",
+                            "WorkData": "ShortTimeCode",
+                            "ListName": "",
+                            "Maxlength": "5",
+                            "Visible": "False"
+                        }, {
+                            "Name": "Set",
+                            "Text": "",
+                            "Data": "0",
+                            "Data": "0",
+                            "Command": "",
+                            "Tag": "0",
+                            "Rect": {
+                                "Top": "34",
+                                "Bottom": "55",
+                                "Left": "109",
+                                "Right": "154"
+                            },
+                            "Select": "False",
+                            "WorkData": "Data",
+                            "ListName": "",
+                            "Maxlength": "5",
+                            "Visible": "False"
+                        }]
+                }, {
+                    "Top": "56",
+                    "Bottom": "77",
+                    "Count": "1",
+                    "Phrases0": {
+                        "Name": "ShortNum",
+                        "Text": "",
+                        "Data": "0",
+                        "Data": "0",
+                        "Command": "",
+                        "Tag": "0",
+                        "Rect": {
+                            "Top": "56",
+                            "Bottom": "77",
+                            "Left": "15",
+                            "Right": "105"
+                        },
+                        "Select": "False",
+                        "WorkData": "Text",
+                        "ListName": "",
+                        "Maxlength": "10",
+                        "Visible": "True"
+                    },
+                    "Phrases": [{
+                            "Name": "ShortNum",
+                            "Text": "",
+                            "Data": "0",
+                            "Data": "0",
+                            "Command": "",
+                            "Tag": "0",
+                            "Rect": {
+                                "Top": "56",
+                                "Bottom": "77",
+                                "Left": "15",
+                                "Right": "105"
+                            },
+                            "Select": "False",
+                            "WorkData": "Text",
+                            "ListName": "",
+                            "Maxlength": "10",
+                            "Visible": "True"
+                        }]
+                }, {
+                    "Top": "78",
+                    "Bottom": "99",
+                    "Count": "1",
+                    "Phrases0": {
+                        "Name": "Comment",
+                        "Text": "",
+                        "Data": "0",
+                        "Data": "0",
+                        "Command": "",
+                        "Tag": "0",
+                        "Rect": {
+                            "Top": "78",
+                            "Bottom": "99",
+                            "Left": "15",
+                            "Right": "9015"
+                        },
+                        "Select": "False",
+                        "WorkData": "Template",
+                        "ListName": "",
+                        "Maxlength": "1000",
+                        "Visible": "True"
+                    },
+                    "Phrases": [{
+                            "Name": "Comment",
+                            "Text": "",
+                            "Data": "0",
+                            "Data": "0",
+                            "Command": "",
+                            "Tag": "0",
+                            "Rect": {
+                                "Top": "78",
+                                "Bottom": "99",
+                                "Left": "15",
+                                "Right": "9015"
+                            },
+                            "Select": "False",
+                            "WorkData": "Template",
+                            "ListName": "",
+                            "Maxlength": "1000",
+                            "Visible": "True"
+                        }]
+                }]
+        } ]
+}

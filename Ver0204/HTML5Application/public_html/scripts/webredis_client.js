@@ -135,7 +135,20 @@ function objFromRedis(instr) {
         data[i] = b;
     }
     var strLST = pako.inflate(data, {to: 'string'});
-    return JSON.parse(strLST);
+    console.log("\n!!inflate start " + strLST.substr(0, 80));
+    console.log("\n!!inflate final " + strLST.substr(strLST.length - 80, strLST.length + 10));
+
+    try{
+       return JSON.parse(strLST);
+        
+    } finally {
+       console.log("\n!!!!!!!!!!!!!!!!!!!!!!!\n");
+       console.log("\n!!inflate error= " + strLST.substr(761900, 762000)+"\"");
+    }
+    throw "ERR inflate";
+    
+    
+    
 }
 function checkObjectOk(obj, lastTime) {
     if (typeof obj === "undefined") {
@@ -171,6 +184,7 @@ function getTLT() {
         myLog("#AJAX TLT success");
         if (checkObjectOk(t, lastTLTtime)) {
             myLog("GOT  TLT success time=" + t.time);
+            
             newTLT = objFromRedis(t.varValue);
             TLT_OK = true;
             lastTLTtime = +t.time;

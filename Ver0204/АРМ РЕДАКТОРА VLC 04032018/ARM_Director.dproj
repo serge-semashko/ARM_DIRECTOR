@@ -163,9 +163,6 @@
         <DCCReference Include="UGridSort.pas">
             <Form>FrSortGrid</Form>
         </DCCReference>
-        <DCCReference Include="uwebserv.pas">
-            <Form>HTTPSRVForm</Form>
-        </DCCReference>
         <DCCReference Include="uLkJSON.pas"/>
         <DCCReference Include="UMyMediaSwitcher.pas"/>
         <DCCReference Include="ushifttl.pas">
@@ -274,13 +271,13 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\helpers\utimeline_body.inc" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="..\helpers\ugrtimelines_body.inc" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\helpers\ugrtimelines_body.inc" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="..\helpers\utimeline_body.inc" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>

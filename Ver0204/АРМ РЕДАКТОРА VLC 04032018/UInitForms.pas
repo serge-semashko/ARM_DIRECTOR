@@ -531,6 +531,11 @@ begin
     Label1.Font.Size := ProgrammFontSize;
     Label1.Font.Color := ProgrammFontColor;
 
+    lbMVSGroup.Color := ProgrammColor;
+    lbMVSGroup.Font.Name := ProgrammFontName;
+    //Label1.Font.Size := ProgrammFontSize;
+    lbMVSGroup.Font.Color := ProgrammFontColor;
+
     CheckBox2.Color := ProgrammColor;
     CheckBox2.Font.Name := ProgrammFontName;
     CheckBox2.Font.Size := ProgrammFontSize;

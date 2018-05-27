@@ -32,7 +32,6 @@ uses
   UMyLists in 'UMyLists.pas',
   USetEventData in 'USetEventData.pas' {frSetEventData},
   UGridSort in 'UGridSort.pas' {FrSortGrid},
-  uwebserv in 'uwebserv.pas' {HTTPSRVForm},
   uLkJSON in 'uLkJSON.pas',
   UMyMediaSwitcher in 'UMyMediaSwitcher.pas',
   ushifttl in 'ushifttl.pas' {frShiftTL},

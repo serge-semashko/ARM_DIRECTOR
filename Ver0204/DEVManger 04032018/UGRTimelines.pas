@@ -1793,8 +1793,10 @@ end;
 function TTLTimelineJSON.LoadFromJSONstr(JSONstr: string): boolean;
 var
     json: tjsonObject;
+    UTF8Str1 : System.TArray<System.Byte>;
 begin
-    json := tjsonObject.ParseJSONValue(TEncoding.UTF8.GetBytes(JSONstr), 0)
+    UTF8Str1 :=TEncoding.UTF8.GetBytes(JSONstr);
+    json := tjsonObject.ParseJSONValue(UTF8Str1, 0)
       as tjsonObject;
     Result := true;
     if JSON = nil then
@@ -2076,8 +2078,18 @@ begin
     Result := JSONstr;
 end;
 // SSSS JSON HELPERS
+var
+ json : tjsonvalue;
+ lst1 : tstringlist;
 
 initialization
+//lst1 := TStringList.Create;
+//lst1.LoadFromFile('tlt0.js');
+//json := tjsonObject.ParseJSONValue(TEncoding.UTF8.GetBytes(lst1.text), 0);
+//lst1.LoadFromFile('tlt2.js');
+//json := tjsonObject.ParseJSONValue(TEncoding.UTF8.GetBytes(lst1.text), 0);
+//lst1.LoadFromFile('tlt2.js');
+//json := tjsonObject.ParseJSONValue(TEncoding.UTF8.GetBytes(lst1.text), 0);
 
 TLParameters := TTLParameters.Create;
 TLP_server := TTLParameters.Create;
