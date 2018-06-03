@@ -116,7 +116,7 @@ function myAjax(url) {
             console.log("ajax pure load start " + resp.substr(0, 80));
             console.log("ajax pure final  " + resp.substr(resp.length - 80, resp.length + 10));
 
-            var retobj = JSON.parse(resp);
+            var retobj = JSON.parse(resp.replace('#$%#$%', ' '));
             return  retobj;
         } else
             return "No status 200";
@@ -134,7 +134,7 @@ function objFromRedis(instr) {
         var b = parseInt(instr[2 * i] + instr[2 * i + 1], 16);
         data[i] = b;
     }
-    var strLST = pako.inflate(data, {to: 'string'});
+    var strLST = pako.inflate(data, {to: 'string'}).replace('#$%#$%', ' ');
     console.log("\n!!inflate start " + strLST.substr(0, 80));
     console.log("\n!!inflate final " + strLST.substr(strLST.length - 80, strLST.length + 10));
 
@@ -268,6 +268,7 @@ function proc_LST(t) {
             if (!(typeof obj === "undefined")) {
                 if (!(Object.keys(obj).length === 0)) {
                     newTLP = newLST.TLP_value;
+	            newTLP.ClipName = newTLP.ClipName.replace('#$%#$%', ' ')        
                     TLP_OK = true;
                 } else {
                 }

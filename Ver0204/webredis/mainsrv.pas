@@ -1228,7 +1228,7 @@ begin
 //    tstjson := TJSONobject.Create;
 //    addVariableToJson(tstjson,'tst',testvar);
 //    tstjson.free;
-    strvar := tstjson.ToString;
+//    strvar := tstjson.ToString;
     resp := jreq
          + '({"sent":'+ stime
 //         +',"test":'+strvar

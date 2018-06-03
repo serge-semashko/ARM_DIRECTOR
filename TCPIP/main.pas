@@ -51,6 +51,7 @@ begin
    memo1.Lines.add('Error send:'+tcpcon.Sock.GetErrorDescEx);
    exit
  end;
+   sleep(300);
    answer := tcpcon.RecvString;
  if tcpcon.Sock.GetErrorDescEx <>'' then begin
    memo1.Lines.add('Error receive:'+tcpcon.Sock.GetErrorDescEx);

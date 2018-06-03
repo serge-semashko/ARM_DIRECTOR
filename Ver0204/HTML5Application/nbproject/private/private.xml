@@ -5,22 +5,12 @@
             <url>public_html/scripts/webredis_client.js</url>
             <bookmark id="1">
                 <name/>
-                <line>199</line>
+                <line>200</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/G:/home/ARM_EDITOR/Ver0204/HTML5Application/public_html/scripts/webredis_client.js</file>
-            <file>file:/G:/home/ARM_EDITOR/Ver0204/HTML5Application/public_html/scripts/vendor/pako.min.js</file>
-            <file>file:/G:/home/ARM_EDITOR/Ver0204/HTML5Application/public_html/scripts/init.js</file>
-            <file>file:/G:/home/ARM_EDITOR/Ver0204/HTML5Application/public_html/scripts/main.js</file>
-            <file>file:/G:/home/ARM_EDITOR/Ver0204/HTML5Application/public_html/scripts/events.js</file>
-            <file>file:/G:/home/ARM_EDITOR/Ver0204/HTML5Application/public_html/scripts/TLO.js</file>
-            <file>file:/G:/home/ARM_EDITOR/Ver0204/HTML5Application/public_html/scripts/TLT.js</file>
-            <file>file:/G:/home/ARM_EDITOR/Ver0204/HTML5Application/public_html/index.html</file>
-            <file>file:/G:/home/ARM_EDITOR/Ver0204/HTML5Application/public_html/scripts/TLP.js</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
