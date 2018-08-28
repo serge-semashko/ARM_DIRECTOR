@@ -4,7 +4,7 @@ interface
 
 uses
     Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-    Dialogs, StdCtrls, WinSock, ExtCtrls, mmsystem, Web.Win.Sockets, Vcl.Buttons;
+    Dialogs, StdCtrls, WinSock, ExtCtrls, mmsystem, Web.Win.Sockets, Vcl.Buttons, tlntsend;
 
 type
     Tmainform = class(TForm)
@@ -17,7 +17,6 @@ type
         AddrEd: TLabeledEdit;
         SpeedButton1: TSpeedButton;
         procedure btn3Click(Sender: TObject);
-        procedure Tcpserver3Accept(Sender: TObject; ClientSocket: TCustomIpClient);
         procedure btn1Click(Sender: TObject);
         procedure SpeedButton1Click(Sender: TObject);
     private
@@ -30,6 +29,7 @@ type
 
 var
     mainform: Tmainform;
+    tlnt :ttelnetsend;
 
 implementation
 
@@ -128,34 +128,6 @@ begin
     st := timegettime;
     for i1 := 0 to  1  do b1 := su1=su2;
     showmessage ('wide cmp ='+IntToStr(((Timegettime -st))));
-
-end;
-
-procedure Tmainform.Tcpserver3Accept(Sender: TObject;       //пришло сообщение
-    ClientSocket: TCustomIpClient);
-var
-    txt: string;
-    buffer: array[0..10000] of ansichar;
-    tmpBuffer: integer;
-    rcstr, hstr: string;
-    rc: Integer;
-    outstr: AnsiString;
-begin
-    hstr := 'H=' + IntToStr(ClientSocket.Handle) + ' ';
-    mmo1.Lines.add(FormatDateTime('HH:NN:SS ', now) + 'accept' + hstr);
-    while True do begin
-        rc := ClientSocket.ReceiveBuf(buffer, 10000);  //берем буфер
-        rcstr := ' ' + IntToStr(rc) + ' ';
-        if rc <= 0 then begin
-            mmo1.Lines.Add(IntToStr(rc) + ' err:' + hstr + syserrormessage(wsagetlasterror));
-            exit;
-        end;
-        if Length(buffer) <> 0 then
-            mmo1.Lines.Add(hstr + rcstr + ' Read:' + buffer);
-        outstr := buffer;
-        ClientSocket.Sendln('HTTP/1.0 ' + '200' + CRLF + 'Content-type: Text/Html' + #13#10 + 'Content-length: ' + IntToStr(length(outstr)) + #13#10 + 'Connection: close' + #13#10 + 'Date: Tue, 20 Mar 2018 14:04:45 +0300' + #13#10 + 'Server: Synapse HTTP server demo' + #13#10 + #13#10 + outstr + eot);
-        exit;
-    end;
 
 end;
 

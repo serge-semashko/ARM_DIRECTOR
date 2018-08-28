@@ -34,8 +34,8 @@ Var
     // наш поток, в котором будет работать процедура опроса порта
     hPort: Integer; // дескриптор порта
     // совсем не обязательные переменые, используемые для "украшения" приложения
-    SendBytes: Cardinal; // количество переданных в порт байт
-    ReciveBytes: Cardinal; // количество считанных из порта байт
+    //SendBytes: Cardinal; // количество переданных в порт байт
+    //ReciveBytes: Cardinal; // количество считанных из порта байт
     lstCommMes: TStrings;
     CommDataRead: boolean = false;
     InBuff: array [0 .. 1023] of ansichar;

@@ -2,8 +2,8 @@ object mainform: Tmainform
   Left = -741
   Top = 37
   Caption = #1055#1088#1086#1074#1077#1088#1082#1072' '#1089#1074#1103#1079#1080
-  ClientHeight = 494
-  ClientWidth = 698
+  ClientHeight = 562
+  ClientWidth = 862
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,24 +16,24 @@ object mainform: Tmainform
   object mmo1: TMemo
     Left = 0
     Top = 153
-    Width = 698
-    Height = 341
+    Width = 862
+    Height = 409
     Align = alClient
     TabOrder = 0
   end
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 698
+    Width = 862
     Height = 153
     Align = alTop
-    Caption = 'None'
     TabOrder = 1
     object SpeedButton1: TSpeedButton
       Left = 512
       Top = 24
-      Width = 23
+      Width = 145
       Height = 22
+      Caption = 'Ping'
       OnClick = SpeedButton1Click
     end
     object btn1: TButton
@@ -47,7 +47,7 @@ object mainform: Tmainform
     end
     object edt1: TEdit
       Left = 152
-      Top = 65
+      Top = 113
       Width = 208
       Height = 24
       TabOrder = 1
@@ -55,7 +55,7 @@ object mainform: Tmainform
     end
     object btn3: TButton
       Left = 7
-      Top = 62
+      Top = 110
       Width = 129
       Height = 31
       Caption = 'Send'

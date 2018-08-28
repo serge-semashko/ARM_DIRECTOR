@@ -43,10 +43,26 @@ var
 procedure UpdateInfoProtocol;
 procedure UpdateInfo422;
 procedure UpdateInfoIP;
+procedure infoportclear;
 
 implementation
 
-uses ucommon, uwebget;
+uses mainunit, ucommon, uwebget;
+
+procedure infoportclear;
+var i : integer;
+begin
+  fmMain.Timer1.Enabled:=false;
+  SendBytes := 0; // количество переданных в порт байт
+  ReciveBytes:= 0; // количество считанных из порта байт
+  if infoport<>nil then begin
+    for i:=0 to infoport.Count-1
+      do Infoport.SetData(i, '');
+  end;
+  InfoPort.Draw(fmMain.ImgTrans.Canvas, 25);
+  fmMain.ImgTrans.Repaint;
+  fmMain.Timer1.Enabled:=true;
+end;
 
 constructor TMyInfo.create;
 begin

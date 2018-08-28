@@ -1,0 +1,7 @@
+﻿/*
+    here you can put any overloads needed to make the bootswatch templates look good
+    loads in all master pages
+*/
+
+/* these styles help the bootstrap multiselect, without them they do not render correctly */
+.radio input[type="radio"],.radio-inline input[type="radio"],.checkbox input[type="checkbox"],.checkbox-inline input[type="checkbox"]{position: relative;float:left;}

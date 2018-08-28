@@ -1231,7 +1231,6 @@ begin
 //    strvar := tstjson.ToString;
     resp := jreq
          + '({"sent":'+ stime
-//         +',"test":'+strvar
          +',"time":'+vartime
          +', "varValue": ' + compressed_resp
          + '});';

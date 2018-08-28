@@ -1,0 +1,44 @@
+.tablecontacns {
+    border-collapse: separate;/*collapse;*/
+    /*position: static;*/
+    margin:0;
+	width: 100%;
+	cellspacing: 10; 
+	border: 0; 
+	min-width: 350px; 
+	border-spacing: 20px 0px;"
+}
+
+#rowcontacts {
+  height: 550px;
+  padding-top:0px; 
+  padding-bottom:0px; 
+  background-size: 100% 100%;
+  -webkit-transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -o-transition: opacity 1s ease-in-out;
+  transition: opacity 1s ease-in-out;
+  transition-property:background;
+  transition-duration:1s;
+  transition-delay:1s;
+  transition-timing-function:linear;
+  -moz-transition-property:background;
+  -moz-transition-duration:1s;
+  -moz-transition-delay:1s;
+  -moz-transition-timing-function:linear;
+  -webkit-transition-property:background;
+  -webkit-transition-duration:1s;
+  -webkit-transition-delay:1s;
+  -webkit-transition-timing-function:linear;
+  -o-transition-property:background;
+  -o-transition-duration:1s;
+  -o-transition-delay:1s;
+  -o-transition-timing-function:linear;
+}
+
+td.tcenter {
+    border-top-left-radius:10px;
+    border-top-right-radius:10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius:10px;
+}

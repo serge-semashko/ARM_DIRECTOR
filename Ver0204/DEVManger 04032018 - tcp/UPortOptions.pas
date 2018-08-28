@@ -89,7 +89,7 @@ procedure setoptions;
 implementation
 
 uses
-    mainunit, ucommon, comportunit, umyinitfile, umytcpconnect;
+    mainunit, ucommon, comportunit, umyinitfile, umytcpconnect, umyinfo;
 
 {$R *.dfm}
 
@@ -349,6 +349,7 @@ var
     sipaddr, sipport, ss: string;
     psi: integer;
     tmp  : string;
+
 begin
     ss := Get('Номер устройства:');
     if trim(ss) = '' then
@@ -625,8 +626,16 @@ begin
 end;
 
 procedure TfrOptions.SpeedButton1Click(Sender: TObject);
+var oldportselect : boolean;
+    str1, str2 : string;
 begin
+    oldportselect := Port422select;
     ProgOptions.SaveData;
+
+    if oldportselect <> Port422select then begin
+      infoportclear;
+      if Not Port422select then updatetcpport := true;
+    end;
 
     if ChangeServerIP then
         Disconnect_redis;
@@ -637,7 +646,10 @@ begin
         fmMain.ComportInit;
         fmMain.Timer1.Enabled := true;
     end else begin
-        if updatetcpport then isTCPConnect := false;
+        if updatetcpport then begin
+           WinSocketDisconnect;
+           infoportclear;
+        end;
     end;
     Edit1.Visible := false;
     ComboBox1.Visible := false;
@@ -645,6 +657,11 @@ begin
     fmMain.Caption := 'Модуль управления устройствами: ' + '  S/N: ' + SerialNumber + '   ID=' + inttostr(ManagerNumber);
     ProgOptions.draw(ImgOptions.Canvas, ComboBox1.Height);
     ImgOptions.Repaint;
+
+    //str1 := 'DEVMAN[' + inttostr(ManagerNumber) +']';
+    //str2 := ProgOptions.SaveToJSONStr;
+    //PutJsonStrToServer(str1,str2);
+
     if AutoStart then
         AutoStartEnable
     else

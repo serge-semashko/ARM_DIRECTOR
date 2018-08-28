@@ -3,13 +3,13 @@
         <ProjectGuid>{86948362-4B70-4897-AA08-CB81A38FFA7F}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
-        <Projects Include="DEVManger 04032018\DEVManager.dproj">
-            <Dependencies/>
-        </Projects>
         <Projects Include="webredis\webredis.dproj">
             <Dependencies/>
         </Projects>
         <Projects Include="АРМ РЕДАКТОРА VLC 04032018\ARM_Director.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="DEVManger 04032018 - tcp\DEVManager.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -20,15 +20,6 @@
             <Default.Personality/>
         </BorlandProject>
     </ProjectExtensions>
-    <Target Name="DEVManager">
-        <MSBuild Projects="DEVManger 04032018\DEVManager.dproj"/>
-    </Target>
-    <Target Name="DEVManager:Clean">
-        <MSBuild Projects="DEVManger 04032018\DEVManager.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="DEVManager:Make">
-        <MSBuild Projects="DEVManger 04032018\DEVManager.dproj" Targets="Make"/>
-    </Target>
     <Target Name="webredis">
         <MSBuild Projects="webredis\webredis.dproj"/>
     </Target>
@@ -47,14 +38,23 @@
     <Target Name="ARM_Director:Make">
         <MSBuild Projects="АРМ РЕДАКТОРА VLC 04032018\ARM_Director.dproj" Targets="Make"/>
     </Target>
+    <Target Name="DEVManager">
+        <MSBuild Projects="DEVManger 04032018 - tcp\DEVManager.dproj"/>
+    </Target>
+    <Target Name="DEVManager:Clean">
+        <MSBuild Projects="DEVManger 04032018 - tcp\DEVManager.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DEVManager:Make">
+        <MSBuild Projects="DEVManger 04032018 - tcp\DEVManager.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="DEVManager;webredis;ARM_Director"/>
+        <CallTarget Targets="webredis;ARM_Director;DEVManager"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="DEVManager:Clean;webredis:Clean;ARM_Director:Clean"/>
+        <CallTarget Targets="webredis:Clean;ARM_Director:Clean;DEVManager:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="DEVManager:Make;webredis:Make;ARM_Director:Make"/>
+        <CallTarget Targets="webredis:Make;ARM_Director:Make;DEVManager:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

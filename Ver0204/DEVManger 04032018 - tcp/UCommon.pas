@@ -165,6 +165,9 @@ Var
     CountWaitReplay : integer = 0;
     MaxCountReplay : integer = 10;
 
+    SendBytes: Cardinal; // количество переданных в порт байт
+    ReciveBytes: Cardinal; // количество считанных из порта байт
+
 function UserExists(User, Pass: string): boolean;
 function TwoDigit(dig: integer): string;
 procedure LoadBMPFromRes(cv: tcanvas; rect: TRect; width, height: integer;

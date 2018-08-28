@@ -5,7 +5,7 @@ interface
 uses
     Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
     StdCtrls, ExtCtrls, Buttons, ComCtrls, Variants, MMSystem, Menus, UHRTimer,
-    Vcl.Samples.Spin, UCommon, UTimeline, UGRTimelines;
+    Vcl.Samples.Spin, UCommon, UTimeline, UGRTimelines, System.Win.ScktComp;
 
 CONST
     WM_TRANSFER = WM_USER + 1; // Определяем сообщение
@@ -58,6 +58,7 @@ type
         Panel5: TPanel;
         Panel6: TPanel;
         SpeedButton1: TSpeedButton;
+        ClientSocket1: TClientSocket;
         procedure FormCreate(Sender: TObject);
         procedure SpeedButton2Click(Sender: TObject);
         procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -74,6 +75,13 @@ type
     procedure SpeedButton5Click(Sender: TObject);
     procedure Edit1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure Edit1KeyPress(Sender: TObject; var Key: Char);
+    procedure ClientSocket1Connect(Sender: TObject; Socket: TCustomWinSocket);
+    procedure ClientSocket1Disconnect(Sender: TObject;
+      Socket: TCustomWinSocket);
+    procedure ClientSocket1Error(Sender: TObject; Socket: TCustomWinSocket;
+      ErrorEvent: TErrorEvent; var ErrorCode: Integer);
+    procedure ClientSocket1Read(Sender: TObject; Socket: TCustomWinSocket);
+    procedure ClientSocket1Write(Sender: TObject; Socket: TCustomWinSocket);
     private
         { Private declarations }
         ShownOnce: Boolean;
@@ -150,8 +158,11 @@ begin
     fmMain.ImgProtocol.Repaint;
     if port422select then
         info422.Draw(fmMain.imgPort.Canvas, 25)
-    else
+    else begin
         infoIP.Draw(fmMain.imgPort.Canvas, 25);
+        InfoPort.Draw(fmMain.ImgTrans.Canvas, 25);
+        fmMain.ImgTrans.Repaint;
+    end;
     fmMain.imgPort.Repaint;
 end;
 
@@ -274,10 +285,10 @@ begin
                 for i:=1 to infoweb.Count-1
                   do InfoWEB.SetData(i, '');
               end;
-              if infoport<>nil then begin
-                for i:=0 to infoport.Count-1
-                  do Infoport.SetData(i, '');
-              end;
+//              if infoport<>nil then begin
+//                for i:=0 to infoport.Count-1
+//                  do Infoport.SetData(i, '');
+//              end;
               DrawProtocolStatus;
               InfoWEB.Draw(fmMain.imgWeb.Canvas, 25);
               fmMain.imgWeb.Repaint;
@@ -498,8 +509,8 @@ begin
                                    WriteBuffToPort
                                      (DataToBuffIn(trim(ListCommands.Strings[icmd])));
                                  end else begin
-                                   //WriteBuffToTCP
-                                   //  (DataToBuffIn(trim(ListCommands.Strings[icmd])));
+                                   WriteBuffToTCP
+                                     (DataToBuffIn(trim(ListCommands.Strings[icmd])));
                                  end;
                                  CountWaitReplay:=0;
                                  while (trim(infoport.Options[7].Text)='')
@@ -556,8 +567,8 @@ begin
                                    WriteBuffToPort
                                        (DataToBuffIn(trim(ListCommands.Strings[icmd])));
                                  end else begin
-                                   //WriteBuffToTCP
-                                   //    (DataToBuffIn(trim(ListCommands.Strings[icmd])));
+                                   WriteBuffToTCP
+                                       (DataToBuffIn(trim(ListCommands.Strings[icmd])));
                                  end;
                                  CountWaitReplay:=0;
                                  while (trim(infoport.Options[7].Text)='')
@@ -612,8 +623,8 @@ begin
                                    WriteBuffToPort
                                        (DataToBuffIn(trim(ListCommands.Strings[icmd])));
                                  end else begin
-                                   //WriteBuffToTCP
-                                   //    (DataToBuffIn(trim(ListCommands.Strings[icmd])));
+                                   WriteBuffToTCP
+                                       (DataToBuffIn(trim(ListCommands.Strings[icmd])));
                                  end;
                                  CountWaitReplay:=0;
                                  while (trim(infoport.Options[7].Text)='')
@@ -662,8 +673,8 @@ begin
                                    WriteBuffToPort
                                        (DataToBuffIn(trim(ListCommands.Strings[icmd])));
                                  end else begin
-                                   //WriteBuffToTCP
-                                   //    (DataToBuffIn(trim(ListCommands.Strings[icmd])));
+                                   WriteBuffToTCP
+                                       (DataToBuffIn(trim(ListCommands.Strings[icmd])));
                                  end;
                                  while (trim(infoport.Options[7].Text)='')
                                       and (CountWaitReplay<MaxCountReplay) do
@@ -885,6 +896,8 @@ begin
         MyThread.Terminate;
 
     if CommThreadExists then StopService;
+
+    if ClientSocket1.Socket.Connected then ClientSocket1.Close;
 
     SaveAProtocolToFile(AppPath + 'BProtocol' + inttostr(ManagerNumber) + '.txt', STRProtocol);
     if ManagerNumber>=0 then WriteIniFile(AppPath + AppName + inttostr(ManagerNumber) + '.ini');
@@ -1123,6 +1136,7 @@ begin
     CloseHandle(FicheroM);
     MyThread.Free;
     MyThread := nil;
+    WinSocketDisconnect;
     try
        with nidata do begin
           Wnd := fmMain.Handle;
@@ -1137,6 +1151,63 @@ end;
 procedure TfmMain.FormHide(Sender: TObject);
 begin
   if ManagerNumber>=0 then WriteIniFile(AppPath + AppName + inttostr(ManagerNumber) + '.ini');
+end;
+
+procedure TfmMain.ClientSocket1Connect(Sender: TObject;
+  Socket: TCustomWinSocket);
+begin
+  if Socket.Connected then begin
+    InfoIP.SetData(5,'Подключён');
+    recvinfoport(Socket.ReceiveText);
+  end else begin
+    InfoIP.SetData(5,'Не подключён');
+  end;
+end;
+
+procedure TfmMain.ClientSocket1Disconnect(Sender: TObject;
+  Socket: TCustomWinSocket);
+begin
+  InfoIP.SetData(5,'Не подключён');
+end;
+
+procedure TfmMain.ClientSocket1Error(Sender: TObject; Socket: TCustomWinSocket;
+  ErrorEvent: TErrorEvent; var ErrorCode: Integer);
+begin
+  try
+    InfoIP.SetData(5,'Ошибка подключения');
+    //ErrorEvent := nil;
+    ErrorCode := 0;
+  except
+    Socket.Close;
+    InfoIP.SetData(5,'Сервер не найден');
+  end;
+end;
+
+procedure TfmMain.ClientSocket1Read(Sender: TObject; Socket: TCustomWinSocket);
+var txt : ansistring;
+begin
+  if Port422select then exit;
+  txt := Socket.ReceiveText;
+  ReciveBytes:=ReciveBytes + length(txt);
+  if AnsiLowerCase(trim(txt)) = 'login:' then begin
+    Socket.SendText(IPLogin + #13#10);
+    SendBytes:=SendBytes + length(IPLogin) + 2;
+  end;
+  if AnsiLowerCase(trim(txt)) = 'password:' then begin
+    Socket.SendText(IPPassword + #13#10);
+    SendBytes:=SendBytes + length(IPLogin) + 2;
+  end;
+  recvinfoport(txt);
+  InfoPort.Draw(fmMain.ImgTrans.Canvas, 25);
+  fmMain.ImgTrans.Repaint;
+end;
+
+procedure TfmMain.ClientSocket1Write(Sender: TObject; Socket: TCustomWinSocket);
+var s : string;
+begin
+//  s:=
+//  Socket.Accept;
+//  s:=s;
 end;
 
 procedure TfmMain.ComportDialogOpen;
@@ -1305,10 +1376,20 @@ begin
             sprot := TLO_server[NumberTimeline].Protocol;
             if sprot<>STRProtocol then begin
               for i:=0 to infoport.Count-1 do infoport.SetData(i,'');
+
               SetAProtocolData(sprot);
               SaveAProtocolToFile(AppPath + 'BProtocol' + inttostr(ManagerNumber) + '.txt', sprot);
               LoadProtocol(AppPath + 'BListProtocols.txt', 'TLDevices', INFOTypeDevice, INFOVendor,
                            INFODevice, INFOProt);
+              if Not port422select then begin
+                if fmMain.ClientSocket1 <> nil then begin
+                  if (trim(fmMain.ClientSocket1.Address) <> trim(IPAdress))
+                      or (fmMain.ClientSocket1.Port <> strtoint(IPPort))
+                  then begin
+                    WinSocketDisconnect;
+                  end;
+                end;
+              end;
               STRProtocol:=sprot;
               if local_vlcMode<>1 then OldList1Index:=-1;
 
@@ -1412,18 +1493,33 @@ begin
     //  end else begin
     //    infoIP[5].SetData(6,'Активен');
     //  end;
-      if isTCPConnect then exit;
-      if TCPCount<=0 then begin
-        TelnetLogout;
-
-        Timer1.Enabled :=false;
-        isTCPConnect := TelnetConnect;
+      if ClientSocket1 <> nil then begin
         DrawProtocolStatus;
-        Timer1.Enabled :=true;
-        application.ProcessMessages;
-        //exit;
-        TCPCount := 25;
+        if ClientSocket1.Active then exit
+      end else begin
+        WinSocketConnect;
+        exit;
+      end;  ;
+      if TCPCount<=0 then begin
+        if Not ClientSocket1.Active then begin
+          WinSocketConnect;
+        end;
+        TCPCount := 20;
+        exit;
       end else TCPCount := TCPCount - 1;
+      DrawProtocolStatus;
+//      if TCPCount<=0 then begin
+//        TelnetLogout;
+//
+//        Timer1.Enabled :=false;
+//        //isTCPConnect := TCPConnect;
+//        isTCPConnect := TelnetConnect;
+//        DrawProtocolStatus;
+//        Timer1.Enabled :=true;
+//        application.ProcessMessages;
+//        //exit;
+//        TCPCount := 25;
+//      end else TCPCount := TCPCount - 1;
     end;
 end;
 

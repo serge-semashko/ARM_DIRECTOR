@@ -347,7 +347,7 @@ function async_net_process() {
         type: "POST",
         global: false,
         dataType: "json",
-        url: url + "LST_" + urlTail,
+        url: url + "LST_" + new Date().getTime()+urlTail,
         data: {
             "get_member": "id"
         },
