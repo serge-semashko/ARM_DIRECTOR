@@ -28,6 +28,7 @@ uses
 // http in 'http.pas';
 
 {$R *.res}
+
 function UniqueApp :Boolean;
 Var HM :THandle;
 begin

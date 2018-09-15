@@ -6,7 +6,9 @@ interface
 uses
     Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
     Dialogs, StdCtrls, Buttons, ExtCtrls, HTTPSend, blcksock, winsock, Synautil,
-    strutils,
+    strutils,dateutils,
+    system.netEncoding,
+    synacode,
 
      system.json,
      AppEvnts, Menus, inifiles, das_const,
@@ -1138,16 +1140,18 @@ var
     compress : boolean;
     ans_var :twebvar;
     stime : string;
+    rtime : string;
     syst :TSystemTime;
     testvar  : ansistring;
     strvar, jsonvar  : ansistring;
     tstjson : tjsonObject;
-
+    reqInfo : string;
 begin
    webWriteLog('HTTP request='+uri);
-
+     reqInfo :='';
      compress := false;
      varTime := '';
+     rTime := '';
     if (pos('callback=', URI) <> 0) then begin
         stmp := copy(URI, pos('callback=', URI) + 9, length(URI));
         amppos := pos('get_member', stmp);
@@ -1185,8 +1189,15 @@ begin
             keyName := system.Copy(keyname, 1, pos('&', keyName) - 1);
         resp := RemoveWebVar(keyName);
     end;
+
     pos_var_name := pos('LST_', ansiuppercase(URI)) + 4;
     if pos_var_name > 4 then begin
+        keyName := system.copy(URI, pos_var_name, Length(URI));
+        if pos('&', keyName) > 0 then
+            keyName := system.Copy(keyname, 1, pos('&', keyName) - 1);
+        if keyName <>'' then begin
+          reqInfo := DecodeURL(keyName);
+        end;
         resp := http_ListWebVars;
         varTime := IntToStr(timegettime);
     end;
@@ -1220,8 +1231,12 @@ begin
                 else compressed_resp := resp;
     compressed_resp := resp;
     if varTime=''  then vartime := '-1';
+    if (rTime = '') then rTime := '-1';
+
     GetSystemTime(syst);
-    stime := IntToStr((syst.wHour+3)*3600*1000+syst.wMinute*60*1000+syst.wSecond*1000+syst.wMilliseconds);
+
+    stime := IntToStr(trunc(now*24*3600*1000));
+    stime := IntToStr(millSecfrom1970(now,false));
 //    webWriteLog('HTTP request='+keyname+' Len orig='+inttostr(length(resp))+' len compressed='+inttostr(length(compressed_resp))+' compress='+floattostr(length(resp)/length(compressed_resp)));
 //    testvar := '';
 //    for i1 := 32 to 254 do testvar := testvar+chr(i1);
@@ -1231,7 +1246,7 @@ begin
 //    strvar := tstjson.ToString;
     resp := jreq
          + '({"sent":'+ stime
-         +',"time":'+vartime
+         +IfThen(reqInfo<>'', ',reqInfo:'+reqInfo,'')
          +', "varValue": ' + compressed_resp
          + '});';
 

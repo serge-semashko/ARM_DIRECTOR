@@ -60,9 +60,16 @@ var lastLSTtime = 0;
 var lastCTCtime = 0;
 function net_init() {
 //    setInterval(serial_net_process, 1);
-
+    var dloc = document.location;
+    var hostname;
+    if (dloc.hostname.length < 3) {
+        hostname = "localhost";
+    } else {
+        hostname = dloc.hostname;
+    }
+    url = "http://" + hostname + ":9090/";
+    urlTail = "&callback=?";
     setInterval(async_net_process, 60);
-
 }
 var options = {
     hour: 'numeric',
@@ -138,17 +145,17 @@ function objFromRedis(instr) {
     console.log("\n!!inflate start " + strLST.substr(0, 80));
     console.log("\n!!inflate final " + strLST.substr(strLST.length - 80, strLST.length + 10));
 
-    try{
-       return JSON.parse(strLST);
-        
+    try {
+        return JSON.parse(strLST);
+
     } finally {
-       console.log("\n!!!!!!!!!!!!!!!!!!!!!!!\n");
-       console.log("\n!!inflate error= " + strLST.substr(761900, 762000)+"\"");
+        console.log("\n!!!!!!!!!!!!!!!!!!!!!!!\n");
+        console.log("\n!!inflate error= " + strLST.substr(761900, 762000) + "\"");
     }
     throw "ERR inflate";
-    
-    
-    
+
+
+
 }
 function checkObjectOk(obj, lastTime) {
     if (typeof obj === "undefined") {
@@ -159,7 +166,7 @@ function checkObjectOk(obj, lastTime) {
         return false;
     }
     if (obj.time < lastTime) {
-        return false;
+        //return false;
     }
     return true;
 }
@@ -184,7 +191,7 @@ function getTLT() {
         myLog("#AJAX TLT success");
         if (checkObjectOk(t, lastTLTtime)) {
             myLog("GOT  TLT success time=" + t.time);
-            
+
             newTLT = objFromRedis(t.varValue);
             TLT_OK = true;
             lastTLTtime = +t.time;
@@ -228,60 +235,83 @@ function getTLO() {
     myLog("#AJAX  TLO complete:");
 }
 function proc_LST(t) {
-    if (checkObjectOk(t, lastLSTtime)) {
-        LST_OK = true;
-        newLST = (t.varValue);
-        lastLSTtime = t.time;
 
-        if (newLST.TLO != undefined) {
-            TLOtime = +newLST.TLO;
-            var TLO1time = +newLST["TLO[1]"];
-            if (TLO1time == -1) {
-                TLO_OK = true;
-                newTLO = [];
-            } else {
-                if ((TLOtime != lastTLOtime) && (TLOtime != -1)) {
+    LST_OK = true;
+    newLST = (t.varValue);
+    lastLSTtime = t.time;
+    var d1Time = new Date().getTime() - (+t.sent)
+//    console.log('req = '+JSON.stringify(t));
+    if(t.reqInfo !=undefined) {
+//        console.log('reqInfo='+JSON.stringify(t.reqInfo));
+        var reqInfo = t.reqInfo;
+        reqInfo.Ts.push(t.sent-reqInfo.tStart);
+        reqInfo.Tp2.push(new Date().getTime()-reqInfo.tStart);
+        
+        if (reqInfo.Tp1.length >10){
+            var spr = "";
+            for (var i = 0;i<reqInfo.Tp1.length;i++) {
+                spr +="Tp1: "+ (reqInfo.Tp1[i]-reqInfo.Tp1[i])+" Ts: "+(reqInfo.Ts[i]-reqInfo.Tp1[i])+" Tp2: "+ (reqInfo.Tp2[i]-reqInfo.Tp1[i])+" "+(reqInfo.Tp2[i]-reqInfo.Ts[i])+" "+"\n";
+//                spr +="Tp1: "+ reqInfo.Tp1[i]+" Ts: "+reqInfo.Ts[i]+" Tp2: "+ reqInfo.Tp2[i]+"\n";
+            }
+            console.log(spr);
+        } else {
+           reqInfo.Tp1.push(new Date().getTime()-reqInfo.tStart);
+            sendLST(JSON.stringify(reqInfo));
+        }
+            
+    };
+    
+    if (newLST.TLO != undefined) {
+        TLOtime = +newLST.TLO;
+        var TLO1time = +newLST["TLO[1]"];
+        if (TLO1time == -1) {
+            TLO_OK = true;
+            newTLO = [];
+        } else {
+            if ((TLOtime != lastTLOtime) && (TLOtime != -1)) {
 //                    myLog(' need new TLO oldtime=' + lastTLOtime + "newtime=" + TLOtime);
 
-                    TLO_OK = false;
-                    getTLO();
-                }
-            }
-
-        }
-        if (newLST.TLT != undefined) {
-            TLTtime = +newLST.TLT;
-            var TLT1time = +newLST["TLT[0]"];
-            if (TLT1time == -1) {
-                TLT_OK = true;
-                newTLT = [];
-            } else {
-                if ((TLTtime != lastTLTtime) && (TLTtime != -1)) {
-                    TLT_OK = false;
-                    getTLT();
-//                    myLog(' need new TLT oldtime=' + lastTLTtime + "newtime=" + TLTtime);
-                }
-            }
-        }
-        if (newLST.TLP_value != undefined) {
-            var obj = newLST.TLP_value;
-            if (!(typeof obj === "undefined")) {
-                if (!(Object.keys(obj).length === 0)) {
-                    newTLP = newLST.TLP_value;
-	            newTLP.ClipName = newTLP.ClipName.replace('#$%#$%', ' ')        
-                    TLP_OK = true;
-                } else {
-                }
-//                    myLog(' need new TLT oldtime=' + lastTLTtime + "newtime=" + TLTtime);
-            } else {
-                TLP_OK = false;
-
+                TLO_OK = false;
+                getTLO();
             }
         }
 
     }
+    if (newLST.TLT != undefined) {
+        TLTtime = +newLST.TLT;
+        var TLT1time = +newLST["TLT[0]"];
+        if (TLT1time == -1) {
+            TLT_OK = true;
+            newTLT = [];
+        } else {
+            if ((TLTtime != lastTLTtime) && (TLTtime != -1)) {
+                TLT_OK = false;
+                getTLT();
+//                    myLog(' need new TLT oldtime=' + lastTLTtime + "newtime=" + TLTtime);
+            }
+        }
+    }
+    if (newLST.TLP_value != undefined) {
+        var obj = newLST.TLP_value;
+        if (!(typeof obj === "undefined")) {
+            if (!(Object.keys(obj).length === 0)) {
+                newTLP = newLST.TLP_value;
+                newTLP.ClipName = newTLP.ClipName.replace('#$%#$%', ' ')
+                TLP_OK = true;
+            } else {
+            }
+//                    myLog(' need new TLT oldtime=' + lastTLTtime + "newtime=" + TLTtime);
+        } else {
+            TLP_OK = false;
+
+        }
+    }
+
 
 }
+
+
+
 function getLST() {
     var t = myAjax(url + "LST_");
     if ("object" == typeof t) {
@@ -317,7 +347,7 @@ function serial_net_process() {
     }
 
 }
-function async_net_process() {
+function old_async_net_process() {
     if ((new Date().getTime() - LST_time) > 1000) {
         LST_time = new Date().getTime();
 //        myLog("За секунду: webredis= " + lst_succ + ", завершено=" + lst_completed + " активных=" + lst_active + " done=" + lst_done );
@@ -347,7 +377,7 @@ function async_net_process() {
         type: "POST",
         global: false,
         dataType: "json",
-        url: url + "LST_" + new Date().getTime()+urlTail,
+        url: url + "LST_" + new Date().getTime() + urlTail,
         data: {
             "get_member": "id"
         },
@@ -395,6 +425,129 @@ function async_net_process() {
 
     });
 }
+
+
+function initSYNC() {
+    $.ajax({
+        type: "POST",
+        global: false,
+        dataType: "json",
+        url: url + 'SYN_{"rTime"=' + new Date().getTime() + '}' + urlTail,
+        data: {
+            "get_member": "id"
+        },
+        success: function (t) {
+            processRequest(t);
+        },
+        complete: function (t) {
+        },
+        error: function (t) {
+        },
+        done: function (t) {
+        }
+
+    });
+}
+
+
+function processRequest(t) {
+    lst_succ++;
+    var now = new Date();
+    var rtime = now.getHours() * 3600 * 1000 + now.getMinutes() * 60 * 1000 + now.getSeconds() * 1000 + now.getMilliseconds();
+    var stime = t.sent;
+    go_time = (go_time + " " + (rtime - stime)).trim();
+    if (go_time.length > 30) {
+        go_time = go_time.substr(go_time.indexOf(" "), go_time.length);
+    }
+
+    if (checkObjectOk(t, lastLSTtime)) {
+        $("#serverStatus").css("color", "blue");
+        proc_LST(t);
+        $("#serverStatus").css("color", serverReady);
+        if (TLT_OK && TLO_OK && TLP_OK) {
+            $("#armStatus").css("color", "aquamarine");
+            if (firstEnter) {
+                firstEnter = false;
+                hidePage();
+            }
+
+        }
+
+    }
+
+    processLST = false;
+
+}
+function sendLST(reqINFO){
+    lst_active++;
+    lst_fired++;
+    reqINFO = reqINFO||"";
+    $.ajax({
+        type: "POST",
+        global: false,
+        dataType: "json",
+        url: url + "LST_" +reqINFO  + urlTail,
+        data: {
+            "get_member": "id"
+        },
+        success: function (t) {
+            processRequest(t);
+        },
+        complete: function (t) {
+            if (rec_first == 0) {
+                rec_first = new Date().getTime();
+            }
+            rec_last = new Date().getTime();
+            lst_completed++;
+            lst_active--;
+        },
+        error: function (t) {
+            lst_error++;
+        },
+        done: function (t) {
+            lst_done++;
+        }
+
+    });
+    
+};
+function async_net_process() {
+    if ((new Date().getTime() - LST_time) > 1000) {
+        LST_time = new Date().getTime();
+//        myLog("За секунду: webredis= " + lst_succ + ", завершено=" + lst_completed + " активных=" + lst_active + " done=" + lst_done );
+        var mess = "За секунду: ok=" + lst_succ + " start=" + lst_fired + " завершено=" + lst_completed + " активных=" + lst_active + " err=" + lst_error;
+        mess += " От посылки до приема (мс)=" + go_time;
+        $("#stat").html(mess);
+        lst_completed = 0;
+        lst_fired = 0;
+//        lst_error = 0;
+        lst_succ = 0;
+        lst_done = 0;
+
+
+    }
+    if (lst_active > max_request) {
+        return;
+    }
+    if (lst_active == 0) {
+        send_first = new Date().getTime();
+    }
+    if (lst_active == max_request) {
+        send_last = new Date().getTime();
+    }
+    var lstParm = {
+        Tp1 : [],
+        Tp2 : [],
+        Ts : [],
+        d : [],
+        tStart : new Date().getTime()
+    };
+    lstParm.Tp1.push(new Date().getTime()-lstParm.tStart);
+    var lstParms = JSON.stringify(lstParm)
+    sendLST(lstParms);
+}
+
+
 
 function net_sock() {
     socket = new WebSocket("ws://localhost:9095");

@@ -4,7 +4,7 @@ unit uwebredis_common;
 interface
 
 uses
-    mmsystem, system.classes, system.sysutils,  winsock;
+    mmsystem, system.classes, system.sysutils,  winsock, dateutils;
 
 const
     SOH = #01; // Start of header - Начало блока данных
@@ -13,6 +13,7 @@ const
 function ReceiveBlob(sock: thandle; var buff: array of ansichar; len: integer): Integer;
 
 procedure webWriteLog(log: widestring); overload;
+function millSecFrom1970(const AValue: TDateTime; AInputIsUTC: Boolean): Int64;
 
 procedure webWriteLog(partname, log: widestring); overload;
 
@@ -79,6 +80,18 @@ var
 begin
     webWriteLog('', log);
 end;
+function millSecFrom1970(const AValue: TDateTime; AInputIsUTC: Boolean): Int64;
+var
+  LDate: TDateTime;
+ begin
+  if AInputIsUTC then
+    LDate := AValue
+  else
+    LDate := TTimeZone.Local.ToUniversalTime(AValue);
+  Result := milliSecondsBetween(UnixDateDelta, LDate);
+  if LDate < UnixDateDelta then
+     Result := -Result;
+ end;
 
 procedure webWriteLog(partname, log: widestring); overload;
 var
