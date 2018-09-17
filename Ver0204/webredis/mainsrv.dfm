@@ -139,4 +139,9 @@ object HTTPSRVForm: THTTPSRVForm
       OnClick = quit1Click
     end
   end
+  object Timer2: TTimer
+    OnTimer = Timer2Timer
+    Left = 432
+    Top = 128
+  end
 end

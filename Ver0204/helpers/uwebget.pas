@@ -74,7 +74,8 @@ var
     IOredis: TIORedisThread;
     FastVars: tstringList;
     ChangeServerIP: boolean = false;
-
+    CTC_caption : ansistring='';
+    CTC_delta : int64 = 0 ;
 implementation
 
 uses
@@ -424,16 +425,38 @@ begin
 
     json := tjsonObject.ParseJSONValue(TEncoding.UTF8.GetBytes(resp), 0) as tjsonObject;
     if json <> nil then begin
+        // Download remote  updated variables
+
         for i_json := 0 to json.Count - 1 do begin
             st := TimegetTime;
             varName := json.get(i_json).JsonString.Value;
 
             varValue := json.get(i_json).JsonValue.Value;
+
+            if (AnsiLowerCase(varName) = 'ctc_caption') then begin
+                ctc_caption :=varValue;
+                continue;
+            end;
+            if (AnsiLowerCase(varName) = 'ctc_delta') then begin
+                ctc_delta :=-1;
+                val(varValue, convValue, convResult);
+                if convResult <> 0 then begin
+                    ctc_delta :=-1;
+                    ABSWriteLog('!!! Error process VarList. Var = ' + varName + ' Lst=' + resp);
+                    continue;
+                end;
+                ctc_delta := convValue;
+                continue;
+            end;
+            if (AnsiLowerCase(varName) = 'tlp_value') then begin
+
+                continue;
+            end;
+
             val(varValue, convValue, convResult);
             if convResult <> 0 then begin
                 ABSWriteLog('!!! Error process VarList. Var = ' + varName + ' Lst=' + resp);
-                json.free;
-                exit;
+                continue;
             end;
             i1 := GetWebVarID(varName);
             if i1 < 0 then begin
@@ -463,6 +486,8 @@ begin
                 inc(Refreshed);
             end;
         end;
+
+        // Upload local updated variables
         for i1 := 0 to webvar_count - 1 do begin
             st := TimeGetTime;
             srvtime := '';

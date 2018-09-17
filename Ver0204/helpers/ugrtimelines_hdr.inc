@@ -6,6 +6,8 @@
     Function LoadFromJSONstr(JSONstr: string): boolean;
   End;
 
+
+
   TTLScalerJson = Class helper for TTLScaler
   public
     Function SaveToJSONStr: string;

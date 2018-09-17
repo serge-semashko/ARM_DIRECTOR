@@ -892,12 +892,16 @@ begin
             Form3.Close;
         exit;
     end;
+
+    if Timer1.Enabled then  Timer1.Enabled := false;
+    WinSocketDisconnect;
+
     if MyThread <> nil then
         MyThread.Terminate;
 
     if CommThreadExists then StopService;
 
-    if ClientSocket1.Socket.Connected then ClientSocket1.Close;
+    //if ClientSocket1.Socket.Connected then ClientSocket1.Close;
 
     SaveAProtocolToFile(AppPath + 'BProtocol' + inttostr(ManagerNumber) + '.txt', STRProtocol);
     if ManagerNumber>=0 then WriteIniFile(AppPath + AppName + inttostr(ManagerNumber) + '.ini');

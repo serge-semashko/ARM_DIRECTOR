@@ -1,0 +1,9 @@
+26.03.2018 16:42:30:867 Receive block ok len =24 Time=4
+26.03.2018 16:42:30:867  success. TIME = 8  len=22 Ans=({"CTC":"277252342"});
+26.03.2018 16:42:30:869  sendln /LST_
+26.03.2018 16:43:08:695  sendln /LST_
+26.03.2018 16:43:08:695  peek answer
+26.03.2018 16:53:18:081 Receive block ok len =24 Time=4
+26.03.2018 16:53:18:081  success. TIME = 10  len=22 Ans=({"CTC":"277899551"});
+26.03.2018 16:53:18:085  sendln /LST_
+26.03.2018 16:53:18:086  peek answer

@@ -15,6 +15,19 @@ uses
     TeEngine, Series, TeeProcs, Chart, VclTee.TeeGDIPlus, System.Generics.Collections,
     mmsystem,web.win.sockets, zlibexapi,ZLIBEX;
 type
+  TSinchronization = (chltc, chsystem, chnone1);
+
+  PCompartido = ^TCompartido;
+
+  TCompartido = record
+    Manejador1: Cardinal;
+    Manejador2: Cardinal;
+    Numero: integer;
+    Shift: Double;
+    State: boolean;
+    Cadena: String[20];
+  end;
+
     THTTPSRVForm = class(TForm)
         Panel1: TPanel;
         Timer1: TTimer;
@@ -30,6 +43,7 @@ type
         txt2: TStaticText;
         webreqtxt: TStaticText;
         mmo1: TMemo;
+    Timer2: TTimer;
         procedure FormCreate(Sender: TObject);
         procedure terminate1Click(Sender: TObject);
         procedure Panel1Click(Sender: TObject);
@@ -44,6 +58,7 @@ type
         procedure TcphttpserverAccept(Sender: TObject; ClientSocket: TCustomIpClient);
         procedure httpError(Sender: TObject; Error : Integer);
         procedure Timer1Timer(Sender: TObject);
+    procedure Timer2Timer(Sender: TObject);
     private
     protected
         procedure ControlWindow(var Msg: TMessage); message WM_SYSCOMMAND;
@@ -89,6 +104,20 @@ function myHTTPProcessRequest(URI: string): AnsiString;
 Procedure Update_Array(basename:string;baseind, changed: integer; varvalue:ansistring);
 
 var
+
+//LTC block
+  TimeCode_Caption: Ansistring = '';
+  TimeCode_delta: integer = 0;
+  FicheroM: THandle;
+  MyShift: Double = 0; // Смещение LTC относительно системного времени
+  TCExists: boolean = false;
+  MyShiftOld: Double = 0; // Старое смещение LTC относительно системного времени
+  MyShiftDelta: Double = 0;
+  MySinhro: TSinchronization = chltc;
+  Compartido: PCompartido;
+
+//*LTC block
+
    var_array : array[0..1000] of TWebarray;
    array_count : integer = 0;
 
@@ -223,12 +252,8 @@ begin
         webWriteLog('TCPaccept>', ' Request ' + system.copy(uri, 1, 30));
 
         outstr :=soh+ ProcessRequest(uri)+eot+#0;
-        if pos('GET_', uri) > 0 then begin
 
-//            synWriteLog('GET_', uri + ' =  ' + outstr);
-        end;
         webWriteLog('TCPaccept>', ' Answer ' + system.copy(outstr, 1, 190));
-
         strpcopy(outbuffer,outstr);
         webWriteLog('TCPaccept>', Format('Processed len=%d time=%d ', [rc, timegettime - st]) + ' Answer= ' + system.copy(outstr, 1, 30));
         rc := Send(ClientSocket.handle, outbuffer[0], length(outstr), 0);
@@ -524,7 +549,7 @@ begin
     TCPsrv.Close;
     TCPHTTPsrv.Close;
     sleep(200);
-    TCPsrv.free;
+    TCPsrv.Free;
     TCPHTTPsrv.free;
     webWriteLog('HALT>Finish');
     halt;
@@ -550,6 +575,18 @@ var
     strlist: TStringList;
     rc: integer;
 begin
+    FicheroM := OpenFileMapping(FILE_MAP_ALL_ACCESS, FALSE, 'MiFichero');
+    { Если нет, то ошибка }
+    if FicheroM = 0 then
+      FicheroM := CreateFileMapping($FFFFFFFF, nil, PAGE_READWRITE, 0,
+        SizeOf(TCompartido), 'MiFichero');
+    // если создается файл, заполним его нулями
+    if FicheroM = 0 then
+      raise Exception.Create('Не удалось создать файл' +
+        '/Ошибка при создании файла');
+    Compartido := MapViewOfFile(FicheroM, FILE_MAP_WRITE, 0, 0, 0);
+    Compartido^.Manejador2 := Handle;
+    Compartido^.Cadena := 'request';
 
     Ic(1, Application.Icon);
     Timer1.Enabled := true;
@@ -579,134 +616,6 @@ begin
 
 end;
 
-{ TTCPHttpThrd }
-
-//constructor TTCPHttpThrd.Create(hsock: tSocket);
-//begin
-////    writeTimeLog('TCPHttpThrd.Create');
-//    inherited Create(false);
-//    sock := TTCPBlockSocket.Create;
-//    Headers := TStringList.Create;
-//    InputData := TMemoryStream.Create;
-//    OutputData := TMemoryStream.Create;
-//    sock.socket := hsock;
-//    FreeOnTerminate := true;
-//    Priority := tpNormal;
-//end;
-//
-//destructor TTCPHttpThrd.Destroy;
-//begin
-//    sock.free;
-//    Headers.free;
-//    InputData.free;
-//    OutputData.free;
-//    inherited Destroy;
-//end;
-//
-//procedure TTCPHttpThrd.doExecute;
-//var
-//    b: byte;
-//    timeout: Integer;
-//    s: string;
-//    method, URI, protocol: string;
-//    size: Integer;
-//    X, n: Integer;
-//    resultcode: Integer;
-//    rsstr: string;
-//    st: int64;
-//
-//    procedure addMark(num: integer);
-//    begin
-//        rsstr := rsstr + format('%d %dms ', [num, TimegetTime - st]);
-//        st := TimegetTime;
-//    end;
-//
-//begin
-//    rsstr := '';
-//    st := timegettime;
-//    addMark(1);
-//    timeout := 1200;
-//  // read request line
-//    s := sock.RecvString(timeout);
-//    WriteLog('URI ' + s);
-//    addMark(2);
-//    if sock.lastError <> 0 then
-//        Exit;
-//    if s = '' then
-//        Exit;
-//    method := fetch(s, ' ');
-//    if (s = '') or (method = '') then
-//        Exit;
-//    URI := fetch(s, ' ');
-//    if URI = '' then
-//        Exit;
-//    protocol := fetch(s, ' ');
-////    protocol :=  'HTTP/1.0';
-//    Headers.Clear;
-//    size := -1;
-//  // read request headers
-//    if protocol <> '' then begin
-//        if pos('HTTP/', protocol) <> 1 then
-//            Exit;
-//        repeat
-//
-//            s := sock.RecvString(timeout);
-//            if pos('Host:', s) > 0 then
-//                rsstr := s + rsstr;
-//            addMark(3);
-//            if sock.lastError <> 0 then
-//                Exit;
-//            if s <> '' then
-//                Headers.add(s);
-//            if pos('CONTENT-LENGTH:', Uppercase(s)) = 1 then
-//                size := StrToIntDef(SeparateRight(s, ' '), -1);
-//        until s = '';
-//    end;
-//  // recv document...
-//    InputData.Clear;
-//    if size >= 0 then begin
-//        InputData.SetSize(size);
-//        X := sock.RecvBufferEx(InputData.Memory, size, timeout);
-//        addMark(4);
-//        InputData.SetSize(X);
-//        if sock.lastError <> 0 then
-//            Exit;
-//    end;
-//    OutputData.Clear;
-//    resultcode := ProcessHttpRequest(method, URI);
-//    sock.SendString('HTTP/1.0 ' + IntToStr(resultcode) + CRLF);
-//    if protocol <> '' then begin
-//        Headers.add('Content-length: ' + IntToStr(OutputData.size));
-//        Headers.add('Connection: close');
-//        Headers.add('Date: ' + Rfc822DateTime(now));
-//        Headers.add('Server: Synapse HTTP server demo');
-//        Headers.add('');
-//        addMark(5);
-//        for n := 0 to Headers.count - 1 do
-//            sock.SendString(Headers[n] + CRLF);
-//        addMark(6);
-//        headers.SaveToFile('g:\home\headers.txt');
-//    end;
-//    if sock.lastError <> 0 then
-//        Exit;
-//    sock.SendBuffer(OutputData.Memory, OutputData.size);
-//    addMark(7);
-//    addMark(8);
-//
-//    sock.CloseSocket;
-//    addMark(9);
-//    webWriteLog('tcpip', 'Request process ' + rsstr);
-//    webWriteLog('Request process ' + rsstr);
-//end;
-//
-//procedure TTCPHttpThrd.Execute;
-//var
-//    st: int64;
-//begin
-//    st := timegettime;
-//    doExecute;
-////  WriteLog('Request process time = '+IntToStr(timeGetTime-st));
-//end;
 procedure ziparray(ind:integer);
 var
    i2 : integer;
@@ -985,6 +894,16 @@ end;
 
 
 
+procedure  Add_CTC_TLP(var instr:ansistring);
+begin
+    if TLP_position<>'' then
+          inStr := inStr + '"TLP_value":' + TLP_value+ ',';
+    if TimeCode_Caption<>'' then begin
+          inStr := inStr + '"CTC_caption":"' + TimeCode_Caption+ '",';
+          inStr := inStr + '"CTC_delta":"' + IntToStr(TimeCode_delta)+ '",';
+    end;
+
+end;
 
 function ListWebVars: ansistring;overload;
 var
@@ -996,12 +915,14 @@ var
     Selvalue: AnsiString;
 begin
     result := '{';
+    Add_CTC_TLP(Result);
     for i1 := 0 to VarCount - 1 do begin
         if i1 = VarCount - 1 then
             result := result + '"' + webvars[i1].Name + '"' + ':"' + IntToStr(webvars[i1].changed) + '"'
         else
             result := result + '"' + webvars[i1].Name + '"' + ':"' + IntToStr(webvars[i1].changed) + '",';
     end;
+    if result[length(result)]=',' then system.Delete(result,length(result),1 );
     result := result + '}';
 end;
 
@@ -1015,11 +936,10 @@ var
     Selvalue: AnsiString;
 begin
     result := '{';
+    Add_CTC_TLP(Result);
     for i1 := 0 to array_count - 1 do begin
             result := result + '"' + var_array[i1].Name + '"' + ':"' + IntToStr(var_array[i1].changed) + '",';
     end;
-    if TLP_position<>'' then
-          result := result + '"TLP_value":' + TLP_value+ ',';
     for i1 := 0 to VarCount - 1 do begin
         if (webvars[i1].Name = 'TLT') or (webvars[i1].Name = 'TLO') then continue;
         result := result + '"' + webvars[i1].Name + '"' + ':"' + IntToStr(webvars[i1].changed) + '",';
@@ -1309,7 +1229,58 @@ begin
 
 
 end;
+function TwoDigit(dig: integer): string;
+begin
+    try
+        if (dig >= 0) and (dig <= 9) then
+            result := '0' + inttostr(dig)
+        else
+            result := inttostr(dig);
+    except
+        On E: Exception do
+        begin
+            // WriteLog('MAIN', 'UCommon.TwoDigit | ' + E.Message);
+            result := '00';
+        end
+        else
+            result := '00';
+    end;
+end;
 
+
+function MyDateTimeToStr(tm: tdatetime): string;
+var
+    Hour, Min, Sec, MSec: Word;
+begin
+    try
+        DecodeTime(tm, Hour, Min, Sec, MSec);
+        result := TwoDigit(Hour) + ':' + TwoDigit(Min) + ':' + TwoDigit(Sec) +
+          ':' + TwoDigit(Trunc(MSec / 40));
+    except
+        On E: Exception do
+        begin
+            // WriteLog('MAIN', 'UCommon.MyDateTimeToStr | ' + E.Message);
+            result := '00:00:00:00';
+        end
+        else
+            result := '00:00:00:00';
+    end;
+end;
+
+function TimeCodeDelta: Double;
+begin
+  result := 0;
+  if MySinhro = chltc then
+    result := MyShift;
+end;
+
+procedure THTTPSRVForm.Timer2Timer(Sender: TObject);
+begin
+    MyShift := Compartido^.Shift;
+    TCExists := Compartido^.State;
+     TimeCode_delta :=  trunc((now - TimeCodeDelta)*24*3600*1000);
+     TimeCode_Caption := '*' + MyDateTimeToStr(now - TimeCodeDelta)
+end;
 
 var
     ini: tinifile;
