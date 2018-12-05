@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>MVSGroup Products</title>
+        <link rel="stylesheet" href="../css/navigation.css" type="text/css"/>
+        <link rel="stylesheet" href="../css/style1.css" type="text/css"/>
+		<link rel="stylesheet" href="../css/pages.css" type="text/css"/>
+		<link rel="stylesheet" href="../css/forms.css" type="text/css"/>
+        <!--
+		<meta http-equiv="Cache-Control" content="no-cache">
+        <meta http-equiv="Pragma" content="no-cache">
+		-->
+        <meta charset="UTF-8">
+		<meta name="description" content="">
+		
+		<script src="../scripts/vendor/jquery-3.3.1.js "></script>
+		<script src="../scripts/main1.js"></script>
+		<script src="../scripts/pages.js"></script>
+        <script src="../scripts/listtitle.js"></script>
+        <script src="../scripts/listproducts.js"></script> 		
+        <script src="../scripts/tables.js"></script>
+        <script src="../scripts/forms.js"></script>		
+        <!--
+		<meta http-equiv="Cache-Control" content="no-cache">
+        <meta http-equiv="Pragma" content="no-cache">
+        -->
+
+    </head>
+    <body>
+	    <div id ="divarrayup" class="nav" onClick="TopScreen()"><img id="arrayup" src="../images/arrayup1.png" style="width: 50px; height=50px"></div>
+	    <div id ="tryproducts" class="classtry" style="display: none">
+		    <div id="trytitle"  style="vertical-align: middle; align-items: center;"> 
+				<table class="tabtrytitle">
+ 				    <tr>
+			            <td style="width: 25%; text-align: center;">
+						    <img id="imgtrytitle" src='../images/tryprod.png'/>
+						</td>
+						<td id="tabtrytitletext" style="width: 75%; text-align: left;">
+						    Валюта:</br>Количество:
+						</td>
+					</tr>
+				</table>
+			</div>
+            <div id="trybody" style="overflow: auto;">
+			    <table class="tabtrybody" >
+				    <thead id="idtrybodyhead">
+			            <tr style="height: 1px">
+						    <th style="width: 10%; border-collapse: collapse;"></th>
+						    <th style="width: 30%; border-collapse: collapse;"></th>
+							<th style="width: 20%; border-collapse: collapse;"></th>
+							<th style="width: 34%; border-collapse: collapse;"></th>
+							<th style="width: 6%; border-collapse: collapse;"></th>
+ 				        </tr>
+						<tr>
+						    <th style="width: 10%; border-bottom: 1px solid; border-right: 1px solid; border-collapse: collapse;">
+							    №
+							</th>
+						    <th colspan="4" style="border-bottom: 1px solid; border-collapse: collapse;">
+						        Наименование
+							</th> 
+ 				        </tr>
+						<tr> 
+						    <th colspan="2" style="width: 40%; border-bottom: 2px solid; border-right: 1px solid; border-collapse: collapse;">
+							    Цена
+							</th>
+							<th style="width: 20%; border-bottom: 2px solid; border-right: 1px solid; border-collapse: collapse;">
+							    Кол-во
+							</th>
+							<th colspan="2" style="border-bottom: 2px solid; border-collapse: collapse;">
+							    Стоимость
+							</th>
+ 				        </tr>
+					</thead>
+					<tbody id="idtrybodybody">
+					<tbody>
+			    </table>
+            </div>
+			<div id="trytotal">
+			    <table class="tabtrytotal" style="width: 100%">
+			        <tr id="r1trytotal">
+					    <th id="trytotalsumtxt" style="width: 45%; text-align: right;">
+					         Итого:
+						</th> 
+						<th id="trytotalsum" style="width: 55%; text-align: center;">
+					        0.00р. 
+						</th>
+					</tr>	
+					<tr id="r2trytotal">
+						<th id="trytotalndstxt" style="width: 45%; text-align: right;">
+					         в т.ч. НДС:
+						</th> 
+						<th id="trytotalnds" style="width: 55%; text-align: center;">
+					        0.00р. 
+						</th>
+					</tr>
+			    </table>  
+            </div>
+			<div id="tryfooter">
+			    <table class="tabtryfooter">
+ 				    <tr>
+			            <th style="width: 50%; text-align: center;">
+						    <input class="btntry" id="btntrypay" type="button" value="Оплатить" onClick="onPagePayment()"/>
+						</th>
+						<th style="width: 50%; text-align: center;">
+						    <input class="btntry" id="btntryclear" type="button" value="Очистить" onClick="clearTryProduct()"/>
+						</th>
+					</tr>
+				</table>	
+            </div>
+		</div>
+		<!-- Наше модальное всплывающее окно -->
+        <div id="popupWin" class="modalwin">
+            <div id="textPopupWin">Контент платный.</br>Скачивание возможно, только после оплаты.</div>
+            <form>
+                <input type="button" id="btnPopupWin" value="OK">
+            </form>
+        </div>
+	
+        <script type="text/javascript">
+		    var brver= ifBrowser();
+			var ie = false;
+			var currbr = brver[0];
+			if (currbr == "ie") { ie = true; };
+			
+			if (ie) {
+			    var ver = +brver[1];
+				if (+ver < 11) { window.location.href = "../pages/browsers.html"; };
+			};
+		
+            var	strJSON = sessionStorage.getItem('purchaseJSON');	 
+		    if (strJSON !== null) {
+			    purchase = JSON.parse(strJSON);
+			    if (purchase.length == 0) {
+                    document.getElementById("tryproducts").style.display="none";
+	            } else {
+		            document.getElementById("tryproducts").style.display="block";
+	            };
+			};
+			
+		    var lang = sessionStorage.getItem('lang');
+			if (lang !== null) { 
+                language = lang;  
+			}  else {
+			    language = "RUS"; 
+			};
+			//sessionStorage.setItem('currency', 'currcurrency');
+			var  ccrns = sessionStorage.getItem('currency');
+			if (ccrns !== null) { 
+                currcurrency = ccrns; 
+			}  else {
+			    currcurrency = "0"; 
+			};
+		     			
+			getCurrecy();
+			lastupdate = 0;
+			
+			if (ie) {
+			    document.attachEvent('DOMContentLoaded', myresizeproducts);
+		        window.attachEvent('resize', myresizeproducts); 
+            } else {			
+		        document.addEventListener('DOMContentLoaded', myresizeproducts);
+		        window.addEventListener('resize', myresizeproducts);
+			};
+			
+			//var MyInterval;
+			
+			$(function () {  
+                $('.mmenu a').each(function () { 
+                    var location = window.location.href; 
+                    var link = this.href;  
+                    if(location == link) { 
+                        $(this).addClass('active');
+                    }
+                });
+            });
+			
+			$(function () {  
+                $('.submmenu a').each(function () { 
+                    var location = window.location.href; 
+                    var link = this.href;  
+                    if(location == link) { 
+                        $(this).addClass('active');
+                    }
+                });
+            });
+			
+//			$(document).ready(function(){ 
+//                var body = $("body"); 
+//                body.fadeIn(500); 
+//                $(document).on("click", "a:not([href^='#']):not([href^='tel']):not([href^='mailto'])", function(e) { 
+//                    e.preventDefault(); 
+//                    $("body").fadeOut(500); 
+//                    var self = this;
+//                    setTimeout(function () { window.location.href = $(self).attr("href"); }, 500); 
+//                });
+//            }); 
+
+            if (location.hash) {               
+                window.scrollTo(0, 0);         
+                setTimeout(function() { window.scrollTo(0, 0); }, 1);
+            }
+			
+			window.onload = function() {
+				var table=document.getElementById("tableproducts");
+				createTable("tableproducts",ListProducts,10);
+				combobox1Select();
+				myresizeproducts();
+
+				prodInterval = setInterval(ShowArrayUp,500);
+            };
+			
+			window.onresize = function() {
+				myresizeproducts();
+			};
+			
+		</script>
+		
+<!-- *******************************  СТРОКА МЕНЮ СТРАНИЦЫ КОНТАКТЫ Начало ************************************************** 
+    файл CSS - css/navigation.css 
+        id = mainmenu          -  параметры фона строки
+        id = divmainmenu       -  параметры контейнера основного меню
+		id = divmylogo         -  параметры контейнера логотипа
+	    id = mylogo            -  параметры логотипа (размер, положение)
+        id = mavigation        -  параметры описания основного навигационого меню 	
+-->		
+		<div id="mainmenu" >
+            <div id="divmainmenu" >	
+		        <div id="divmylogo" style="width: 100%; height: 100%">	
+		            <a href="../index.html"><img id="mylogo" src="../images/MVSGroup.png" ></a>
+                </div> 					
+                <ul class="mmenu" id="navigation">
+                    <li><a href="../pages/products.html">Продукты</a></li>
+                    <li><a href="../pages/services.html">Услуги</a></li>
+					<li><a href="../pages/supports.html">Поддержка</a></li>
+                    <li><a href="../pages/contacts.html">Контакты</a></li>
+                </ul>
+	        </div>
+			<div id="idregistration">
+			    <div id="divusers" onclick="forminput()" style="display: none"> 
+				    <img id="imgusers" src="../images/users.png"> 
+					<span id="mode_users" style="font-size: 11px; text-align: center; margin-left: 15%;">Вход</span>
+				</div>
+				<div id="divlanguage"> RUS </div>
+				<div id="divflaguk" onclick="setLanguageUK('page')" > 
+				    <img id="imgflaguk" src="../images/flaguk.png"> 
+				</div>
+				<div id="divflagrus" onclick="setLanguageRUS('page')">
+				     <img id="imgflagrus" src="../images/rusflag.png">
+				</div>
+			</div>
+ 		</div>
+<!-- *******************************  СТРОКА МЕНЮ СТРАНИЦЫ КОНТАКТЫ Окончание ************************************************** -->
+
+<!-- *******************************  Контейнер СТРАНИЦЫ КОНТАКТЫ Начало ******************************************************* -->
+        <div style="display:block; background-color:#333; color:white; font-family:Arial;">
+<!-- *******************************  Таблица СТРАНИЦЫ КОНТАКТЫ Начало ********************************************************* -->		
+		    <table id="tableproducts" class="menu" > 
+<!-- __________________________________  Строка задает количество столбцов Начало ______________________________________________ -->			
+				<tr id="countcols" >
+				    <td width="2%">  </td>
+					<td width="12%">  </td>
+					<td width="12%">  </td>
+					<td width="12%">  </td>
+					<td width="12%">  </td>
+					<td width="12%">  </td>
+					<td width="12%">  </td>
+					<td id="currency" width="12%" align="left"><span id="valjuta">Валюта:</span> 
+					    <select id="combobox1" name="List"  value="0" align="left" style="background-color: #333; color: white" OnChange='combobox1Select()'>
+                            <option value="0" >p. (Россия)</option>
+                            <option value="1" >€ (EURO)</option>
+							<option value="1" >$ (USA)</option>
+                        </select>
+                        <!--<input type="text" name="Vvod"  size="20"  maxlength="20" value="Поле ввода">-->  
+					</td>
+					<td id="rate" width="12%"><div id="EUR">Курс: € — 00,00 р.</div> </td>
+					<td width="2%">  </td>
+				</tr>
+<!-- _________________________________  Строка задает количество столбцов Окончание ___________________________________________ -->	
+
+<!-- ______________________________  Строка между строкой контектов и нижней строкой Начало _______________________________ 
+    файл CSS - css/style1.css 
+        id = beetwinrow   -  параметры отображения названия поддержки
+-->			
+	
+				<tr>
+				    <td id="freerow"  colspan="10"> </td>
+				</tr>
+<!-- ______________________________ Строка между строкой контектов и нижней строкой Окончание _____________________________ -->	
+<!-- ______________________________ Строка Нижняя строка таблицы Начало ___________________________________________________ 
+    файл CSS - css/style1.css 
+        id = tabfooter1     -  параметры списка первого столбца
+        id = tabfooter2     -  параметры списка второго столбца
+		id = tabfooter3     -  параметры списка третьего столбца
+		id = tabfooter4     -  параметры списка четвкртого столбца
+-->								
+				<tr id="lastrow">
+				    <td style="background-color: #333;">
+					</td>
+				    <td colspan="2"> 
+  			    	    <ul id="tabfooter1">
+                            <li><a href="#">Услуги</a></li>
+                            <li><a href="#">Продукты</a></li>
+					        <li><a href="#">Поддержка</a></li>
+                            <li><a href="#">Контакты</a></li>
+                        </ul>
+					</td>
+					<td colspan="2"> 
+  			    	    <ul id="tabfooter2">
+                            <li><a href="#">Услуги</a></li>
+                            <li><a href="#">Продукты</a></li>
+					        <!--<li><a href="#">Поддержка</a></li>
+                            <li><a href="#">Контакты</a></li>-->
+                        </ul>
+					</td>
+					<td colspan="2"> 
+  			    	    <ul id="tabfooter3">
+                            <li><a href="#">Услуги</a></li>
+                            <li><a href="#">Продукты</a></li>
+					        <li><a href="#">Поддержка</a></li>
+                            <li><a href="#">Контакты</a></li>
+                        </ul>
+					</td>
+					<td colspan="2"> 
+  			    	    <ul id="tabfooter4">
+                            <li><a href="#">Скачать данные</a></li>
+                            <li><a href="#">Документация</a></li>
+					        <li><a href="#">Библиотека</a></li>
+                            <li><a href="#">Контакты</a></li>
+                        </ul>
+					</td>
+				</tr>  
+<!-- ______________________________ Строка Нижняя строка таблицы Окончание  ___________________________________________________ -->			
+            </table>	
+<!-- *******************************  Таблица СТРАНИЦЫ КОНТАКТЫ Окончание ***************************************************** -->			
+        </div>
+<!-- *******************************  Контейнер Текста  СТРАНИЦЫ КОНТАКТЫ Окончание ******************************************* -->
+<!-- *******************************  ЗАВЕРШАЮЩИЙ БЛОК ОСНОВНОЙ СТРАНИЦЫ Начало *********************************************** -->
+		<div id="myfooter"> &copy; MVSGroup.tv 2018. Design of PZavialov  </div>
+<!-- *******************************  ЗАВЕРШАЮЩИЙ БЛОК ОСНОВНОЙ СТРАНИЦЫ Окончание ******************************************** -->
+
+    </body>
+</html>

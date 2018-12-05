@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>MVSGroup Browsers</title>
+		<link rel="stylesheet" href="../css/navigation.css" type="text/css"/>
+        <link rel="stylesheet" href="../css/style1.css" type="text/css"/>
+		<link rel="stylesheet" href="../css/pages.css" type="text/css"/>
+        <!--
+		<meta http-equiv="Cache-Control" content="no-cache">
+        <meta http-equiv="Pragma" content="no-cache">
+		-->
+        <meta charset="UTF-8">
+		<meta name="description" content="">
+		
+		<!--<script src="../scripts/vendor/jquery-3.3.1.js "></script>-->
+		<script src="../scripts/main1.js"></script>
+		<script src="../scripts/pages.js"></script>
+        <script src="../scripts/listtitle.js"></script>		
+        <!--
+		<meta http-equiv="Cache-Control" content="no-cache">
+        <meta http-equiv="Pragma" content="no-cache">
+        -->
+
+    </head>
+    <body>
+        <script type="text/javascript">
+		    var brver= ifBrowser();
+			var ie = false;
+			var currbr = brver[0];
+			if (currbr == "ie") { ie = true; };
+						
+		    //var lang = sessionStorage.getItem('lang');
+			//if (lang !== null) { 
+            //    language = lang; 
+			//}  else {
+			    language = "RUS"; 
+			//};
+						
+			if (ie) {
+			    document.attachEvent('DOMContentLoaded', myresizebrowsers);
+		        window.attachEvent('resize', myresizebrowsers); 
+            } else {			
+		        document.addEventListener('DOMContentLoaded', myresizebrowsers);
+		        window.addEventListener('resize', myresizebrowsers);
+			}
+			
+			window.onload = function() {
+				myresizebrowsers();
+            }
+			
+			window.onresize = function() {
+				myresizebrowsers();
+            }
+			
+		</script>
+		
+
+<!-- *******************************  Контейнер СТРАНИЦЫ КОНТАКТЫ Начало ******************************************************* -->
+        <div style="display:block; background-color:#333; color:white; font-family:Arial;">
+<!-- *******************************  Таблица СТРАНИЦЫ КОНТАКТЫ Начало ********************************************************* -->		
+		    <table  class="menu" > 
+<!-- __________________________________  Строка задает количество столбцов Начало ______________________________________________ -->			
+				<tr id="brcount">
+				    <td width="2%">  </td>
+					<td width="12%">  </td>
+					<td width="12%">  </td>
+					<td width="12%">  </td>
+					<td width="12%">  </td> 
+					<td width="12%">  </td>
+					<td width="12%">  </td>
+					<td width="12%">  </td>
+					<td width="12%">  </td> 
+					<td width="2%">  </td>
+				</tr>
+<!-- _________________________________  Строка задает количество столбцов Окончание ___________________________________________ -->	
+<!-- _________________________________  Строка задает текст контактов Начало __________________________________________________ -->		
+		        <tr>
+                    <td id="mainrowbr" colspan="10" align="justify"; style="background-color: #333">
+                        Иcпользуемая версия Internet Explorer</br> не поддерживает работу с содержимым сайта.</br>
+						<span style="color: aqua">(The used Internet Explorer version</br>doesn't support work with website contents.)</span></br>
+						</br> Обновите Ваш браузер до версии 11,</br>или используйте программное обеспечение</br>другого производителя.</br>
+						<span style="color: aqua">(Update your browser to version 11,</br> or use the software of other producers.)</span>
+                    </td>
+                </tr>
+<!-- _________________________________  Строка задает текст контактов Окончание _______________________________________________ -->
+<!-- __________________________________  Строка задает количество столбцов Начало ______________________________________________ -->			
+				<tr id="rowbrowsers" style="height: 50px;">
+				    <td></td>
+					<td></td>
+					<td class="copybrowsers">
+					    <a href="https://www.microsoft.com/ru-ru/download/internet-explorer.aspx" style="color: white; text-decoration: none;">
+					        <img class="linkbrowsers" src="../images/ie.jpg" style="width: 50px; height=50px; align: center"/><p>IE.11</p>
+					    </a>
+					</td>
+					<td class="copybrowsers">
+					    <a href="https://www.google.ru/chrome/" style="color: white; text-decoration: none;">
+					        <img class="linkbrowsers" src="../images/chrome1.jpg" style="width: 50px; height=50px; align: center"/><p>Chrome</p>
+						</a>
+					</td>
+					<td class="copybrowsers">
+					    <a href="http://ru.opera.com/download/" style="color: white; text-decoration: none;">
+						    <img class="linkbrowsers" src="../images/opera.jpg" style="width: 50px; height=50px; align: center"/><p>Opera</p>
+						</a>
+					</td>
+					<td class="copybrowsers">
+					    <a href="http://www.mozilla.org/ru/firefox/new/" style="color: white; text-decoration: none;">
+					        <img class="linkbrowsers" src="../images/firefox.jpg" style="width: 50px; height=50px; align: center"/><p>FireFox</p>
+						</a>
+					</td>
+					<td class="copybrowsers">
+					    <a href="http://browser.yandex.ru/" style="color: white; text-decoration: none;">
+					        <img class="linkbrowsers" src="../images/yandex.jpg" style="width: 50px; height=50px; align: center"/><p>Yandex</p>
+						</a>
+					</td>
+					<td class="copybrowsers">
+					    <a href="http://www.apple.com/ru/safari/download/" style="color: white; text-decoration: none;">
+					        <img class="linkbrowsers" src="../images/safari.jpg" style="width: 50px; height=50px; align: center"/><p>Safari</p>
+						</a>
+					</td>
+					<td></td>
+					<td></td>
+				</tr>
+<!-- _________________________________  Строка задает количество столбцов Окончание ___________________________________________ -->
+<!-- ______________________________ Строка между строкой контектов и нижней строкой Начало ____________________________________ -->
+
+				<tr>
+				    <td id="brfreerow"  colspan="1"  style="color: white"></td>
+				</tr>
+<!-- ______________________________ Строка между строкой контектов и нижней строкой Окончание _________________________________ -->	
+		
+            </table>	
+<!-- *******************************  Таблица СТРАНИЦЫ КОНТАКТЫ Окончание ***************************************************** -->			
+        </div>
+<!-- *******************************  Контейнер Текста  СТРАНИЦЫ КОНТАКТЫ Окончание ******************************************* -->
+<!-- *******************************  ЗАВЕРШАЮЩИЙ БЛОК ОСНОВНОЙ СТРАНИЦЫ Начало *********************************************** -->
+		<div id="brmyfooter"> &copy; MVSGroup.tv 2018.</div>
+<!-- *******************************  ЗАВЕРШАЮЩИЙ БЛОК ОСНОВНОЙ СТРАНИЦЫ Окончание ******************************************** -->
+    </body>
+</html>
+
+
+
+
+
+
+        

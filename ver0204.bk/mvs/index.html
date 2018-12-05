@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+	    <link rel="stylesheet" href="css/navigation.css" type="text/css"/>
+        <link rel="stylesheet" href="css/style1.css" type="text/css"/>
+		<link rel="stylesheet" href="css/pages.css" type="text/css"/>
+		<link rel="stylesheet" href="css/forms.css" type="text/css"/>
+		
+        <title>MVSGroup Main</title>
+        <!--
+		<meta http-equiv="Cache-Control" content="no-cache">
+        <meta http-equiv="Pragma" content="no-cache">
+		-->
+		
+        <meta charset="UTF-8">
+		<meta name="description" content="">
+		<meta http-equiv=”X-UA-Compatible” content=”IE=8” />
+		
+		<script src="scripts/vendor/jquery-3.3.1.js "></script>
+		<script src="scripts/main1.js"></script>
+		<script src="scripts/listtitle.js"></script>
+		<script src="scripts/listproducts.js"></script>
+		<script src="scripts/listservices.js"></script>
+		<script src="scripts/tables.js"></script>
+		<script src="scripts/forms.js"></script>
+		       
+        <!--
+		<meta http-equiv="Cache-Control" content="no-cache">
+        <meta http-equiv="Pragma" content="no-cache">
+        -->
+
+    </head>
+    <body>
+        <div id ="divarrayup" class="nav" onClick="TopScreen()"><img id="arrayup" src="images/arrayup1.png" style="width: 50px; height=50px"></div>	
+		<div id="popusermenu">
+	        <div id="boundusermenu"  onmouseover="showpopUserMenu1()" onmouseout="closepopUserMenu()">
+                <ul class="listusermenu">
+                  <li>Вход</li>
+                  <li>Регистрация</li>
+                </ul>
+		    </div>
+		</div>
+        <div id="popupWin" class="modalwin">
+            <div id="textPopupWin">Контент платный.</br>Скачивание возможно, только после оплаты.</div>
+            <form>
+                <input type="button" id="btnPopupWin" value="OK">
+            </form>
+        </div>  
+		<div id="dialogWin" class="modalwin">
+            <div id="textDialogWin">Вы действительно,</br> хотите выйти?</div>
+            <form>
+                <input type="button" id="btnDialogCancel" value="Нет">
+				<input type="button" id="btnDialogOK" value="Да">
+            </form>
+        </div>
+		<div id="messageWin" class="modalwin">
+            <div id="textMessageWin">Данные подтверждены,</br>Приветствуем Вас</br>на нашем сайте.</div>
+        </div>
+        <div id="login" class="loginform">
+            <form> 
+                <div class="inputstr">
+				    <div id="iddivintext" class="divintext">Вход</div>
+					<div class="divbtnexit"> 
+                        <input id="exitlogin" type="button" value="X"/> 
+                    </div>
+				</div> 
+				<div style="position: absolute; top: 60px">
+				    <div id="inputmess"> </div>
+                    <p style="margin-top: -2px"> 
+                        <label for="username" id="iduname" class="uname"> Логин или e-mail</label>
+                        <input id="username" name="username" required="required" type="text" placeholder="login  или e-mail" 
+						       onkeyup="inputUserKeyUp()" onchange="inputUserOnChange(event)"/>
+						<!--<input id="username" name="username" required="required" type="text" placeholder="login  или e-mail" oninvalid="this.setCustomValidity('Wow')" oninput="setCustomValidity('')/>-->
+                    </p>
+                    <p> 
+                        <label for="password" id="idyoupasswd" class="youpasswd"> Пароль </label>
+                        <input id="password" name="password" required="required" type="password" placeholder="например 123456" onkeyup="inputUserKeyUp()"/> 
+                    </p>
+                    <p class="keeplogin"> 
+                        <input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping" /> 
+                        <label for="loginkeeping" id="idloginkeeping" style="font-size: 16px;">Запомнить меня</label>
+                    </p>
+                    <p class="login button"> 
+                        <input id="btnexecute" type="button" value="Войти" onclick="userIdentification()"/> 
+                    </p>
+                    <p id="idregister" class="change_link" onclick="showRegisterWin()">
+                       Зарегистрироваться
+                    </p>
+				</div>
+            </form>
+        </div>
+   
+        <div id="register" class="registerform">
+            <form>
+   			    <div class="inputstr">
+				    <div id="idregdivintext" class="divintext">Регистрация</div>
+					<div class="divbtnexit"> 
+                        <input id="exitregister" type="button" value="X"/> 
+                    </div>
+				</div>
+                <div style="position: absolute; top: 60px">
+				    <div id="registrmess"> </div>
+				    <p> 
+                        <label for="namesignup" id="idlbregname" class="name">Имя</label>
+                        <input id="namesignup" name="namesignup" required="required" type="text" placeholder="Пётр" />
+                    </p>
+					<p> 
+                        <label for="subnamesignup" id="idlbregsubname" class="subname">Фамилия</label>
+                        <input id="subnamesignup" name="subnamesignup" required="required" type="text" placeholder="Иванов" />
+                    </p>
+                    <p> 
+                        <label for="usernamesignup" id="idlbreglogin" class="uname">Логин</label>
+                        <input id="usernamesignup" name="usernamesignup" required="required" type="text" placeholder="myname1" />
+                    </p>
+                    <p> 
+                        <label for="emailsignup" id="idlbregmail" class="youmail"> E-mail</label>
+                        <input id="emailsignup" name="emailsignup" required="required" type="email" placeholder="sitehere@my.com"/> 
+                    </p>
+                    <p> 
+                        <label for="passwordsignup" id="idlbregpassword" class="youpasswd">Пароль </label>
+                        <input id="passwordsignup" name="passwordsignup" required="required" type="password" placeholder="123456"/>
+                    </p>
+                    <p> 
+                        <label for="passwordsignup_confirm" id="idlbregconfirm" class="youpasswd">Подтвердите пароль </label>
+                        <input id="passwordsignup_confirm" name="passwordsignup_confirm" required="required" type="password" placeholder="123456"/>
+                    </p>
+                        <p class="signin button"> 
+                        <input id="btnconfirm" type="button" value="Зарегистрировать" onclick="userRegistration()"/> 
+                    </p>
+                    <p id="idlogin" class="change_link" onclick="showLoginWin()">  
+                        Войти на сайт
+                    </p>
+				</div>
+            </form>
+        </div>						
+           
+        <script type="text/javascript">
+		    var brver= ifBrowser();
+			var ie = false;
+			var currbr = brver[0];
+			if (currbr == "ie") { ie = true; };
+			
+			if (ie) {
+			    var ver = +brver[1];
+				if (+ver < 11) { window.location.href = "pages/browsers.html"; };
+			};
+		
+			var lang = sessionStorage.getItem('lang');
+            if (lang !== null) { 
+                language = lang;  
+			}  else {
+			    language = "RUS"; 
+			};	
+			
+			if (ie) {
+			    document.attachEvent('DOMContentLoaded', myresize);
+		        window.attachEvent('resize', myresize); 
+				window.onresize = myresize; 
+            } else {			
+		        document.addEventListener('DOMContentLoaded', myresize);
+		        window.addEventListener('resize', myresize);
+			}
+			
+			//$(document).ready ( function(){ myresize();});
+			
+			//var currbkgnd = sessionStorage.getItem('bkgnd');
+			
+			//if (currbkgnd !== null) {
+			//    //var cbkgnd = JSON.parse(currbkgnd); 
+			//    indexMainImage = +currbkgnd;
+			//} else {
+            //    indexMainImage = 1;			   
+			//};
+			
+			//var reg = sessionStorage.getItem('isregistration');
+			//if (reg == null) {
+			//    clearRegistration;
+			//} else {
+			//    if (reg == "Yes") {
+			//        userregistrated = true;
+			//    } else {} {
+			//	    userregistrated = false;
+			//	};
+			//};
+			
+//			$(document).ready(function(){ 
+//                var body = $("body"); 
+//                body.fadeIn(500); 
+//                $(document).on("click", "a:not([href^='#']):not([href^='tel']):not([href^='mailto'])", function(e) { 
+//                    e.preventDefault(); 
+//                    $("body").fadeOut(500); 
+//                    var self = this;
+//                    setTimeout(function () { window.location.href = $(self).attr("href"); }, 500); 
+//                });
+//            }); 
+			
+			var ext1 = document.location.hash;
+        	if (ext1 == "#RUS") {language = "RUS"};
+        	if (ext1 == "#ENG") {language = "ENG"};
+			
+			if (location.hash) {               
+                window.scrollTo(0, 0);         
+                setTimeout(function() { window.scrollTo(0, 0); }, 1);
+            }
+			
+			window.onload = function() {
+			    //var ll = language;
+			    initProducts();
+				initServices1();
+				initServices2();
+				myresize();
+				//var firstreg = sessionStorage.first_entrance;
+                //if (firstreg !== null || firstreg !== "") {
+				//    sessionStorage.isregistration = "yes";
+				//	sessionStorage.userstatus = "0";
+				//	userregistrated = true;
+				//    sessionStorage.first_entrance = "";
+				//};				
+				var reg = sessionStorage.getItem('isregistration');
+				if (reg == null) {
+				    clearRegistration;
+				} else {
+				    if (reg == "Yes") {
+				        userregistrated = true;
+				    } else {
+					    userregistrated = false;
+						sessionStorage.userstatus = "";
+						sessionStorage.MVSUID = "";
+	                    sessionStorage.name = "";
+					};
+				};
+
+				if (userregistrated) {
+				    setUserStatus();
+				    //document.getElementById("imgusers").src = "images/usersgreen.png";
+					//document.getElementById("mode_users").style.color = "lime";
+				} else { 
+				    document.getElementById("imgusers").src = "images/users.png";
+					document.getElementById("mode_users").style.color = "white";
+				};
+				setLanguage();
+			    myInterval = setInterval(changeBKGN, 7500);
+				prodInterval = setInterval(ShowArrayUp,500);
+				//currentMode();
+            }	
+			
+			window.onresize = function() {
+				myresize();
+            }
+			
+			function changeBKGN() {
+			    //var indx = JSON.stringify(indexMainImage);
+	            //sessionStorage.setItem('bkgnd', +indexMainImage);
+		        indexMainImage++;
+			    if (indexMainImage > ListTitles.length-1) {indexMainImage = 0}; 
+			    var timerId = setTimeout(function() { 
+				                    if (language == "RUS") {
+				                        document.getElementById("textup").innerHTML = ListTitles[indexMainImage].textRUS;
+									} else {
+									    document.getElementById("textup").innerHTML = ListTitles[indexMainImage].textUK;
+									}
+								}, 1400);
+			    document.getElementById("mainrow1").style.backgroundImage=ListTitles[indexMainImage].image;
+                document.getElementById("mainrow1").style.backgroundRepeat="no-repeat";
+			}
+			
+		</script>
+		
+<!-- *******************************  СТРОКА МЕНЮ ОСНОВНОЙ СТРАНИЦЫ  Начало ************************************************** 
+    файл CSS - css/navigation.css 
+        id = mainmenu          -  параметры фона строки
+        id = divmainmenu       -  параметры контейнера основного меню
+		id = divmylogo         -  параметры контейнера логотипа
+	    id = mylogo            -  параметры логотипа (размер, положение)
+        id = mavigation        -  параметры описания основного навигационого меню 	
+-->		
+		<div id="mainmenu" >
+            <div id="divmainmenu" >	
+		        <div id="divmylogo" style="width: 100%; height: 100%">	
+		            <img id="mylogo" src="images/MVSGroup.png" >
+                </div> 					
+                <ul id="navigation">
+                    <li><a href="pages/products.html">Продукты</a></li>
+                    <li><a href="pages/services.html">Услуги</a></li>
+					<li><a href="pages/supports.html">Поддержка</a></li>
+                    <li><a href="pages/contacts.html">Контакты</a></li>
+                </ul>
+	        </div>
+			<div id="idregistration">
+			    <div id="divusers" onmouseover="showpopUserMenu()" onmouseout="closepopUserMenu()"> 
+				    <img id="imgusers" src="images/users.png"> 
+					<span id="mode_users" style="font-size: 11px; text-align: center; margin-left: 15%;">Вход</span>
+				</div>
+				<div id="divlanguage"> RUS </div>
+				<div id="divflaguk" onclick="setLanguageUK('')" > 
+				    <img id="imgflaguk" src="images/flaguk.png"> 
+				</div>
+				<div id="divflagrus" onclick="setLanguageRUS('')">
+				     <img id="imgflagrus" src="images/rusflag.png">
+				</div>
+			</div>
+ 		</div>
+<!-- *******************************  СТРОКА МЕНЮ ОСНОВНОЙ СТРАНИЦЫ  Окончание ************************************************** -->	
+
+<!-- *******************************  ИНФОРМАЦИОННЫЙ БЛОК ОСНОВНОЙ СТРАНИЦЫ Начало ********************************************** -->	
+         
+        <div style="display:block; background-color:#333; color:white; font-family:Arial;">
+
+<!-- ______________________________  Табличный блок основной страницы Начало _____________________________________________________ 
+    файл CSS - css/style1.css 
+        class = menu          -  параметры отображения таблицы
+-->
+            <table  class="menu" >
+
+<!-- ______________________________  Строка Главной картинки Начало _____________________________________________________ 
+    файл CSS - css/style1.css 
+        id = mainrow1         -  параметры отображения строки с рисунком
+		id = textup           -  параметры отображения контейнера текста
+-->			
+                <tr>
+                    <td id="mainrow1" colspan="6" align="justify"; background="images/tabimage1.png">
+	                    <div id="textup" >	
+                            Мы не ищем легких решений,</br>мы находим оптимальные
+						</div>
+                    </td>
+                </tr>
+<!-- ______________________________  Строка Главной картинки Окончание _____________________________________________________ -->	
+<!-- ______________________________  Строка задает количество столбцов Начало ______________________________________________ -->			
+				<tr style="height: 1px;">
+				    <td width="2%">  </td>
+					<td width="24%">  </td>
+					<td width="24%">  </td>
+					<td width="24%">  </td>
+					<td width="24%">  </td>
+					<td width="2%">  </td>
+				</tr>
+<!-- ______________________________  Строка задает количество столбцов Окнчание ____________________________________________ -->	
+<!-- ______________________________  Строка Заголовок Списка продуктов Начало ______________________________________________ 
+    файл CSS - css/style1.css 
+        id = ttlproducts      -  параметры отображения строки с рисунком
+-->			
+				<tr>
+				    <td id="ttlproducts" colspan="6" ><a class="titlelink" href="pages/products.html"> Продукты </a></td>
+				</tr>
+<!-- ______________________________  Строка Заголовок строки продуктов Окнчание ____________________________________________ -->
+<!-- ______________________________  Строка Списка продуктов Начало ________________________________________________________ 
+    файл CSS - css/style1.css 
+        id = rowproducts   -  параметры строки списка продуктов
+        id = btnprodleft   -  кнопка сдвига списка продуктов влево
+        id = prod1         -  первая ячейка описания продукта
+		id = prod1herf     -  первая ячейка ccылка на страницу описания продукта
+		id = prod1txt      -  первая ячейка текст названия продукта
+		id = prod2         -  вторая ячейка описания продукта
+		id = prod2herf     -  вторая ячейка ccылка на страницу описания продукта
+		id = prod2txt      -  вторая ячейка текст названия продукта
+		id = prod3         -  третья ячейка описания продукта
+		id = prod3herf     -  третья ячейка ccылка на страницу описания продукта
+		id = prod3txt      -  третья ячейка текст названия продукта
+		id = prod4         -  четвертая ячейка описания продукта
+		id = prod4herf     -  четвертая ячейка ccылка на страницу описания продукта
+		id = prod4txt      -  четвертая ячейка текст названия продукта
+		id = btnprodright  -  кнопка сдвига списка продуктов вправо
+-->				
+
+                <tr id="rowproducts"; >
+				    <td id="btnprodleft" onclick="productsleft()" background="images/left.png" 
+					    onMouseOver="this.style.backgroundColor='#555' " 
+						onMouseOut="this.style.backgroundColor='#333'"> 
+					</td>
+                    <td id="prod1"; align="justify"; background="images/product1.jpg";
+					    onMouseOver="productcycleleft()" 
+						onMouseOut="productend()"> 
+					    <a id="prod1herf" href="#">
+						    <div id="prod1txt" > Продукт1 </div>
+						</a>	
+				    </td>
+					<td id="prod2" align="justify"; background="images/product2.jpg"
+					    onMouseOver="productcycleleft()" 
+						onMouseOut="productend()">
+	                    <a id="prod2herf" href="#">
+						    <div id="prod2txt" > Продукт2 </div>
+						</a> 				
+					</td>
+					<td id="prod3" align="justify"; background="images/product3.jpg"
+					    onMouseOver="productcycleright()" 
+						onMouseOut="productend()">
+					    <a id="prod3herf" href="#">
+						    <div id="prod3txt" > Продукт3 </div>
+						</a> 
+					</td>
+					<td id="prod4" align="justify"; background="images/product4.jpg"
+					    onMouseOver="productcycleright()" 
+						onMouseOut="productend()">
+					    <a id="prod4herf" href="#">
+						    <div id="prod4txt" > Продукт4 </div>
+						</a>	
+				    </td>
+					<td id="btnprodright" onclick="productsright()" background="images/right.png"  
+					    onMouseOver="this.style.backgroundColor='#444'" 
+						onMouseOut="this.style.backgroundColor='#333'"> 
+					</td>
+				</tr>
+<!-- ______________________________  Строка Списка продуктов Окончание _______________________________________________________ -->	
+<!-- ______________________________  Строка Заголовок Списка услуг IT Начало _________________________________________________ 
+    файл CSS - css/style1.css 
+        id = ttlservices1      -  параметры отображения названия списка услуг ШЕ
+-->			
+				<tr>
+				    <td id="ttlservices1"  colspan="6" > Разработка ПО, аппаратных средств, автоматизации, монтаж, сопровождение ... </td>
+				</tr>
+<!-- ______________________________  Строка Заголовок Списка услуг IT Окончание ______________________________________________ -->				
+<!-- ______________________________  Строка Списка услуг IT Начало ___________________________________________________________ 
+    файл CSS - css/style1.css 
+        id = rowservices1  -  параметры строки списка услуг IT
+        id = btnservleft1  -  кнопка сдвига списка услуг IT влево
+        id = serv1_1         -  первая ячейка описания услуг IT
+		id = serv1_1herf     -  первая ячейка ccылка на страницу описания услуг IT
+		id = serv1_1txt      -  первая ячейка текст названия услуг IT
+		id = serv1_2         -  вторая ячейка описания услуг IT
+		id = serv1_2herf     -  вторая ячейка ccылка на страницу описания услуг IT
+		id = serv1_2txt      -  вторая ячейка текст названия услуг IT
+		id = serv1_3         -  третья ячейка описания услуг IT
+		id = serv1_3herf     -  третья ячейка ccылка на страницу описания услуг IT
+		id = serv1_3txt      -  третья ячейка текст названия услуг IT
+		id = serv1_4         -  четвертая ячейка описания услуг IT
+		id = serv1_4herf     -  четвертая ячейка ccылка на страницу описания услуг IT
+		id = serv1_4txt      -  четвертая ячейка текст названия услуг IT
+		id = btnservright1   -  кнопка сдвига списка услуг IT вправо
+-->
+                <tr id="rowservices1">
+				    <td id="btnservleft1" onclick="serviceleft1()" background="images/left.png" 
+					    onMouseOver="this.style.backgroundColor='#555'" 
+						onMouseOut="this.style.backgroundColor='#333'"> 
+					</td>
+                    <td id="serv1_1"; align="justify"; background="images/service1_1.jpg"
+					    onMouseOver="servicetcycleleft1()" 
+						onMouseOut="productend()">
+					    <a id="serv1_1herf" href="#">
+						    <div id="serv1_1txt" > Услуга1_1 </div>
+						</a>	
+				    </td>
+					<td id="serv1_2" align="justify"; background="images/service1_2.jpg"
+					    onMouseOver="servicetcycleleft1()" 
+						onMouseOut="productend()">
+	                    <a id="serv1_2herf" href="#">
+						    <div id="serv1_2txt" > Услуга1_2 </div>
+						</a> 				
+					</td>
+					<td id="serv1_3" align="justify"; background="images/service1_3.jpg"
+					    onMouseOver="servicecycleright1()" 
+						onMouseOut="productend()">
+					    <a id="serv1_3herf" href="#">
+						    <div id="serv1_3txt" > Услуга1_3 </div>
+						</a> 
+					</td>
+					<td id="serv1_4" align="justify"; background="images/service1_4.jpg"
+					    onMouseOver="servicecycleright1()" 
+						onMouseOut="productend()">
+					    <a id="serv1_4herf" href="#">
+						    <div id="serv1_4txt" > Услуга1_4 </div>
+						</a>	
+				    </td>
+					<td id="btnservright1" onclick="serviceright1()" background="images/right.png" 
+					    onMouseOver="this.style.backgroundColor='#444'" 
+						onMouseOut="this.style.backgroundColor='#333'"> 
+					</td>
+				</tr>
+<!-- ______________________________  Строка Заголовок Списка услуг Фото Видео Начало _________________________________________ 
+    файл CSS - css/style1.css 
+        id = ttlservices2      -  параметры отображения названия списка услуг фото видео
+-->				
+				<tr>
+				    <td id="ttlservices2"  colspan="6"> Услуги Фото, Видео </td>
+				</tr>
+<!-- ______________________________  Строка Заголовок Списка услуг Фото Видео Окончание ______________________________________ -->				
+<!-- ______________________________  Строка Списка услуг Фото Видео Начало ___________________________________________________ 
+    файл CSS - css/style1.css 
+        id = rowservices2  -  параметры строки списка услуг Фото Видео
+        id = btnservleft2  -  кнопка сдвига списка услуг Фото Видео влево
+        id = serv2_1         -  первая ячейка описания услуг Фото Видео
+		id = serv2_1herf     -  первая ячейка ccылка на страницу описания услуг Фото Видео
+		id = serv2_1txt      -  первая ячейка текст названия услуг Фото Видео
+		id = serv2_2         -  вторая ячейка описания услуг Фото Видео
+		id = serv2_2herf     -  вторая ячейка ccылка на страницу описания услуг Фото Видео
+		id = serv2_2txt      -  вторая ячейка текст названия услуг Фото Видео
+		id = serv2_3         -  третья ячейка описания услуг Фото Видео
+		id = serv2_3herf     -  третья ячейка ccылка на страницу описания услуг Фото Видео
+		id = serv2_3txt      -  третья ячейка текст названия услуг Фото Видео
+		id = serv2_4         -  четвертая ячейка описания услуг Фото Видео
+		id = serv2_4herf     -  четвертая ячейка ccылка на страницу описания услуг Фото Видео
+		id = serv2_4txt      -  четвертая ячейка текст названия услуг Фото Видео
+		id = btnservright2 -  кнопка сдвига списка услуг Фото Видео вправо
+-->				
+				<tr id="rowservices2">
+				    <td id="btnservleft2" onclick="serviceleft2()" background="images/left.png" 
+					    onMouseOver="this.style.backgroundColor='#555'" 
+						onMouseOut="this.style.backgroundColor='#333'"> 
+					</td>
+                    <td id="serv2_1"; align="justify"; background="images/service2_1.jpg"
+					    onMouseOver="servicetcycleleft2()" 
+						onMouseOut="productend()">
+					    <a id="serv2_1herf" href="#">
+						    <div id="serv2_1txt" > Услуга2_1 </div>
+						</a>	
+				    </td>
+					<td id="serv2_2" align="justify"; background="images/service2_2.jpg"
+					    onMouseOver="servicetcycleleft2()" 
+						onMouseOut="productend()">
+	                    <a id="serv2_2herf" href="#">
+						    <div id="serv2_2txt" > Услуга2_2 </div>
+						</a> 				
+					</td>
+					<td id="serv2_3" align="justify"; background="images/service2_3.jpg"
+					    onMouseOver="servicecycleright2()" 
+						onMouseOut="productend()">
+					    <a id="serv2_3herf" href="#">
+						    <div id="serv2_3txt" > Услуга2_3 </div>
+						</a> 
+					</td>
+					<td id="serv2_4" align="justify"; background="images/service2_4.jpg"
+					    onMouseOver="servicecycleright2()" 
+						onMouseOut="productend()">
+					    <a id="serv2_4herf" href="#">
+						    <div id="serv2_4txt" > Услуга2_4 </div>
+						</a>	
+				    </td>
+					<td id="btnservright2" onclick="serviceright2()" background="images/right.png" 
+					    onMouseOver="this.style.backgroundColor='#555'" 
+						onMouseOut="this.style.backgroundColor='#333'"> 
+					</td>
+				</tr>
+<!-- ______________________________ Строка Списка услуг Фото Видео Окончание ______________________________________________ -->	
+<!-- ______________________________  Строка Заголовок строки поддержки Начало______________________________________________ 
+    файл CSS - css/style1.css 
+        id = ttlsupports   -  параметры отображения названия поддержки
+-->			
+	
+				<tr>
+				    <td id="ttlsupports"  colspan="6"> Программные модули, Документация, Библиотека, Контакты </td>
+				</tr>
+<!-- ______________________________ Строка Заголовок строки поддержки Окончание ___________________________________________ -->	
+<!-- ______________________________  Строка Поддержки Начало ______________________________________________________________ 
+    файл CSS - css/style1.css 
+        id = rowsupports     -  параметры строки списка услуг Фото Видео
+        id = download   -  первая ячейка описания услуг Фото Видео
+		id = documentations    -  первая ячейка ccылка на страницу описания услуг Фото Видео
+		id = libraries      -  первая ячейка текст названия услуг Фото Видео
+		id = contacts         -  вторая ячейка описания услуг Фото Видео
+-->				
+				<tr id="rowsupports" >
+	                <td> </td>			
+				    <td id="download"; align="justify" >
+	                	<a href="pages/supports.html" > 
+						    <div id="divdownload" >
+    					        <img id="imgdownload" src = "images/download1.jpg" width="100%"; height="100%" >
+								<div id="tadownload" >
+								    <span id="txtdownload" > Скачать данные </span>
+								</div>
+							</div>
+						</a>			 
+				    </td>
+					<td id="documentations"; align="justify" >
+	                	<a href="pages/documentations.html"> 
+	                        <div id="divdocumentations" >
+    					        <img id="imgdocumentations" src = "images/documentations.jpg"  width="100%"; height="100%"  >
+								<div id="tadocumentations" >
+								    <span id="txtdocumentations" > Документация </span>
+								</div>
+							</div>
+						</a>			 
+				    </td>
+					<td id="libraries"; align="justify" >
+	                	<a href="pages/libraries.html"> 
+						    <div id="divlibraries" >
+    					        <img id="imglibraries" src = "images/libraries.jpg"  width="100%"; height="100%"  >
+								<div id="talibraries" >
+								    <span id="txtlibraries" > Библиотека </span>
+								</div>
+							</div>
+						</a>			 
+				    </td>
+					<td id="contacts"; align="justify">
+	                	<a href="pages/contacts.html"> 
+						    <div id="divcontacts" >
+    					        <img id="imgcontacts" src = "images/contact1.jpg"  width="100%"; height="100%"  >
+								<div id="tacontacts" >
+								    <span id="txtcontacts" > Контакты </span>
+								</div>
+							</div>
+						</a>			 
+				    </td>
+					<td> </td>
+				</tr>
+<!-- ______________________________  Строка Поддержки Окончание ___________________________________________________________ -->				
+<!-- ______________________________  Строка между строкой контектов и нижней строкой Начало _______________________________ 
+    файл CSS - css/style1.css 
+        id = beetwinrow   -  параметры отображения названия поддержки
+-->			
+	
+				<tr>
+				    <td id="beetwinrow"  colspan="6"> </td>
+				</tr>
+<!-- ______________________________ Строка между строкой контектов и нижней строкой Окончание _____________________________ -->	
+<!-- ______________________________ Строка Нижняя строка таблицы Начало ___________________________________________________ 
+    файл CSS - css/style1.css 
+        id = tabfooter1     -  параметры списка первого столбца
+        id = tabfooter2     -  параметры списка второго столбца
+		id = tabfooter3     -  параметры списка третьего столбца
+		id = tabfooter4     -  параметры списка четвкртого столбца
+-->								
+				<tr  id="lastrow">
+				    <td style="background-color: #333;">
+					</td>
+				    <td> 
+  			    	    <!--<ul id="tabfooter1">
+                            <li><a href="#">Услуги</a></li>
+                            <li><a href="#">Продукты</a></li>
+					        <li><a href="#">Поддержка</a></li>
+                            <li><a href="#">Контакты</a></li>
+                        </ul>-->
+					</td>
+					<td> 
+  			    	    <!--<ul id="tabfooter2">
+                            <li><a href="#">Услуги</a></li>
+                            <li><a href="#">Продукты</a></li>
+					        <li><a href="#">Поддержка</a></li>
+                            <li><a href="#">Контакты</a></li>
+                        </ul>-->
+					</td>
+					<td> 
+  			    	    <!--<ul id="tabfooter3">
+                            <li><a href="#">Услуги</a></li>
+                            <li><a href="#">Продукты</a></li>
+					        <li><a href="#">Поддержка</a></li>
+                            <li><a href="#">Контакты</a></li>
+                        </ul>-->
+					</td>
+					<td colspan="2"> 
+  			    	    <!--<ul id="tabfooter4">
+                            <li><a href="#">Скачать данные</a></li>
+                            <li><a href="#">Документация</a></li>
+					        <li><a href="#">Библиотека</a></li>
+                            <li><a href="#">Контакты</a></li>
+                        </ul>-->
+					</td>
+				</tr>  
+<!-- ______________________________ Строка Нижняя строка таблицы Окончание  ___________________________________________________ -->				
+            </table>    
+<!-- ______________________________  Табличный блок основной страницы Окончание _______________________________________________ -->			
+        </div>
+<!-- *******************************  ИНФОРМАЦИОННЫЙ БЛОК ОСНОВНОЙ СТРАНИЦЫ Окончание ***************************************** -->		
+
+<!-- *******************************  ЗАВЕРШАЮЩИЙ БЛОК ОСНОВНОЙ СТРАНИЦЫ Начало *********************************************** -->
+		<div id="myfooter"> &copy; MVSGroup.tv 2018. Design of PZavialov  </div>
+<!-- *******************************  ЗАВЕРШАЮЩИЙ БЛОК ОСНОВНОЙ СТРАНИЦЫ Окончание ******************************************** -->		
+
+    </body>
+</html>

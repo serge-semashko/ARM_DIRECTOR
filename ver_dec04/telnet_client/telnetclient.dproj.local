@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.174,=G:\home\ARM_EDITOR\Ver0204\TCPClient\Web.Win.Sockets.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.822,G:\home\ARM_EDITOR\Ver0204\checktcp\checktcp.dproj=G:\home\ARM_EDITOR\Ver0204\TCPClient\tcpclient.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.363,G:\home\ARM_EDITOR\Ver0204\TCPClient\synaip.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.364,G:\home\ARM_EDITOR\Ver0204\TCPClient\synsock.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.133,=G:\home\ARM_EDITOR\Ver0204\TCPClient\synaip.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.120,=G:\home\ARM_EDITOR\Ver0204\TCPClient\synacode.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.323,G:\home\ARM_EDITOR\Ver0204\TCPClient\synacode.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.222,G:\home\ARM_EDITOR\Ver0204\TCPClient\telnetclient.dproj=G:\home\ARM_EDITOR\Ver0204\TCPClient\tcpclient.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.928,G:\home\ARM_EDITOR\Ver0204\TCPClient\blcksock.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.103,=G:\home\ARM_EDITOR\Ver0204\TCPClient\blcksock.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.150,=G:\home\ARM_EDITOR\Ver0204\TCPClient\synsock.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.870,G:\home\ARM_EDITOR\Ver0204\TCPClient\uwebget.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.769,G:\home\ARM_EDITOR\Ver0204\checktcp\main.pas=G:\home\ARM_EDITOR\Ver0204\TCPClient\main.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.165,=G:\home\ARM_EDITOR\Ver0204\TCPClient\uwebget.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.362,G:\home\ARM_EDITOR\Ver0204\TCPClient\synafpc.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.127,=G:\home\ARM_EDITOR\Ver0204\TCPClient\synafpc.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.157,=G:\home\ARM_EDITOR\Ver0204\TCPClient\tlntsend.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.769,G:\home\ARM_EDITOR\Ver0204\checktcp\main.dfm=G:\home\ARM_EDITOR\Ver0204\TCPClient\main.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.980,G:\home\ARM_EDITOR\Ver0204\TCPClient\tlntsend.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.363,G:\home\ARM_EDITOR\Ver0204\TCPClient\synautil.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.143,=G:\home\ARM_EDITOR\Ver0204\TCPClient\synautil.pas</Transaction>
+  </Transactions>
+</BorlandProject>

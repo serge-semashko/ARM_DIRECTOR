@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>MVSGroup Not Page</title>
+		<link rel="stylesheet" href="../css/navigation.css" type="text/css"/>
+        <link rel="stylesheet" href="../css/style1.css" type="text/css"/>
+		<link rel="stylesheet" href="../css/pages.css" type="text/css"/>
+        <!--
+		<meta http-equiv="Cache-Control" content="no-cache">
+        <meta http-equiv="Pragma" content="no-cache">
+		-->
+        <meta charset="UTF-8">
+		<meta name="description" content="">
+		
+		<script src="../scripts/vendor/jquery-3.3.1.js "></script>
+		<script src="../scripts/main1.js"></script>
+		<script src="../scripts/pages.js"></script>
+        <script src="../scripts/listtitle.js"></script>		
+        <!--
+		<meta http-equiv="Cache-Control" content="no-cache">
+        <meta http-equiv="Pragma" content="no-cache">
+        -->
+
+    </head>
+    <body>
+        <script type="text/javascript">
+		    var brver= ifBrowser();
+			var ie = false;
+			var currbr = brver[0];
+			if (currbr == "ie") { ie = true; };
+			
+			if (ie) {
+			    var ver = +brver[1];
+				if (+ver < 11) { window.location.href = "../pages/browsers.html"; };
+			};
+		
+		    var lang = sessionStorage.getItem('lang');
+			if (lang !== null) { 
+                language = lang;  
+			}  else {
+			    language = "RUS"; 
+			};
+		     			
+			if (ie) {
+			    document.attachEvent('DOMContentLoaded', myresizecontacts);
+		        window.attachEvent('resize', myresizecontacts); 
+            } else {			
+		        document.addEventListener('DOMContentLoaded', myresizecontacts);
+		        window.addEventListener('resize', myresizecontacts);
+			}
+			
+			window.onload = function() {
+				myresizecontacts();
+            }
+			
+			window.onresize = function() {
+				myresizecontacts();
+            }
+		</script>
+		
+<!-- *******************************  СТРОКА МЕНЮ СТРАНИЦЫ КОНТАКТЫ Начало ************************************************** 
+    файл CSS - css/navigation.css 
+        id = mainmenu          -  параметры фона строки
+        id = divmainmenu       -  параметры контейнера основного меню
+		id = divmylogo         -  параметры контейнера логотипа
+	    id = mylogo            -  параметры логотипа (размер, положение)
+        id = mavigation        -  параметры описания основного навигационого меню 	
+-->		
+		<div id="mainmenu" >
+            <div id="divmainmenu" >	
+		        <div id="divmylogo" style="width: 100%; height: 100%">	
+		            <a href="../index.html"><img id="mylogo" src="../images/MVSGroup.png" ></a>
+                </div> 					
+                <ul id="navigation">
+                    <li><a href="../pages/products.html">Продукты</a></li>
+                    <li><a href="../pages/services.html">Услуги</a></li>	
+					<li><a href="../pages/supports.html">Поддержка</a></li>
+                    <li><a href="../pages/contacts.html">Контакты</a></li>
+                </ul>
+	        </div>
+			<div id="idregistration">
+			    <div id="divusers" onclick="forminput()" style="display: none"> 
+				    <img id="imgusers" src="../images/users.png">
+					<span id="mode_users" style="font-size: 11px; text-align: center; margin-left: 15%;">Вход</span>
+				</div>
+				<div id="divlanguage"> RUS </div>
+				<div id="divflaguk" onclick="setLanguageUK('page')" > 
+				    <img id="imgflaguk" src="../images/flaguk.png"> 
+				</div>
+				<div id="divflagrus" onclick="setLanguageRUS('page')">
+				     <img id="imgflagrus" src="../images/rusflag.png">
+				</div>
+			</div>
+ 		</div>
+<!-- *******************************  СТРОКА МЕНЮ СТРАНИЦЫ КОНТАКТЫ Окончание ************************************************** -->
+<!-- *******************************  Контейнер СТРАНИЦЫ КОНТАКТЫ Начало ******************************************************* -->
+        <div style="display:block; background-color:#333; color:white; font-family:Arial;">
+<!-- *******************************  Таблица СТРАНИЦЫ КОНТАКТЫ Начало ********************************************************* -->		
+		    <table  class="menu" > 
+<!-- __________________________________  Строка задает количество столбцов Начало ______________________________________________ -->			
+				<tr style="height: 10px;">
+				    <td width="2%">  </td>
+					<td width="24%">  </td>
+					<td width="24%">  </td>
+					<td width="24%">  </td>
+					<td width="24%">  </td>
+					<td width="2%">  </td>
+				</tr>
+<!-- _________________________________  Строка задает количество столбцов Окончание ___________________________________________ -->	
+<!-- _________________________________  Строка задает текст контактов Начало __________________________________________________ -->		
+		        <tr>
+                    <td id="mainrow1" colspan="6" align="justify"; style="background-color: #333">
+	                    <span id="mycontacts">				
+	                        Приносим искренние извинения,</br>но в настоящий момент</br>данная странца находится</br> в процессе разработки.
+						</span>
+                    </td>
+                </tr>
+<!-- _________________________________  Строка задает текст контактов Окончание _______________________________________________ -->
+<!-- ______________________________  Строка между строкой контектов и нижней строкой Начало _______________________________ 
+    файл CSS - css/style1.css 
+        id = beetwinrow   -  параметры отображения названия поддержки
+-->			
+	
+				<tr>
+				    <td id="freerow"  colspan="6"> </td>
+				</tr>
+<!-- ______________________________ Строка между строкой контектов и нижней строкой Окончание _____________________________ -->	
+<!-- ______________________________ Строка Нижняя строка таблицы Начало ___________________________________________________ 
+    файл CSS - css/style1.css 
+        id = tabfooter1     -  параметры списка первого столбца
+        id = tabfooter2     -  параметры списка второго столбца
+		id = tabfooter3     -  параметры списка третьего столбца
+		id = tabfooter4     -  параметры списка четвкртого столбца
+-->								
+				<tr id="lastrow">
+				    <td style="background-color: #333;">
+					</td>
+				    <td> 
+  			    	    <ul id="tabfooter1">
+                            <li><a href="#">Услуги</a></li>
+                            <li><a href="#">Продукты</a></li>
+					        <li><a href="#">Поддержка</a></li>
+                            <li><a href="#">Контакты</a></li>
+                        </ul>
+					</td>
+					<td> 
+  			    	    <ul id="tabfooter2">
+                            <li><a href="#">Услуги</a></li>
+                            <li><a href="#">Продукты</a></li>
+					        <!--<li><a href="#">Поддержка</a></li>
+                            <li><a href="#">Контакты</a></li>-->
+                        </ul>
+					</td>
+					<td> 
+  			    	    <ul id="tabfooter3">
+                            <li><a href="#">Услуги</a></li>
+                            <li><a href="#">Продукты</a></li>
+					        <li><a href="#">Поддержка</a></li>
+                            <li><a href="#">Контакты</a></li>
+                        </ul>
+					</td>
+					<td colspan="2"> 
+  			    	    <ul id="tabfooter4">
+                            <li><a href="#">Скачать данные</a></li>
+                            <li><a href="#">Документация</a></li>
+					        <li><a href="#">Библиотека</a></li>
+                            <li><a href="#">Контакты</a></li>
+                        </ul>
+					</td>
+				</tr>  
+<!-- ______________________________ Строка Нижняя строка таблицы Окончание  ___________________________________________________ -->			
+            </table>	
+<!-- *******************************  Таблица СТРАНИЦЫ КОНТАКТЫ Окончание ***************************************************** -->			
+        </div>
+<!-- *******************************  Контейнер Текста  СТРАНИЦЫ КОНТАКТЫ Окончание ******************************************* -->
+<!-- *******************************  ЗАВЕРШАЮЩИЙ БЛОК ОСНОВНОЙ СТРАНИЦЫ Начало *********************************************** -->
+		<div id="myfooter"> &copy; MVSGroup.tv 2018. Design of PZavialov  </div>
+<!-- *******************************  ЗАВЕРШАЮЩИЙ БЛОК ОСНОВНОЙ СТРАНИЦЫ Окончание ******************************************** -->
+    </body>

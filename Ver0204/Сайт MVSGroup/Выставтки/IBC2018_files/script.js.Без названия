@@ -1,9 +1,0 @@
-(function (w) {
-    
-    if (typeof w.feathr === 'function') {
-        w.feathr('match', '5b6567f7e6dfa500014c5523');
-    }
-        
-
-    
-}(window));
