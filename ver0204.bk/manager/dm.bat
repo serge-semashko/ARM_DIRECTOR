@@ -1,1 +1,0 @@
-DEVManager 1

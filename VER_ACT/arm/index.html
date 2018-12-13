@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <link rel="stylesheet" href="css/style.css" type="text/css"/>
+        <title>ARM_EDITOR web client</title>
+        <meta http-equiv="Cache-Control" content="no-cache">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta charset="UTF-8">
+        <meta name="description" content="">
+        <script src="phrases/voices.js"></script>
+        <script src="scripts/data.js"></script>
+        <script src="scripts/devs.js"></script>
+        <script src="scripts/events.js"></script>
+        <script src="scripts/airSecond.js"></script>
+        <script src="scripts/devman.js"></script>
+        <script src="scripts/TLO.js"></script>
+        <script src="scripts/TLT.js"></script>
+        <script src="scripts/TLP.js"></script>
+        <script src="scripts/alltimelines.js"></script>
+        <script src="scripts/myutils.js"></script>
+        <script src="scripts/main.js"></script>
+        <script src="scripts/vendor/pako.min.js"></script>
+        <script src="scripts/vendor/jquery-3.3.1.js "></script>
+        <script src="scripts/typescreen.js"></script>
+        <script src="scripts/init.js" ></script>
+        <script src="scripts/webredis_client.js"></script>
+        <meta http-equiv="Cache-Control" content="no-cache">
+        <meta http-equiv="Pragma" content="no-cache">
+        
+    </head>
+    <body>
+        <div id="debuginfo" style="display:none">
+            <p id=stat>status</p>
+            <p id=stat1></p>
+        </div>
+		
+		<div id="startpanel"  style="z-index: 40;">
+		        <table id="startpaneltab" border="0">	
+                    <!--<tr style="height: 5em">
+					    <td id="progtitle1" colspan="3">Модуль контроля</td>
+					</tr>-->
+					<tr class="progtitle" style="height: 5em">
+						<td colspan="5">
+					        <table class="rowtable" border="0" style="border-spacing: 5px 0;">
+							   <tr>
+									<td style="width: 11em;"></td>
+								    <td>
+									    <table class="rowtable" border="0" style="border-spacing: 0 0;">
+									        <tr style="height: 3.5em;">
+											    <td id="progtitle1" colspan="3" style="font-size: 3em;">Модуль контроля</td>
+											</tr>
+											<tr>
+											    <td class="lbserverStatus" style="width: 47%; font-size: 1em; color: rgb(220,220,220); text-align: right;">Сервер:</td>
+												<td style="width: 2em"></td>
+												<td id="serverStatus1" style="font-size: 1em; color: red; text-align: left;"></td>
+											</tr>
+									    </table>
+									</td>
+								    <td class="idlanguage">RUS</td>
+								    <td style="width: 2.5em;"><img class="rusflag" src="images/rusflag.png" onclick="setLanguage('RUS')"></td>
+								    <td style="width: 2.5em;"><img class="engflag" src="images/flaguk.png" onclick="setLanguage('ENG')"></td>
+									<td style="width: 1em;"></td>
+									<td style="width: 4em;"><img id="imgsynch" src="images/options.png" style="width: 3.5em; height: 3.5em;" onclick="goToProgramm()"></td>
+									<td style="width: 0.5em;"></td>
+							   </tr> 
+							</table>
+						</td>
+					</tr>
+					<tr><td colspan="5"></td></tr>
+                    <tr style="height: 25em">
+					    <td></td>
+						<td colspan="3" class="optionsscreen">
+						    <table style="width: 100%; height: 100%;" border="0">
+							    <tr><td colspan="3"></td></tr>
+								 <tr style="height: 2em;">
+									<td></td>
+									<td id="lblocaltime" style="font-size: 1.5em;">Время устройства</td>
+									<td></td>
+								</tr>
+								<tr style="height: 4em">
+									<td></td>
+									<td id="localtime">00:00:00:00</td>
+									<td></td>
+								</tr>
+								<tr><td colspan="5" style="height: 1em;"></td></tr>
+								<tr style="height: 2em;">
+									<td></td>
+									<td id="lbsystime" style="font-size: 1.5em;">Время синхронизации системы</td>
+									<td></td>
+								</tr>
+								<tr style="height: 4em">
+									<td></td>
+									<td id="systime">00:00:00:00</td>
+									<td></td>
+								</tr>
+								<tr><td colspan="5"></td></tr>
+								<tr style="height: 3em">
+									<td></td>
+									<td id="statussynch">Требуется синхронизация</td>
+									<td></td>
+								</tr>
+								<tr><td colspan="3"></td></tr>
+							</table>
+						</td>
+					    <td></td>
+					</tr>
+					
+					<!--<tr style="height: 2em;">
+					    <td></td>
+						<td style="width: 10em"></td>
+						<td id="lblocaltime" style="font-size: 1.5em;">Время устройства</td>
+						<td style="width: 10em"></td>
+						<td></td>
+					</tr>
+					<tr style="height: 4em">
+					    <td></td>
+						<td></td>
+						<td id="localtime">00:00:00:00</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr><td colspan="5" style="height: 1em;"></td></tr>
+					<tr style="height: 2em;">
+					    <td></td>
+						<td></td>
+						<td id="lbsystime" style="font-size: 1.5em;">Время синхронизации системы</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 4em">
+					    <td></td>
+						<td></td>
+						<td id="systime">00:00:00:00</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr><td colspan="5"></td></tr>
+					<tr style="height: 3em">
+					    <td></td>
+						<td></td>
+						<td id="statussynch">Требуется синхронизация</td>
+						<td></td>
+						<td></td>
+					</tr>-->
+					<tr><td colspan="5"></td></tr>
+                    <tr style="height: 4em">
+					    <td></td>
+						<td style="width: 10em"></td>
+						<td class="btninputscreen" id="synchrotime" onclick="setSynchronization()">Синхронизировать с сервером</td>
+						<td style="width: 10em"></td>
+						<td></td>
+					</tr>
+					<tr style="height: 4em"><td colspan="5"></td></tr>
+                    <tr style="height: 4em">
+					    <td></td>
+						<td></td>
+						<td class="btninputscreen" id="inputprog" onclick="goToProgramm()">Выйти из режима синхронизации</td>
+						<td></td>
+						<td></td>
+					</tr>
+                    <tr><td colspan="5"></td></tr>
+					<tr style="height: 1.5em">
+					    <td></td>
+						<td></td>
+						<td>
+						    <table border="0" style="width: 100%; height: 100%;">
+							    <tr>
+                                    <td style="width: 5em;">
+									    <div class="filldiv">
+										    <input type="checkbox" id="synchvisible" name="synchvisible" value="" onchange="setStartSynch()"/>
+									    </div>
+									</td>
+									<td id="lbsynchvisible">Не показывать окно при входе в систему</td>
+						        </tr>
+							</table>
+						</td>	
+						<td></td>
+						<td></td>
+					</tr>
+					<tr><td colspan="5"></td></tr>
+					<tr class="footertab"><td colspan="5">www.mvsgroup.tv</td></tr>
+				</table>
+		</div>
+
+        <div class="menu" id="select_scr" style="display:none; z-index: 30;">
+		    <table id="menupaneltab" border="0">
+			    <tr class="progtitle" style="height: 5em">
+					<td colspan="3">
+				        <table class="rowtable" border="0" style="border-spacing: 5px 0;">
+						   <tr>
+				                <td style="width: 11em;"></td>
+							    <td>
+								    <table class="rowtable" border="0" style="border-spacing: 5px 0;">
+								        <tr style="height: 3.5em;">
+										    <td id="armStatus" colspan="3" style="font-size: 3em;">Модуль контроля</td>
+										</tr>
+										<tr>
+										    <td class="lbserverStatus" style="width: 47%; font-size: 1em; color: rgb(220,220,220); text-align: right;">Сервер:</td>
+											<td style="width: 2em"></td>
+											<td id="serverStatus" style="font-size: 1em; color: red; text-align: left;"></td>
+										</tr>
+								    </table>
+								</td>
+							    <td class="idlanguage">RUS</td>
+							    <td style="width: 2.5em;"><img class="rusflag" src="images/rusflag.png" onclick="setLanguage('RUS')"></td>
+							    <td style="width: 2.5em;"><img class="engflag" src="images/flaguk.png" onclick="setLanguage('ENG')"></td>
+								<td style="width: 1em;"></td>
+								<td style="width: 4em;"><img id="imgsynch1" src="images/synch.png" style="width: 3.5em; height: 3.5em;" onclick="showWinSynch()"></td>
+							    <td style="width: 0.5em;"></td>
+						   </tr> 
+						</table>
+					</td>
+				</tr>
+				<tr><td colspan="3"></td></tr>
+		        <tr style="height: 25em;"> 
+				    <td></td>
+					<td style="width: 60em;">
+					    <table class="optionsscreen" border="0" style="width: 100%; height: 100%; border-spacing: 0 0; font-family: Arial;">
+						    <tr style="height: 2em;"><td colspan="9" class="topoptionsscreen" id="opttypescreen" style="font-size: 1.5em;">Тип экрана</td></tr>
+							<tr style="height: 0.5em;"><td colspan="9"></td></tr>
+							<tr style="height: 8em;">
+							    <td></td>
+								<td class="btntypescreen" id="idtypestreen1" onClick="execMain(0)">
+								    <table style="width:100%; height: 100%; border-spacing: 0 0;" border="0">
+									    <tr style="height: 5em">
+										    <td><img id="imgsreen1" src="images/screen1.png" style="width:100%; height: 5em;"></td>
+										</tr>
+										<tr>
+										    <td id="txtscreen1" style="font-size: 1em;">Полный экран</td>
+										</tr>
+									</table>
+								</td>
+								<td></td>
+								<td class="btntypescreen" id="idtypestreen2" onClick="execMain(1)">
+								    <table style="width:100%; height: 100%; border-spacing: 0 0;" border="0">
+									    <tr style="height: 5em">
+										    <td><img id="imgsreen2" src="images/screen2.png" style="width:100%; height: 5em;"></td>
+										</tr>
+										<tr>
+										    <td id="txtscreen2" style="font-size: 1em;">События, устройства</td>
+										</tr>
+									</table>
+								</td>
+								<td></td>
+								<td class="btntypescreen" id="idtypestreen3" onClick="execMain(4)">
+								    <table style="width:100%; height: 100%; border-spacing: 0 0;" border="0">
+									    <tr style="height: 5em">
+										    <td><img id="imgsreen3" src="images/screen3.png" style="width:100%; height: 5em;"></td>
+										</tr>
+										<tr>
+										    <td id="txtscreen3" style="font-size: 1em;">Настраиваемый экран</td>
+										</tr>
+									</table>
+								</td>
+								<td></td>
+								<td id="myinfo" style="color:aquamarine; width: 10em; text-align: center; font-size: 1.1em;">Для выбора экрана<br>нажмите<br>на его изображение.</td>
+								<td></td>
+							</tr>
+							<tr style="height: 0.5em;"><td colspan="9"></td></tr>
+							<tr style="height: 1.5em;"><td colspan="9" id="lboptssetscr" style="font-size: 1.3em; background-color: rgb(100,100,100);">Параметры настраевомого экрана</td></tr>
+							<tr style="height: 1.5em;">
+							    <td colspan="3" id="txt_scr_1" style="text-align: right; font-size: 1.2em;">1 Поле</td>
+								<td></td>
+								<td colspan="5" style="text-align: left">
+								    <select  id="scr_1" class="graphSelect" style="width: 15em;" onchange="changeOptions(0)">
+                                        <option value="-1">Не используется</option>
+                                        <option value="0">События </option>
+                                        <option value="1">Устройства </option>
+                                        <option value="2">Тайм линии </option>
+                                        <option value="3">Образ тайм линий </option>
+                                        <option value="4">События  устройства 1 </option>
+                                        <option value="5">События  устройства 2 </option>
+                                    </select>
+								</td>
+							</tr>
+							<tr style="height: 1.5em;">
+							    <td colspan="3" id="txt_scr_2" style="text-align: right; font-size: 1.2em;">2 Поле</td>
+								<td></td>
+								<td colspan="5" style="text-align: left">
+								    <select  id="scr_2" class="graphSelect" style="width: 15em;" onchange="changeOptions(1)">
+                                        <option value="-1">Не используется</option>
+                                        <option value="0">События </option>
+                                        <option value="1">Устройства </option>
+                                        <option value="2">Тайм линии </option>
+                                        <option value="3">Образ тайм линий </option>
+                                        <option value="4">События  устройства 1 </option>
+                                        <option value="5">События  устройства 2 </option>
+                                    </select>
+								</td>
+							</tr>
+							<tr style="height: 1.5em;">
+							    <td colspan="3" id="txt_scr_3" style="text-align: right; font-size: 1.2em;">3 Поле</td>
+								<td></td>
+								<td colspan="5" style="text-align: left">
+								    <select  id="scr_3" class="graphSelect" style="width: 15em;" onchange="changeOptions(2)">
+                                        <option value="-1">Не используется</option>
+                                        <option value="0">События </option>
+                                        <option value="1">Устройства </option>
+                                        <option value="2">Тайм линии </option>
+                                        <option value="3">Образ тайм линий </option>
+                                        <option value="4">События  устройства 1 </option>
+                                        <option value="5">События  устройства 2 </option>
+                                    </select>
+								</td>
+							</tr>
+							<tr style="height: 1.5em;">
+							    <td colspan="3" id="txt_scr_4" style="text-align: right; font-size: 1.2em;">4 Поле</td>
+								<td></td>
+								<td colspan="5" style="text-align: left">
+								    <select  id="scr_4" class="graphSelect" style="width: 15em;" onchange="changeOptions(3)">
+                                        <option value="-1">Не используется</option>
+                                        <option value="0">События </option>
+                                        <option value="1">Устройства </option>
+                                        <option value="2">Тайм линии </option>
+                                        <option value="3">Образ тайм линий </option>
+                                        <option value="4">События  устройства 1 </option>
+                                        <option value="5">События  устройства 2 </option>
+                                    </select>
+								</td>
+							</tr>
+							<tr style="height: 1.5em;">
+							    <td colspan="3" id="txt_scr_5" style="text-align: right; font-size: 1.2em;">5 Поле</td>
+								<td></td>
+								<td colspan="5" style="text-align: left">
+								    <select  id="scr_5" class="graphSelect" style="width: 15em;" onchange="changeOptions(4)">
+                                        <option value="-1">Не используется</option>
+                                        <option value="0">События </option>
+                                        <option value="1">Устройства </option>
+                                        <option value="2">Тайм линии </option>
+                                        <option value="3">Образ тайм линий </option>
+                                        <option value="4">События  устройства 1 </option>
+                                        <option value="5">События  устройства 2 </option>
+                                    </select>
+								</td>
+							</tr>
+							<tr style="height: 1em;"><td class="bottomoptionsscreen" colspan="9"></td></tr>
+					    </table>
+					</td>
+					<td></td>
+                </tr>
+				<tr style="height: 1em;"><td colspan="3"></td></tr>
+				<tr style="height: 22em;"> 
+				    <td></td>
+					<td>
+					    <table style="width: 100%; height: 100%;" border="0">
+						    <tr style="height: 7em;">
+							    <td class="optionsscreen">
+								    <table style="width: 100%; height: 100%; font-family: Arial;" border="0">
+									    <tr style="height: 2em;">
+										    <td class="topoptionsscreen" id="optvoices" colspan="3" style="font-size: 1.5em;">Cинтезатор голоса</td>
+										</tr>
+										<tr style="height: 0.5em;">
+										    <td colspan="3"></td>
+										</tr>
+										<tr>
+										    <td style="width:2em;"><input checked  type="radio" id="extVoice" name="voice" value="0" style="width: 1.2em; height: 1.2em" onchange="changeOptions(5)"></td>
+											<td id="typevoice0" style="font-size: 1.2em; text-align: left;">Встроенный</td>
+											<td style="width:12em; text-align: left;">
+											    <select  id="voice_0" class="graphSelect" style="width: 96%;" onchange="changeOptions(6)">
+                                                </select>
+											</td>
+										</tr>
+										<tr>
+										    <td><input  type="radio" id="extVoice" name="voice" value="1" style="width: 1.2em; height: 1.2em" onchange="changeOptions(5)"></td>
+											<td id="typevoice1" style="font-size: 1.2em; text-align: left;">Внешний</td>
+											<td style="width:12em; text-align: left;">
+											    <select  id="voice_1" class="graphSelect" style="width: 96%;" onchange="changeOptions(7)">
+                                                </select>
+											</td>
+										</tr>
+										<tr style="height: 0.5em;">
+										    <td class="bottomoptionsscreen" colspan="3"></td>
+										</tr>
+									</table>
+								</td>
+								<td style="width: 0.2em;"></td>
+								<td class="optionsscreen" rowspan="3">
+								    <table style="width: 100%; height: 100%; font-family: Arial;" border="0">
+									    <tr style="height: 2em;">
+										    <td class="topoptionsscreen" id="opttimelines" colspan="3" style="font-size: 1.5em;">Тайм-линии</td>
+										</tr>
+										<tr style="height: 0.5em;">
+										    <td colspan="3"></td>
+										</tr>
+										<tr style="height: 2em;">
+										    <td style="width:2em;"><input type="checkbox" id="chk4_1" name="option2" value="a2" style="width: 1.2em; height: 1.2em;" onchange="changeOptions(13)"/></td>
+											<td id="tlscaler" style="font-size: 1.2em; text-align: left;">Шкала времени</td>
+											<td></td>
+										</tr>
+										<tr style="height: 2em;">
+										    <td style="width:2em;"><input type="checkbox" id="chk4_2" name="option2" value="a2" style="width: 1.2em; height: 1.2em;" onchange="changeOptions(14)"/></td>
+											<td id="tlselect" style="font-size: 1.2em; text-align: left;">Выбранная тайм-линия</td>
+											<td style="width:12em; text-align: left;">
+											    <select class="graphSelect"  id="ActiveTL" style="width: 96%;" onchange="changeOptions(17)">
+                                                </select>
+											</td>
+										</tr>
+										<tr style="height: 2em;">
+										    <td style="width:2em;"><input type="checkbox" id="chk4_3" name="option2" value="a2" style="width: 1.2em; height: 1.2em;" onchange="changeOptions(15)"/></td>
+											<td id="tllist" style="font-size: 1.2em; text-align: left;">Список тайм-линий</td>
+											<td></td>
+										</tr>
+										<tr style="height: 2em;">
+										    <td style="width:2em;"><input type="checkbox" id="chk4_4" name="option2" value="a2" style="width: 1.2em; height: 1.2em;"/ onchange="changeOptions(16)"></td>
+											<td id="tlnames" style="font-size: 1.2em; text-align: left;">Название тайм-линий</td>
+											<td></td>
+										</tr>
+										<tr>
+										    <td class="bottomoptionsscreen" colspan="3"></td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr style="height: 1em;">
+							    <td></td>
+								<td></td>
+							</tr>
+							<tr>
+							    <td class="optionsscreen">
+								    <table style="width: 100%; height: 100%; font-family: Arial; border-collapse: collapse;" border="0">
+									    <tr style="height: 2em;">
+										    <td class="topoptionsscreen" id="optevents" colspan="5" style="font-size: 1.5em;">События</td>
+										</tr>
+										<tr style="height: 0.5em;">
+										    <td colspan="5"></td>
+										</tr>
+										<tr style="height: 1.5em;">
+										    <td style="width: 0.5em;"></td>
+											<td colspan="2" id="txtEvCount" style="text-align: left;">Кол-во отображаемых событий</td>
+											<td style="width: 6em;"><input id="CountEvents" type="number" value=10 min="1" max="31" style="width: 96%; text-align:center;" onchange="changeOptions(8)"/></td>
+											<td style="width: 0.5em;"></td>
+										</tr>
+										<tr style="height: 1.5em; background-color: rgb(100,100,100);">
+										    <td></td>
+											<td></td>
+											<td id="nmnumber" style="width: 6em;">Номер</td>
+											<td id="nmamount">Кол-во</td>
+											<td></td>
+										</tr>
+										<tr>
+										    <td></td>
+											<td id="txtdevice1" style="text-align: left; font-size: 1.2em;">Устройство 1</td>
+											<td><input id="dev1" type="number" value=10 min="1" max="31" style="width: 96%; text-align:center;" onchange="changeOptions(9)"></td>
+											<td><input id="dev1CountEvents" type="number" value=10 min="1" max="31" style="width: 96%; text-align:center;" onchange="changeOptions(11)"></td>
+											<td></td>
+										</tr>
+										<tr>
+										    <td></td>
+											<td id="txtdevice2" style="text-align: left; font-size: 1.2em;">Устройство 2</td>
+											<td><input id="dev2" type="number" value=10 min="1" max="31" style="width: 96%; text-align:center;" onchange="changeOptions(10)"></td>
+											<td><input id="dev2CountEvents" type="number" value=10 min="1" max="31" style="width: 96%; text-align:center;" onchange="changeOptions(12)"></td>
+											<td></td>
+										</tr>
+										<tr style="height: 0.5em;">
+										    <td class="bottomoptionsscreen" colspan="5"></td>
+										</tr>
+									</table> 
+								</td>
+								<td></td>
+							</tr>
+						</table>
+					</td>
+					<td></td>
+				</tr>
+                <tr>
+				    <td></td>
+					<td></td>
+					<td></td>
+				</tr>
+                <tr style="height: 4em;">
+				    <td></td>
+					<td>
+					    <input type="button" class="btninputscreen" id="gowinsynch" name=="gowinsynch" value="Синхронизировать с сервером" style="width: 20em; height: 100%;" onclick="showWinSynch()"/>
+					</td>
+					<td></td>
+				</tr>
+                <tr>
+				    <td></td>
+					<td></td>
+					<td></td>
+				</tr>				
+                <tr class="footertab"><td colspan="3">www.mvsgroup.tv</td></tr>				
+			</table>
+        </div>
+        <div style="position: fixed; left: 0; top: 0; width: 100%; height: 100%; display:none;" id="main" >
+            <table style="width: 100%; height: 100%;">
+			    <tr class="progtitle" style="height: 5em;">
+				    <td>
+					    <table class="rowtable" border="0" style="border-spacing: 5px 0; font-family: Arial; color: white;">
+						    <tr id="rowcanvasmenu" style="text-align: center;">
+							    <td style="width: 0.5em;"></td>
+								<td style="width: 4em;"><img id="imgaudioonoff" src="images/audiooff.png" style="width: 3.5em; height: 3.5em;" onclick="clickAudioOnOff()"/></td>
+								<td style="width: 1em;"></td>
+								<td id="txtimgfsize" style="width: 8em; font-size: 1.5em;">Размер кадра</td>
+								<td style="width: 2.5em;"><img id="imgdownfsize" src="images/down.png" onclick="clickFrameSizeDown()"></td>
+								<td id="txtfsize" style="width: 3em; font-size: 1.5em;">1px</td>
+								<td style="width: 2.5em;"><img id="imgupfsize" src="images/up.png" onclick="clickFrameSizeUp()"></td>
+								<td style="width: 1em;"></td>
+								<td id="txtimgtlsize" style="width: 10em; font-size: 1.5em;">Высота тайм-линии</td>
+								<td style="width: 2.5em;"><img id="imgdowntlsize" src="images/down.png" onclick="clickTLSizeDown()"></td>
+								<td id="txttlsize" style="width: 3em; font-size: 1.5em;">99px</td>
+								<td style="width: 2.5em;"><img id="imguptlsize" src="images/up.png" onclick="clickTLSizeUp()"></td>
+								<td></td>
+								<td style="width: 0.5em;"></td>
+								<td style="width: 4em;"><img id="imgsynch2" src="images/synch.png" onclick="showWinSynch()"></td>
+								<td style="width: 4em;"><img id="imgsynch" src="images/options.png" onclick="goToProgramm()"/></td>
+								<td style="width: 0.5em;"></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+				    <td>
+                        <!--<canvas class=myCanvas id="mnCanvas" ></canvas>-->
+                        <canvas class=myCanvas id="evCanvas" ></canvas>
+                        <canvas class=myCanvas id="dvCanvas" ></canvas>
+                        <canvas class=myCanvas id="edCanvas" ></canvas>
+                        <canvas class=myCanvas id="tvCanvas" ></canvas>
+                        <canvas class=myCanvas id="tmCanvas" ></canvas>
+		            </td>	    
+				</tr>
+			</table>
+        </div>
+
+        <script>
+        </script>
+    </body>
+</html>

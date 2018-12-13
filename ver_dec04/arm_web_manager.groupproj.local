@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<BorlandProject>
-	<Transactions>
-    <Transaction>1899.12.30 00:00:00.000.508,C:\Users\ostap\Documents\Embarcadero\Studio\Projects\ProjectGroup1.groupproj=G:\home\ARM_EDITOR\ver1203\arm_web_manager.groupproj</Transaction>
-  </Transactions>
-	<Default.Personality>
-		<Projects ActiveProject="G:\home\ARM_EDITOR\ver_dec04\webredis\webredis.dproj"/>
-	</Default.Personality>
-</BorlandProject>

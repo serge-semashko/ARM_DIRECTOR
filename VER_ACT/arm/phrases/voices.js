@@ -1,0 +1,1 @@
+﻿var intVoices = ["Default", "Masha"];
