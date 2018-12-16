@@ -2,8 +2,8 @@ object HTTPSRVForm: THTTPSRVForm
   Left = 327
   Top = 19
   Caption = 'WEB srv'
-  ClientHeight = 689
-  ClientWidth = 1081
+  ClientHeight = 798
+  ClientWidth = 1157
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -21,11 +21,12 @@ object HTTPSRVForm: THTTPSRVForm
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1081
+    Width = 1157
     Height = 104
     Align = alTop
     TabOrder = 0
     OnClick = Panel1Click
+    ExplicitWidth = 1081
     object URLED: TEdit
       Left = 8
       Top = 51
@@ -93,11 +94,19 @@ object HTTPSRVForm: THTTPSRVForm
       TabOrder = 6
       OnClick = ext_tctClick
     end
+    object Button1: TButton
+      Left = 680
+      Top = 16
+      Width = 75
+      Height = 25
+      Caption = 'Button1'
+      TabOrder = 7
+    end
   end
   object Memo2: TMemo
     Left = 0
     Top = 104
-    Width = 1081
+    Width = 1157
     Height = 158
     Align = alTop
     Font.Charset = DEFAULT_CHARSET
@@ -107,12 +116,13 @@ object HTTPSRVForm: THTTPSRVForm
     Font.Style = []
     ParentFont = False
     TabOrder = 1
+    ExplicitWidth = 1081
   end
   object Memo1: TMemo
     Left = 0
     Top = 262
-    Width = 1081
-    Height = 427
+    Width = 1157
+    Height = 536
     Align = alClient
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -124,6 +134,8 @@ object HTTPSRVForm: THTTPSRVForm
     ParentFont = False
     ScrollBars = ssBoth
     TabOrder = 2
+    ExplicitWidth = 1081
+    ExplicitHeight = 427
   end
   object Timer1: TTimer
     Enabled = False

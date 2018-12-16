@@ -41,7 +41,8 @@ begin
             ff := TFileStream.create(lfname, fmOpenWrite or fmShareDenyNone)
         else
             ff := TFileStream.create(lfname, fmCreate or fmShareDenyNone);
-        ff.seek(0, soFromEnd);
+        if ff.Size<10000000  then ff.seek(0, soFromEnd);
+
         DecodeDate(now, Year, Month, Day);
         txt := FormatDateTime('dd.mm.yyyy hh:mm:ss:zzz ', now);
         txt := '!!! ' + txt + log + #13#10;
@@ -111,7 +112,7 @@ begin
             ff := TFileStream.create(lfname, fmOpenWrite or fmShareDenyNone)
         else
             ff := TFileStream.create(lfname, fmCreate or fmShareDenyNone);
-        ff.seek(0, soFromEnd);
+        if ff.Size<10000000 then ff.seek(0, soFromEnd);
         DecodeDate(now, Year, Month, Day);
         txt := FormatDateTime('dd.mm.yyyy hh:mm:ss:zzz ', now);
         txt := txt + partname + log + #13#10;

@@ -45,6 +45,7 @@ type
         mmo1: TMemo;
     Timer2: TTimer;
     ext_tct: TCheckBox;
+    Button1: TButton;
         procedure FormCreate(Sender: TObject);
         procedure terminate1Click(Sender: TObject);
         procedure Panel1Click(Sender: TObject);
@@ -108,6 +109,9 @@ Procedure Update_Array(basename:string;baseind, changed: integer; varvalue:ansis
 var
 
 //LTC block
+  HTTPSRVForm_txt1_Caption : array[0..1300] of char;
+  HTTPSRVForm_txt2_Caption : array[0..1300] of char;
+
   tlp_string : ansistring = '';
   TimeCode_Caption: Ansistring = '';
   TimeCode_shift: int64 = 0;
@@ -465,7 +469,7 @@ begin
         'Content-length: ' + IntToStr(length(outstr)) + #13#10 +
         'Connection: close' + #13#10 +
         'Date: Tue, 20 Mar 2018 14:04:45 +0300' + #13#10 +
-        'Server: Synapse HTTP server demo' + #13#10 + #13#10 + outstr + crlf);
+        'Server: webRedis HTTP server' + #13#10 + #13#10 + outstr + crlf);
         webWriteLog(hstr,'fin');
 end;
 
@@ -637,24 +641,21 @@ procedure ziparray(ind:integer);
 var
    i2 : integer;
    arr : ansistring;
+   str1 : tstringlist;
 begin
+  while (var_array[ind].values.Count > 0 )do
+      if  length( var_array[ind].values[var_array[ind].values.Count-1])<3 then  begin
+        str1:=  var_array[ind].values;
+        str1.Delete(var_array[ind].values.Count-1);
+      end else break;
+
      arr := '[';
         for i2 := 0 to var_array[ind].values.Count-1 do
         begin
-          if length(var_array[ind].values[i2])<5 then
-          begin
-             var_array[ind].zip_value := '';
-             var_array[ind].changed := -1;
-             exit;
-          end;
-
-          if i2  = (var_array[ind].values.Count-1)
-          then
-              arr:=arr+ansistring(var_array[ind].values[i2])
-          else
               arr:=arr + ansistring(var_array[ind].values[i2])+',';
-
         end;
+        if arr[length(arr)]=',' then system.Delete(arr,length(arr),1);
+
        var_array[ind].zip_value :='"'+compress2send( arr+']')+'"';
 end;
 Procedure Update_Array(basename:string;baseind, changed: integer; varvalue:ansistring);
@@ -663,8 +664,11 @@ var
  lst : tstringlist;
 begin
 
-if basename = 'TLO' then
+  if basename = 'TLO' then
    baseind := baseind-1;
+
+  if (basename = 'TLO') and (varvalue<>'') then
+   baseind := baseind;
 
   for i1 := 0  to array_count-1 do
   begin
@@ -693,7 +697,7 @@ var
     s1 : string;
 Procedure UpdateCapctc;
 begin
-        HTTPSRVForm.txt1.Caption :=s1;
+        strpcopy(HTTPSRVForm_txt1_Caption,s1);
 
 end;
 begin
@@ -746,15 +750,14 @@ begin
             continue;
         webvars[i1].changed := tnow;
         webvars[i1].jsonstr := KeyValue;
-//        webvars[i1].json.free;
-//        webvars[i1].json := json;
-        if webvars[i1].BaseName<>'' then update_array(webvars[i1].BaseName, webvars[i1].base_ind,webvars[i1].changed,KeyValue);
+        if webvars[i1].BaseName<>''
+          then update_array(webvars[i1].BaseName, webvars[i1].base_ind,webvars[i1].changed,KeyValue);
         exit;
     end;
     inc(varCount);
     i1 := varCount - 1;
-    if keyname = 'TLO[3]' then
-    i1 := varCount - 1;
+//    if keyname = 'TLO[3]' then
+//    i1 := varCount - 1;
 
     webvars[i1].changed := tnow;
     webvars[i1].jsonstr := KeyValue;
@@ -787,6 +790,9 @@ begin
                 continue;
             webvars[i1].changed := -1;
             webvars[i1].jsonStr := '';
+            if webvars[i1].BaseName<>''
+              then update_array(webvars[i1].BaseName, webvars[i1].base_ind,timeGetTime,'');
+
         end;
     end;
 
@@ -795,6 +801,9 @@ begin
             continue;
         IF keyname<>'TLP' THEN  HTTPSRVForm.memo1.lines.Values[keyname] := 'deleted ' + formatdatetime('HH:NN:SS ZZZ', now);
         webvars[i1].changed := -1;
+        if webvars[i1].BaseName<>''
+          then update_array(webvars[i1].BaseName, webvars[i1].base_ind,webvars[i1].changed,'');
+
         result := '{"RC":0,"status":"Deleted"}';
         exit;
     end;
@@ -1318,9 +1327,10 @@ procedure THTTPSRVForm.Timer2Timer(Sender: TObject);
           TimeCode_shift_frame:=TimeCode_shift div 40;
           TimeCode_delta :=  trunc((now - TimeCodeDelta)*24*3600*1000);
           TimeCode_Caption := '*' + MyDateTimeToStr(now - TimeCodeDelta);
-          HTTPSRVForm.txt2.Caption := 'CTC:' + TimeCode_Caption+' shift='+IntToStr(TimeCode_shift)+'('+IntToStr(TimeCode_shift_frame)+') delta='+IntToStr(TimeCode_delta);
-          HTTPSRVForm.txt1.Caption := tlp_string;
-          HTTPSRVForm.txt2.Update;
+          strpcopy(HTTPSRVForm_txt2_Caption, 'CTC:' + TimeCode_Caption+' shift='+IntToStr(TimeCode_shift)+'('+IntToStr(TimeCode_shift_frame)+') delta='+IntToStr(TimeCode_delta));
+          txt2.Caption:=HTTPSRVForm_txt2_Caption;
+          txt1.Caption :=tlp_string;
+          caption := formatdateTime('HH:NN:SS zzz',now)
       end;
     end;
 
@@ -1333,6 +1343,9 @@ var
   INSTR, OUTSTR,tmpstr : AnsiString;
   i1 : integer;
 initialization
+  strpcopy(HTTPSRVForm_txt1_Caption,'');
+  strpcopy(HTTPSRVForm_txt2_Caption,'');
+
     ini := tinifile.Create(extractfilepath(application.exename)+'webredis.cfg');
     EmptyWebVar.Name := '';
     EmptyWebVar.baseName := '';
